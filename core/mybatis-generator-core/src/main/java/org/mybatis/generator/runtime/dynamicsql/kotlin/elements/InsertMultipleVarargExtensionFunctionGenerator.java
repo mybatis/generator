@@ -19,31 +19,37 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
+import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
-public class GeneralSelectOneMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
+public class InsertMultipleVarargExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
+    private final FullyQualifiedKotlinType recordType;
     private final String mapperName;
 
-    private GeneralSelectOneMethodGenerator(Builder builder) {
+    private InsertMultipleVarargExtensionFunctionGenerator(Builder builder) {
         super(builder);
+        recordType = Objects.requireNonNull(builder.recordType);
         mapperName = Objects.requireNonNull(builder.mapperName);
     }
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
+        if (!DynamicSqlUtils.generateMultipleRowInsert(introspectedTable)) {
+            return Optional.empty();
+        }
+
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".selectOne") //$NON-NLS-1$
-                .withArgument(KotlinArg.newArg("completer") //$NON-NLS-1$
-                        .withDataType("SelectCompleter") //$NON-NLS-1$
+                KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("vararg records") //$NON-NLS-1$
+                        .withDataType(recordType.getShortNameWithTypeArguments()) //$NON-NLS-1$ //$NON-NLS-2$
                         .build())
-                .withCodeLine("selectOne(this::selectOne, columnList, " + tableFieldName //$NON-NLS-1$
-                        + ", completer)") //$NON-NLS-1$
+                .withCodeLine("insertMultiple(records.toList())") //$NON-NLS-1$
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.SelectCompleter") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.selectOne") //$NON-NLS-1$
+                .withImports(recordType.getImportList())
                 .build();
 
         addFunctionComment(functionAndImports);
@@ -52,11 +58,18 @@ public class GeneralSelectOneMethodGenerator extends AbstractKotlinMapperFunctio
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientSelectOneMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientInsertMultipleVarargMethodGenerated(kotlinFunction, kotlinFile,
+                introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
+        private @Nullable FullyQualifiedKotlinType recordType;
         private @Nullable String mapperName;
+
+        public Builder withRecordType(FullyQualifiedKotlinType recordType) {
+            this.recordType = recordType;
+            return this;
+        }
 
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
@@ -68,8 +81,8 @@ public class GeneralSelectOneMethodGenerator extends AbstractKotlinMapperFunctio
             return this;
         }
 
-        public GeneralSelectOneMethodGenerator build() {
-            return new GeneralSelectOneMethodGenerator(this);
+        public InsertMultipleVarargExtensionFunctionGenerator build() {
+            return new InsertMultipleVarargExtensionFunctionGenerator(this);
         }
     }
 }

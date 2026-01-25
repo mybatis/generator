@@ -15,57 +15,69 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
+import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
-import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
-public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
-    private final String mapperName;
+public class UpdateSelectiveColumnsExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
+    private final FullyQualifiedKotlinType recordType;
     private final KotlinFragmentGenerator fragmentGenerator;
 
-    private SelectByPrimaryKeyMethodGenerator(Builder builder) {
+    private UpdateSelectiveColumnsExtensionFunctionGenerator(Builder builder) {
         super(builder);
-        mapperName = Objects.requireNonNull(builder.mapperName);
+        recordType = Objects.requireNonNull(builder.recordType);
         fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
-        if (!DynamicSqlUtils.generateSelectByPrimaryKey(introspectedTable)) {
-            return Optional.empty();
-        }
 
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".selectByPrimaryKey") //$NON-NLS-1$
-                .withCodeLine("selectOne {") //$NON-NLS-1$
+                KotlinFunction.newOneLineFunction("KotlinUpdateBuilder.updateSelectiveColumns") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("row") //$NON-NLS-1$
+                        .withDataType(recordType.getShortNameWithTypeArguments())
+                        .build())
                 .build())
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.KotlinUpdateBuilder") //$NON-NLS-1$
+                .withImports(recordType.getImportList())
                 .build();
 
         addFunctionComment(functionAndImports);
 
-        KotlinFunctionParts functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters(false);
+        KotlinFunction function = functionAndImports.getFunction();
+
+        function.addCodeLine("apply {"); //$NON-NLS-1$
+
+        List<IntrospectedColumn> columns = introspectedTable.getAllColumns();
+        KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualWhenPresentLines(columns);
+
         acceptParts(functionAndImports, functionParts);
-        functionAndImports.getFunction().getCodeLines().add("}"); //$NON-NLS-1$
+
+        function.addCodeLine("}"); //$NON-NLS-1$
 
         return Optional.of(functionAndImports);
     }
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientSelectByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientUpdateSelectiveColumnsMethodGenerated(kotlinFunction, kotlinFile,
+                introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-        private @Nullable String mapperName;
+        private @Nullable FullyQualifiedKotlinType recordType;
         private @Nullable KotlinFragmentGenerator fragmentGenerator;
 
-        public Builder withMapperName(String mapperName) {
-            this.mapperName = mapperName;
+        public Builder withRecordType(FullyQualifiedKotlinType recordType) {
+            this.recordType = recordType;
             return this;
         }
 
@@ -79,8 +91,8 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinMapperFunct
             return this;
         }
 
-        public SelectByPrimaryKeyMethodGenerator build() {
-            return new SelectByPrimaryKeyMethodGenerator(this);
+        public UpdateSelectiveColumnsExtensionFunctionGenerator build() {
+            return new UpdateSelectiveColumnsExtensionFunctionGenerator(this);
         }
     }
 }

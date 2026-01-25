@@ -19,47 +19,58 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
+import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
-public class GeneralSelectMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
+public class SelectByPrimaryKeyExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final String mapperName;
+    private final KotlinFragmentGenerator fragmentGenerator;
 
-    private GeneralSelectMethodGenerator(Builder builder) {
+    private SelectByPrimaryKeyExtensionFunctionGenerator(Builder builder) {
         super(builder);
         mapperName = Objects.requireNonNull(builder.mapperName);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
+        if (!DynamicSqlUtils.generateSelectByPrimaryKey(introspectedTable)) {
+            return Optional.empty();
+        }
+
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".select") //$NON-NLS-1$
-                .withArgument(KotlinArg.newArg("completer") //$NON-NLS-1$
-                        .withDataType("SelectCompleter") //$NON-NLS-1$
-                        .build())
-                .withCodeLine("selectList(this::selectMany, columnList, " + tableFieldName //$NON-NLS-1$
-                        + ", completer)") //$NON-NLS-1$
+                KotlinFunction.newOneLineFunction(mapperName + ".selectByPrimaryKey") //$NON-NLS-1$
+                .withCodeLine("selectOne {") //$NON-NLS-1$
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.SelectCompleter") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.selectList") //$NON-NLS-1$
                 .build();
 
         addFunctionComment(functionAndImports);
+
+        KotlinFunctionParts functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters(false);
+        acceptParts(functionAndImports, functionParts);
+        functionAndImports.getFunction().getCodeLines().add("}"); //$NON-NLS-1$
+
         return Optional.of(functionAndImports);
     }
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientGeneralSelectMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientSelectByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
         private @Nullable String mapperName;
+        private @Nullable KotlinFragmentGenerator fragmentGenerator;
 
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
+            return this;
+        }
+
+        public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
+            this.fragmentGenerator = fragmentGenerator;
             return this;
         }
 
@@ -68,8 +79,8 @@ public class GeneralSelectMethodGenerator extends AbstractKotlinMapperFunctionGe
             return this;
         }
 
-        public GeneralSelectMethodGenerator build() {
-            return new GeneralSelectMethodGenerator(this);
+        public SelectByPrimaryKeyExtensionFunctionGenerator build() {
+            return new SelectByPrimaryKeyExtensionFunctionGenerator(this);
         }
     }
 }

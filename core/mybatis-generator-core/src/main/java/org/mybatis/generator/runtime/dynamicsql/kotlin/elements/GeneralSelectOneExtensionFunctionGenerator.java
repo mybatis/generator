@@ -24,10 +24,10 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class GeneralSelectDistinctMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
+public class GeneralSelectOneExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final String mapperName;
 
-    private GeneralSelectDistinctMethodGenerator(Builder builder) {
+    private GeneralSelectOneExtensionFunctionGenerator(Builder builder) {
         super(builder);
         mapperName = Objects.requireNonNull(builder.mapperName);
     }
@@ -35,15 +35,15 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractKotlinMapperFu
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".selectDistinct") //$NON-NLS-1$
+                KotlinFunction.newOneLineFunction(mapperName + ".selectOne") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("completer") //$NON-NLS-1$
                         .withDataType("SelectCompleter") //$NON-NLS-1$
                         .build())
-                .withCodeLine("selectDistinct(this::selectMany, columnList, " + tableFieldName //$NON-NLS-1$
+                .withCodeLine("selectOne(this::selectOne, columnList, " + tableFieldName //$NON-NLS-1$
                         + ", completer)") //$NON-NLS-1$
                 .build())
                 .withImport("org.mybatis.dynamic.sql.util.kotlin.SelectCompleter") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.selectDistinct") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.selectOne") //$NON-NLS-1$
                 .build();
 
         addFunctionComment(functionAndImports);
@@ -52,8 +52,7 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractKotlinMapperFu
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientGeneralSelectDistinctMethodGenerated(kotlinFunction, kotlinFile,
-                introspectedTable);
+        return pluginAggregator.clientSelectOneMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
@@ -69,8 +68,8 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractKotlinMapperFu
             return this;
         }
 
-        public GeneralSelectDistinctMethodGenerator build() {
-            return new GeneralSelectDistinctMethodGenerator(this);
+        public GeneralSelectOneExtensionFunctionGenerator build() {
+            return new GeneralSelectOneExtensionFunctionGenerator(this);
         }
     }
 }

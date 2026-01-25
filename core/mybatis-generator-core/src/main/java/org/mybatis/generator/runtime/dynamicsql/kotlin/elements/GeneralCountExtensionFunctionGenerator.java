@@ -24,26 +24,29 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class GeneralDeleteMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
+public class GeneralCountExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
 
     private final String mapperName;
+    private final String tableFieldImport;
 
-    private GeneralDeleteMethodGenerator(Builder builder) {
+    private GeneralCountExtensionFunctionGenerator(Builder builder) {
         super(builder);
         mapperName = Objects.requireNonNull(builder.mapperName);
+        tableFieldImport = Objects.requireNonNull(builder.tableFieldImport);
     }
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".delete") //$NON-NLS-1$
+                KotlinFunction.newOneLineFunction(mapperName + ".count") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("completer") //$NON-NLS-1$
-                        .withDataType("DeleteCompleter") //$NON-NLS-1$
+                        .withDataType("CountCompleter") //$NON-NLS-1$
                         .build())
-                .withCodeLine("deleteFrom(this::delete, " + tableFieldName + ", completer)") //$NON-NLS-1$ //$NON-NLS-2$
+                .withCodeLine("countFrom(this::count, " + tableFieldName + ", completer)") //$NON-NLS-1$ //$NON-NLS-2$
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.DeleteCompleter") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.deleteFrom") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.CountCompleter") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.countFrom") //$NON-NLS-1$
+                .withImport(tableFieldImport)
                 .build();
 
         addFunctionComment(functionAndImports);
@@ -52,11 +55,17 @@ public class GeneralDeleteMethodGenerator extends AbstractKotlinMapperFunctionGe
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientGeneralDeleteMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientGeneralCountMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
         private @Nullable String mapperName;
+        private @Nullable String tableFieldImport;
+
+        public Builder withTableFieldImport(String tableFieldImport) {
+            this.tableFieldImport = tableFieldImport;
+            return this;
+        }
 
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
@@ -68,8 +77,8 @@ public class GeneralDeleteMethodGenerator extends AbstractKotlinMapperFunctionGe
             return this;
         }
 
-        public GeneralDeleteMethodGenerator build() {
-            return new GeneralDeleteMethodGenerator(this);
+        public GeneralCountExtensionFunctionGenerator build() {
+            return new GeneralCountExtensionFunctionGenerator(this);
         }
     }
 }

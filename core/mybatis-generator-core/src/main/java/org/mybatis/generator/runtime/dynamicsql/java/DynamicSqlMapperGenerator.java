@@ -109,6 +109,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         addInsertMultipleMethod(interfaze);
         addInsertSelectiveMethod(interfaze);
         addSelectListField(interfaze);
+        addGeneralSelectOneMethod(interfaze);
         addGeneralSelectMethod(interfaze);
         addSelectDistinctMethod(interfaze);
         addSelectByPrimaryKeyMethod(interfaze);
@@ -243,7 +244,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addGeneralSelectMethod(Interface interfaze) {
-        addGeneralSelectOneMethod(interfaze);
         var generator = initializeSubBuilder(new GeneralSelectMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)

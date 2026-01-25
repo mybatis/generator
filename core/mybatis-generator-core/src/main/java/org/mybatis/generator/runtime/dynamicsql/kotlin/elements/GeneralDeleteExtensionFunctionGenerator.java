@@ -24,25 +24,26 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class GeneralUpdateMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
+public class GeneralDeleteExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
+
     private final String mapperName;
 
-    private GeneralUpdateMethodGenerator(Builder builder) {
+    private GeneralDeleteExtensionFunctionGenerator(Builder builder) {
         super(builder);
-        this.mapperName = Objects.requireNonNull(builder.mapperName);
+        mapperName = Objects.requireNonNull(builder.mapperName);
     }
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".update") //$NON-NLS-1$
+                KotlinFunction.newOneLineFunction(mapperName + ".delete") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("completer") //$NON-NLS-1$
-                        .withDataType("UpdateCompleter") //$NON-NLS-1$
+                        .withDataType("DeleteCompleter") //$NON-NLS-1$
                         .build())
-                .withCodeLine("update(this::update, " + tableFieldName + ", completer)") //$NON-NLS-1$ //$NON-NLS-2$
+                .withCodeLine("deleteFrom(this::delete, " + tableFieldName + ", completer)") //$NON-NLS-1$ //$NON-NLS-2$
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.UpdateCompleter") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.update") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.DeleteCompleter") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.deleteFrom") //$NON-NLS-1$
                 .build();
 
         addFunctionComment(functionAndImports);
@@ -51,7 +52,7 @@ public class GeneralUpdateMethodGenerator extends AbstractKotlinMapperFunctionGe
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientGeneralUpdateMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientGeneralDeleteMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
@@ -67,8 +68,8 @@ public class GeneralUpdateMethodGenerator extends AbstractKotlinMapperFunctionGe
             return this;
         }
 
-        public GeneralUpdateMethodGenerator build() {
-            return new GeneralUpdateMethodGenerator(this);
+        public GeneralDeleteExtensionFunctionGenerator build() {
+            return new GeneralDeleteExtensionFunctionGenerator(this);
         }
     }
 }

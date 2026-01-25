@@ -25,11 +25,11 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class BasicSelectManyMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
+public class BasicSelectManyFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final FullyQualifiedKotlinType recordType;
     private final KotlinFragmentGenerator fragmentGenerator;
 
-    private BasicSelectManyMethodGenerator(Builder builder) {
+    private BasicSelectManyFunctionGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
         fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
@@ -85,8 +85,8 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinMapperFunction
             return this;
         }
 
-        public BasicSelectManyMethodGenerator build() {
-            return new BasicSelectManyMethodGenerator(this);
+        public BasicSelectManyFunctionGenerator build() {
+            return new BasicSelectManyFunctionGenerator(this);
         }
     }
 }

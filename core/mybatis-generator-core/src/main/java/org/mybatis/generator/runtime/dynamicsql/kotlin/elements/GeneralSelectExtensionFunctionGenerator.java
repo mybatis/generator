@@ -24,29 +24,26 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class GeneralCountMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
-
+public class GeneralSelectExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final String mapperName;
-    private final String tableFieldImport;
 
-    private GeneralCountMethodGenerator(Builder builder) {
+    private GeneralSelectExtensionFunctionGenerator(Builder builder) {
         super(builder);
         mapperName = Objects.requireNonNull(builder.mapperName);
-        tableFieldImport = Objects.requireNonNull(builder.tableFieldImport);
     }
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".count") //$NON-NLS-1$
+                KotlinFunction.newOneLineFunction(mapperName + ".select") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("completer") //$NON-NLS-1$
-                        .withDataType("CountCompleter") //$NON-NLS-1$
+                        .withDataType("SelectCompleter") //$NON-NLS-1$
                         .build())
-                .withCodeLine("countFrom(this::count, " + tableFieldName + ", completer)") //$NON-NLS-1$ //$NON-NLS-2$
+                .withCodeLine("selectList(this::selectMany, columnList, " + tableFieldName //$NON-NLS-1$
+                        + ", completer)") //$NON-NLS-1$
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.CountCompleter") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.countFrom") //$NON-NLS-1$
-                .withImport(tableFieldImport)
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.SelectCompleter") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.selectList") //$NON-NLS-1$
                 .build();
 
         addFunctionComment(functionAndImports);
@@ -55,17 +52,11 @@ public class GeneralCountMethodGenerator extends AbstractKotlinMapperFunctionGen
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientGeneralCountMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientGeneralSelectMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
         private @Nullable String mapperName;
-        private @Nullable String tableFieldImport;
-
-        public Builder withTableFieldImport(String tableFieldImport) {
-            this.tableFieldImport = tableFieldImport;
-            return this;
-        }
 
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
@@ -77,8 +68,8 @@ public class GeneralCountMethodGenerator extends AbstractKotlinMapperFunctionGen
             return this;
         }
 
-        public GeneralCountMethodGenerator build() {
-            return new GeneralCountMethodGenerator(this);
+        public GeneralSelectExtensionFunctionGenerator build() {
+            return new GeneralSelectExtensionFunctionGenerator(this);
         }
     }
 }

@@ -27,11 +27,11 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
-public class BasicMultipleInsertMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
+public class BasicMultipleInsertFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
 
     private final FullyQualifiedKotlinType recordType;
 
-    private BasicMultipleInsertMethodGenerator(Builder builder) {
+    private BasicMultipleInsertFunctionGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
     }
@@ -113,8 +113,8 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinMapperFunc
             return this;
         }
 
-        public BasicMultipleInsertMethodGenerator build() {
-            return new BasicMultipleInsertMethodGenerator(this);
+        public BasicMultipleInsertFunctionGenerator build() {
+            return new BasicMultipleInsertFunctionGenerator(this);
         }
     }
 }

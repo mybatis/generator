@@ -15,67 +15,82 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class UpdateAllColumnsMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
-    private final FullyQualifiedKotlinType recordType;
-    private final KotlinFragmentGenerator fragmentGenerator;
+public class BasicSelectOneFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
 
-    private UpdateAllColumnsMethodGenerator(Builder builder) {
+    private final FullyQualifiedKotlinType recordType;
+    private final String resultMapId;
+    private final KotlinFragmentGenerator fragmentGenerator;
+    private final boolean reuseResultMap;
+
+    private BasicSelectOneFunctionGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
+        resultMapId = Objects.requireNonNull(builder.resultMapId);
         fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
+        reuseResultMap = builder.reuseResultMap;
     }
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
-        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction("KotlinUpdateBuilder.updateAllColumns") //$NON-NLS-1$
-                .withArgument(KotlinArg.newArg("row") //$NON-NLS-1$
-                        .withDataType(recordType.getShortNameWithTypeArguments())
+        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports
+                .withFunction(KotlinFunction.newOneLineFunction("selectOne") //$NON-NLS-1$
+                        .withExplicitReturnType(recordType.getShortNameWithTypeArguments() + "?") //$NON-NLS-1$
+                        .withArgument(KotlinArg.newArg("selectStatement") //$NON-NLS-1$
+                                .withDataType("SelectStatementProvider") //$NON-NLS-1$
+                                .build())
+                        .withAnnotation("@SelectProvider(type=SqlProviderAdapter::class," //$NON-NLS-1$
+                                + " method=\"select\")") //$NON-NLS-1$
                         .build())
-                .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.KotlinUpdateBuilder") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.select.render.SelectStatementProvider") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$
+                .withImport("org.apache.ibatis.annotations.SelectProvider") //$NON-NLS-1$
                 .withImports(recordType.getImportList())
                 .build();
 
         addFunctionComment(functionAndImports);
 
-        KotlinFunction function = functionAndImports.getFunction();
-
-        function.addCodeLine("apply {"); //$NON-NLS-1$
-
-        List<IntrospectedColumn> columns = introspectedTable.getAllColumns();
-        KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualLines(columns);
-
-        acceptParts(functionAndImports, functionParts);
-
-        function.addCodeLine("}"); //$NON-NLS-1$
+        if (reuseResultMap) {
+            functionAndImports.getImports().add("org.apache.ibatis.annotations.ResultMap"); //$NON-NLS-1$
+            functionAndImports.getFunction().addAnnotation("@ResultMap(\"" //$NON-NLS-1$
+                    + resultMapId
+                    + "\")"); //$NON-NLS-1$
+        } else {
+            KotlinFunctionParts functionParts = fragmentGenerator.getAnnotatedResults();
+            acceptParts(functionAndImports, functionParts);
+        }
 
         return Optional.of(functionAndImports);
     }
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientUpdateAllColumnsMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientBasicSelectOneMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
+
         private @Nullable FullyQualifiedKotlinType recordType;
+        private @Nullable String resultMapId;
         private @Nullable KotlinFragmentGenerator fragmentGenerator;
+        private boolean reuseResultMap;
 
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
+            return this;
+        }
+
+        public Builder withResultMapId(String resultMapId) {
+            this.resultMapId = resultMapId;
             return this;
         }
 
@@ -84,13 +99,18 @@ public class UpdateAllColumnsMethodGenerator extends AbstractKotlinMapperFunctio
             return this;
         }
 
+        public Builder withReuseResultMap(boolean reuseResultMap) {
+            this.reuseResultMap = reuseResultMap;
+            return this;
+        }
+
         @Override
         public Builder getThis() {
             return this;
         }
 
-        public UpdateAllColumnsMethodGenerator build() {
-            return new UpdateAllColumnsMethodGenerator(this);
+        public BasicSelectOneFunctionGenerator build() {
+            return new BasicSelectOneFunctionGenerator(this);
         }
     }
 }

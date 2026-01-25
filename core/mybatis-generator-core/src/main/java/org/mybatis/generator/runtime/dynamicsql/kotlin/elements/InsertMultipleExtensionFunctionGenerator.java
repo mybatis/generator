@@ -26,14 +26,15 @@ import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
+import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
-public class InsertMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
+public class InsertMultipleExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final FullyQualifiedKotlinType recordType;
     private final String mapperName;
     private final String supportObjectImport;
 
-    private InsertMethodGenerator(Builder builder) {
+    private InsertMultipleExtensionFunctionGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
         mapperName = Objects.requireNonNull(builder.mapperName);
@@ -42,13 +43,32 @@ public class InsertMethodGenerator extends AbstractKotlinMapperFunctionGenerator
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
+        if (!DynamicSqlUtils.generateMultipleRowInsert(introspectedTable)) {
+            return Optional.empty();
+        }
+
+        // Kotlin type inference gets lost if we don't name the helper method something different from the
+        // regular mapper method
+        String functionImport;
+        String functionShortName;
+        if (DynamicSqlUtils.canRetrieveMultiRowGeneratedKeys(introspectedTable)) {
+            functionImport =
+                    "org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultipleWithGeneratedKeys"; //$NON-NLS-1$
+            functionShortName = "insertMultipleWithGeneratedKeys"; //$NON-NLS-1$
+        } else {
+            functionImport = "org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultiple"; //$NON-NLS-1$
+            functionShortName = "insertMultiple"; //$NON-NLS-1$
+        }
+
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".insert") //$NON-NLS-1$
-                .withArgument(KotlinArg.newArg("row") //$NON-NLS-1$
-                        .withDataType(recordType.getShortNameWithTypeArguments())
+                KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("records") //$NON-NLS-1$
+                        .withDataType("Collection<" //$NON-NLS-1$
+                                + recordType.getShortNameWithTypeArguments()
+                                + ">") //$NON-NLS-1$
                         .build())
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.insert") //$NON-NLS-1$
+                .withImport(functionImport)
                 .withImports(recordType.getImportList())
                 .build();
 
@@ -56,7 +76,8 @@ public class InsertMethodGenerator extends AbstractKotlinMapperFunctionGenerator
 
         KotlinFunction function = functionAndImports.getFunction();
 
-        function.addCodeLine("insert(this::insert, row, " + tableFieldName //$NON-NLS-1$
+        function.addCodeLine(functionShortName + "(this::insertMultiple" //$NON-NLS-1$
+                + ", records, " + tableFieldName //$NON-NLS-1$
                 + ") {"); //$NON-NLS-1$
 
         List<IntrospectedColumn> columns =
@@ -79,7 +100,7 @@ public class InsertMethodGenerator extends AbstractKotlinMapperFunctionGenerator
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientInsertMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientInsertMultipleMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
@@ -107,8 +128,8 @@ public class InsertMethodGenerator extends AbstractKotlinMapperFunctionGenerator
             return this;
         }
 
-        public InsertMethodGenerator build() {
-            return new InsertMethodGenerator(this);
+        public InsertMultipleExtensionFunctionGenerator build() {
+            return new InsertMultipleExtensionFunctionGenerator(this);
         }
     }
 }

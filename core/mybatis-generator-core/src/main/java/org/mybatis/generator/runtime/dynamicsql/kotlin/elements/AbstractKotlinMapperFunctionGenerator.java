@@ -63,7 +63,7 @@ public abstract class AbstractKotlinMapperFunctionGenerator extends AbstractKotl
     }
 
     public static FieldNameAndImport calculateFieldNameAndImport(String tableFieldName, String supportObjectImport,
-                                                     IntrospectedColumn column) {
+                                                                 IntrospectedColumn column) {
         String fieldName = column.getJavaProperty();
         String importString;
         if (fieldName.equals(tableFieldName)) {

@@ -15,23 +15,22 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
+public class BasicInsertFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
+
     private final FullyQualifiedKotlinType recordType;
     private final KotlinFragmentGenerator fragmentGenerator;
 
-    private UpdateSelectiveColumnsMethodGenerator(Builder builder) {
+    private BasicInsertFunctionGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
         fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
@@ -39,37 +38,39 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinMapperF
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
+        String parameterType = "InsertStatementProvider<" //$NON-NLS-1$
+                + recordType.getShortNameWithTypeArguments()
+                + ">"; //$NON-NLS-1$
 
-        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction("KotlinUpdateBuilder.updateSelectiveColumns") //$NON-NLS-1$
-                .withArgument(KotlinArg.newArg("row") //$NON-NLS-1$
-                        .withDataType(recordType.getShortNameWithTypeArguments())
+        KotlinFunction function = KotlinFunction.newOneLineFunction("insert") //$NON-NLS-1$
+                .withExplicitReturnType("Int") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("insertStatement") //$NON-NLS-1$
+                        .withDataType(parameterType)
                         .build())
-                .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.KotlinUpdateBuilder") //$NON-NLS-1$
-                .withImports(recordType.getImportList())
+                .withAnnotation("@InsertProvider(type=SqlProviderAdapter::class, method=\"insert\")") //$NON-NLS-1$
                 .build();
 
+        KotlinFunctionAndImports.Builder functionAndImportsBuilder = KotlinFunctionAndImports.withFunction(function)
+                .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$
+                .withImport("org.apache.ibatis.annotations.InsertProvider") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.insert.render.InsertStatementProvider") //$NON-NLS-1$
+                .withImports(recordType.getImportList());
+
+        introspectedTable.getGeneratedKey().ifPresent(gk -> {
+            KotlinFunctionParts functionParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
+            // need to add imports to function and imports
+            acceptParts(function, functionParts);
+            functionAndImportsBuilder.withImports(functionParts.getImports());
+        });
+
+        KotlinFunctionAndImports functionAndImports = functionAndImportsBuilder.build();
         addFunctionComment(functionAndImports);
-
-        KotlinFunction function = functionAndImports.getFunction();
-
-        function.addCodeLine("apply {"); //$NON-NLS-1$
-
-        List<IntrospectedColumn> columns = introspectedTable.getAllColumns();
-        KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualWhenPresentLines(columns);
-
-        acceptParts(functionAndImports, functionParts);
-
-        function.addCodeLine("}"); //$NON-NLS-1$
-
         return Optional.of(functionAndImports);
     }
 
     @Override
-    public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientUpdateSelectiveColumnsMethodGenerated(kotlinFunction, kotlinFile,
-                introspectedTable);
+    public boolean callPlugins(KotlinFunction function, KotlinFile kotlinFile) {
+        return pluginAggregator.clientBasicInsertMethodGenerated(function, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
@@ -91,8 +92,8 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinMapperF
             return this;
         }
 
-        public UpdateSelectiveColumnsMethodGenerator build() {
-            return new UpdateSelectiveColumnsMethodGenerator(this);
+        public BasicInsertFunctionGenerator build() {
+            return new BasicInsertFunctionGenerator(this);
         }
     }
 }

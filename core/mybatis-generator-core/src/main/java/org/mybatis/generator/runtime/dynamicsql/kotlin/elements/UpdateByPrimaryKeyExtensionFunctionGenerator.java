@@ -15,41 +15,54 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
+import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
-public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
-
+public class UpdateByPrimaryKeyExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
+    private final FullyQualifiedKotlinType recordType;
     private final KotlinFragmentGenerator fragmentGenerator;
     private final String mapperName;
 
-    private DeleteByPrimaryKeyMethodGenerator(Builder builder) {
+    private UpdateByPrimaryKeyExtensionFunctionGenerator(Builder builder) {
         super(builder);
+        recordType = Objects.requireNonNull(builder.recordType);
         fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
         mapperName = Objects.requireNonNull(builder.mapperName);
     }
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
-        if (!DynamicSqlUtils.generateDeleteByPrimaryKey(introspectedTable)) {
+        if (!DynamicSqlUtils.generateUpdateByPrimaryKey(introspectedTable)) {
             return Optional.empty();
         }
 
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".deleteByPrimaryKey") //$NON-NLS-1$
-                .withCodeLine("delete {") //$NON-NLS-1$
+                KotlinFunction.newOneLineFunction(mapperName + ".updateByPrimaryKey") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("row") //$NON-NLS-1$
+                        .withDataType(recordType.getShortNameWithTypeArguments())
+                        .build())
+                .withCodeLine("update {") //$NON-NLS-1$
                 .build())
+                .withImports(recordType.getImportList())
                 .build();
 
         addFunctionComment(functionAndImports);
 
-        KotlinFunctionParts functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters(false);
+        List<IntrospectedColumn> columns = introspectedTable.getNonPrimaryKeyColumns();
+        KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualLines(columns);
+        acceptParts(functionAndImports, functionParts);
+
+        functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters(true);
         acceptParts(functionAndImports, functionParts);
         functionAndImports.getFunction().getCodeLines().add("}"); //$NON-NLS-1$
 
@@ -58,12 +71,18 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinMapperFunct
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return pluginAggregator.clientDeleteByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientUpdateByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {
+        private @Nullable FullyQualifiedKotlinType recordType;
         private @Nullable KotlinFragmentGenerator fragmentGenerator;
         private @Nullable String mapperName;
+
+        public Builder withRecordType(FullyQualifiedKotlinType recordType) {
+            this.recordType = recordType;
+            return this;
+        }
 
         public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
@@ -80,8 +99,8 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinMapperFunct
             return this;
         }
 
-        public DeleteByPrimaryKeyMethodGenerator build() {
-            return new DeleteByPrimaryKeyMethodGenerator(this);
+        public UpdateByPrimaryKeyExtensionFunctionGenerator build() {
+            return new UpdateByPrimaryKeyExtensionFunctionGenerator(this);
         }
     }
 }

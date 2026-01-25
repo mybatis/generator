@@ -16,14 +16,16 @@
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenerator {
+public class BasicSelectManyMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final FullyQualifiedKotlinType recordType;
     private final KotlinFragmentGenerator fragmentGenerator;
 
@@ -34,7 +36,7 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
     }
 
     @Override
-    public KotlinFunctionAndImports generateMethodAndImports() {
+    public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction("selectMany") //$NON-NLS-1$
                 .withExplicitReturnType("List<" //$NON-NLS-1$
@@ -56,7 +58,7 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
         KotlinFunctionParts functionParts = fragmentGenerator.getAnnotatedResults();
         acceptParts(functionAndImports, functionParts);
 
-        return functionAndImports;
+        return Optional.of(functionAndImports);
     }
 
     @Override

@@ -20,14 +20,14 @@ import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
-import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
-import org.mybatis.generator.codegen.AbstractGenerator;
+import org.mybatis.generator.runtime.AbstractKotlinFunctionGenerator;
+import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public abstract class AbstractKotlinFunctionGenerator extends AbstractGenerator {
+public abstract class AbstractKotlinMapperFunctionGenerator extends AbstractKotlinFunctionGenerator {
     protected final String tableFieldName;
 
-    protected AbstractKotlinFunctionGenerator(BaseBuilder<?> builder) {
+    protected AbstractKotlinMapperFunctionGenerator(BaseBuilder<?> builder) {
         super(builder);
         tableFieldName = Objects.requireNonNull(builder.tableFieldName);
     }
@@ -77,10 +77,6 @@ public abstract class AbstractKotlinFunctionGenerator extends AbstractGenerator 
     }
 
     public record FieldNameAndImport(String fieldName, String importString) { }
-
-    public abstract @Nullable KotlinFunctionAndImports generateMethodAndImports();
-
-    public abstract boolean callPlugins(KotlinFunction method, KotlinFile kotlinFile);
 
     public abstract static class BaseBuilder<T extends BaseBuilder<T>> extends AbstractGeneratorBuilder<T> {
         private @Nullable String tableFieldName;

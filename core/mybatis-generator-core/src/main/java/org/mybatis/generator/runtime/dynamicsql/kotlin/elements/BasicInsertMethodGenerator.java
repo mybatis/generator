@@ -16,14 +16,16 @@
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator {
+public class BasicInsertMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
 
     private final FullyQualifiedKotlinType recordType;
     private final KotlinFragmentGenerator fragmentGenerator;
@@ -35,7 +37,7 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
     }
 
     @Override
-    public KotlinFunctionAndImports generateMethodAndImports() {
+    public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
         String parameterType = "InsertStatementProvider<" //$NON-NLS-1$
                 + recordType.getShortNameWithTypeArguments()
                 + ">"; //$NON-NLS-1$
@@ -63,7 +65,7 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
 
         KotlinFunctionAndImports functionAndImports = functionAndImportsBuilder.build();
         addFunctionComment(functionAndImports);
-        return functionAndImports;
+        return Optional.of(functionAndImports);
     }
 
     @Override

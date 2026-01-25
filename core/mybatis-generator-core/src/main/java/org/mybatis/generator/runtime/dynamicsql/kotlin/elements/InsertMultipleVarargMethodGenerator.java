@@ -16,15 +16,17 @@
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
-public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionGenerator {
+public class InsertMultipleVarargMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final FullyQualifiedKotlinType recordType;
     private final String mapperName;
 
@@ -35,9 +37,9 @@ public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionG
     }
 
     @Override
-    public @Nullable KotlinFunctionAndImports generateMethodAndImports() {
+    public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
         if (!DynamicSqlUtils.generateMultipleRowInsert(introspectedTable)) {
-            return null;
+            return Optional.empty();
         }
 
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
@@ -51,7 +53,7 @@ public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionG
                 .build();
 
         addFunctionComment(functionAndImports);
-        return functionAndImports;
+        return Optional.of(functionAndImports);
     }
 
     @Override

@@ -66,8 +66,8 @@ public class KotlinFragmentGenerator {
                         .build());
             }
 
-            AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
-                    AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
+            AbstractKotlinMapperFunctionGenerator.FieldNameAndImport fieldNameAndImport =
+                    AbstractKotlinMapperFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
                     supportObjectImport, column);
 
             builder.withImport(fieldNameAndImport.importString());
@@ -215,8 +215,8 @@ public class KotlinFragmentGenerator {
 
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
         for (IntrospectedColumn column : columns) {
-            AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
-                    AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
+            AbstractKotlinMapperFunctionGenerator.FieldNameAndImport fieldNameAndImport =
+                    AbstractKotlinMapperFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
                             supportObjectImport, column);
             builder.withImport(fieldNameAndImport.importString());
 
@@ -233,8 +233,8 @@ public class KotlinFragmentGenerator {
 
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
         for (IntrospectedColumn column : columns) {
-            AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
-                    AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
+            AbstractKotlinMapperFunctionGenerator.FieldNameAndImport fieldNameAndImport =
+                    AbstractKotlinMapperFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
                             supportObjectImport, column);
             builder.withImport(fieldNameAndImport.importString());
 

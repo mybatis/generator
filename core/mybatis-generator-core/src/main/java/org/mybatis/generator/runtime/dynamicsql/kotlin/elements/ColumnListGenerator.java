@@ -26,7 +26,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinModifier;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 import org.mybatis.generator.codegen.AbstractGenerator;
-import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.AbstractKotlinFunctionGenerator.FieldNameAndImport;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.AbstractKotlinMapperFunctionGenerator.FieldNameAndImport;
 
 public class ColumnListGenerator extends AbstractGenerator {
 
@@ -58,7 +58,7 @@ public class ColumnListGenerator extends AbstractGenerator {
     }
 
     private FieldNameAndImport calculateFieldAndImport(IntrospectedColumn column) {
-        return AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName, supportObjectImport, column);
+        return AbstractKotlinMapperFunctionGenerator.calculateFieldNameAndImport(tableFieldName, supportObjectImport, column);
     }
 
     private String getInitializationString(List<FieldNameAndImport> fieldsAndImports) {

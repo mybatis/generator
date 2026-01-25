@@ -16,13 +16,15 @@
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class GeneralSelectMethodGenerator extends AbstractKotlinFunctionGenerator {
+public class GeneralSelectMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final String mapperName;
 
     private GeneralSelectMethodGenerator(Builder builder) {
@@ -31,7 +33,7 @@ public class GeneralSelectMethodGenerator extends AbstractKotlinFunctionGenerato
     }
 
     @Override
-    public KotlinFunctionAndImports generateMethodAndImports() {
+    public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".select") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("completer") //$NON-NLS-1$
@@ -45,7 +47,7 @@ public class GeneralSelectMethodGenerator extends AbstractKotlinFunctionGenerato
                 .build();
 
         addFunctionComment(functionAndImports);
-        return functionAndImports;
+        return Optional.of(functionAndImports);
     }
 
     @Override

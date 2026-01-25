@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -24,8 +25,9 @@ import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
-public class UpdateAllColumnsMethodGenerator extends AbstractKotlinFunctionGenerator {
+public class UpdateAllColumnsMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final FullyQualifiedKotlinType recordType;
     private final KotlinFragmentGenerator fragmentGenerator;
 
@@ -36,7 +38,7 @@ public class UpdateAllColumnsMethodGenerator extends AbstractKotlinFunctionGener
     }
 
     @Override
-    public KotlinFunctionAndImports generateMethodAndImports() {
+    public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction("KotlinUpdateBuilder.updateAllColumns") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("row") //$NON-NLS-1$
@@ -60,7 +62,7 @@ public class UpdateAllColumnsMethodGenerator extends AbstractKotlinFunctionGener
 
         function.addCodeLine("}"); //$NON-NLS-1$
 
-        return functionAndImports;
+        return Optional.of(functionAndImports);
     }
 
     @Override

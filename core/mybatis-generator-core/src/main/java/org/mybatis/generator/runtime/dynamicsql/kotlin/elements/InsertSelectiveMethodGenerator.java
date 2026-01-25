@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -24,9 +25,10 @@ import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
-public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenerator {
+public class InsertSelectiveMethodGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final FullyQualifiedKotlinType recordType;
     private final String mapperName;
     private final String supportObjectImport;
@@ -39,7 +41,7 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
     }
 
     @Override
-    public KotlinFunctionAndImports generateMethodAndImports() {
+    public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insertSelective") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("row") //$NON-NLS-1$
@@ -60,8 +62,8 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (IntrospectedColumn column : columns) {
-            AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
-                    AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
+            AbstractKotlinMapperFunctionGenerator.FieldNameAndImport fieldNameAndImport =
+                    AbstractKotlinMapperFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
                             supportObjectImport, column);
             functionAndImports.getImports().add(fieldNameAndImport.importString());
 
@@ -79,7 +81,7 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
 
         function.addCodeLine("}"); //$NON-NLS-1$
 
-        return functionAndImports;
+        return Optional.of(functionAndImports);
     }
 
     @Override

@@ -20,6 +20,8 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 public class CodeGenUtils {
@@ -56,7 +58,8 @@ public class CodeGenUtils {
      * @param generator The interface method generator to execute.
      * @return true if the method was successfully generated and added to the interface, false otherwise.
      */
-    public static boolean executeInterfaceMethodGenerator(Interface interfaze, AbstractJavaInterfaceMethodGenerator generator) {
+    public static boolean executeInterfaceMethodGenerator(Interface interfaze,
+                                                          AbstractJavaInterfaceMethodGenerator generator) {
         return generator.generateMethodAndImports()
                 .filter(mi -> generator.callPlugins(mi.getMethod(), interfaze))
                 .map(mi -> {
@@ -75,7 +78,8 @@ public class CodeGenUtils {
      * @param generator The class method generator to execute.
      * @return true if the method was successfully generated and added to the class, false otherwise.
      */
-    public static boolean executeClassMethodGenerator(TopLevelClass topLevelClass, AbstractJavaClassMethodGenerator generator) {
+    public static boolean executeClassMethodGenerator(TopLevelClass topLevelClass,
+                                                      AbstractJavaClassMethodGenerator generator) {
         return generator.generateMethodAndImports()
                 .filter(mi -> generator.callPlugins(mi.getMethod(), topLevelClass))
                 .map(mi -> {
@@ -87,11 +91,62 @@ public class CodeGenUtils {
                 .orElse(false);
     }
 
+    /**
+     * Executes the given XML element generator, calls plugins, and applies the generated element to the parent element.
+     *
+     * @param parentElement The parent element to which the generated element will be added.
+     * @param generator The XML element generator to execute.
+     * @return true if the element was successfully generated and added to the parent element, false otherwise.
+     */
     public static boolean executeXmlElementGenerator(XmlElement parentElement, AbstractXmlElementGenerator generator) {
         return generator.generateElement()
                 .filter(generator::callPlugins)
                 .map(mi -> {
                     parentElement.addElement(mi);
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    /**
+     * Executes the given Kotlin function generator, calls plugins, and applies the generated function and imports to
+     * the Kotlin file. This variant expects the generated function to be an extension function.
+     *
+     * @param kotlinFile The Kotlin file to which the generated function and imports will be added.
+     * @param generator The Kotlin function generator to execute.
+     * @return true if the function and imports were successfully generated and added to the Kotlin file, false
+     * otherwise.
+     */
+    public static boolean executeKotlinExtensionFunctionGenerator(KotlinFile kotlinFile,
+                                                                  AbstractKotlinFunctionGenerator generator) {
+        return generator.generateFunctionAndImports()
+                .filter(fi -> generator.callPlugins(fi.getFunction(), kotlinFile))
+                .map(mi -> {
+                    kotlinFile.addNamedItem(mi.getFunction());
+                    kotlinFile.addImports(mi.getImports());
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    /**
+     * Executes the given Kotlin function generator, calls plugins, and applies the generated function and imports to
+     * the Kotlin file. This variant expects the generated function to be a function in a type.
+     *
+     * @param kotlinFile The Kotlin file to which the generated imports will be added.
+     * @param kotlinType The Kotlin type to which the generated function will be added.
+     * @param generator The Kotlin function generator to execute.
+     * @return true if the function and imports were successfully generated and added to the Kotlin file, false
+     * otherwise.
+     */
+    public static boolean executeKotlinFunctionGenerator(KotlinFile kotlinFile,
+                                                         KotlinType kotlinType,
+                                                         AbstractKotlinFunctionGenerator generator) {
+        return generator.generateFunctionAndImports()
+                .filter(fi -> generator.callPlugins(fi.getFunction(), kotlinFile))
+                .map(mi -> {
+                    kotlinType.addNamedItem(mi.getFunction());
+                    kotlinFile.addImports(mi.getImports());
                     return true;
                 })
                 .orElse(false);

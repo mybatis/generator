@@ -19,14 +19,14 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.Optional;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.AbstractRuntime;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.AnnotatedMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.JavaMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.MixedMapperGenerator;
@@ -34,6 +34,7 @@ import org.mybatis.generator.runtime.mybatis3.model.BaseRecordGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.ExampleGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.PrimaryKeyGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.RecordWithBLOBsGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.MixedXmlMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.XMLMapperGenerator;
 
 /**
@@ -49,37 +50,36 @@ public class LegacyJavaRuntime extends AbstractRuntime {
     @Override
     protected void calculateGenerators() {
         calculateJavaModelGenerators();
-        AbstractJavaClientGenerator javaClientGenerator = calculateClientGenerator().orElse(null);
-        calculateXmlMapperGenerator(javaClientGenerator);
+        calculateClientGenerator();
+        calculateXmlMapperGenerator();
     }
 
-    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator) {
-        if (javaClientGenerator == null) {
-            if (context.getSqlMapGeneratorConfiguration().isPresent()) {
-                xmlMapperGenerator = initializeSubBuilder(new XMLMapperGenerator.Builder()).build();
-            }
-        } else {
-            xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator().orElse(null);
+    protected void calculateXmlMapperGenerator() {
+        if (context.getSqlMapGeneratorConfiguration().isPresent()) {
+            xmlMapperGenerator = context.getJavaClientGeneratorConfiguration()
+                    .flatMap(TypedPropertyHolder::getConfigurationType)
+                    .filter(JavaClientGeneratorConfiguration.MIXED_MAPPER::equalsIgnoreCase)
+                    .map(ct -> initializeSubBuilder(new MixedXmlMapperGenerator.Builder()).build())
+                    .orElseGet(() -> initializeSubBuilder(new XMLMapperGenerator.Builder()).build());
         }
     }
 
-    protected Optional<AbstractJavaClientGenerator> calculateClientGenerator() {
+    protected void calculateClientGenerator() {
         if (!introspectedTable.getRules().generateJavaClient()) {
-            return Optional.empty();
+            return;
         }
 
-        return calculateJavaClientGeneratorBuilderType().map(t -> {
+        calculateJavaClientGeneratorBuilderType().ifPresent(t -> {
             var generator = buildClientGenerator(t);
             javaGenerators.add(generator);
-            return generator;
         });
     }
 
-    private <T extends AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<T>>
-            AbstractJavaClientGenerator buildClientGenerator(String builderType) {
+    private <T extends AbstractJavaGenerator.AbstractJavaGeneratorBuilder<T>>
+            AbstractJavaGenerator buildClientGenerator(String builderType) {
         @SuppressWarnings("unchecked")
         T builder = (T) ObjectFactory.createInternalObject(builderType,
-                AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
+                AbstractJavaGenerator.AbstractJavaGeneratorBuilder.class);
 
         return initializeSubBuilder(builder)
                 .withProject(getClientProject().orElseThrow(() ->
@@ -92,13 +92,13 @@ public class LegacyJavaRuntime extends AbstractRuntime {
         return context.getJavaClientGeneratorConfiguration()
                 .flatMap(TypedPropertyHolder::getConfigurationType)
                 .map(t -> {
-                    if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                    if (JavaClientGeneratorConfiguration.XML_MAPPER.equalsIgnoreCase(t)) {
                         return JavaMapperGenerator.Builder.class.getName();
-                    } else if ("MIXEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                    } else if (JavaClientGeneratorConfiguration.MIXED_MAPPER.equalsIgnoreCase(t)) {
                         return MixedMapperGenerator.Builder.class.getName();
-                    } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                    } else if (JavaClientGeneratorConfiguration.ANNOTATED_MAPPER.equalsIgnoreCase(t)) {
                         return AnnotatedMapperGenerator.Builder.class.getName();
-                    } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                    } else if (JavaClientGeneratorConfiguration.MAPPER.equalsIgnoreCase(t)) {
                         return JavaMapperGenerator.Builder.class.getName();
                     } else {
                         return t;

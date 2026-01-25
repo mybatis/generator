@@ -16,11 +16,9 @@
 package org.mybatis.generator.runtime.mybatis3.javamapper;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedCountByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByExampleMethodGenerator;
@@ -163,12 +161,6 @@ public class AnnotatedMapperGenerator extends JavaMapperGenerator {
         return initializeSubBuilder(new SqlProviderGenerator.Builder().withProject(getProject()))
                 .build()
                 .getCompilationUnits();
-    }
-
-    @Override
-    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        // No XML required by the annotated client
-        return Optional.empty();
     }
 
     public static class Builder extends JavaMapperGenerator.Builder {

@@ -21,24 +21,21 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.InsertMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectAllMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
-import org.mybatis.generator.runtime.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
 
-public class SimpleJavaMapperGenerator extends AbstractJavaClientGenerator {
+public class SimpleJavaMapperGenerator extends AbstractJavaGenerator {
 
     public SimpleJavaMapperGenerator(Builder builder) {
         super(builder);
@@ -126,13 +123,7 @@ public class SimpleJavaMapperGenerator extends AbstractJavaClientGenerator {
         return Collections.emptyList();
     }
 
-    @Override
-    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        var generator = initializeSubBuilder(new SimpleXMLMapperGenerator.Builder()).build();
-        return Optional.of(generator);
-    }
-
-    public static class Builder extends AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<Builder> {
+    public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;

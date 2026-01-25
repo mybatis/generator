@@ -15,10 +15,7 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper;
 
-import java.util.Optional;
-
 import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedInsertMethodGenerator;
@@ -75,11 +72,6 @@ public class SimpleAnnotatedMapperGenerator extends SimpleJavaMapperGenerator {
                 .build();
 
         CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
-    }
-
-    @Override
-    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        return Optional.empty();
     }
 
     public static class Builder extends SimpleJavaMapperGenerator.Builder {

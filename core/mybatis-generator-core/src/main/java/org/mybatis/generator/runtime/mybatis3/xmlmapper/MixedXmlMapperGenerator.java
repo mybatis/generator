@@ -17,9 +17,9 @@ package org.mybatis.generator.runtime.mybatis3.xmlmapper;
 
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class MixedMapperGenerator extends XMLMapperGenerator {
+public class MixedXmlMapperGenerator extends XMLMapperGenerator {
 
-    protected MixedMapperGenerator(Builder builder) {
+    protected MixedXmlMapperGenerator(Builder builder) {
         super(builder);
     }
 
@@ -55,8 +55,8 @@ public class MixedMapperGenerator extends XMLMapperGenerator {
         }
 
         @Override
-        public MixedMapperGenerator build() {
-            return new MixedMapperGenerator(this);
+        public MixedXmlMapperGenerator build() {
+            return new MixedXmlMapperGenerator(this);
         }
     }
 }

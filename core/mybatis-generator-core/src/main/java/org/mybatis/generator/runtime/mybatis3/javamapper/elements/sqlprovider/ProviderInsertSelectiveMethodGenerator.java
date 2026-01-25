@@ -20,6 +20,10 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -30,10 +34,6 @@ import org.mybatis.generator.runtime.AbstractJavaClassMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaClassMethodGenerator {
 

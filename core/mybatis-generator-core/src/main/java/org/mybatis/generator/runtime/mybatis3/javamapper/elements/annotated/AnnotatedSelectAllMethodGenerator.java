@@ -37,8 +37,6 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
 
     @Override
     protected List<String> extraMethodAnnotations() {
-        List<String> annotations = new ArrayList<>(buildInitialSelectAnnotationStrings());
-
         StringBuilder sb = new StringBuilder();
         javaIndent(sb, 1);
         sb.append("\"from "); //$NON-NLS-1$
@@ -51,6 +49,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
         if (hasOrderBy) {
             sb.append(',');
         }
+        List<String> annotations = new ArrayList<>(buildInitialSelectAnnotationStrings());
         annotations.add(sb.toString());
 
         if (hasOrderBy) {

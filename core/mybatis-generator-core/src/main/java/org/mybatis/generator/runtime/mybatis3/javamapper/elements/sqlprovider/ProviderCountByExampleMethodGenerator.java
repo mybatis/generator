@@ -17,6 +17,10 @@ package org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider;
 
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -25,10 +29,6 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.runtime.AbstractJavaClassMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 public class ProviderCountByExampleMethodGenerator extends AbstractJavaClassMethodGenerator {
 

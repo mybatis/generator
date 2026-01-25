@@ -87,9 +87,9 @@ public class BasicMultipleInsertMethodGenerator extends AbstractJavaInterfaceMet
             if (gk.isJdbcStandard()) {
                 // only jdbc standard keys are supported for multiple insert
                 builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options")); //$NON-NLS-1$
-                String annotation = "@Options(useGeneratedKeys=true,keyProperty=\"records." + //$NON-NLS-1$
-                        introspectedColumn.getJavaProperty() +
-                        "\")"; //$NON-NLS-1$
+                String annotation = "@Options(useGeneratedKeys=true,keyProperty=\"records." //$NON-NLS-1$
+                        + introspectedColumn.getJavaProperty()
+                        + "\")"; //$NON-NLS-1$
                 builder.withAnnotation(annotation);
             }
         });

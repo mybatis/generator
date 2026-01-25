@@ -38,13 +38,12 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
 
     @Override
     protected List<String> extraMethodAnnotations() {
-        List<String> annotations = new ArrayList<>(buildInitialSelectAnnotationStrings());
-
         StringBuilder sb = new StringBuilder();
         javaIndent(sb, 1);
         sb.append("\"from "); //$NON-NLS-1$
         sb.append(escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName()));
         sb.append("\","); //$NON-NLS-1$
+        List<String> annotations = new ArrayList<>(buildInitialSelectAnnotationStrings());
         annotations.add(sb.toString());
 
         annotations.addAll(buildByPrimaryKeyWhereClause());

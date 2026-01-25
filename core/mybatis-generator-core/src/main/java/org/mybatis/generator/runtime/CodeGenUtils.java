@@ -115,7 +115,7 @@ public class CodeGenUtils {
      * @param kotlinFile The Kotlin file to which the generated function and imports will be added.
      * @param generator The Kotlin function generator to execute.
      * @return true if the function and imports were successfully generated and added to the Kotlin file, false
-     * otherwise.
+     *     otherwise.
      */
     public static boolean executeKotlinExtensionFunctionGenerator(KotlinFile kotlinFile,
                                                                   AbstractKotlinFunctionGenerator generator) {
@@ -137,7 +137,7 @@ public class CodeGenUtils {
      * @param kotlinType The Kotlin type to which the generated function will be added.
      * @param generator The Kotlin function generator to execute.
      * @return true if the function and imports were successfully generated and added to the Kotlin file, false
-     * otherwise.
+     *     otherwise.
      */
     public static boolean executeKotlinFunctionGenerator(KotlinFile kotlinFile,
                                                          KotlinType kotlinType,

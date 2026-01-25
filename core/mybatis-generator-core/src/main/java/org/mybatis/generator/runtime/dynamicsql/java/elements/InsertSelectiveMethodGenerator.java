@@ -121,6 +121,7 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodG
             this.tableFieldName = tableFieldName;
             return this;
         }
+
         @Override
         public Builder getThis() {
             return this;

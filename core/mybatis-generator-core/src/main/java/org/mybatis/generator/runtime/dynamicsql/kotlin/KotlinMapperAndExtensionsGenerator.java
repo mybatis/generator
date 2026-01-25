@@ -128,7 +128,8 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     }
 
     protected KotlinFile createMapperInterfaceFile() {
-        FullyQualifiedKotlinType kotlinType = new FullyQualifiedKotlinType(introspectedTable.getMyBatis3JavaMapperType());
+        FullyQualifiedKotlinType kotlinType =
+                new FullyQualifiedKotlinType(introspectedTable.getMyBatis3JavaMapperType());
 
         KotlinFile kotlinFile = new KotlinFile(kotlinType.getShortNameWithoutTypeArguments());
         kotlinFile.setPackage(kotlinType.getPackageName());

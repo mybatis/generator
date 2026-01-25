@@ -58,7 +58,8 @@ public class ColumnListGenerator extends AbstractGenerator {
     }
 
     private FieldNameAndImport calculateFieldAndImport(IntrospectedColumn column) {
-        return AbstractKotlinMapperFunctionGenerator.calculateFieldNameAndImport(tableFieldName, supportObjectImport, column);
+        return AbstractKotlinMapperFunctionGenerator
+                .calculateFieldNameAndImport(tableFieldName, supportObjectImport, column);
     }
 
     private String getInitializationString(List<FieldNameAndImport> fieldsAndImports) {

@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -26,6 +27,7 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.exception.InternalException;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class SelectByExampleWithoutBLOBsMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
@@ -34,7 +36,11 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends AbstractJavaMapp
     }
 
     @Override
-    public void addInterfaceElements(Interface interfaze) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
+            return Optional.empty();
+        }
+
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(type);
@@ -62,30 +68,27 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends AbstractJavaMapp
 
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
-        addMapperAnnotations(interfaze, method);
+        method.addAnnotations(extraMethodAnnotations());
 
-        if (pluginAggregator.clientSelectByExampleWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable)) {
-            addExtraImports(interfaze);
-            interfaze.addImportedTypes(importedTypes);
-            interfaze.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .withImports(extraImports())
+                .build();
+
+        return Optional.of(answer);
     }
 
-    public void addMapperAnnotations(Interface interfaze, Method method) {
-        // extension point for subclasses
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+        return pluginAggregator.clientSelectByExampleWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public void addExtraImports(Interface interfaze) {
-        // extension point for subclasses
-    }
-
-    public static class Builder extends AbstractMethodGeneratorBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public SelectByExampleWithoutBLOBsMethodGenerator build() {
             return new SelectByExampleWithoutBLOBsMethodGenerator(this);
         }

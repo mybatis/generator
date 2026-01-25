@@ -15,16 +15,22 @@
  */
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class UpdateByPrimaryKeyWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
+public class UpdateByPrimaryKeyWithBLOBsElementGenerator extends AbstractXmlMapperElementGenerator {
 
     protected UpdateByPrimaryKeyWithBLOBsElementGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
+        if (!introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
+            return Optional.empty();
+        }
+
         String parameterType;
         if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
             parameterType = introspectedTable.getRecordWithBLOBsType();
@@ -37,18 +43,20 @@ public class UpdateByPrimaryKeyWithBLOBsElementGenerator extends AbstractXmlElem
                 parameterType,
                 introspectedTable.getNonPrimaryKeyColumns());
 
-        if (pluginAggregator.sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(element, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public UpdateByPrimaryKeyWithBLOBsElementGenerator build() {
             return new UpdateByPrimaryKeyWithBLOBsElementGenerator(this);
         }

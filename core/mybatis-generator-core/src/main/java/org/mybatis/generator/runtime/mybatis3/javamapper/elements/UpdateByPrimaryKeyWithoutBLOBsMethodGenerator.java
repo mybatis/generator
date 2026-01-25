@@ -15,21 +15,29 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends AbstractJavaMapperMethodGenerator {
+    protected final boolean isSimple;
 
     protected UpdateByPrimaryKeyWithoutBLOBsMethodGenerator(Builder builder) {
         super(builder);
+        isSimple = builder.isSimple;
     }
 
     @Override
-    public void addInterfaceElements(Interface interfaze) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!shouldGenerate()) {
+            return Optional.empty();
+        }
+
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         String statementId = introspectedTable.getUpdateByPrimaryKeyStatementId();
@@ -37,31 +45,43 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends AbstractJavaM
 
         Method method = buildBasicUpdateByPrimaryKeyMethod(statementId, parameterType);
 
-        addMapperAnnotations(method);
+        method.addAnnotations(extraMethodAnnotations());
 
-        if (pluginAggregator
-                .clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable)) {
-            addExtraImports(interfaze);
-            interfaze.addImportedTypes(importedTypes);
-            interfaze.addMethod(method);
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .withImports(extraImports())
+                .build();
+
+        return Optional.of(answer);
+    }
+
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+        return pluginAggregator
+                .clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
+    }
+
+    protected boolean shouldGenerate() {
+        if (isSimple) {
+            return introspectedTable.getRules().generateUpdateByPrimaryKeySelective();
+        } else {
+            return introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs();
         }
     }
 
-    public void addMapperAnnotations(Method method) {
-        // extension point for subclasses
-    }
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
+        private boolean isSimple;
 
-    public void addExtraImports(Interface interfaze) {
-        // extension point for subclasses
-    }
+        public Builder isSimple(boolean isSimple) {
+            this.isSimple = isSimple;
+            return this;
+        }
 
-    public static class Builder extends AbstractMethodGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public UpdateByPrimaryKeyWithoutBLOBsMethodGenerator build() {
             return new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator(this);
         }

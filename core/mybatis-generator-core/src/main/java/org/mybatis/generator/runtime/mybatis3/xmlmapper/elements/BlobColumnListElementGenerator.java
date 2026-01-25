@@ -15,17 +15,23 @@
  */
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class BlobColumnListElementGenerator extends AbstractXmlElementGenerator {
+public class BlobColumnListElementGenerator extends AbstractXmlMapperElementGenerator {
 
     protected BlobColumnListElementGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
+        if (!introspectedTable.getRules().generateBlobColumnList()) {
+            return Optional.empty();
+        }
+
         XmlElement answer = new XmlElement("sql"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute("id", introspectedTable.getBlobColumnListId())); //$NON-NLS-1$
@@ -34,12 +40,15 @@ public class BlobColumnListElementGenerator extends AbstractXmlElementGenerator 
 
         buildSelectList(introspectedTable.getBLOBColumns()).forEach(answer::addElement);
 
-        if (pluginAggregator.sqlMapBlobColumnListElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapBlobColumnListElementGenerated(element, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;

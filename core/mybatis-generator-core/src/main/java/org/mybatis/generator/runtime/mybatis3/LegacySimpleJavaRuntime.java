@@ -17,16 +17,15 @@ package org.mybatis.generator.runtime.mybatis3;
 
 import java.util.Optional;
 
-import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.TypedPropertyHolder;
-import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
-import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleAnnotatedClientGenerator;
-import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleJavaClientGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleAnnotatedMapperGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleJavaMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.SimpleModelGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
 
 /**
- * Introspected table implementation for generating simple MyBatis3 artifacts.
+ * Runtime for generating simple MyBatis3 artifacts.
  *
  * <p>Simple means no "by example" methods, flat model, etc.
  *
@@ -38,14 +37,9 @@ public class LegacySimpleJavaRuntime extends LegacyJavaRuntime {
     }
 
     @Override
-    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator) {
-        if (javaClientGenerator == null) {
-            if (context.getSqlMapGeneratorConfiguration().isPresent()) {
-                xmlMapperGenerator = initializeSubBuilder(new SimpleXMLMapperGenerator.Builder())
-                        .build();
-            }
-        } else {
-            xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator().orElse(null);
+    protected void calculateXmlMapperGenerator() {
+        if (context.getSqlMapGeneratorConfiguration().isPresent()) {
+            xmlMapperGenerator = initializeSubBuilder(new SimpleXMLMapperGenerator.Builder()).build();
         }
     }
 
@@ -53,12 +47,12 @@ public class LegacySimpleJavaRuntime extends LegacyJavaRuntime {
     protected Optional<String> calculateJavaClientGeneratorBuilderType() {
         return context.getJavaClientGeneratorConfiguration().flatMap(TypedPropertyHolder::getConfigurationType)
                 .map(t -> {
-                    if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return SimpleJavaClientGenerator.Builder.class.getName();
-                    } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return SimpleAnnotatedClientGenerator.Builder.class.getName();
-                    } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return SimpleJavaClientGenerator.Builder.class.getName();
+                    if (JavaClientGeneratorConfiguration.XML_MAPPER.equalsIgnoreCase(t)) {
+                        return SimpleJavaMapperGenerator.Builder.class.getName();
+                    } else if (JavaClientGeneratorConfiguration.ANNOTATED_MAPPER.equalsIgnoreCase(t)) {
+                        return SimpleAnnotatedMapperGenerator.Builder.class.getName();
+                    } else if (JavaClientGeneratorConfiguration.MAPPER.equalsIgnoreCase(t)) {
+                        return SimpleJavaMapperGenerator.Builder.class.getName();
                     } else {
                         return t;
                     }

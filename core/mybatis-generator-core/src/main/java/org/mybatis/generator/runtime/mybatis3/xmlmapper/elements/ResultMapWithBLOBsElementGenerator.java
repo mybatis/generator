@@ -15,17 +15,23 @@
  */
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class ResultMapWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
+public class ResultMapWithBLOBsElementGenerator extends AbstractXmlMapperElementGenerator {
 
-    protected ResultMapWithBLOBsElementGenerator(AbstractXmlElementGeneratorBuilder<?> builder) {
+    protected ResultMapWithBLOBsElementGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
+        if (!introspectedTable.getRules().generateResultMapWithBLOBs()) {
+            return Optional.empty();
+        }
+
         XmlElement answer = new XmlElement("resultMap"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute("id", //$NON-NLS-1$
@@ -55,9 +61,7 @@ public class ResultMapWithBLOBsElementGenerator extends AbstractXmlElementGenera
             addResultMapElements(answer);
         }
 
-        if (pluginAggregator.sqlMapResultMapWithBLOBsElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
+        return Optional.of(answer);
     }
 
     private void addResultMapElements(XmlElement answer) {
@@ -68,7 +72,12 @@ public class ResultMapWithBLOBsElementGenerator extends AbstractXmlElementGenera
         answer.addElement(buildConstructorElement(true));
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapResultMapWithBLOBsElementGenerated(element, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;

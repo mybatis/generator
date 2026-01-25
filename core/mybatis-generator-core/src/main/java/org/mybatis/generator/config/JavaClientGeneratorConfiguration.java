@@ -24,6 +24,12 @@ import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 
 public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
+    // Known types...
+    public static final String ANNOTATED_MAPPER = "AnnotatedMapper"; //$NON-NLS-1$
+    public static final String MAPPER = "Mapper"; //$NON-NLS-1$
+    public static final String MIXED_MAPPER = "MixedMapper"; //$NON-NLS-1$
+    public static final String XML_MAPPER = "XMLMapper"; //$NON-NLS-1$
+
     private final String targetPackage;
     private final String targetProject;
 
@@ -52,8 +58,9 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
     }
 
     public boolean requiresXmlMapper() {
-        return "XMLMAPPER".equalsIgnoreCase(configurationType) //$NON-NLS-1$
-                || "MIXEDMAPPER".equalsIgnoreCase(configurationType); //$NON-NLS-1$
+        return XML_MAPPER.equalsIgnoreCase(configurationType)
+                || MIXED_MAPPER.equalsIgnoreCase(configurationType)
+                || MAPPER.equalsIgnoreCase(configurationType);
     }
 
     public static class Builder extends TypedBuilder<Builder> {

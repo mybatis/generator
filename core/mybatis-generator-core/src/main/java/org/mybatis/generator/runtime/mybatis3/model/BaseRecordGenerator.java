@@ -25,7 +25,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -37,6 +36,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.runtime.CodeGenUtils;
 
 public class BaseRecordGenerator extends AbstractJavaGenerator {
 
@@ -46,22 +46,19 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
 
     @Override
     public List<CompilationUnit> getCompilationUnits() {
-        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
-        progressCallback.startTask(getString("Progress.8", table.toString())); //$NON-NLS-1$
+        progressCallback.startTask(getString("Progress.8", //$NON-NLS-1$
+                introspectedTable.getFullyQualifiedTable().toString()));
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
+        commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
 
         getSuperClass().ifPresent(sc -> {
             topLevelClass.setSuperClass(sc);
             topLevelClass.addImportedType(sc);
         });
-
-        commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
-
-        List<IntrospectedColumn> introspectedColumns = getColumnsInThisClass();
 
         if (introspectedTable.isConstructorBased()) {
             addParameterizedConstructor(topLevelClass, introspectedTable.getNonBLOBColumns());
@@ -76,7 +73,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         }
 
         Optional<RootClassInfo> rootClassInfo = getRootClass().map(rc -> RootClassInfo.getInstance(rc, warnings));
-        for (IntrospectedColumn introspectedColumn : introspectedColumns) {
+        for (IntrospectedColumn introspectedColumn : getColumnsInThisClass()) {
             if (rootClassInfo.map(rci -> rci.containsProperty(introspectedColumn)).orElse(false)) {
                 continue;
             }
@@ -161,13 +158,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
 
         for (IntrospectedColumn introspectedColumn : constructorColumns) {
             if (!superColumns.contains(introspectedColumn.getActualColumnName())) {
-                sb.setLength(0);
-                sb.append("this."); //$NON-NLS-1$
-                sb.append(introspectedColumn.getJavaProperty());
-                sb.append(" = "); //$NON-NLS-1$
-                sb.append(introspectedColumn.getJavaProperty());
-                sb.append(';');
-                method.addBodyLine(sb.toString());
+                method.addBodyLine(CodeGenUtils.generateFieldSetterForConstructor(introspectedColumn));
             }
         }
 

@@ -20,23 +20,37 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.runtime.AbstractJavaClassMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
-public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends AbstractJavaProviderMethodGenerator {
+public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends AbstractJavaClassMethodGenerator {
 
     protected ProviderUpdateByPrimaryKeySelectiveMethodGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addClassElements(TopLevelClass topLevelClass) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
+            return Optional.empty();
+        }
+
         FullyQualifiedJavaType fqjt = introspectedTable.getRules().calculateAllFieldsClass();
+        Set<FullyQualifiedJavaType> importedTypes = new HashSet<>();
+        importedTypes.add(MyBatis3FormattingUtilities.BUILDER_IMPORT);
+        importedTypes.add(fqjt);
 
         Method method = new Method(introspectedTable.getUpdateByPrimaryKeySelectiveStatementId());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
@@ -80,20 +94,25 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
 
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
-        if (pluginAggregator
-                .providerUpdateByPrimaryKeySelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
-            topLevelClass.addImportedTypes(initializeImportedTypes(fqjt));
-            topLevelClass.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .build();
+
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractJavaProviderMethodGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
+        return pluginAggregator
+                .providerUpdateByPrimaryKeySelectiveMethodGenerated(method, topLevelClass, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public ProviderUpdateByPrimaryKeySelectiveMethodGenerator build() {
             return new ProviderUpdateByPrimaryKeySelectiveMethodGenerator(this);
         }

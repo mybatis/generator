@@ -20,8 +20,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -30,9 +32,11 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.exception.InternalException;
+import org.mybatis.generator.runtime.AbstractJavaClassMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
-public class ProviderApplyWhereMethodGenerator extends AbstractJavaProviderMethodGenerator {
-
+public class ProviderApplyWhereMethodGenerator extends AbstractJavaClassMethodGenerator {
     private static final List<String> METHOD_LINES = getMethodLines();
 
     protected ProviderApplyWhereMethodGenerator(Builder builder) {
@@ -40,8 +44,10 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaProviderMetho
     }
 
     @Override
-    public void addClassElements(TopLevelClass topLevelClass) {
-        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.List"); //$NON-NLS-1$
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        Set<FullyQualifiedJavaType> importedTypes = new HashSet<>();
+        importedTypes.add(MyBatis3FormattingUtilities.BUILDER_IMPORT);
+        importedTypes.add(new FullyQualifiedJavaType("java.util.List")); //$NON-NLS-1$
 
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(fqjt);
@@ -52,7 +58,7 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaProviderMetho
 
         Method method = new Method("applyWhere"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PROTECTED);
-        method.addParameter(new Parameter(BUILDER_IMPORT, "sql")); //$NON-NLS-1$
+        method.addParameter(new Parameter(MyBatis3FormattingUtilities.BUILDER_IMPORT, "sql")); //$NON-NLS-1$
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(),
                 "includeExamplePhrase")); //$NON-NLS-1$
@@ -61,10 +67,16 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaProviderMetho
 
         METHOD_LINES.forEach(method::addBodyLine);
 
-        if (pluginAggregator.providerApplyWhereMethodGenerated(method, topLevelClass, introspectedTable)) {
-            topLevelClass.addImportedTypes(importedTypes);
-            topLevelClass.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .build();
+
+        return Optional.of(answer);
+    }
+
+    @Override
+    public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
+        return pluginAggregator.providerApplyWhereMethodGenerated(method, topLevelClass, introspectedTable);
     }
 
     protected static List<String> getMethodLines() {
@@ -89,13 +101,12 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaProviderMetho
         return answer;
     }
 
-    public static class Builder extends AbstractJavaProviderMethodGeneratorBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public ProviderApplyWhereMethodGenerator build() {
             return new ProviderApplyWhereMethodGenerator(this);
         }

@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -22,6 +23,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
@@ -33,7 +35,11 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodG
     }
 
     @Override
-    public void addInterfaceElements(Interface interfaze) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateDeleteByPrimaryKey()) {
+            return Optional.empty();
+        }
+
         Method method = new Method(introspectedTable.getDeleteByPrimaryKeyStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setAbstract(true);
@@ -42,26 +48,24 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodG
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         addPrimaryKeyMethodParameters(isSimple, method, importedTypes);
 
-        addMapperAnnotations(method);
+        method.addAnnotations(extraMethodAnnotations());
 
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
-        if (pluginAggregator.clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
-            addExtraImports(interfaze);
-            interfaze.addImportedTypes(importedTypes);
-            interfaze.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .withImports(extraImports())
+                .build();
+
+        return Optional.of(answer);
     }
 
-    public void addMapperAnnotations(Method method) {
-        // extension point for subclasses
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+        return pluginAggregator.clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public void addExtraImports(Interface interfaze) {
-        // extension point for subclasses
-    }
-
-    public static class Builder extends AbstractMethodGeneratorBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private boolean isSimple;
 
         public Builder isSimple(boolean isSimple) {
@@ -74,7 +78,6 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodG
             return this;
         }
 
-        @Override
         public DeleteByPrimaryKeyMethodGenerator build() {
             return new DeleteByPrimaryKeyMethodGenerator(this);
         }

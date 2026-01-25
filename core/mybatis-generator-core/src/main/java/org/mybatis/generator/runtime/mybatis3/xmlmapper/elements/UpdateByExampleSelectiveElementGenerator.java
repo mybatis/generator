@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -22,14 +24,18 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
-public class UpdateByExampleSelectiveElementGenerator extends AbstractXmlElementGenerator {
+public class UpdateByExampleSelectiveElementGenerator extends AbstractXmlMapperElementGenerator {
 
     protected UpdateByExampleSelectiveElementGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
+        if (!introspectedTable.getRules().generateUpdateByExampleSelective()) {
+            return Optional.empty();
+        }
+
         XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute(
@@ -67,18 +73,20 @@ public class UpdateByExampleSelectiveElementGenerator extends AbstractXmlElement
 
         answer.addElement(getUpdateByExampleIncludeElement());
 
-        if (pluginAggregator.sqlMapUpdateByExampleSelectiveElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapUpdateByExampleSelectiveElementGenerated(element, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public UpdateByExampleSelectiveElementGenerator build() {
             return new UpdateByExampleSelectiveElementGenerator(this);
         }

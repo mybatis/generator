@@ -29,13 +29,18 @@ public class ProviderSelectByExampleWithBLOBsMethodGenerator
     }
 
     @Override
-    public List<IntrospectedColumn> getColumns() {
+    protected List<IntrospectedColumn> getColumns() {
         return introspectedTable.getAllColumns();
     }
 
     @Override
-    public String getMethodName() {
+    protected String getMethodName() {
         return introspectedTable.getSelectByExampleWithBLOBsStatementId();
+    }
+
+    @Override
+    protected boolean shouldGenerate() {
+        return introspectedTable.getRules().generateSelectByExampleWithBLOBs();
     }
 
     @Override

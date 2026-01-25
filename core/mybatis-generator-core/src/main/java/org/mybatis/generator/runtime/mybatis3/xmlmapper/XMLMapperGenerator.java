@@ -24,6 +24,7 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.XmlConstants;
+import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.BaseColumnListElementGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.BlobColumnListElementGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.CountByExampleElementGenerator;
@@ -82,143 +83,143 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     }
 
     protected void addResultMapWithoutBLOBsElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateBaseResultMap()) {
-            initializeSubBuilder(new ResultMapWithoutBLOBsElementGenerator.Builder().isSimple(false))
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new ResultMapWithoutBLOBsElementGenerator.Builder())
+                .isSimple(false)
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addResultMapWithBLOBsElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateResultMapWithBLOBs()) {
-            initializeSubBuilder(new ResultMapWithBLOBsElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new ResultMapWithBLOBsElementGenerator.Builder())
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addExampleWhereClauseElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateSQLExampleWhereClause()) {
-            initializeSubBuilder(new ExampleWhereClauseElementGenerator.Builder().isForUpdateByExample(false))
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new ExampleWhereClauseElementGenerator.Builder())
+                .isForUpdateByExample(false)
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addMyBatis3UpdateByExampleWhereClauseElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateMyBatis3UpdateByExampleWhereClause()) {
-            initializeSubBuilder(new ExampleWhereClauseElementGenerator.Builder().isForUpdateByExample(true))
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new ExampleWhereClauseElementGenerator.Builder())
+                .isForUpdateByExample(true)
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addBaseColumnListElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateBaseColumnList()) {
-            initializeSubBuilder(new BaseColumnListElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new BaseColumnListElementGenerator.Builder()).build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addBlobColumnListElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateBlobColumnList()) {
-            initializeSubBuilder(new BlobColumnListElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new BlobColumnListElementGenerator.Builder()).build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addSelectByExampleWithoutBLOBsElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
-            initializeSubBuilder(new SelectByExampleWithoutBLOBsElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new SelectByExampleWithoutBLOBsElementGenerator.Builder()).build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addSelectByExampleWithBLOBsElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {
-            initializeSubBuilder(new SelectByExampleWithBLOBsElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new SelectByExampleWithBLOBsElementGenerator.Builder()).build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addSelectByPrimaryKeyElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            initializeSubBuilder(new SelectByPrimaryKeyElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new SelectByPrimaryKeyElementGenerator.Builder()).build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addDeleteByExampleElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateDeleteByExample()) {
-            initializeSubBuilder(new DeleteByExampleElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new DeleteByExampleElementGenerator.Builder()).build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            initializeSubBuilder(new DeleteByPrimaryKeyElementGenerator.Builder().isSimple(false))
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new DeleteByPrimaryKeyElementGenerator.Builder())
+                .isSimple(false)
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addInsertElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateInsert()) {
-            initializeSubBuilder(new InsertElementGenerator.Builder().isSimple(false))
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new InsertElementGenerator.Builder())
+                .isSimple(false)
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addInsertSelectiveElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateInsertSelective()) {
-            initializeSubBuilder(new InsertSelectiveElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new InsertSelectiveElementGenerator.Builder())
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addCountByExampleElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateCountByExample()) {
-            initializeSubBuilder(new CountByExampleElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new CountByExampleElementGenerator.Builder())
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addUpdateByExampleSelectiveElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
-            initializeSubBuilder(new UpdateByExampleSelectiveElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new UpdateByExampleSelectiveElementGenerator.Builder())
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addUpdateByExampleWithBLOBsElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {
-            initializeSubBuilder(new UpdateByExampleWithBLOBsElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new UpdateByExampleWithBLOBsElementGenerator.Builder())
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addUpdateByExampleWithoutBLOBsElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {
-            initializeSubBuilder(new UpdateByExampleWithoutBLOBsElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new UpdateByExampleWithoutBLOBsElementGenerator.Builder())
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addUpdateByPrimaryKeySelectiveElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            initializeSubBuilder(new UpdateByPrimaryKeySelectiveElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new UpdateByPrimaryKeySelectiveElementGenerator.Builder())
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addUpdateByPrimaryKeyWithBLOBsElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
-            initializeSubBuilder(new UpdateByPrimaryKeyWithBLOBsElementGenerator.Builder())
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new UpdateByPrimaryKeyWithBLOBsElementGenerator.Builder())
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     protected void addUpdateByPrimaryKeyWithoutBLOBsElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
-            initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder().isSimple(false))
-                    .build().addElements(parentElement);
-        }
+        var generator = initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder())
+                .isSimple(false)
+                .build();
+
+        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
     }
 
     @Override

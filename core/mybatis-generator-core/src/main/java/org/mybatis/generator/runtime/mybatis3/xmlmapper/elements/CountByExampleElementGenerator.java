@@ -15,18 +15,24 @@
  */
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class CountByExampleElementGenerator extends AbstractXmlElementGenerator {
+public class CountByExampleElementGenerator extends AbstractXmlMapperElementGenerator {
 
     protected CountByExampleElementGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
+        if (!introspectedTable.getRules().generateCountByExample()) {
+            return Optional.empty();
+        }
+
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute(
@@ -41,12 +47,15 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
         answer.addElement(new TextElement(s));
         answer.addElement(getExampleIncludeElement());
 
-        if (pluginAggregator.sqlMapCountByExampleElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapCountByExampleElementGenerated(element, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;

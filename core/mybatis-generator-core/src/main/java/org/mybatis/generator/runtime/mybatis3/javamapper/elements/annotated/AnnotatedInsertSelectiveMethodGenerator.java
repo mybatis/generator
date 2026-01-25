@@ -15,9 +15,12 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.InsertSelectiveMethodGenerator;
 
 public class AnnotatedInsertSelectiveMethodGenerator extends InsertSelectiveMethodGenerator {
@@ -27,24 +30,27 @@ public class AnnotatedInsertSelectiveMethodGenerator extends InsertSelectiveMeth
     }
 
     @Override
-    public void addMapperAnnotations(Method method) {
+    protected List<String> extraMethodAnnotations() {
+        List<String> annotations = new ArrayList<>();
+
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
 
-        String s = "@InsertProvider(type=" //$NON-NLS-1$
+        String annotation = "@InsertProvider(type=" //$NON-NLS-1$
                 + fqjt.getShortName()
                 + ".class, method=\"" //$NON-NLS-1$
                 + introspectedTable.getInsertSelectiveStatementId()
                 + "\")"; //$NON-NLS-1$
-        method.addAnnotation(s);
+        annotations.add(annotation);
 
-        buildGeneratedKeyAnnotation().ifPresent(method::addAnnotation);
+        buildGeneratedKeyAnnotation().ifPresent(annotations::add);
+        return annotations;
     }
 
     @Override
-    public void addExtraImports(Interface interfaze) {
-        interfaze.addImportedTypes(buildGeneratedKeyImportsIfRequired());
-        interfaze.addImportedType(
-                new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
+    protected Set<FullyQualifiedJavaType> extraImports() {
+        Set<FullyQualifiedJavaType> imports = new HashSet<>(buildGeneratedKeyImportsIfRequired());
+        imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
+        return imports;
     }
 
     public static class Builder extends InsertSelectiveMethodGenerator.Builder {

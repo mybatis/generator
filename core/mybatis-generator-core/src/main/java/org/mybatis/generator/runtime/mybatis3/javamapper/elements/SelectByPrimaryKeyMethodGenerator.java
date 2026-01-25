@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -22,18 +23,23 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     private final boolean isSimple;
 
-    protected SelectByPrimaryKeyMethodGenerator(Builder builder) {
+    protected SelectByPrimaryKeyMethodGenerator(AbstractBuilder<?> builder) {
         super(builder);
         this.isSimple = builder.isSimple;
     }
 
     @Override
-    public void addInterfaceElements(Interface interfaze) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateSelectByPrimaryKey()) {
+            return Optional.empty();
+        }
+
         Method method = new Method(introspectedTable.getSelectByPrimaryKeyStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setAbstract(true);
@@ -46,39 +52,38 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodG
 
         addPrimaryKeyMethodParameters(isSimple, method, importedTypes);
 
-        addMapperAnnotations(interfaze, method);
+        method.addAnnotations(extraMethodAnnotations());
 
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
-        if (pluginAggregator.clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
-            addExtraImports(interfaze);
-            interfaze.addImportedTypes(importedTypes);
-            interfaze.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .withImports(extraImports())
+                .build();
+
+        return Optional.of(answer);
     }
 
-    public void addMapperAnnotations(Interface interfaze, Method method) {
-        // extension point for subclasses
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+        return pluginAggregator.clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public void addExtraImports(Interface interfaze) {
-        // extension point for subclasses
-    }
-
-    public static class Builder extends AbstractMethodGeneratorBuilder<Builder> {
+    public abstract static class AbstractBuilder<T extends AbstractBuilder<T>> extends AbstractGeneratorBuilder<T> {
         private boolean isSimple;
 
-        public Builder isSimple(boolean isSimple) {
+        public T isSimple(boolean isSimple) {
             this.isSimple = isSimple;
-            return this;
+            return getThis();
         }
+    }
 
+    public static class Builder extends AbstractBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public SelectByPrimaryKeyMethodGenerator build() {
             return new SelectByPrimaryKeyMethodGenerator(this);
         }

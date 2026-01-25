@@ -15,18 +15,23 @@
  */
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class SelectByExampleWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
+public class SelectByExampleWithBLOBsElementGenerator extends AbstractXmlMapperElementGenerator {
 
     protected SelectByExampleWithBLOBsElementGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
+        if (!introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {
+            return Optional.empty();
+        }
 
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
         answer.addAttribute(new Attribute(
@@ -66,18 +71,20 @@ public class SelectByExampleWithBLOBsElementGenerator extends AbstractXmlElement
         ifElement.addElement(new TextElement("order by ${orderByClause}")); //$NON-NLS-1$
         answer.addElement(ifElement);
 
-        if (pluginAggregator.sqlMapSelectByExampleWithBLOBsElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapSelectByExampleWithBLOBsElementGenerated(element, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public SelectByExampleWithBLOBsElementGenerator build() {
             return new SelectByExampleWithBLOBsElementGenerator(this);
         }

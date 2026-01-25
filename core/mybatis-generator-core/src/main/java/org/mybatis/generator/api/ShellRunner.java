@@ -33,7 +33,6 @@ import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.logging.LogFactory;
 
 /**
  * This class allows the code generator to be run from the command line.
@@ -46,7 +45,6 @@ public class ShellRunner {
     private static final String CONTEXT_IDS = "-contextids"; //$NON-NLS-1$
     private static final String TABLES = "-tables"; //$NON-NLS-1$
     private static final String VERBOSE = "-verbose"; //$NON-NLS-1$
-    private static final String FORCE_JAVA_LOGGING = "-forceJavaLogging"; //$NON-NLS-1$
     private static final String HELP_1 = "-?"; //$NON-NLS-1$
     private static final String HELP_2 = "-h"; //$NON-NLS-1$
 
@@ -169,8 +167,6 @@ public class ShellRunner {
                 // put HELP_1 in the map here too - so we only
                 // have to check for one entry in the mainline
                 arguments.put(HELP_1, "Y"); //$NON-NLS-1$
-            } else if (FORCE_JAVA_LOGGING.equalsIgnoreCase(args[i])) {
-                LogFactory.forceJavaLogging();
             } else if (CONTEXT_IDS.equalsIgnoreCase(args[i])) {
                 if ((i + 1) < args.length) {
                     arguments.put(CONTEXT_IDS, args[i + 1]);

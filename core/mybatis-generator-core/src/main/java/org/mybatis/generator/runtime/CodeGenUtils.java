@@ -20,6 +20,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.xml.XmlElement;
 
 public class CodeGenUtils {
     private CodeGenUtils() {
@@ -81,6 +82,16 @@ public class CodeGenUtils {
                     topLevelClass.addMethod(mi.getMethod());
                     topLevelClass.addImportedTypes(mi.getImports());
                     topLevelClass.addStaticImports(mi.getStaticImports());
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    public static boolean executeXmlElementGenerator(XmlElement parentElement, AbstractXmlElementGenerator generator) {
+        return generator.generateElement()
+                .filter(generator::callPlugins)
+                .map(mi -> {
+                    parentElement.addElement(mi);
                     return true;
                 })
                 .orElse(false);

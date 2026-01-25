@@ -15,18 +15,24 @@
  */
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class SelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenerator {
+public class SelectByPrimaryKeyElementGenerator extends AbstractXmlMapperElementGenerator {
 
     protected SelectByPrimaryKeyElementGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
+        if (!introspectedTable.getRules().generateSelectByPrimaryKey()) {
+            return Optional.empty();
+        }
+
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute(
@@ -79,18 +85,20 @@ public class SelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
 
         buildPrimaryKeyWhereClause().forEach(answer::addElement);
 
-        if (pluginAggregator.sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapSelectByPrimaryKeyElementGenerated(element, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public SelectByPrimaryKeyElementGenerator build() {
             return new SelectByPrimaryKeyElementGenerator(this);
         }

@@ -16,11 +16,12 @@
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends AbstractXmlElementGenerator {
+public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends AbstractXmlMapperElementGenerator {
 
     private final boolean isSimple;
 
@@ -30,7 +31,11 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends AbstractXmlE
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
+        if (!shouldGenerate()) {
+            return Optional.empty();
+        }
+
         List<IntrospectedColumn> columns;
         if (isSimple) {
             columns = introspectedTable.getNonPrimaryKeyColumns();
@@ -42,12 +47,23 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends AbstractXmlE
                 introspectedTable.getBaseRecordType(),
                 columns);
 
-        if (pluginAggregator.sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
+        return Optional.of(answer);
+    }
+
+    private boolean shouldGenerate() {
+        if (isSimple) {
+            return introspectedTable.getRules().generateUpdateByPrimaryKeySelective();
+        } else {
+            return introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs();
         }
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(element, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private boolean isSimple;
 
         public Builder isSimple(boolean isSimple) {
@@ -60,7 +76,6 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends AbstractXmlE
             return this;
         }
 
-        @Override
         public UpdateByPrimaryKeyWithoutBLOBsElementGenerator build() {
             return new UpdateByPrimaryKeyWithoutBLOBsElementGenerator(this);
         }

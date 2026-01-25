@@ -16,12 +16,13 @@
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGenerator {
+public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlMapperElementGenerator {
 
     private final boolean isSimple;
 
@@ -31,7 +32,11 @@ public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGen
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
+        if (!introspectedTable.getRules().generateBaseResultMap()) {
+            return Optional.empty();
+        }
+
         XmlElement answer = new XmlElement("resultMap"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("id", introspectedTable.getBaseResultMapId())); //$NON-NLS-1$
 
@@ -56,9 +61,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGen
             addResultMapElements(answer);
         }
 
-        if (pluginAggregator.sqlMapResultMapWithoutBLOBsElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
+        return Optional.of(answer);
     }
 
     private void addResultMapElements(XmlElement answer) {
@@ -78,7 +81,12 @@ public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGen
         answer.addElement(buildConstructorElement(isSimple));
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapResultMapWithoutBLOBsElementGenerated(element, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private boolean isSimple;
 
         public Builder isSimple(boolean isSimple) {

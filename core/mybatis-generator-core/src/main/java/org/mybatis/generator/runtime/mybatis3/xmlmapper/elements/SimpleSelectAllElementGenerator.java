@@ -15,20 +15,22 @@
  */
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.StringUtility;
 
-public class SimpleSelectAllElementGenerator extends AbstractXmlElementGenerator {
+public class SimpleSelectAllElementGenerator extends AbstractXmlMapperElementGenerator {
 
     protected SimpleSelectAllElementGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute(
@@ -55,18 +57,20 @@ public class SimpleSelectAllElementGenerator extends AbstractXmlElementGenerator
             answer.addElement(new TextElement(sb.toString()));
         }
 
-        if (pluginAggregator.sqlMapSelectAllElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapSelectAllElementGenerated(element, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public SimpleSelectAllElementGenerator build() {
             return new SimpleSelectAllElementGenerator(this);
         }

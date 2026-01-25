@@ -25,13 +25,13 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.runtime.AbstractXmlElementGenerator;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
-public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
-    protected AbstractXmlElementGenerator(AbstractXmlElementGeneratorBuilder<?> builder) {
+public abstract class AbstractXmlMapperElementGenerator extends AbstractXmlElementGenerator {
+    protected AbstractXmlMapperElementGenerator(AbstractGeneratorBuilder<?> builder) {
         super(builder);
     }
 
@@ -346,12 +346,5 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         buildPrimaryKeyWhereClause().forEach(answer::addElement);
 
         return answer;
-    }
-
-    public abstract void addElements(XmlElement parentElement);
-
-    public abstract static class AbstractXmlElementGeneratorBuilder<T extends AbstractXmlElementGeneratorBuilder<T>>
-            extends AbstractGeneratorBuilder<T> {
-        public abstract AbstractXmlElementGenerator build();
     }
 }

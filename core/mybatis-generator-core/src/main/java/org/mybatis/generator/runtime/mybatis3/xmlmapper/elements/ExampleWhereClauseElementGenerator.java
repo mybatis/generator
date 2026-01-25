@@ -15,13 +15,15 @@
  */
 package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
 
+import java.util.Optional;
+
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenerator {
+public class ExampleWhereClauseElementGenerator extends AbstractXmlMapperElementGenerator {
 
     private final boolean isForUpdateByExample;
 
@@ -31,7 +33,11 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
     }
 
     @Override
-    public void addElements(XmlElement parentElement) {
+    public Optional<XmlElement> generateElement() {
+        if (!shouldGenerate()) {
+            return Optional.empty();
+        }
+
         XmlElement answer = new XmlElement("sql"); //$NON-NLS-1$
 
         if (isForUpdateByExample) {
@@ -78,9 +84,7 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
             }
         }
 
-        if (pluginAggregator.sqlMapExampleWhereClauseElementGenerated(answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
+        return Optional.of(answer);
     }
 
     private XmlElement getMiddleForEachElement(@Nullable IntrospectedColumn introspectedColumn) {
@@ -166,7 +170,20 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
         return middleForEachElement;
     }
 
-    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(XmlElement element) {
+        return pluginAggregator.sqlMapExampleWhereClauseElementGenerated(element, introspectedTable);
+    }
+
+    private boolean shouldGenerate() {
+        if (isForUpdateByExample) {
+            return introspectedTable.getRules().generateMyBatis3UpdateByExampleWhereClause();
+        } else {
+            return introspectedTable.getRules().generateSQLExampleWhereClause();
+        }
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private boolean isForUpdateByExample;
 
         public Builder isForUpdateByExample(boolean isForUpdateByExample) {

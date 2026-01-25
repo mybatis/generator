@@ -16,8 +16,8 @@
 package org.mybatis.generator.api;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.runtime.dynamic.sql.JavaDynamicSqlRuntime;
-import org.mybatis.generator.runtime.kotlin.KotlinDynamicSqlRuntime;
+import org.mybatis.generator.runtime.dynamicsql.java.JavaDynamicSqlRuntime;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.KotlinDynamicSqlRuntime;
 import org.mybatis.generator.runtime.mybatis3.LegacyJavaRuntime;
 import org.mybatis.generator.runtime.mybatis3.LegacySimpleJavaRuntime;
 

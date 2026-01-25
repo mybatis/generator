@@ -58,7 +58,9 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
     }
 
     public boolean requiresXmlMapper() {
-        return XML_MAPPER.equalsIgnoreCase(configurationType) || MIXED_MAPPER.equalsIgnoreCase(configurationType);
+        return XML_MAPPER.equalsIgnoreCase(configurationType)
+                || MIXED_MAPPER.equalsIgnoreCase(configurationType)
+                || MAPPER.equalsIgnoreCase(configurationType);
     }
 
     public static class Builder extends TypedBuilder<Builder> {

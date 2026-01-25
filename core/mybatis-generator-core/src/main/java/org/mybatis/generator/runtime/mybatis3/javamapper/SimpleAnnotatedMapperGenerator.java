@@ -26,9 +26,9 @@ import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.Anno
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 
-public class SimpleAnnotatedClientGenerator extends SimpleJavaClientGenerator {
+public class SimpleAnnotatedMapperGenerator extends SimpleJavaMapperGenerator {
 
-    public SimpleAnnotatedClientGenerator(Builder builder) {
+    public SimpleAnnotatedMapperGenerator(Builder builder) {
         super(builder);
     }
 
@@ -82,15 +82,15 @@ public class SimpleAnnotatedClientGenerator extends SimpleJavaClientGenerator {
         return Optional.empty();
     }
 
-    public static class Builder extends SimpleJavaClientGenerator.Builder {
+    public static class Builder extends SimpleJavaMapperGenerator.Builder {
         @Override
         protected Builder getThis() {
             return this;
         }
 
         @Override
-        public SimpleAnnotatedClientGenerator build() {
-            return new SimpleAnnotatedClientGenerator(this);
+        public SimpleAnnotatedMapperGenerator build() {
+            return new SimpleAnnotatedMapperGenerator(this);
         }
     }
 }

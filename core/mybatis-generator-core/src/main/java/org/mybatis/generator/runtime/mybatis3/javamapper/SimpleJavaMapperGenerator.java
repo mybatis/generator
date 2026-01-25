@@ -38,9 +38,9 @@ import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectByPrimar
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
 
-public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
+public class SimpleJavaMapperGenerator extends AbstractJavaClientGenerator {
 
-    public SimpleJavaClientGenerator(Builder builder) {
+    public SimpleJavaMapperGenerator(Builder builder) {
         super(builder);
     }
 
@@ -139,8 +139,8 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
         }
 
         @Override
-        public SimpleJavaClientGenerator build() {
-            return new SimpleJavaClientGenerator(this);
+        public SimpleJavaMapperGenerator build() {
+            return new SimpleJavaMapperGenerator(this);
         }
     }
 }

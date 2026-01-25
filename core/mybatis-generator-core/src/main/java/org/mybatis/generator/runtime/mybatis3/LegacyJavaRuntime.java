@@ -27,9 +27,9 @@ import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
-import org.mybatis.generator.runtime.mybatis3.javamapper.AnnotatedClientGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.AnnotatedMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.JavaMapperGenerator;
-import org.mybatis.generator.runtime.mybatis3.javamapper.MixedClientGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.MixedMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.BaseRecordGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.ExampleGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.PrimaryKeyGenerator;
@@ -95,9 +95,9 @@ public class LegacyJavaRuntime extends AbstractRuntime {
                     if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
                         return JavaMapperGenerator.Builder.class.getName();
                     } else if ("MIXEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return MixedClientGenerator.Builder.class.getName();
+                        return MixedMapperGenerator.Builder.class.getName();
                     } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return AnnotatedClientGenerator.Builder.class.getName();
+                        return AnnotatedMapperGenerator.Builder.class.getName();
                     } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
                         return JavaMapperGenerator.Builder.class.getName();
                     } else {

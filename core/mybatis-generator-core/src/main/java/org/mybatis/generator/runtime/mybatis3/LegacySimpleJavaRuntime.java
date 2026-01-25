@@ -20,8 +20,8 @@ import java.util.Optional;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
-import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleAnnotatedClientGenerator;
-import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleJavaClientGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleAnnotatedMapperGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleJavaMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.SimpleModelGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
 
@@ -53,11 +53,11 @@ public class LegacySimpleJavaRuntime extends LegacyJavaRuntime {
         return context.getJavaClientGeneratorConfiguration().flatMap(TypedPropertyHolder::getConfigurationType)
                 .map(t -> {
                     if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return SimpleJavaClientGenerator.Builder.class.getName();
+                        return SimpleJavaMapperGenerator.Builder.class.getName();
                     } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return SimpleAnnotatedClientGenerator.Builder.class.getName();
+                        return SimpleAnnotatedMapperGenerator.Builder.class.getName();
                     } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return SimpleJavaClientGenerator.Builder.class.getName();
+                        return SimpleJavaMapperGenerator.Builder.class.getName();
                     } else {
                         return t;
                     }

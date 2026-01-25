@@ -25,7 +25,6 @@ import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.Anno
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
-import org.mybatis.generator.runtime.mybatis3.xmlmapper.MixedMapperGenerator;
 
 /**
  * This class overrides the base mapper to provide annotated methods for the
@@ -33,9 +32,9 @@ import org.mybatis.generator.runtime.mybatis3.xmlmapper.MixedMapperGenerator;
  *
  * @author Jeff Butler
  */
-public class MixedClientGenerator extends JavaMapperGenerator {
+public class MixedMapperGenerator extends JavaMapperGenerator {
 
-    public MixedClientGenerator(Builder builder) {
+    public MixedMapperGenerator(Builder builder) {
         super(builder);
     }
 
@@ -86,7 +85,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
 
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        var generator = initializeSubBuilder(new MixedMapperGenerator.Builder()).build();
+        var generator = initializeSubBuilder(new org.mybatis.generator.runtime.mybatis3.xmlmapper.MixedMapperGenerator.Builder()).build();
         return Optional.of(generator);
     }
 
@@ -97,8 +96,8 @@ public class MixedClientGenerator extends JavaMapperGenerator {
         }
 
         @Override
-        public MixedClientGenerator build() {
-            return new MixedClientGenerator(this);
+        public MixedMapperGenerator build() {
+            return new MixedMapperGenerator(this);
         }
     }
 }

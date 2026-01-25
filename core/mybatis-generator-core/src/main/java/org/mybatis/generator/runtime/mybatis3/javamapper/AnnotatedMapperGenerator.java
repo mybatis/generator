@@ -37,9 +37,9 @@ import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.Anno
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 
-public class AnnotatedClientGenerator extends JavaMapperGenerator {
+public class AnnotatedMapperGenerator extends JavaMapperGenerator {
 
-    public AnnotatedClientGenerator(Builder builder) {
+    public AnnotatedMapperGenerator(Builder builder) {
         super(builder);
     }
 
@@ -178,8 +178,8 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
         }
 
         @Override
-        public AnnotatedClientGenerator build() {
-            return new AnnotatedClientGenerator(this);
+        public AnnotatedMapperGenerator build() {
+            return new AnnotatedMapperGenerator(this);
         }
     }
 }

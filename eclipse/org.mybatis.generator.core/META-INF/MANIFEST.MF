@@ -40,8 +40,8 @@ Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.runtime.mybatis3.model,
  org.mybatis.generator.runtime.mybatis3.xmlmapper,
  org.mybatis.generator.runtime.mybatis3.xmlmapper.elements
-Require-Bundle: org.jspecify.jspecify;bundle-version="1.0.0",
- org.apache.ant;bundle-version="[1.10.14,2.0.0)";resolution:=optional,
- org.apache.commons.commons-logging;bundle-version="1.3.5"
+Require-Bundle: org.apache.ant;bundle-version="[1.10.14,2.0.0)";resolution:=optional
 Automatic-Module-Name: org.mybatis.generator.core
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ lib/commons-logging-1.3.5.jar,
+ lib/jspecify-1.0.0.jar

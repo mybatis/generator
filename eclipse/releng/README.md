@@ -8,6 +8,7 @@ the feature and plugins in Eclipse. These files are used to make sure we maintai
 | 2018-12     | 1.4.1       | https://download.eclipse.org/releases/2018-12/ | First Eclipse version that supports Java 11 in the AST |
 | 2021-06     | 1.4.2       | https://download.eclipse.org/releases/2021-06/ | First Eclipse version that supports M1 Mac             |
 | 2022-09     | 1.4.3       | https://download.eclipse.org/releases/2022-09/ | First Eclipse version that requires Java 17            |
+| 2024-09     | 2.0.0       | https://download.eclipse.org/releases/2024-09/ | Fixed a nasty SWT rendering rendering error on MacOS  |
 
 Find p2 Repository sites for the various releases here: https://github.com/eclipse-simrel/.github/blob/main/wiki/Simultaneous_Release.md
 
@@ -22,7 +23,7 @@ of a platform definition file is essential.
 The parent POM has some build dependencies. Updates to this file should be handled automatically
 by the GitHub renovate bot.
 
-The parent pom also has a link to the target file for the build - this should be manually
+The parent pom also has a link to the target platform file for the build - this should be manually
 updated to match the target platform selected (change the configuration of the target-platform-configuration
 plugin).
 
@@ -44,17 +45,23 @@ following projects:
 - org.mybatis.generator.eclipse.ui
 - org.mybatis.generator.eclipse.ui.tests
 
-### Libraries
+### Runtime Dependencies
 
-Optional dependencies are in the "lib" directory of the org.mybatis.generator.core project. They should be upgraded
-periodically.
+Runtime dependencies for the core generator are in the "lib" directory of the org.mybatis.generator.core project. They should be
+upgraded to match the versions used in the core project. If you import new versions of a library, make sure to update the
+MANIFEST.MF file in that project.
 
-We use this strategy rather then relying on Eclipse's distributions of these libraries for the following reasons:
+We only bundle dependencies that are not available on the Eclipse update sites. It would be possible for us to repackage these
+dependencies as ORGi bundles and host them on our own update site, but that's a lot of work for very little benefit.
 
-- Eclipse doesn't distribute every library we need
-- The Eclipse versions are often very down level
-- We don't want the packages declared as dependencies for the final artifact
+Some runtime dependencies (like Ant) are optional, and also available from Eclipse. So we can reference them directly in the MANIFST.MF.
 
+### Optional Dependencies
+
+Some dependencies (like Hamcrest 3 and Junit 6) are not available in the target platform, but only needed during the build phase. For these
+dependencies, we can reference them in the `.target` file directly from Maven central. This makes them available for development and build.
+
+JUnit 6 will eventually be made available directly from Eclipse, so we can remove the Maven reference in the future.
 
 ### Update Java Execution Environment
 

@@ -76,4 +76,31 @@ this can be done with a quick fix helper in the MANIFEST.MF file).
 
 Also update the source and compile versions in the parent pom to match, and the toolchain definition.
 
+## How To Find Platform Features
+It can be very frustrating to try and find the features that bundle the plugins you need in a particular
+target runtime. Here's how to do it using the OSGi console:
 
+1. Open an OSGi Console from the console view
+2. Enter this command to find the console number:
+   ```
+   ss p2.console
+   ```
+
+3. Start the console:
+   ```
+   start <<consoleNumber>>
+   ```
+   
+4. The following command will look for `org.apache.commons.commons-logging` in the update site
+   http://download.eclipse.org/releases/2024-09:
+   ```
+   provlquery http://download.eclipse.org/releases/2024-09 "select(parent | parent.properties['org.eclipse.equinox.p2.type.group'] == true && parent.requirements.exists(rc | everything.exists(iu | iu.id == 'org.apache.commons.commons-logging' && iu ~= rc)))" true
+   ```
+   
+5. The query shows that commons-logging is bundled in the following features
+   - org.eclipse.ecf.remoteservice.rest.feature.feature.group 1.0.303.v20240709-0844
+   - org.eclipse.net4j.util.feature.group 4.25.0.v20240904-1115
+
+   These features can be added directly to a target platform definition file.
+
+The [P2 Console User's Guide](https://wiki.eclipse.org/Equinox_p2_Console_Users_Guide) may also be helpful.

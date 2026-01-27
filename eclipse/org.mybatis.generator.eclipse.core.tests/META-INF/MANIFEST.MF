@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests for MyBatis Generator Eclipse Core Support
 Bundle-SymbolicName: org.mybatis.generator.eclipse.core.tests
-Bundle-Version: 1.4.3.qualifier
+Bundle-Version: 2.0.0.qualifier
 Fragment-Host: org.mybatis.generator.eclipse.core;bundle-version="1.4.3"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
-Require-Bundle: org.mybatis.generator.eclipse.test.utilities;bundle-version="1.4.3",
+Require-Bundle: org.mybatis.generator.eclipse.test.utilities;bundle-version="[2.0.0,3.0.0)",
  org.hamcrest;bundle-version="3.0.0",
  junit-jupiter-api;bundle-version="6.0.2"
 Automatic-Module-Name: org.mybatis.generator.eclipse.core.tests

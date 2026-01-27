@@ -20,7 +20,7 @@
   <extension>
     <groupId>org.eclipse.tycho</groupId>
     <artifactId>tycho-build</artifactId>
-    <version>5.0.0</version>
+    <version>5.0.2</version>
   </extension>
   <extension>
     <groupId>fr.jcgay.maven</groupId>

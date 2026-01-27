@@ -121,7 +121,7 @@
         <configuration>
           <toolchains>
             <jdk>
-              <version>21</version>
+              <version>17</version>
             </jdk>
           </toolchains>
         </configuration>

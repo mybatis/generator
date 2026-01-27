@@ -87,18 +87,10 @@ public class AntFileGenerator implements GeneratorLaunchConstants {
     private XmlElement getGenerateTask() {
         XmlElement generateTask = new XmlElement("mybatis.generate"); //$NON-NLS-1$
         generateTask.addAttribute(new Attribute("configfile", getConfigFile())); //$NON-NLS-1$
-        setLoggingImplementation(generateTask);
 
         return generateTask;
     }
 
-    private void setLoggingImplementation(XmlElement generateTask) {
-        String implementation = getTextOrBlank(configuration, ATTR_LOGGING_IMPLEMENTATION);
-        if (implementation.length() > 0) {
-            generateTask.addAttribute(new Attribute("loggingImplementation", implementation));
-        }
-    }
-    
     private String getConfigFile() {
         String configFileName = getTextOrBlank(configuration, ATTR_CONFIGURATION_FILE_NAME);
 

@@ -32,6 +32,7 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
+import org.mybatis.generator.internal.JavaMergingShellCallback;
 import org.mybatis.generator.internal.util.StringUtility;
 
 /**
@@ -45,6 +46,7 @@ public class ShellRunner {
     private static final String CONTEXT_IDS = "-contextids"; //$NON-NLS-1$
     private static final String TABLES = "-tables"; //$NON-NLS-1$
     private static final String VERBOSE = "-verbose"; //$NON-NLS-1$
+    private static final String JAVA_MERGE_ENABLED = "-javaMergeEnabled";
     private static final String HELP_1 = "-?"; //$NON-NLS-1$
     private static final String HELP_2 = "-h"; //$NON-NLS-1$
 
@@ -85,7 +87,12 @@ public class ShellRunner {
             ConfigurationParser cp = new ConfigurationParser();
             Configuration config = cp.parseConfiguration(configurationFile.toFile());
             warnings.addAll(cp.getWarnings());
-            DefaultShellCallback shellCallback = new DefaultShellCallback(arguments.containsKey(OVERWRITE));
+            ShellCallback shellCallback;
+            if (arguments.containsKey(JAVA_MERGE_ENABLED)) {
+                shellCallback = new JavaMergingShellCallback(arguments.containsKey(OVERWRITE));
+            } else {
+                shellCallback = new DefaultShellCallback(arguments.containsKey(OVERWRITE));
+            }
 
             ProgressCallback progressCallback = arguments.containsKey(VERBOSE) ? new VerboseProgressCallback()
                     : null;
@@ -161,6 +168,8 @@ public class ShellRunner {
                 arguments.put(OVERWRITE, "Y"); //$NON-NLS-1$
             } else if (VERBOSE.equalsIgnoreCase(args[i])) {
                 arguments.put(VERBOSE, "Y"); //$NON-NLS-1$
+            } else if (JAVA_MERGE_ENABLED.equalsIgnoreCase(args[i])) {
+                arguments.put(JAVA_MERGE_ENABLED, "Y"); //$NON-NLS-1$
             } else if (HELP_1.equalsIgnoreCase(args[i])) {
                 arguments.put(HELP_1, "Y"); //$NON-NLS-1$
             } else if (HELP_2.equalsIgnoreCase(args[i])) {

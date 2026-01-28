@@ -152,6 +152,14 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
     @Parameter(property = "mybatis.generator.includeAllDependencies", defaultValue = "false")
     private boolean includeAllDependencies;
 
+    /**
+     * If true, then existing Java files will be merged. If
+     * false (default), then existing Java files will be untouched and the generator
+     * will write new Java files with a unique name
+     */
+    @Parameter(property = "mybatis.generator.javaMergeEnabled", defaultValue = "false")
+    private boolean javaMergeEnabled;
+
     @Override
     public void execute() throws MojoExecutionException {
         if (skip) {
@@ -196,7 +204,12 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
             Configuration config = cp.parseConfiguration(configurationFile);
             warnings.addAll(cp.getWarnings());
 
-            ShellCallback callback = new MavenShellCallback(this, overwrite);
+            ShellCallback callback;
+            if (javaMergeEnabled) {
+                callback = new JavaMergingMavenShellCallback(this, overwrite);
+            } else {
+                callback = new MavenShellCallback(this, overwrite);
+            }
 
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                     .withConfiguration(config)

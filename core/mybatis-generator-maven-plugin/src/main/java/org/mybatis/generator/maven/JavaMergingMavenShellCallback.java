@@ -18,17 +18,17 @@ package org.mybatis.generator.maven;
 import java.io.File;
 
 import org.mybatis.generator.exception.ShellException;
-import org.mybatis.generator.internal.DefaultShellCallback;
+import org.mybatis.generator.internal.JavaMergingShellCallback;
 
 /**
- * Shell callback that calculates the Maven output directory.
+ * Shell callback that calculates the Maven output directory and supports Java merging.
  *
  * @author Jeff Butler
  */
-public class MavenShellCallback extends DefaultShellCallback {
+public class JavaMergingMavenShellCallback extends JavaMergingShellCallback {
     private final MyBatisGeneratorMojo mybatisGeneratorMojo;
 
-    public MavenShellCallback(MyBatisGeneratorMojo mybatisGeneratorMojo, boolean overwrite) {
+    public JavaMergingMavenShellCallback(MyBatisGeneratorMojo mybatisGeneratorMojo, boolean overwrite) {
         super(overwrite);
         this.mybatisGeneratorMojo = mybatisGeneratorMojo;
     }

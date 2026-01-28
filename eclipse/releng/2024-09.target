@@ -11,6 +11,12 @@
 		<location includeDependencyDepth="infinite" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
 			<dependencies>
 				<dependency>
+					<groupId>com.github.javaparser</groupId>
+					<artifactId>javaparser-core</artifactId>
+					<version>3.28.0</version>
+					<type>jar</type>
+				</dependency>
+				<dependency>
 					<groupId>org.hamcrest</groupId>
 					<artifactId>hamcrest</artifactId>
 					<version>3.0</version>

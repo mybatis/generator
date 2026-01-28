@@ -36,11 +36,13 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.PropertySet;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
+import org.mybatis.generator.internal.JavaMergingShellCallback;
 
 /**
  * This is an Ant task that will run the generator. The following is a sample
@@ -67,14 +69,19 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  *
  * <p>The task supports these optional attributes:
  * <ul>
- * <li>"overwrite" - if true, then existing Java files will be overwritten. if
- * false (default), then existing Java files will be untouched and the generator
- * will write new Java files with a unique name</li>
- * <li>"verbose" - if true, then the generator will log progress messages to the
- * Ant log. Default is false</li>
- * <li>"contextIds" - a comma delimited list of contaxtIds to use for this run</li>
- * <li>"fullyQualifiedTableNames" - a comma-delimited list of fully qualified
- * table names to use for this run</li>
+ *     <li>"overwrite" - if true, then existing Java files will be overwritten. if
+ *         false (default), then existing Java files will be untouched and the generator
+ *         will write new Java files with a unique name</li>
+ *     <li>"verbose" - if true, then the generator will log progress messages to the
+ *         Ant log. Default is false</li>
+ *     <li>"contextIds" - a comma delimited list of contaxtIds to use for this run</li>
+ *     <li>"fullyQualifiedTableNames" - a comma-delimited list of fully qualified
+ *         table names to use for this run</li>
+ *     <li>
+ *         "javaMergeEnabled" - if true, then existing Java files will be merged. if
+ *         false (default), then existing Java files will be untouched and the generator
+ *         will write new Java files with a unique name
+ *     </li>
  * </ul>
  *
  *
@@ -88,6 +95,7 @@ public class GeneratorAntTask extends Task {
     private boolean verbose;
     private @Nullable String contextIds;
     private @Nullable String fullyQualifiedTableNames;
+    private boolean javaMergeEnabled;
 
     @Override
     public void execute() {
@@ -103,7 +111,12 @@ public class GeneratorAntTask extends Task {
             Configuration config = cp.parseConfiguration(configurationFile);
             warnings.addAll(cp.getWarnings());
 
-            DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+            ShellCallback callback;
+            if (javaMergeEnabled) {
+                callback = new JavaMergingShellCallback(overwrite);
+            } else {
+                callback = new DefaultShellCallback(overwrite);
+            }
 
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                     .withConfiguration(config)
@@ -221,5 +234,13 @@ public class GeneratorAntTask extends Task {
 
     public void setFullyQualifiedTableNames(String fullyQualifiedTableNames) {
         this.fullyQualifiedTableNames = fullyQualifiedTableNames;
+    }
+
+    public boolean isJavaMergeEnabled() {
+        return javaMergeEnabled;
+    }
+
+    public void setJavaMergeEnabled(boolean javaMergeEnabled) {
+        this.javaMergeEnabled = javaMergeEnabled;
     }
 }

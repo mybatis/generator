@@ -41,7 +41,29 @@ cleanup and modernization of the code base. For many users, these changes should
 document the null handling properties of this library. JSpecify is now a runtime dependency - as is
 recommended practice with JSpecify.</p>
 
-<h3>Enhancements/Fixes</h3>
+<h3>Java File Merging</h3>
+<p>The core library now supports Java file merging - this no longer requires Eclipse to run.
+    This is the most requested feature in MyBatis Generator. Thanks to @DanielLiu1123 for the initial contribution!
+</p>
+
+<p>The Java file merger in the core library is based on <a href="https://javaparser.org/">https://javaparser.org/</a>.
+    This is different than the merger in the Eclipse plugin, which is based on Eclipse JDT. For this reason
+    we are calling this new feature experimental for now. We encourage you to try it and provide any feedback
+    you might have.
+</p>
+
+<p>To enable the feature, two things are required:</p>
+<ol>
+    <li>You must explicitely enable this feature with a new flag if you are using the command line runner, or by
+        setting a property in the Ant or Maven runners.
+    </li>
+    <li>You must add JavaParser to the runtime classpath of whatever runner you are using.
+    </li>
+</ol>
+
+<p> See the "running" pages for details on how to enable this in every environment.</p>
+
+<h3>Other Enhancements/Fixes</h3>
 <ul>
   <li>Java 17 is now the minimum supported Java version</li>
   <li>Added several missing modifiers to the Kotlin DSL</li>

@@ -65,6 +65,13 @@
       <b>Important: MBG will always merge and overwrite XML files.</b></td>
 </tr>
 <tr>
+  <td>javaMergeEnabled (optional)</td>
+  <td>If specified, then the generator will attempt to merge Java files rather than simply overwriting them, or saving
+      files with a new name. If you specify "true", then you will need to add
+      <a href="https://javaparser.org/">https://javaparser.org/</a> to your runtime classpath.
+  </td>
+</tr>
+<tr>
   <td>contextids (optional)</td>
   <td>If specified, then this is a comma-delimited list of contexts to use in
       the current run.  Any id specified in the list must exactly

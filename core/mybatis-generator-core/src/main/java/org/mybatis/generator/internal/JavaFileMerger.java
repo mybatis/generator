@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,15 +15,7 @@
  */
 package org.mybatis.generator.internal;
 
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ParseResult;
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.ImportDeclaration;
-import com.github.javaparser.ast.body.BodyDeclaration;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.expr.AnnotationExpr;
-import org.mybatis.generator.exception.ShellException;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +25,16 @@ import java.nio.file.Files;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseResult;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
+import com.github.javaparser.ast.body.BodyDeclaration;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.ast.expr.AnnotationExpr;
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.exception.ShellException;
 
 /**
  * This class handles the task of merging changes into an existing Java file using JavaParser.
@@ -57,7 +58,7 @@ public class JavaFileMerger {
      * @throws ShellException if the file cannot be merged for some reason
      */
     public static String getMergedSource(String newFileSource, File existingFile,
-                                         String[] javadocTags, String fileEncoding) throws ShellException {
+                                         String[] javadocTags, @Nullable String fileEncoding) throws ShellException {
         try {
             String existingFileContent = readFileContent(existingFile, fileEncoding);
             return getMergedSource(newFileSource, existingFileContent, javadocTags);
@@ -237,7 +238,7 @@ public class JavaFileMerger {
         return firstType;
     }
 
-    private static String readFileContent(File file, String fileEncoding) throws IOException {
+    private static String readFileContent(File file, @Nullable String fileEncoding) throws IOException {
         if (fileEncoding != null) {
             return Files.readString(file.toPath(), Charset.forName(fileEncoding));
         } else {

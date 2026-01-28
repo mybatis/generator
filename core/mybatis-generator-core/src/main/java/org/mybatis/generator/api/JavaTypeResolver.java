@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package org.mybatis.generator.api;
 import java.util.List;
 import java.util.Properties;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.Context;
 
@@ -70,8 +71,7 @@ public interface JavaTypeResolver {
      *         is returned, we will set the type to Object and issue a
      *         warning unless the column is ignored or otherwise overridden
      */
-    FullyQualifiedJavaType calculateJavaType(
-            IntrospectedColumn introspectedColumn);
+    @Nullable FullyQualifiedJavaType calculateJavaType(IntrospectedColumn introspectedColumn);
 
     /**
      * Calculates and returns the JDBC type name that should be associated with
@@ -83,5 +83,5 @@ public interface JavaTypeResolver {
      *         null is returned, we will set the type to OTHER and issue a
      *         warning unless the column is ignored or otherwise overridden
      */
-    String calculateJdbcTypeName(IntrospectedColumn introspectedColumn);
+    @Nullable String calculateJdbcTypeName(IntrospectedColumn introspectedColumn);
 }

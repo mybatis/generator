@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,51 +19,39 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
 
 public class JDBCConnectionConfiguration extends PropertyHolder {
+    private final String driverClass;
+    private final String connectionURL;
+    private final @Nullable String userId;
+    private final @Nullable String password;
 
-    private String driverClass;
-
-    private String connectionURL;
-
-    private String userId;
-
-    private String password;
-
-    public JDBCConnectionConfiguration() {
-        super();
+    protected JDBCConnectionConfiguration(Builder builder) {
+        super(builder);
+        this.driverClass = Objects.requireNonNull(builder.driverClass);
+        this.connectionURL = Objects.requireNonNull(builder.connectionURL);
+        this.userId = builder.userId;
+        this.password = builder.password;
     }
 
     public String getConnectionURL() {
         return connectionURL;
     }
 
-    public void setConnectionURL(String connectionURL) {
-        this.connectionURL = connectionURL;
+    public Optional<String> getPassword() {
+        return Optional.ofNullable(password);
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public Optional<String> getUserId() {
+        return Optional.ofNullable(userId);
     }
 
     public String getDriverClass() {
         return driverClass;
-    }
-
-    public void setDriverClass(String driverClass) {
-        this.driverClass = driverClass;
     }
 
     public void validate(List<String> errors) {
@@ -73,6 +61,42 @@ public class JDBCConnectionConfiguration extends PropertyHolder {
 
         if (!stringHasValue(connectionURL)) {
             errors.add(getString("ValidationError.5")); //$NON-NLS-1$
+        }
+    }
+
+    public static class Builder extends AbstractBuilder<Builder> {
+        private @Nullable String driverClass;
+        private @Nullable String connectionURL;
+        private @Nullable String userId;
+        private @Nullable String password;
+
+        public Builder withDriverClass(@Nullable String driverClass) {
+            this.driverClass = driverClass;
+            return this;
+        }
+
+        public Builder withConnectionURL(@Nullable String connectionURL) {
+            this.connectionURL = connectionURL;
+            return this;
+        }
+
+        public Builder withUserId(@Nullable String userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder withPassword(@Nullable String password) {
+            this.password = password;
+            return this;
+        }
+
+        public JDBCConnectionConfiguration build() {
+            return new JDBCConnectionConfiguration(this);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

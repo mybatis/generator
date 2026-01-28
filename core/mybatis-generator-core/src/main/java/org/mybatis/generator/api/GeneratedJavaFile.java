@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,32 +18,11 @@ package org.mybatis.generator.api;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 
 public class GeneratedJavaFile extends GeneratedFile {
-
     private final CompilationUnit compilationUnit;
 
-    private final String fileEncoding;
-
-    private final JavaFormatter javaFormatter;
-
-    public GeneratedJavaFile(CompilationUnit compilationUnit,
-            String targetProject,
-            String fileEncoding,
-            JavaFormatter javaFormatter) {
+    public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject) {
         super(targetProject);
         this.compilationUnit = compilationUnit;
-        this.fileEncoding = fileEncoding;
-        this.javaFormatter = javaFormatter;
-    }
-
-    public GeneratedJavaFile(CompilationUnit compilationUnit,
-            String targetProject,
-            JavaFormatter javaFormatter) {
-        this(compilationUnit, targetProject, null, javaFormatter);
-    }
-
-    @Override
-    public String getFormattedContent() {
-        return javaFormatter.getFormattedContent(compilationUnit);
     }
 
     @Override
@@ -76,10 +55,5 @@ public class GeneratedJavaFile extends GeneratedFile {
     @Override
     public boolean isMergeable() {
         return true;
-    }
-
-    @Override
-    public String getFileEncoding() {
-        return fileEncoding;
     }
 }

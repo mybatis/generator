@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
 package org.mybatis.generator.internal.rules;
 
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
+import org.mybatis.generator.api.PluginUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
 /**
  * This class centralizes all the rules related to code generation - including
@@ -31,15 +31,11 @@ import org.mybatis.generator.internal.util.StringUtility;
  * @author Jeff Butler
  */
 public abstract class BaseRules implements Rules {
-
     protected final TableConfiguration tableConfiguration;
-
     protected final IntrospectedTable introspectedTable;
-
     protected final boolean isModelOnly;
 
     protected BaseRules(IntrospectedTable introspectedTable) {
-        super();
         this.introspectedTable = introspectedTable;
         this.tableConfiguration = introspectedTable.getTableConfiguration();
         String modelOnly = tableConfiguration.getProperty(PropertyRegistry.TABLE_MODEL_ONLY);
@@ -277,8 +273,8 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3
-                && tableConfiguration.isUpdateByExampleStatementEnabled();
+        boolean isLegacyMybatis3 = PluginUtilities.isLegacyMyBatis3(introspectedTable);
+        return isLegacyMybatis3 && tableConfiguration.isUpdateByExampleStatementEnabled();
     }
 
     /**
@@ -344,8 +340,8 @@ public abstract class BaseRules implements Rules {
      */
     @Override
     public boolean generateExampleClass() {
-        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null
-                && introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {
+        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration().isEmpty()
+                && introspectedTable.getContext().getJavaClientGeneratorConfiguration().isEmpty()) {
             // this is a model only context - don't generate the example class
             return false;
         }

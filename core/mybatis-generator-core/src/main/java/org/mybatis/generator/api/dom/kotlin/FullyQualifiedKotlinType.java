@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.mybatis.generator.exception.TypeParsingException;
+
 public class FullyQualifiedKotlinType {
 
     private static final Set<String> AUTOMATIC_KOTLIN_PACKAGES = new HashSet<>();
@@ -37,9 +39,9 @@ public class FullyQualifiedKotlinType {
         AUTOMATIC_KOTLIN_PACKAGES.add("kotlin.collections"); //$NON-NLS-1$
     }
 
-    private String packageName;
+    private String packageName = ""; //$NON-NLS-1$
     private final List<FullyQualifiedKotlinType> typeArguments = new ArrayList<>();
-    private String shortNameWithoutTypeArguments;
+    private String shortNameWithoutTypeArguments = ""; //$NON-NLS-1$
     private boolean isExplicitlyImported;
 
     public FullyQualifiedKotlinType(String fullTypeSpecification) {
@@ -103,7 +105,7 @@ public class FullyQualifiedKotlinType {
             simpleParse(fullTypeSpecification.substring(0, index));
             int endIndex = fullTypeSpecification.lastIndexOf('>');
             if (endIndex == -1) {
-                throw new RuntimeException(getString("RuntimeError.22", fullTypeSpecification)); //$NON-NLS-1$
+                throw new TypeParsingException(getString("RuntimeError.22", fullTypeSpecification)); //$NON-NLS-1$
             }
             genericParse(fullTypeSpecification.substring(index, endIndex + 1));
         }
@@ -126,7 +128,7 @@ public class FullyQualifiedKotlinType {
         int lastIndex = genericSpecification.lastIndexOf('>');
         if (lastIndex == -1) {
             // shouldn't happen - should be caught already, but just in case...
-            throw new RuntimeException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
+            throw new TypeParsingException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
         String argumentString = genericSpecification.substring(1, lastIndex);
         // need to find "," outside a <> bounds
@@ -154,7 +156,7 @@ public class FullyQualifiedKotlinType {
         }
 
         if (openCount != 0) {
-            throw new RuntimeException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
+            throw new TypeParsingException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
 
         String finalType = sb.toString();

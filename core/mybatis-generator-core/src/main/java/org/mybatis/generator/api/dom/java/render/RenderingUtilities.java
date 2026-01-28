@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ import org.mybatis.generator.api.dom.java.InitializationBlock;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.InnerEnum;
 import org.mybatis.generator.api.dom.java.InnerInterface;
+import org.mybatis.generator.api.dom.java.InnerRecord;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TypeParameter;
 import org.mybatis.generator.internal.util.CustomCollectors;
@@ -49,6 +50,7 @@ public class RenderingUtilities {
     private static final InnerClassRenderer innerClassRenderer = new InnerClassRenderer();
     private static final InnerInterfaceRenderer innerInterfaceRenderer = new InnerInterfaceRenderer();
     private static final InnerEnumRenderer innerEnumRenderer = new InnerEnumRenderer();
+    private static final InnerRecordRenderer innerRecordRenderer = new InnerRecordRenderer();
 
     // should return an empty string if no type parameters
     public static String renderTypeParameters(List<TypeParameter> typeParameters, CompilationUnit compilationUnit) {
@@ -148,6 +150,21 @@ public class RenderingUtilities {
                 .map(RenderingUtilities::javaIndent));
     }
 
+    public static List<String> renderInnerRecordNoIndent(InnerRecord innerRecord, CompilationUnit compilationUnit) {
+        return innerRecordRenderer.render(innerRecord, compilationUnit);
+    }
+
+    public static List<String> renderInnerRecords(List<InnerRecord> innerRecords, CompilationUnit compilationUnit) {
+        return innerRecords.stream()
+                .flatMap(ir -> renderInnerRecord(ir, compilationUnit))
+                .toList();
+    }
+
+    private static Stream<String> renderInnerRecord(InnerRecord innerRecord, CompilationUnit compilationUnit) {
+        return addEmptyLine(innerRecordRenderer.render(innerRecord, compilationUnit).stream()
+                .map(RenderingUtilities::javaIndent));
+    }
+
     public static List<String> renderPackage(CompilationUnit compilationUnit) {
         List<String> answer = new ArrayList<>();
 
@@ -166,7 +183,7 @@ public class RenderingUtilities {
 
         return addEmptyLine(compilationUnit.getStaticImports().stream()
                 .map(s -> "import static " + s + ";")) //$NON-NLS-1$ //$NON-NLS-2$
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> renderImports(CompilationUnit compilationUnit) {

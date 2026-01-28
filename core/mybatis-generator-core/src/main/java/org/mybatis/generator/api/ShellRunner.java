@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,7 +33,6 @@ import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.logging.LogFactory;
 
 /**
  * This class allows the code generator to be run from the command line.
@@ -46,7 +45,6 @@ public class ShellRunner {
     private static final String CONTEXT_IDS = "-contextids"; //$NON-NLS-1$
     private static final String TABLES = "-tables"; //$NON-NLS-1$
     private static final String VERBOSE = "-verbose"; //$NON-NLS-1$
-    private static final String FORCE_JAVA_LOGGING = "-forceJavaLogging"; //$NON-NLS-1$
     private static final String HELP_1 = "-?"; //$NON-NLS-1$
     private static final String HELP_2 = "-h"; //$NON-NLS-1$
 
@@ -84,18 +82,23 @@ public class ShellRunner {
         Set<String> contexts = StringUtility.tokenize(arguments.get(CONTEXT_IDS));
 
         try {
-            ConfigurationParser cp = new ConfigurationParser(warnings);
+            ConfigurationParser cp = new ConfigurationParser();
             Configuration config = cp.parseConfiguration(configurationFile.toFile());
-
+            warnings.addAll(cp.getWarnings());
             DefaultShellCallback shellCallback = new DefaultShellCallback(arguments.containsKey(OVERWRITE));
-
-            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
 
             ProgressCallback progressCallback = arguments.containsKey(VERBOSE) ? new VerboseProgressCallback()
                     : null;
 
-            myBatisGenerator.generate(progressCallback, contexts, fullyQualifiedTables);
+            MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                    .withConfiguration(config)
+                    .withShellCallback(shellCallback)
+                    .withProgressCallback(progressCallback)
+                    .withContextIds(contexts)
+                    .withFullyQualifiedTableNames(fullyQualifiedTables)
+                    .build();
 
+            warnings.addAll(myBatisGenerator.generateAndWrite());
         } catch (XMLParserException e) {
             writeLine(getString("Progress.3")); //$NON-NLS-1$
             writeLine();
@@ -164,8 +167,6 @@ public class ShellRunner {
                 // put HELP_1 in the map here too - so we only
                 // have to check for one entry in the mainline
                 arguments.put(HELP_1, "Y"); //$NON-NLS-1$
-            } else if (FORCE_JAVA_LOGGING.equalsIgnoreCase(args[i])) {
-                LogFactory.forceJavaLogging();
             } else if (CONTEXT_IDS.equalsIgnoreCase(args[i])) {
                 if ((i + 1) < args.length) {
                     arguments.put(CONTEXT_IDS, args[i + 1]);

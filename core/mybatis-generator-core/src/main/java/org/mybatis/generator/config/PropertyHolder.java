@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,25 +15,41 @@
  */
 package org.mybatis.generator.config;
 
+import java.util.Map;
 import java.util.Properties;
+
+import org.jspecify.annotations.Nullable;
 
 public abstract class PropertyHolder {
     private final Properties properties;
 
-    protected PropertyHolder() {
-        super();
+    protected PropertyHolder(AbstractBuilder<?> builder) {
         properties = new Properties();
+        properties.putAll(builder.properties);
     }
 
-    public void addProperty(String name, String value) {
-        properties.setProperty(name, value);
-    }
-
-    public String getProperty(String name) {
+    public @Nullable String getProperty(String name) {
         return properties.getProperty(name);
     }
 
     public Properties getProperties() {
         return properties;
+    }
+
+    public abstract static class AbstractBuilder<T extends AbstractBuilder<T>> {
+        private final Properties properties = new Properties();
+
+        @SuppressWarnings("UnusedReturnValue")
+        public T withProperty(Property property) {
+            properties.setProperty(property.name(), property.value());
+            return getThis();
+        }
+
+        public T withProperties(Map<Object, Object> properties) {
+            this.properties.putAll(properties);
+            return getThis();
+        }
+
+        protected abstract T getThis();
     }
 }

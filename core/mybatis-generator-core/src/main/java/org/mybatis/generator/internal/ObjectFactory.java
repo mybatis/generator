@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,32 +21,24 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.ConnectionFactory;
-import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.KotlinFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.XmlFormatter;
-import org.mybatis.generator.api.dom.DefaultJavaFormatter;
-import org.mybatis.generator.api.dom.DefaultKotlinFormatter;
-import org.mybatis.generator.api.dom.DefaultXmlFormatter;
-import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
-import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3SimpleImpl;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.Defaults;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.config.TableConfiguration;
-import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
-import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImpl;
-import org.mybatis.generator.runtime.kotlin.IntrospectedTableKotlinImpl;
+import org.mybatis.generator.exception.InternalException;
 
 /**
  * This class creates the different objects needed by the generator.
@@ -87,8 +79,7 @@ public class ObjectFactory {
      * @param classLoader
      *            the class loader
      */
-    public static synchronized void addExternalClassLoader(
-            ClassLoader classLoader) {
+    public static synchronized void addExternalClassLoader(ClassLoader classLoader) {
         ObjectFactory.externalClassLoaders.add(classLoader);
     }
 
@@ -103,39 +94,37 @@ public class ObjectFactory {
      * @throws ClassNotFoundException
      *             the class not found exception
      */
-    public static Class<?> externalClassForName(String type)
-            throws ClassNotFoundException {
-
-        Class<?> clazz;
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> externalClassForName(String type, Class<T> t) throws ClassNotFoundException {
+        Class<T> clazz;
 
         for (ClassLoader classLoader : externalClassLoaders) {
             try {
-                clazz = Class.forName(type, true, classLoader);
+                clazz = (Class<T>) Class.forName(type, true, classLoader);
                 return clazz;
             } catch (Exception e) {
                 // ignore - fail safe below
             }
         }
 
-        return internalClassForName(type);
+        return internalClassForName(type, t);
     }
 
-    public static Object createExternalObject(String type) {
-        Object answer;
+    public static <T> T createExternalObject(String type, Class<T> t) {
+        T answer;
 
         try {
-            Class<?> clazz = externalClassForName(type);
+            Class<T> clazz = externalClassForName(type, t);
             answer = clazz.getConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(getString(
-                    "RuntimeError.6", type), e); //$NON-NLS-1$
+            throw new InternalException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
         }
 
         return answer;
     }
 
-    public static Class<?> internalClassForName(String type)
-            throws ClassNotFoundException {
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> internalClassForName(String type, Class<T> t) throws ClassNotFoundException {
         Class<?> clazz = null;
 
         try {
@@ -149,16 +138,16 @@ public class ObjectFactory {
             clazz = Class.forName(type, true, ObjectFactory.class.getClassLoader());
         }
 
-        return clazz;
+        return (Class<T>) clazz;
     }
 
-    public static URL getResource(String resource) {
+    public static Optional<URL> getResource(String resource) {
         URL url;
 
         for (ClassLoader classLoader : externalClassLoaders) {
             url = classLoader.getResource(resource);
             if (url != null) {
-                return url;
+                return Optional.of(url);
             }
         }
 
@@ -169,101 +158,69 @@ public class ObjectFactory {
             url = ObjectFactory.class.getClassLoader().getResource(resource);
         }
 
-        return url;
+        return Optional.ofNullable(url);
     }
 
-    public static Object createInternalObject(String type) {
-        Object answer;
+    public static <T> T createInternalObject(String type, Class<T> t) {
+        T answer;
 
         try {
-            Class<?> clazz = internalClassForName(type);
-
+            Class<T> clazz = internalClassForName(type, t);
             answer = clazz.getConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(getString(
-                    "RuntimeError.6", type), e); //$NON-NLS-1$
-
+            throw new InternalException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
         }
 
         return answer;
     }
 
-    public static JavaTypeResolver createJavaTypeResolver(Context context,
-            List<String> warnings) {
-        JavaTypeResolverConfiguration config = context
-                .getJavaTypeResolverConfiguration();
-        String type;
+    public static JavaTypeResolver createJavaTypeResolver(Context context, List<String> warnings) {
+        String type = context.getJavaTypeResolverConfiguration()
+                .map(JavaTypeResolverConfiguration::getImplementationType)
+                .orElse(Defaults.DEFAULT_JAVA_TYPE_RESOLVER);
 
-        if (config != null && config.getConfigurationType() != null) {
-            type = config.getConfigurationType();
-            if ("DEFAULT".equalsIgnoreCase(type)) { //$NON-NLS-1$
-                type = JavaTypeResolverDefaultImpl.class.getName();
-            }
-        } else {
-            type = JavaTypeResolverDefaultImpl.class.getName();
-        }
-
-        JavaTypeResolver answer = (JavaTypeResolver) createInternalObject(type);
+        JavaTypeResolver answer = createInternalObject(type, JavaTypeResolver.class);
         answer.setWarnings(warnings);
 
-        if (config != null) {
-            answer.addConfigurationProperties(config.getProperties());
-        }
+        context.getJavaTypeResolverConfiguration()
+                .ifPresent(c -> answer.addConfigurationProperties(c.getProperties()));
 
         answer.setContext(context);
 
         return answer;
     }
 
-    public static Plugin createPlugin(Context context,
-            PluginConfiguration pluginConfiguration) {
-        Plugin plugin = (Plugin) createInternalObject(pluginConfiguration
-                .getConfigurationType());
+    public static Plugin createPlugin(Context context, PluginConfiguration pluginConfiguration,
+                                      CommentGenerator commentGenerator) {
+        Plugin plugin = createInternalObject(pluginConfiguration.getConfigurationType().orElseThrow(), Plugin.class);
         plugin.setContext(context);
         plugin.setProperties(pluginConfiguration.getProperties());
+        plugin.setCommentGenerator(commentGenerator);
         return plugin;
     }
 
     public static CommentGenerator createCommentGenerator(Context context) {
-
-        CommentGeneratorConfiguration config = context
-                .getCommentGeneratorConfiguration();
         CommentGenerator answer;
 
-        String type;
-        if (config == null || config.getConfigurationType() == null) {
-            type = DefaultCommentGenerator.class.getName();
-        } else {
-            type = config.getConfigurationType();
-        }
+        String type = context.getCommentGeneratorConfiguration()
+                .map(CommentGeneratorConfiguration::getImplementationType)
+                .orElse(Defaults.DEFAULT_COMMENT_GENERATOR);
 
-        answer = (CommentGenerator) createInternalObject(type);
+        answer = createInternalObject(type, CommentGenerator.class);
 
-        if (config != null) {
-            answer.addConfigurationProperties(config.getProperties());
-        }
+        context.getCommentGeneratorConfiguration()
+                .ifPresent(c -> answer.addConfigurationProperties(c.getProperties()));
 
         return answer;
     }
 
-    public static ConnectionFactory createConnectionFactory(Context context) {
-
-        ConnectionFactoryConfiguration config = context
-                .getConnectionFactoryConfiguration();
+    public static ConnectionFactory createConnectionFactory(ConnectionFactoryConfiguration config) {
         ConnectionFactory answer;
 
-        String type;
-        if (config == null || config.getConfigurationType() == null) {
-            type = JDBCConnectionFactory.class.getName();
-        } else {
-            type = config.getConfigurationType();
-        }
+        String type = config.getImplementationType();
 
-        answer = (ConnectionFactory) createInternalObject(type);
-
-        if (config != null) {
-            answer.addConfigurationProperties(config.getProperties());
-        }
+        answer = createInternalObject(type, ConnectionFactory.class);
+        answer.addConfigurationProperties(config.getProperties());
 
         return answer;
     }
@@ -271,10 +228,10 @@ public class ObjectFactory {
     public static JavaFormatter createJavaFormatter(Context context) {
         String type = context.getProperty(PropertyRegistry.CONTEXT_JAVA_FORMATTER);
         if (!stringHasValue(type)) {
-            type = DefaultJavaFormatter.class.getName();
+            type = Defaults.DEFAULT_JAVA_FORMATTER;
         }
 
-        JavaFormatter answer = (JavaFormatter) createInternalObject(type);
+        JavaFormatter answer = createInternalObject(type, JavaFormatter.class);
 
         answer.setContext(context);
 
@@ -284,10 +241,10 @@ public class ObjectFactory {
     public static KotlinFormatter createKotlinFormatter(Context context) {
         String type = context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FORMATTER);
         if (!stringHasValue(type)) {
-            type = DefaultKotlinFormatter.class.getName();
+            type = Defaults.DEFAULT_KOTLIN_FORMATTER;
         }
 
-        KotlinFormatter answer = (KotlinFormatter) createInternalObject(type);
+        KotlinFormatter answer = createInternalObject(type, KotlinFormatter.class);
 
         answer.setContext(context);
 
@@ -297,62 +254,19 @@ public class ObjectFactory {
     public static XmlFormatter createXmlFormatter(Context context) {
         String type = context.getProperty(PropertyRegistry.CONTEXT_XML_FORMATTER);
         if (!stringHasValue(type)) {
-            type = DefaultXmlFormatter.class.getName();
+            type = Defaults.DEFAULT_XML_FORMATTER;
         }
 
-        XmlFormatter answer = (XmlFormatter) createInternalObject(type);
+        XmlFormatter answer = createInternalObject(type, XmlFormatter.class);
 
-        answer.setContext(context);
-
-        return answer;
-    }
-
-    public static IntrospectedTable createIntrospectedTable(
-            TableConfiguration tableConfiguration, FullyQualifiedTable table,
-            Context context) {
-
-        IntrospectedTable answer = createIntrospectedTableForValidation(context);
-        answer.setFullyQualifiedTable(table);
-        answer.setTableConfiguration(tableConfiguration);
-
-        return answer;
-    }
-
-    /**
-     * Creates an introspected table implementation that is only usable for validation .
-     *
-     *
-     * @param context
-     *            the context
-     * @return the introspected table
-     */
-    public static IntrospectedTable createIntrospectedTableForValidation(Context context) {
-        String type = context.getTargetRuntime();
-        if (!stringHasValue(type)) {
-            type = IntrospectedTableMyBatis3DynamicSqlImpl.class.getName();
-        } else if ("MyBatis3".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableMyBatis3Impl.class.getName();
-        } else if ("MyBatis3Simple".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableMyBatis3SimpleImpl.class.getName();
-        } else if ("MyBatis3DynamicSql".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableMyBatis3DynamicSqlImpl.class.getName();
-        } else if ("MyBatis3Kotlin".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableKotlinImpl.class.getName();
-        }
-
-        IntrospectedTable answer = (IntrospectedTable) createInternalObject(type);
         answer.setContext(context);
 
         return answer;
     }
 
     public static IntrospectedColumn createIntrospectedColumn(Context context) {
-        String type = context.getIntrospectedColumnImpl();
-        if (!stringHasValue(type)) {
-            type = IntrospectedColumn.class.getName();
-        }
-
-        IntrospectedColumn answer = (IntrospectedColumn) createInternalObject(type);
+        String type = context.getIntrospectedColumnImpl().orElse(IntrospectedColumn.class.getName());
+        IntrospectedColumn answer = createInternalObject(type, IntrospectedColumn.class);
         answer.setContext(context);
 
         return answer;

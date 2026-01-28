@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * This class encapsulates the idea of an inner class - it has methods that make it easy to generate inner classes.
  *
@@ -28,7 +30,7 @@ public class InnerClass extends AbstractJavaType {
 
     private final List<TypeParameter> typeParameters = new ArrayList<>();
 
-    private FullyQualifiedJavaType superClass;
+    private @Nullable FullyQualifiedJavaType superClass;
 
     private boolean isAbstract;
 
@@ -76,8 +78,8 @@ public class InnerClass extends AbstractJavaType {
         return isAbstract;
     }
 
-    public void setAbstract(boolean isAbtract) {
-        this.isAbstract = isAbtract;
+    public void setAbstract(boolean isAbstract) {
+        this.isAbstract = isAbstract;
     }
 
     public boolean isFinal() {

@@ -1,0 +1,76 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: '43 10 * * 2'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 30
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Setup Java
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5
+        with:
+          cache: maven
+          distribution: 'temurin'
+          java-version: 25
+
+      - name: Install Toolchain JDK
+        uses: battila7/jdk-via-jabba@v1
+        with:
+          jdk: zulu@1.17.0-0
+          javaHomeEnvironmentVariable: TOOLCHAIN_JDK
+
+      - name: Set up Toolchain
+        shell: bash
+        run: |
+          mkdir --parents $HOME/.m2 \
+          && cat << EOF > $HOME/.m2/toolchains.xml
+          <?xml version="1.0" encoding="UTF-8"?>
+          <toolchains>
+            <toolchain>
+              <type>jdk</type>
+                <provides>
+                  <version>17</version>
+                  <vendor>zulu</vendor>
+                </provides>
+                <configuration>
+                  <jdkHome>${{ env.TOOLCHAIN_JDK }}</jdkHome>
+                </configuration>
+            </toolchain>
+          </toolchains>
+          EOF
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@b20883b0cd1f46c72ae0ba6d1090936928f9fa30 # v4
+        with:
+          queries: +security-and-quality
+
+      - name: Autobuild (manual core)
+        working-directory: core
+        run: ./mvnw clean install -DskipTests
+
+      - name: Autobuild (manual eclipse)
+        working-directory: eclipse
+        run: ./mvnw clean install -DskipTests
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@b20883b0cd1f46c72ae0ba6d1090936928f9fa30 # v4

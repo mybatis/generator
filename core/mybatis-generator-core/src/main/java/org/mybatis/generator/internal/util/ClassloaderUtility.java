@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,8 +26,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.mybatis.generator.logging.Log;
-import org.mybatis.generator.logging.LogFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.mybatis.generator.exception.InternalException;
 
 /**
  * This class holds methods useful for constructing custom classloaders.
@@ -48,26 +49,23 @@ public class ClassloaderUtility {
         List<URL> urls = new ArrayList<>();
         Path file;
 
-        if (entries != null) {
-            for (String classPathEntry : entries) {
-                file = Path.of(classPathEntry);
-                if (Files.notExists(file)) {
-                    LOG.warn(getString("Warning.31", classPathEntry)); //$NON-NLS-1$
-                    continue;
-                }
+        for (String classPathEntry : entries) {
+            file = Path.of(classPathEntry);
+            if (Files.notExists(file)) {
+                LOG.warn(getString("Warning.31", classPathEntry)); //$NON-NLS-1$
+                continue;
+            }
 
-                try {
-                    urls.add(file.toUri().toURL());
-                } catch (MalformedURLException e) {
-                    // this shouldn't happen, but just in case...
-                    throw new RuntimeException(getString(
-                            "RuntimeError.9", classPathEntry)); //$NON-NLS-1$
-                }
+            try {
+                urls.add(file.toUri().toURL());
+            } catch (MalformedURLException e) {
+                // this shouldn't happen, but just in case...
+                throw new InternalException(getString("RuntimeError.9", classPathEntry)); //$NON-NLS-1$
             }
         }
 
         ClassLoader parent = Thread.currentThread().getContextClassLoader();
 
-        return new URLClassLoader(urls.toArray(new URL[urls.size()]), parent);
+        return new URLClassLoader(urls.toArray(new URL[0]), parent);
     }
 }

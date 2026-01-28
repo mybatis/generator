@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,11 +20,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
+
 public class KotlinArg {
 
     private final String name;
-    private final String dataType;
-    private final String initializationString;
+    private final @Nullable String dataType;
+    private final @Nullable String initializationString;
     private final List<String> annotations;
 
     private KotlinArg(Builder builder) {
@@ -56,8 +58,8 @@ public class KotlinArg {
 
     public static class Builder {
         private final String name;
-        private String dataType;
-        private String initializationString;
+        private @Nullable String dataType;
+        private @Nullable String initializationString;
         private final List<String> annotations = new ArrayList<>();
 
         private Builder(String name) {

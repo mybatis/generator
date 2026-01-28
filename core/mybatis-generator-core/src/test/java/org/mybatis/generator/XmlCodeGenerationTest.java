@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package org.mybatis.generator;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.api.dom.DefaultXmlFormatter;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -41,8 +43,9 @@ class XmlCodeGenerationTest {
     @ParameterizedTest
     @MethodSource("xmlFileGenerator")
     void testXmlParse(GeneratedXmlFile generatedXmlFile) {
-        ByteArrayInputStream is = new ByteArrayInputStream(
-                generatedXmlFile.getFormattedContent().getBytes());
+        DefaultXmlFormatter formatter = new DefaultXmlFormatter();
+        ByteArrayInputStream is = new ByteArrayInputStream(formatter
+                .getFormattedContent(generatedXmlFile.getDocument()).getBytes());
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setValidating(true);
@@ -65,14 +68,20 @@ class XmlCodeGenerationTest {
     }
 
     static List<GeneratedXmlFile> generateXmlFiles(String configFile) throws Exception {
-        List<String> warnings = new ArrayList<>();
-        ConfigurationParser cp = new ConfigurationParser(warnings);
-        Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.class.getResourceAsStream(configFile));
+        ConfigurationParser cp = new ConfigurationParser();
+        InputStream is = JavaCodeGenerationTest.class.getResourceAsStream(configFile);
+        if (is == null) {
+            throw new RuntimeException("Cannot load configFile: " + configFile);
+        }
+        Configuration config = cp.parseConfiguration(is);
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
 
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-        myBatisGenerator.generate(null, null, null, false);
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                .withConfiguration(config)
+                .withShellCallback(shellCallback)
+                .build();
+        myBatisGenerator.generateOnly();
         return myBatisGenerator.getGeneratedXmlFiles();
     }
 

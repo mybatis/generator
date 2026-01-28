@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,18 @@
  */
 package org.mybatis.generator.codegen;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.xml.Document;
 
 public abstract class AbstractXmlGenerator extends AbstractGenerator {
-    public abstract Document getDocument();
+    protected AbstractXmlGenerator(AbstractXmlGeneratorBuilder<?> builder) {
+        super(builder);
+    }
+
+    public abstract @Nullable Document getDocument();
+
+    public abstract static class AbstractXmlGeneratorBuilder<T extends AbstractXmlGeneratorBuilder<T>>
+            extends AbstractGeneratorBuilder<T> {
+        public abstract AbstractXmlGenerator build();
+    }
 }

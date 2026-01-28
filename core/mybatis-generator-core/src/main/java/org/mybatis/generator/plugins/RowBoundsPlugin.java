@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ import java.util.Map;
 
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.PluginUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -49,7 +49,8 @@ public class RowBoundsPlugin extends PluginAdapter {
 
     @Override
     public boolean validate(List<String> warnings) {
-        if ("MyBatis3DynamicSql".equalsIgnoreCase(context.getTargetRuntime())) { //$NON-NLS-1$
+        String targetRuntime = context.getTargetRuntime().orElse("MyBatis3DynamicSql"); //$NON-NLS-1$
+        if ("MyBatis3DynamicSql".equalsIgnoreCase(targetRuntime)) { //$NON-NLS-1$
             warnings.add(Messages.getString("Warning.30")); //$NON-NLS-1$
             return false;
         }
@@ -59,7 +60,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     @Override
     public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
+        if (PluginUtilities.isLegacyMyBatis3(introspectedTable)) {
             copyAndAddMethod(method, interfaze);
         }
         return true;
@@ -69,7 +70,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(
             Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
+        if (PluginUtilities.isLegacyMyBatis3(introspectedTable)) {
             copyAndAddMethod(method, interfaze);
         }
         return true;
@@ -78,7 +79,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     @Override
     public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(
             XmlElement element, IntrospectedTable introspectedTable) {
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
+        if (PluginUtilities.isLegacyMyBatis3(introspectedTable)) {
             copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());
         }
         return true;
@@ -87,7 +88,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     @Override
     public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(
             XmlElement element, IntrospectedTable introspectedTable) {
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
+        if (PluginUtilities.isLegacyMyBatis3(introspectedTable)) {
             copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());
         }
         return true;

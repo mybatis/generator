@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 package org.mybatis.generator.config;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import org.mybatis.generator.exception.InternalException;
 
 /**
  * Typesafe enum of different model types.
@@ -41,7 +43,7 @@ public enum ModelType {
         } else if (CONDITIONAL.type.equalsIgnoreCase(type)) {
             return CONDITIONAL;
         } else {
-            throw new RuntimeException(getString("RuntimeError.13", type)); //$NON-NLS-1$
+            throw new InternalException(getString("RuntimeError.13", type)); //$NON-NLS-1$
         }
     }
 }

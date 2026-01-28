@@ -24,20 +24,26 @@ on: [push, pull_request]
 
 permissions: read-all
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        java: [17, 21]
-        distribution: ['zulu']
+        cache: [maven]
+        distribution: [temurin]
+        java: [21, 25, 26-ea]
+        os: [macos-latest, ubuntu-latest, windows-latest]
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 6
     name: Test JDK ${{ matrix.java }}, ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Install Toolchain JDK
         uses: battila7/jdk-via-jabba@v1
         with:
@@ -46,9 +52,10 @@ jobs:
       - name: Set up Toolchain
         shell: bash
         run: |
+          # Note: Cannot expand -p to --parents on macos
           mkdir -p $HOME/.m2 \
           && cat << EOF > $HOME/.m2/toolchains.xml
-          <?xml version="1.0" encoding="UTF8"?>
+          <?xml version="1.0" encoding="UTF-8"?>
           <toolchains>
             <toolchain>
               <type>jdk</type>
@@ -62,10 +69,11 @@ jobs:
             </toolchain>
           </toolchains>
           EOF
-      - name: Set up JDK
-        uses: actions/setup-java@v5
+      - name: Setup Java ${{ matrix.java }} ${{ matrix.distribution }}
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5
         with:
-          java-version: ${{ matrix.java }}
+          cache: ${{ matrix.cache }}
           distribution: ${{ matrix.distribution }}
+          java-version: ${{ matrix.java }}
       - name: Test with Maven
-        run: ./mvnw integration-test -B -D"license.skip=true"
+        run: ./mvnw integration-test --batch-mode --no-transfer-progress --show-version -D"license.skip=true"

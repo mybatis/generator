@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.internal.types;
 
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+
 import java.math.BigDecimal;
 import java.sql.Types;
 import java.util.Date;
@@ -23,20 +25,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.internal.util.StringUtility;
 
 public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
 
-    protected List<String> warnings;
+    protected @Nullable List<String> warnings;
 
     protected final Properties properties;
 
-    protected Context context;
+    protected @Nullable Context context;
 
     protected boolean forceBigDecimals;
     protected boolean useJSR310Types;
@@ -127,20 +129,14 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     @Override
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll(properties);
-        forceBigDecimals = StringUtility
-                .isTrue(properties
-                        .getProperty(PropertyRegistry.TYPE_RESOLVER_FORCE_BIG_DECIMALS));
-        useJSR310Types = StringUtility
-                .isTrue(properties
-                        .getProperty(PropertyRegistry.TYPE_RESOLVER_USE_JSR310_TYPES));
+        forceBigDecimals = isTrue(properties.getProperty(PropertyRegistry.TYPE_RESOLVER_FORCE_BIG_DECIMALS));
+        useJSR310Types = isTrue(properties.getProperty(PropertyRegistry.TYPE_RESOLVER_USE_JSR310_TYPES));
     }
 
     @Override
-    public FullyQualifiedJavaType calculateJavaType(
-            IntrospectedColumn introspectedColumn) {
+    public @Nullable FullyQualifiedJavaType calculateJavaType(IntrospectedColumn introspectedColumn) {
         FullyQualifiedJavaType answer = null;
-        JdbcTypeInformation jdbcTypeInformation = typeMap
-                .get(introspectedColumn.getJdbcType());
+        JdbcTypeInformation jdbcTypeInformation = typeMap.get(introspectedColumn.getJdbcType());
 
         if (jdbcTypeInformation != null) {
             answer = jdbcTypeInformation.fullyQualifiedJavaType();
@@ -151,7 +147,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     }
 
     protected FullyQualifiedJavaType overrideDefaultType(IntrospectedColumn column,
-            FullyQualifiedJavaType defaultType) {
+                                                         FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer = defaultType;
 
         switch (column.getJdbcType()) {
@@ -161,8 +157,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         case Types.DATE:
             answer = calculateDateType(column, defaultType);
             break;
-        case Types.DECIMAL:
-        case Types.NUMERIC:
+        case Types.DECIMAL, Types.NUMERIC:
             answer = calculateBigDecimalReplacement(column, defaultType);
             break;
         case Types.TIME:
@@ -229,7 +224,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     }
 
     protected FullyQualifiedJavaType calculateBigDecimalReplacement(IntrospectedColumn column,
-            FullyQualifiedJavaType defaultType) {
+                                                                    FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer;
 
         if (column.getScale() > 0 || column.getLength() > 18 || forceBigDecimals) {
@@ -246,10 +241,9 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     }
 
     @Override
-    public String calculateJdbcTypeName(IntrospectedColumn introspectedColumn) {
+    public @Nullable String calculateJdbcTypeName(IntrospectedColumn introspectedColumn) {
         String answer = null;
-        JdbcTypeInformation jdbcTypeInformation = typeMap
-                .get(introspectedColumn.getJdbcType());
+        JdbcTypeInformation jdbcTypeInformation = typeMap.get(introspectedColumn.getJdbcType());
 
         if (jdbcTypeInformation != null) {
             answer = jdbcTypeInformation.jdbcTypeName();

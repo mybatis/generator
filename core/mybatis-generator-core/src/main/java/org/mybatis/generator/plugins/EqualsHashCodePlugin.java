@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import java.util.Properties;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.PluginUtilities;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -133,12 +133,10 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                 .getObjectInstance(), "that")); //$NON-NLS-1$
         method.addAnnotation("@Override"); //$NON-NLS-1$
 
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
-            context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
-                    topLevelClass.getImportedTypes());
+        if (PluginUtilities.isDynamicSql(introspectedTable)) {
+            commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
         } else {
-            context.getCommentGenerator().addGeneralMethodComment(method,
-                    introspectedTable);
+            commentGenerator.addGeneralMethodComment(method, introspectedTable);
         }
 
         method.addBodyLine("if (this == that) {"); //$NON-NLS-1$
@@ -244,12 +242,10 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addAnnotation("@Override"); //$NON-NLS-1$
 
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
-            context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
-                    topLevelClass.getImportedTypes());
+        if (PluginUtilities.isDynamicSql(introspectedTable)) {
+            commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
         } else {
-            context.getCommentGenerator().addGeneralMethodComment(method,
-                    introspectedTable);
+            commentGenerator.addGeneralMethodComment(method, introspectedTable);
         }
 
         method.addBodyLine("final int prime = 31;"); //$NON-NLS-1$

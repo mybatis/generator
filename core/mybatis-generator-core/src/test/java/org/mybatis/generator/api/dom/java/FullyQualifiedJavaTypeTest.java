@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.mybatis.generator.api.dom.java.render.ParameterRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
 
 /**
@@ -340,7 +341,16 @@ class FullyQualifiedJavaTypeTest {
         assertThat(fqjt.getFullyQualifiedName()).isEqualTo("Class<? extends HttpMessageConverter<?>>");
 
         Parameter parameter = new Parameter(fqjt, "converterType");
-        String out = parameter.toString();
+        ParameterRenderer pr = new ParameterRenderer();
+        TopLevelClass tlc = new TopLevelClass("foo.Bar");
+        String out = pr.render(parameter, tlc);
         assertThat(out).isEqualTo("Class<? extends HttpMessageConverter<?>> converterType");
+    }
+
+    @Test
+    void testPrimitiveTypeWrapper() {
+        PrimitiveTypeWrapper ptw = PrimitiveTypeWrapper.getBooleanInstance();
+
+        assertThat(ptw.hashCode()).hasSameHashCodeAs("java.lang.Boolean");
     }
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -65,6 +65,13 @@ public abstract class CompositePlugin implements Plugin {
     }
 
     @Override
+    public void setCommentGenerator(CommentGenerator commentGenerator) {
+        for (Plugin plugin : plugins) {
+            plugin.setCommentGenerator(commentGenerator);
+        }
+    }
+
+    @Override
     public void initialized(IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
             plugin.initialized(introspectedTable);
@@ -104,7 +111,7 @@ public abstract class CompositePlugin implements Plugin {
     }
 
     @Override
-    public List<GeneratedFile> contextGenerateAdditionalFiles() {
+    public List<GenericGeneratedFile> contextGenerateAdditionalFiles() {
         return plugins.stream()
                 .map(Plugin::contextGenerateAdditionalFiles)
                 .flatMap(List::stream)
@@ -112,7 +119,7 @@ public abstract class CompositePlugin implements Plugin {
     }
 
     @Override
-    public List<GeneratedFile> contextGenerateAdditionalFiles(IntrospectedTable introspectedTable) {
+    public List<GenericGeneratedFile> contextGenerateAdditionalFiles(IntrospectedTable introspectedTable) {
         return plugins.stream()
                 .map(p -> p.contextGenerateAdditionalFiles(introspectedTable))
                 .flatMap(List::stream)

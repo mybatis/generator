@@ -32,6 +32,8 @@ public abstract class AbstractJavaType extends JavaElement {
 
     private final List<InnerInterface> innerInterfaces = new ArrayList<>();
 
+    private final List<InnerRecord> innerRecords = new ArrayList<>();
+
     private final List<Field> fields = new ArrayList<>();
 
     private final List<Method> methods = new ArrayList<>();
@@ -66,6 +68,14 @@ public abstract class AbstractJavaType extends JavaElement {
 
     public void addInnerInterface(InnerInterface innerInterface) {
         innerInterfaces.add(innerInterface);
+    }
+
+    public List<InnerRecord> getInnerRecords() {
+        return innerRecords;
+    }
+
+    public void addInnerRecord(InnerRecord innerRecord) {
+        innerRecords.add(innerRecord);
     }
 
     public List<Field> getFields() {

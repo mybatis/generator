@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,22 +21,22 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 
 public class Configuration {
-
     private final List<Context> contexts;
-
     private final List<String> classPathEntries;
 
     public Configuration() {
-        super();
         contexts = new ArrayList<>();
         classPathEntries = new ArrayList<>();
     }
 
-    public void addClasspathEntry(String entry) {
-        classPathEntries.add(entry);
+    public void addClasspathEntry(@Nullable String entry) {
+        if (entry != null) {
+            classPathEntries.add(entry);
+        }
     }
 
     public List<String> getClassPathEntries() {

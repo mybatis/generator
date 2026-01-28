@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,14 +24,15 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.codegen.XmlConstants;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.exception.XMLParserException;
@@ -44,13 +45,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class ConfigurationParser {
+    private final List<String> warnings = new ArrayList<>();
+    private final List<String> parseErrors = new ArrayList<>();
+    private final @Nullable Properties extraProperties;
 
-    private final List<String> warnings;
-    private final List<String> parseErrors;
-    private final Properties extraProperties;
-
-    public ConfigurationParser(List<String> warnings) {
-        this(null, warnings);
+    public ConfigurationParser() {
+        this(null);
     }
 
     /**
@@ -71,70 +71,37 @@ public class ConfigurationParser {
      *
      * @param extraProperties an (optional) set of properties used to resolve property
      *     references in the configuration file
-     * @param warnings any warnings are added to this array
      */
-    public ConfigurationParser(Properties extraProperties, List<String> warnings) {
-        super();
+    public ConfigurationParser(@Nullable Properties extraProperties) {
         this.extraProperties = extraProperties;
-
-        this.warnings = Objects.requireNonNullElseGet(warnings, ArrayList::new);
-
-        parseErrors = new ArrayList<>();
     }
 
-    public Configuration parseConfiguration(File inputFile) throws IOException,
-            XMLParserException {
+    public List<String> getWarnings() {
+        return Collections.unmodifiableList(warnings);
+    }
 
+    public Configuration parseConfiguration(File inputFile) throws IOException, XMLParserException {
         try (BufferedReader fr = Files.newBufferedReader(inputFile.toPath())) {
             return parseConfiguration(fr);
         }
     }
 
-    public Configuration parseConfiguration(Reader reader) throws IOException,
-            XMLParserException {
-
+    public Configuration parseConfiguration(Reader reader) throws IOException, XMLParserException {
         InputSource is = new InputSource(reader);
-
         return parseConfiguration(is);
     }
 
-    public Configuration parseConfiguration(InputStream inputStream)
-            throws IOException, XMLParserException {
-
+    public Configuration parseConfiguration(InputStream inputStream) throws IOException, XMLParserException {
         InputSource is = new InputSource(inputStream);
-
         return parseConfiguration(is);
     }
 
-    private Configuration parseConfiguration(InputSource inputSource)
-            throws IOException, XMLParserException {
+    private Configuration parseConfiguration(InputSource inputSource) throws IOException, XMLParserException {
         parseErrors.clear();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
-        factory.setValidating(true);
+        warnings.clear();
 
         try {
-            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            builder.setEntityResolver(new ParserEntityResolver());
-
-            ParserErrorHandler handler = new ParserErrorHandler(warnings,
-                    parseErrors);
-            builder.setErrorHandler(handler);
-
-            Document document = null;
-            try {
-                document = builder.parse(inputSource);
-            } catch (SAXParseException e) {
-                throw new XMLParserException(parseErrors);
-            } catch (SAXException e) {
-                if (e.getException() == null) {
-                    parseErrors.add(e.getMessage());
-                } else {
-                    parseErrors.add(e.getException().getMessage());
-                }
-            }
+            Document document = basicParse(inputSource);
 
             if (document == null || !parseErrors.isEmpty()) {
                 throw new XMLParserException(parseErrors);
@@ -144,8 +111,7 @@ public class ConfigurationParser {
             Element rootNode = document.getDocumentElement();
             DocumentType docType = document.getDoctype();
             if (rootNode.getNodeType() == Node.ELEMENT_NODE
-                    && docType.getPublicId().equals(
-                            XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
+                    && docType.getPublicId().equals(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
                 config = parseMyBatisGeneratorConfiguration(rootNode);
             } else {
                 throw new XMLParserException(getString("RuntimeError.5")); //$NON-NLS-1$
@@ -162,10 +128,38 @@ public class ConfigurationParser {
         }
     }
 
-    private Configuration parseMyBatisGeneratorConfiguration(Element rootNode)
-            throws XMLParserException {
-        MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(
-                extraProperties);
+    private @Nullable Document basicParse(InputSource inputSource) throws IOException, ParserConfigurationException,
+            XMLParserException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, ""); //$NON-NLS-1$
+        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, ""); //$NON-NLS-1$
+        factory.setValidating(true);
+
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        builder.setEntityResolver(new ParserEntityResolver());
+
+        ParserErrorHandler handler = new ParserErrorHandler(warnings, parseErrors);
+        builder.setErrorHandler(handler);
+
+        Document document = null;
+        try {
+            document = builder.parse(inputSource);
+        } catch (SAXParseException e) {
+            throw new XMLParserException(parseErrors);
+        } catch (SAXException e) {
+            if (e.getException() == null) {
+                parseErrors.add(e.getMessage());
+            } else {
+                parseErrors.add(e.getException().getMessage());
+            }
+        }
+
+        return document;
+    }
+
+    private Configuration parseMyBatisGeneratorConfiguration(Element rootNode) throws XMLParserException {
+        MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(extraProperties);
         return parser.parseConfiguration(rootNode);
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2025 the original author or authors.
+       Copyright 2006-2026 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -34,14 +34,18 @@ Java.</p>
    show exception handling, but that should be obvious from the compiler
    errors :)</p>
 <pre>
-   List&lt;String&gt; warnings = new ArrayList&lt;String&gt;();
-   boolean overwrite = true;
-   Path configFile = Path.of("generatorConfig.xml");
-   ConfigurationParser cp = new ConfigurationParser(warnings);
-   Configuration config = cp.parseConfiguration(configFile.toFile());
-   DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-   MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
-   myBatisGenerator.generate(null);
+    List&lt;String&gt; warnings = new ArrayList&lt;String&gt;();
+    boolean overwrite = true;
+    Path configFile = Path.of("generatorConfig.xml");
+    ConfigurationParser cp = new ConfigurationParser();
+    Configuration config = cp.parseConfiguration(configFile.toFile());
+    warnings.addAll(cp.getWarnings());
+    DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+    MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+        .withConfiguration(config)
+        .withShellCallback(callback)
+        .build();
+    warnings.addAll(myBatisGenerator.generateAndWrite());
 </pre>
 
 <p>Notes:</p>
@@ -65,15 +69,18 @@ Java.</p>
    not show exception handling, but that should be obvious from the compiler
    errors :)</p>
 <pre>
-   List&lt;String&gt; warnings = new ArrayList&lt;String&gt;();
-   boolean overwrite = true;
-   Configuration config = new Configuration();
+    List&lt;String&gt; warnings = new ArrayList&lt;String&gt;();
+    boolean overwrite = true;
+    Configuration config = new Configuration();
 
    //   ... fill out the config object as appropriate...
 
-   DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-   MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
-   myBatisGenerator.generate(null);
+    DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+    MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+        .withConfiguration(config)
+        .withShellCallback(callback)
+        .build();
+    warnings.addAll(myBatisGenerator.generateAndWrite());
 </pre>
 
 </body>

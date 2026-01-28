@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,10 +18,12 @@ package org.mybatis.generator.api.dom.kotlin;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
+
 public class KotlinProperty extends KotlinNamedItem {
 
-    private final String dataType;
-    private final String initializationString;
+    private final @Nullable String dataType;
+    private final @Nullable String initializationString;
     private final Type type;
 
     public enum Type {
@@ -72,8 +74,8 @@ public class KotlinProperty extends KotlinNamedItem {
     }
 
     public static class Builder extends AbstractBuilder<Builder> {
-        private String dataType;
-        private String initializationString;
+        private @Nullable String dataType;
+        private @Nullable String initializationString;
         private final Type type;
 
         private Builder(Type type, String name) {

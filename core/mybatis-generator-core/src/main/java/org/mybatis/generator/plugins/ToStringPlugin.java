@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Properties;
 
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.PluginUtilities;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -72,12 +72,10 @@ public class ToStringPlugin extends PluginAdapter {
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.addAnnotation("@Override"); //$NON-NLS-1$
 
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
-            context.getCommentGenerator().addGeneralMethodAnnotation(method,
-                    introspectedTable, topLevelClass.getImportedTypes());
+        if (PluginUtilities.isDynamicSql(introspectedTable)) {
+            commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
         } else {
-            context.getCommentGenerator().addGeneralMethodComment(method,
-                    introspectedTable);
+            commentGenerator.addGeneralMethodComment(method, introspectedTable);
         }
 
         method.addBodyLine("StringBuilder sb = new StringBuilder();"); //$NON-NLS-1$

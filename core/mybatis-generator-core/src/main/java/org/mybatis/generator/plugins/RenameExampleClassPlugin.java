@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 
@@ -51,17 +52,15 @@ import org.mybatis.generator.api.PluginAdapter;
  * @author Jeff Butler
  */
 public class RenameExampleClassPlugin extends PluginAdapter {
-    private String replaceString;
-    private Pattern pattern;
+    private @Nullable String replaceString;
+    private @Nullable Pattern pattern;
 
     @Override
     public boolean validate(List<String> warnings) {
-
         String searchString = properties.getProperty("searchString"); //$NON-NLS-1$
         replaceString = properties.getProperty("replaceString"); //$NON-NLS-1$
 
-        boolean valid = stringHasValue(searchString)
-                && stringHasValue(replaceString);
+        boolean valid = stringHasValue(searchString) && stringHasValue(replaceString);
 
         if (valid) {
             pattern = Pattern.compile(searchString);
@@ -83,10 +82,11 @@ public class RenameExampleClassPlugin extends PluginAdapter {
 
     @Override
     public void initialized(IntrospectedTable introspectedTable) {
-        String oldType = introspectedTable.getExampleType();
-        Matcher matcher = pattern.matcher(oldType);
-        oldType = matcher.replaceAll(replaceString);
-
-        introspectedTable.setExampleType(oldType);
+        if (pattern != null) {
+            String oldType = introspectedTable.getExampleType();
+            Matcher matcher = pattern.matcher(oldType);
+            oldType = matcher.replaceAll(replaceString);
+            introspectedTable.setExampleType(oldType);
+        }
     }
 }

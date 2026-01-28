@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@ package org.mybatis.generator.codegen;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 
 public abstract class AbstractKotlinGenerator extends AbstractGenerator {
@@ -25,8 +27,9 @@ public abstract class AbstractKotlinGenerator extends AbstractGenerator {
 
     private final String project;
 
-    protected AbstractKotlinGenerator(String project) {
-        this.project = project;
+    protected AbstractKotlinGenerator(AbstractKotlinGeneratorBuilder<?> builder) {
+        super(builder);
+        this.project = Objects.requireNonNull(builder.project);
     }
 
     public String getProject() {
@@ -35,5 +38,17 @@ public abstract class AbstractKotlinGenerator extends AbstractGenerator {
 
     public List<KotlinFile> listOf(KotlinFile... kotlinFiles) {
         return Arrays.asList(kotlinFiles);
+    }
+
+    public abstract static class AbstractKotlinGeneratorBuilder<T extends AbstractKotlinGeneratorBuilder<T>>
+            extends AbstractGeneratorBuilder<T> {
+        private @Nullable String project;
+
+        public T withProject(String project) {
+            this.project = project;
+            return getThis();
+        }
+
+        public abstract AbstractKotlinGenerator build();
     }
 }

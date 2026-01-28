@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,125 +20,97 @@ import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.internal.util.messages.Messages;
 
 public class TableConfiguration extends PropertyHolder {
-
-    private boolean insertStatementEnabled;
-
-    private boolean selectByPrimaryKeyStatementEnabled;
-
-    private boolean selectByExampleStatementEnabled;
-
-    private boolean updateByPrimaryKeyStatementEnabled;
-
-    private boolean deleteByPrimaryKeyStatementEnabled;
-
-    private boolean deleteByExampleStatementEnabled;
-
-    private boolean countByExampleStatementEnabled;
-
-    private boolean updateByExampleStatementEnabled;
-
+    private final boolean insertStatementEnabled;
+    private final boolean selectByPrimaryKeyStatementEnabled;
+    private final boolean selectByExampleStatementEnabled;
+    private final boolean updateByPrimaryKeyStatementEnabled;
+    private final boolean deleteByPrimaryKeyStatementEnabled;
+    private final boolean deleteByExampleStatementEnabled;
+    private final boolean countByExampleStatementEnabled;
+    private final boolean updateByExampleStatementEnabled;
     private final List<ColumnOverride> columnOverrides;
-
+    // this is a Map for validation purposes. Initially, all items will be FALSE. When accessed, an item will
+    // be made TRUE. This allows us to generate warning for columns configured to be ignored but not found.
     private final Map<IgnoredColumn, Boolean> ignoredColumns;
+    private final @Nullable GeneratedKey generatedKey;
+    private final @Nullable String selectByPrimaryKeyQueryId;
+    private final @Nullable String selectByExampleQueryId;
+    private final @Nullable String catalog;
+    private final @Nullable String schema;
+    private final String tableName;
+    private final @Nullable String domainObjectName;
+    private final @Nullable String alias;
+    private final @Nullable ModelType modelType;
+    private final boolean wildcardEscapingEnabled;
+    private final boolean delimitIdentifiers;
+    private final @Nullable DomainObjectRenamingRule domainObjectRenamingRule;
+    private final @Nullable ColumnRenamingRule columnRenamingRule;
+    private final boolean isAllColumnDelimitingEnabled;
+    private final @Nullable String mapperName;
+    private final @Nullable String sqlProviderName;
+    private final List<IgnoredColumnPattern> ignoredColumnPatterns;
 
-    private GeneratedKey generatedKey;
+    protected TableConfiguration(Builder builder) {
+        super(builder);
 
-    private String selectByPrimaryKeyQueryId;
-
-    private String selectByExampleQueryId;
-
-    private String catalog;
-
-    private String schema;
-
-    private String tableName;
-
-    private String domainObjectName;
-
-    private String alias;
-
-    private ModelType modelType;
-
-    private boolean wildcardEscapingEnabled;
-
-    private boolean delimitIdentifiers;
-
-    private DomainObjectRenamingRule domainObjectRenamingRule;
-
-    private ColumnRenamingRule columnRenamingRule;
-
-    private boolean isAllColumnDelimitingEnabled;
-
-    private String mapperName;
-    private String sqlProviderName;
-
-    private final List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<>();
-
-    public TableConfiguration(Context context) {
-        super();
-
-        this.modelType = context.getDefaultModelType();
-
-        columnOverrides = new ArrayList<>();
-        ignoredColumns = new HashMap<>();
-
-        insertStatementEnabled = true;
-        selectByPrimaryKeyStatementEnabled = true;
-        selectByExampleStatementEnabled = true;
-        updateByPrimaryKeyStatementEnabled = true;
-        deleteByPrimaryKeyStatementEnabled = true;
-        deleteByExampleStatementEnabled = true;
-        countByExampleStatementEnabled = true;
-        updateByExampleStatementEnabled = true;
+        catalog = builder.catalog;
+        schema = builder.schema;
+        tableName = Objects.requireNonNull(builder.tableName);
+        domainObjectName = builder.domainObjectName;
+        alias = builder.alias;
+        modelType = builder.modelType;
+        insertStatementEnabled = builder.insertStatementEnabled;
+        selectByPrimaryKeyStatementEnabled = builder.selectByPrimaryKeyStatementEnabled;
+        selectByExampleStatementEnabled = builder.selectByExampleStatementEnabled;
+        updateByPrimaryKeyStatementEnabled = builder.updateByPrimaryKeyStatementEnabled;
+        deleteByPrimaryKeyStatementEnabled = builder.deleteByPrimaryKeyStatementEnabled;
+        deleteByExampleStatementEnabled = builder.deleteByExampleStatementEnabled;
+        countByExampleStatementEnabled = builder.countByExampleStatementEnabled;
+        updateByExampleStatementEnabled = builder.updateByExampleStatementEnabled;
+        wildcardEscapingEnabled = builder.wildcardEscapingEnabled;
+        delimitIdentifiers = builder.delimitIdentifiers;
+        isAllColumnDelimitingEnabled = builder.isAllColumnDelimitingEnabled;
+        selectByPrimaryKeyQueryId = builder.selectByPrimaryKeyQueryId;
+        selectByExampleQueryId = builder.selectByExampleQueryId;
+        mapperName = builder.mapperName;
+        sqlProviderName = builder.sqlProviderName;
+        columnOverrides = Collections.unmodifiableList(builder.columnOverrides);
+        ignoredColumns = builder.ignoredColumns;
+        generatedKey = builder.generatedKey;
+        domainObjectRenamingRule = builder.domainObjectRenamingRule;
+        columnRenamingRule = builder.columnRenamingRule;
+        ignoredColumnPatterns = Collections.unmodifiableList(builder.ignoredColumnPatterns);
     }
 
     public boolean isDeleteByPrimaryKeyStatementEnabled() {
         return deleteByPrimaryKeyStatementEnabled;
     }
 
-    public void setDeleteByPrimaryKeyStatementEnabled(
-            boolean deleteByPrimaryKeyStatementEnabled) {
-        this.deleteByPrimaryKeyStatementEnabled = deleteByPrimaryKeyStatementEnabled;
-    }
-
     public boolean isInsertStatementEnabled() {
         return insertStatementEnabled;
-    }
-
-    public void setInsertStatementEnabled(boolean insertStatementEnabled) {
-        this.insertStatementEnabled = insertStatementEnabled;
     }
 
     public boolean isSelectByPrimaryKeyStatementEnabled() {
         return selectByPrimaryKeyStatementEnabled;
     }
 
-    public void setSelectByPrimaryKeyStatementEnabled(
-            boolean selectByPrimaryKeyStatementEnabled) {
-        this.selectByPrimaryKeyStatementEnabled = selectByPrimaryKeyStatementEnabled;
-    }
-
     public boolean isUpdateByPrimaryKeyStatementEnabled() {
         return updateByPrimaryKeyStatementEnabled;
     }
 
-    public void setUpdateByPrimaryKeyStatementEnabled(
-            boolean updateByPrimaryKeyStatementEnabled) {
-        this.updateByPrimaryKeyStatementEnabled = updateByPrimaryKeyStatementEnabled;
-    }
-
     public boolean isColumnIgnored(String columnName) {
-        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns
-                .entrySet()) {
+        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns.entrySet()) {
             if (entry.getKey().matches(columnName)) {
                 entry.setValue(Boolean.TRUE);
                 return true;
@@ -152,18 +124,6 @@ public class TableConfiguration extends PropertyHolder {
         }
 
         return false;
-    }
-
-    public void addIgnoredColumn(IgnoredColumn ignoredColumn) {
-        ignoredColumns.put(ignoredColumn, Boolean.FALSE);
-    }
-
-    public void addIgnoredColumnPattern(IgnoredColumnPattern ignoredColumnPattern) {
-        ignoredColumnPatterns.add(ignoredColumnPattern);
-    }
-
-    public void addColumnOverride(ColumnOverride columnOverride) {
-        columnOverrides.add(columnOverride);
     }
 
     @Override
@@ -190,11 +150,6 @@ public class TableConfiguration extends PropertyHolder {
         return selectByExampleStatementEnabled;
     }
 
-    public void setSelectByExampleStatementEnabled(
-            boolean selectByExampleStatementEnabled) {
-        this.selectByExampleStatementEnabled = selectByExampleStatementEnabled;
-    }
-
     /**
      * May return null if the column has not been overridden.
      *
@@ -202,49 +157,36 @@ public class TableConfiguration extends PropertyHolder {
      *            the column name
      * @return the column override (if any) related to this column
      */
-    public ColumnOverride getColumnOverride(String columnName) {
+    public Optional<ColumnOverride> getColumnOverride(String columnName) {
         for (ColumnOverride co : columnOverrides) {
             if (co.isColumnNameDelimited()) {
                 if (columnName.equals(co.getColumnName())) {
-                    return co;
+                    return Optional.of(co);
                 }
             } else {
                 if (columnName.equalsIgnoreCase(co.getColumnName())) {
-                    return co;
+                    return Optional.of(co);
                 }
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
     public Optional<GeneratedKey> getGeneratedKey() {
         return Optional.ofNullable(generatedKey);
     }
 
-    public String getSelectByExampleQueryId() {
-        return selectByExampleQueryId;
+    public Optional<String> getSelectByExampleQueryId() {
+        return Optional.ofNullable(selectByExampleQueryId);
     }
 
-    public void setSelectByExampleQueryId(String selectByExampleQueryId) {
-        this.selectByExampleQueryId = selectByExampleQueryId;
-    }
-
-    public String getSelectByPrimaryKeyQueryId() {
-        return selectByPrimaryKeyQueryId;
-    }
-
-    public void setSelectByPrimaryKeyQueryId(String selectByPrimaryKeyQueryId) {
-        this.selectByPrimaryKeyQueryId = selectByPrimaryKeyQueryId;
+    public Optional<String> getSelectByPrimaryKeyQueryId() {
+        return Optional.ofNullable(selectByPrimaryKeyQueryId);
     }
 
     public boolean isDeleteByExampleStatementEnabled() {
         return deleteByExampleStatementEnabled;
-    }
-
-    public void setDeleteByExampleStatementEnabled(
-            boolean deleteByExampleStatementEnabled) {
-        this.deleteByExampleStatementEnabled = deleteByExampleStatementEnabled;
     }
 
     public boolean areAnyStatementsEnabled() {
@@ -257,48 +199,24 @@ public class TableConfiguration extends PropertyHolder {
                 || updateByExampleStatementEnabled;
     }
 
-    public void setGeneratedKey(GeneratedKey generatedKey) {
-        this.generatedKey = generatedKey;
-    }
-
-    public String getAlias() {
+    public @Nullable String getAlias() {
         return alias;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
-    public String getCatalog() {
+    public @Nullable String getCatalog() {
         return catalog;
     }
 
-    public void setCatalog(String catalog) {
-        this.catalog = catalog;
-    }
-
-    public String getDomainObjectName() {
+    public @Nullable String getDomainObjectName() {
         return domainObjectName;
     }
 
-    public void setDomainObjectName(String domainObjectName) {
-        this.domainObjectName = domainObjectName;
-    }
-
-    public String getSchema() {
+    public @Nullable String getSchema() {
         return schema;
-    }
-
-    public void setSchema(String schema) {
-        this.schema = schema;
     }
 
     public String getTableName() {
         return tableName;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
     }
 
     public List<ColumnOverride> getColumnOverrides() {
@@ -316,8 +234,7 @@ public class TableConfiguration extends PropertyHolder {
     public List<String> getIgnoredColumnsInError() {
         List<String> answer = new ArrayList<>();
 
-        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns
-                .entrySet()) {
+        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns.entrySet()) {
             if (Boolean.FALSE.equals(entry.getValue())) {
                 answer.add(entry.getKey().getColumnName());
             }
@@ -326,52 +243,29 @@ public class TableConfiguration extends PropertyHolder {
         return answer;
     }
 
-    public ModelType getModelType() {
-        return modelType;
-    }
-
-    public void setConfiguredModelType(String configuredModelType) {
-        this.modelType = ModelType.getModelType(configuredModelType);
+    public Optional<ModelType> getModelType() {
+        return Optional.ofNullable(modelType);
     }
 
     public boolean isWildcardEscapingEnabled() {
         return wildcardEscapingEnabled;
     }
 
-    public void setWildcardEscapingEnabled(boolean wildcardEscapingEnabled) {
-        this.wildcardEscapingEnabled = wildcardEscapingEnabled;
-    }
-
     @Override
     public String toString() {
-        return composeFullyQualifiedTableName(catalog, schema,
-                tableName, '.');
+        return composeFullyQualifiedTableName(catalog, schema, tableName, '.');
     }
 
     public boolean isDelimitIdentifiers() {
         return delimitIdentifiers;
     }
 
-    public void setDelimitIdentifiers(boolean delimitIdentifiers) {
-        this.delimitIdentifiers = delimitIdentifiers;
-    }
-
     public boolean isCountByExampleStatementEnabled() {
         return countByExampleStatementEnabled;
     }
 
-    public void setCountByExampleStatementEnabled(
-            boolean countByExampleStatementEnabled) {
-        this.countByExampleStatementEnabled = countByExampleStatementEnabled;
-    }
-
     public boolean isUpdateByExampleStatementEnabled() {
         return updateByExampleStatementEnabled;
-    }
-
-    public void setUpdateByExampleStatementEnabled(
-            boolean updateByExampleStatementEnabled) {
-        this.updateByExampleStatementEnabled = updateByExampleStatementEnabled;
     }
 
     public void validate(List<String> errors, int listPosition) {
@@ -422,52 +316,222 @@ public class TableConfiguration extends PropertyHolder {
         }
     }
 
-    public DomainObjectRenamingRule getDomainObjectRenamingRule() {
+    public @Nullable DomainObjectRenamingRule getDomainObjectRenamingRule() {
         return domainObjectRenamingRule;
     }
 
-    public void setDomainObjectRenamingRule(DomainObjectRenamingRule domainObjectRenamingRule) {
-        this.domainObjectRenamingRule = domainObjectRenamingRule;
-    }
-
-    public ColumnRenamingRule getColumnRenamingRule() {
-        return columnRenamingRule;
-    }
-
-    public void setColumnRenamingRule(ColumnRenamingRule columnRenamingRule) {
-        this.columnRenamingRule = columnRenamingRule;
+    public Optional<ColumnRenamingRule> getColumnRenamingRule() {
+        return Optional.ofNullable(columnRenamingRule);
     }
 
     public boolean isAllColumnDelimitingEnabled() {
         return isAllColumnDelimitingEnabled;
     }
 
-    public void setAllColumnDelimitingEnabled(
-            boolean isAllColumnDelimitingEnabled) {
-        this.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;
-    }
-
-    public String getMapperName() {
+    public @Nullable String getMapperName() {
         return mapperName;
     }
 
-    public void setMapperName(String mapperName) {
-        this.mapperName = mapperName;
-    }
-
-    public String getSqlProviderName() {
+    public @Nullable String getSqlProviderName() {
         return sqlProviderName;
     }
 
-    public void setSqlProviderName(String sqlProviderName) {
-        this.sqlProviderName = sqlProviderName;
-    }
-
-    public String getDynamicSqlSupportClassName() {
+    public @Nullable String getDynamicSqlSupportClassName() {
         return getProperty(PropertyRegistry.TABLE_DYNAMIC_SQL_SUPPORT_CLASS_NAME);
     }
 
-    public String getDynamicSqlTableObjectName() {
+    public @Nullable String getDynamicSqlTableObjectName() {
         return getProperty(PropertyRegistry.TABLE_DYNAMIC_SQL_TABLE_OBJECT_NAME);
+    }
+
+    public static class Builder extends AbstractBuilder<Builder> {
+        private @Nullable ModelType modelType;
+        private @Nullable String catalog;
+        private @Nullable String schema;
+        private @Nullable String tableName;
+        private @Nullable String domainObjectName;
+        private @Nullable String alias;
+        private boolean insertStatementEnabled = true;
+        private boolean selectByPrimaryKeyStatementEnabled = true;
+        private boolean selectByExampleStatementEnabled = true;
+        private boolean updateByPrimaryKeyStatementEnabled = true;
+        private boolean deleteByPrimaryKeyStatementEnabled = true;
+        private boolean deleteByExampleStatementEnabled = true;
+        private boolean countByExampleStatementEnabled = true;
+        private boolean updateByExampleStatementEnabled = true;
+        private boolean wildcardEscapingEnabled;
+        private boolean delimitIdentifiers;
+        private boolean isAllColumnDelimitingEnabled;
+        private @Nullable String selectByPrimaryKeyQueryId;
+        private @Nullable String selectByExampleQueryId;
+        private @Nullable String mapperName;
+        private @Nullable String sqlProviderName;
+        private @Nullable GeneratedKey generatedKey;
+        private @Nullable DomainObjectRenamingRule domainObjectRenamingRule;
+        private @Nullable ColumnRenamingRule columnRenamingRule;
+        private final List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<>();
+        private final List<ColumnOverride> columnOverrides = new ArrayList<>();
+        private final Map<IgnoredColumn, Boolean> ignoredColumns = new HashMap<>();
+
+        public TableConfiguration build() {
+            return new TableConfiguration(this);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        public Builder withModelType(@Nullable String tableModelType) {
+            this.modelType = tableModelType == null ? null : ModelType.getModelType(tableModelType);
+            return getThis();
+        }
+
+        public Builder withCatalog(@Nullable String catalog) {
+            this.catalog = catalog;
+            return this;
+        }
+
+        public Builder withSchema(@Nullable String schema) {
+            this.schema = schema;
+            return this;
+        }
+
+        public Builder withTableName(@Nullable String tableName) {
+            this.tableName = tableName;
+            return this;
+        }
+
+        public Builder withDomainObjectName(@Nullable String domainObjectName) {
+            this.domainObjectName = domainObjectName;
+            return this;
+        }
+
+        public Builder withAlias(@Nullable String alias) {
+            this.alias = alias;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withInsertStatementEnabled(boolean insertStatementEnabled) {
+            this.insertStatementEnabled = insertStatementEnabled;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withSelectByPrimaryKeyStatementEnabled(boolean selectByPrimaryKeyStatementEnabled) {
+            this.selectByPrimaryKeyStatementEnabled = selectByPrimaryKeyStatementEnabled;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withSelectByExampleStatementEnabled(boolean selectByExampleStatementEnabled) {
+            this.selectByExampleStatementEnabled = selectByExampleStatementEnabled;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withUpdateByPrimaryKeyStatementEnabled(boolean updateByPrimaryKeyStatementEnabled) {
+            this.updateByPrimaryKeyStatementEnabled = updateByPrimaryKeyStatementEnabled;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withDeleteByPrimaryKeyStatementEnabled(boolean deleteByPrimaryKeyStatementEnabled) {
+            this.deleteByPrimaryKeyStatementEnabled = deleteByPrimaryKeyStatementEnabled;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withDeleteByExampleStatementEnabled(boolean deleteByExampleStatementEnabled) {
+            this.deleteByExampleStatementEnabled = deleteByExampleStatementEnabled;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withCountByExampleStatementEnabled(boolean countByExampleStatementEnabled) {
+            this.countByExampleStatementEnabled = countByExampleStatementEnabled;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withUpdateByExampleStatementEnabled(boolean updateByExampleStatementEnabled) {
+            this.updateByExampleStatementEnabled = updateByExampleStatementEnabled;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withWildcardEscapingEnabled(boolean wildcardEscapingEnabled) {
+            this.wildcardEscapingEnabled = wildcardEscapingEnabled;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withDelimitIdentifiers(boolean delimitIdentifiers) {
+            this.delimitIdentifiers = delimitIdentifiers;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withAllColumnDelimitingEnabled(boolean isAllColumnDelimitingEnabled) {
+            this.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;
+            return this;
+        }
+
+        public Builder withSelectByPrimaryKeyQueryId(@Nullable String selectByPrimaryKeyQueryId) {
+            this.selectByPrimaryKeyQueryId = selectByPrimaryKeyQueryId;
+            return this;
+        }
+
+        public Builder withSelectByExampleQueryId(@Nullable String selectByExampleQueryId) {
+            this.selectByExampleQueryId = selectByExampleQueryId;
+            return this;
+        }
+
+        public Builder withMapperName(@Nullable String mapperName) {
+            this.mapperName = mapperName;
+            return this;
+        }
+
+        public Builder withSqlProviderName(@Nullable String sqlProviderName) {
+            this.sqlProviderName = sqlProviderName;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withGeneratedKey(@Nullable GeneratedKey generatedKey) {
+            this.generatedKey = generatedKey;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withDomainObjectRenamingRule(@Nullable DomainObjectRenamingRule domainObjectRenamingRule) {
+            this.domainObjectRenamingRule = domainObjectRenamingRule;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withColumnRenamingRule(@Nullable ColumnRenamingRule columnRenamingRule) {
+            this.columnRenamingRule = columnRenamingRule;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withIgnoredColumnPattern(IgnoredColumnPattern ignoredColumnPattern) {
+            this.ignoredColumnPatterns.add(ignoredColumnPattern);
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withIgnoredColumn(IgnoredColumn ignoredColumn) {
+            this.ignoredColumns.put(ignoredColumn, Boolean.FALSE);
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withColumnOverride(ColumnOverride columnOverride) {
+            this.columnOverrides.add(columnOverride);
+            return this;
+        }
     }
 }

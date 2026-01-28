@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2025 the original author or authors.
+       Copyright 2006-2026 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.mybatis.generator</groupId>
   <artifactId>org.mybatis.generator.eclipse.parent</artifactId>
-  <version>1.4.3-SNAPSHOT</version>
+  <version>2.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>MyBatis Generator - Eclipse Feature</name>
   <inceptionYear>2006</inceptionYear>
@@ -40,7 +40,7 @@
   </modules>
 
   <properties>
-    <tycho-version>5.0.0</tycho-version>
+    <tycho-version>5.0.2</tycho-version>
     <license.version>5.0.0</license.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -91,7 +91,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.2.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -193,7 +193,7 @@
         <version>${tycho-version}</version>
         <configuration>
           <target>
-            <file>../releng/2022-09.target</file>
+            <file>../releng/2024-09.target</file>
           </target>
           <environments>
             <environment>
@@ -232,7 +232,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.13</version>
+        <version>0.8.14</version>
         <configuration>
           <append>true</append>
         </configuration>

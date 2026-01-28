@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,9 +21,11 @@ import org.mybatis.generator.api.dom.java.CompilationUnitVisitor;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.api.dom.java.TopLevelEnumeration;
+import org.mybatis.generator.api.dom.java.TopLevelRecord;
 import org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelEnumerationRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
+import org.mybatis.generator.api.dom.java.render.TopLevelRecordRenderer;
 import org.mybatis.generator.config.Context;
 
 /**
@@ -32,8 +34,6 @@ import org.mybatis.generator.config.Context;
  * @author Jeff Butler
  */
 public class DefaultJavaFormatter implements JavaFormatter, CompilationUnitVisitor<String> {
-    protected Context context;
-
     @Override
     public String getFormattedContent(CompilationUnit compilationUnit) {
         return compilationUnit.accept(this);
@@ -41,7 +41,7 @@ public class DefaultJavaFormatter implements JavaFormatter, CompilationUnitVisit
 
     @Override
     public void setContext(Context context) {
-        this.context = context;
+        // context is not used in the default formatter
     }
 
     @Override
@@ -57,5 +57,10 @@ public class DefaultJavaFormatter implements JavaFormatter, CompilationUnitVisit
     @Override
     public String visit(Interface topLevelInterface) {
         return new TopLevelInterfaceRenderer().render(topLevelInterface);
+    }
+
+    @Override
+    public String visit(TopLevelRecord topLevelRecord) {
+        return new TopLevelRecordRenderer().render(topLevelRecord);
     }
 }

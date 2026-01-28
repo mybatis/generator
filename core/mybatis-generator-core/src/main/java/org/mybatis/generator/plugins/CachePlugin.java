@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -84,7 +84,7 @@ public class CachePlugin extends PluginAdapter {
     public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
 
         XmlElement element = new XmlElement("cache"); //$NON-NLS-1$
-        context.getCommentGenerator().addComment(element);
+        commentGenerator.addComment(element);
 
         for (CacheProperty cacheProperty : CacheProperty.values()) {
             addAttributeIfExists(element, introspectedTable, cacheProperty);

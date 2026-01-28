@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.PropertySet;
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
@@ -81,38 +82,38 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  */
 public class GeneratorAntTask extends Task {
 
-    private String configfile;
+    private @Nullable String configfile;
     private boolean overwrite;
-    private PropertySet propertyset;
+    private @Nullable PropertySet propertyset;
     private boolean verbose;
-    private String contextIds;
-    private String fullyQualifiedTableNames;
-
-    public GeneratorAntTask() {
-        super();
-    }
+    private @Nullable String contextIds;
+    private @Nullable String fullyQualifiedTableNames;
 
     @Override
     public void execute() {
         File configurationFile = calculateConfigurationFile();
-        Set<String> fullyqualifiedTables = calculateTables();
+        Set<String> fullyQualifiedTables = calculateTables();
         Set<String> contexts = calculateContexts();
 
         List<String> warnings = new ArrayList<>();
         try {
-            Properties p = propertyset == null ? null : propertyset
-                    .getProperties();
+            Properties p = propertyset == null ? null : propertyset.getProperties();
 
-            ConfigurationParser cp = new ConfigurationParser(p, warnings);
+            ConfigurationParser cp = new ConfigurationParser(p);
             Configuration config = cp.parseConfiguration(configurationFile);
+            warnings.addAll(cp.getWarnings());
 
             DefaultShellCallback callback = new DefaultShellCallback(overwrite);
 
-            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+            MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                    .withConfiguration(config)
+                    .withShellCallback(callback)
+                    .withProgressCallback(new AntProgressCallback(this, verbose))
+                    .withContextIds(contexts)
+                    .withFullyQualifiedTableNames(fullyQualifiedTables)
+                    .build();
 
-            myBatisGenerator.generate(new AntProgressCallback(this, verbose), contexts,
-                    fullyqualifiedTables);
-
+            warnings.addAll(myBatisGenerator.generateAndWrite());
         } catch (XMLParserException | InvalidConfigurationException e) {
             for (String error : e.getErrors()) {
                 log(error, Project.MSG_ERR);
@@ -150,8 +151,7 @@ public class GeneratorAntTask extends Task {
     private Set<String> calculateTables() {
         Set<String> fullyqualifiedTables = new HashSet<>();
         if (stringHasValue(fullyQualifiedTableNames)) {
-            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
-                    ","); //$NON-NLS-1$
+            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();
                 if (!s.isEmpty()) {
@@ -170,13 +170,12 @@ public class GeneratorAntTask extends Task {
 
         Path configurationFile = Path.of(configfile);
         if (Files.notExists(configurationFile)) {
-            throw new BuildException(getString(
-                    "RuntimeError.1", configfile)); //$NON-NLS-1$
+            throw new BuildException(getString("RuntimeError.1", configfile)); //$NON-NLS-1$
         }
         return configurationFile.toFile();
     }
 
-    public String getConfigfile() {
+    public @Nullable String getConfigfile() {
         return configfile;
     }
 
@@ -208,7 +207,7 @@ public class GeneratorAntTask extends Task {
         this.verbose = verbose;
     }
 
-    public String getContextIds() {
+    public @Nullable String getContextIds() {
         return contextIds;
     }
 
@@ -216,7 +215,7 @@ public class GeneratorAntTask extends Task {
         this.contextIds = contextIds;
     }
 
-    public String getFullyQualifiedTableNames() {
+    public @Nullable String getFullyQualifiedTableNames() {
         return fullyQualifiedTableNames;
     }
 

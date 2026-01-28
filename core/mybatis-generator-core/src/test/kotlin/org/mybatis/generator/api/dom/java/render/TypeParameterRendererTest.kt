@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,26 +25,28 @@ class TypeParameterRendererTest {
     @Test
     fun testSimpleTypeParameterRender() {
         val renderer = TypeParameterRenderer()
+        val tlc = TopLevelClass(FullyQualifiedJavaType("com.foo.Baz"))
         val tp = TypeParameter("someName")
-        assertThat(renderer.render(tp, null)).isEqualTo("someName")
+        assertThat(renderer.render(tp, tlc)).isEqualTo("someName")
     }
 
     @Test
     fun testComplexTypeParameterRenderNoCU() {
         val renderer = TypeParameterRenderer()
-	val extendsTypes = listOf(FullyQualifiedJavaType("com.foo.Bar"))
+        val tlc = TopLevelClass(FullyQualifiedJavaType("com.foo.Baz"))
+        val extendsTypes = listOf(FullyQualifiedJavaType("com.foo.Bar"))
         val tp = TypeParameter("someName", extendsTypes)
-        assertThat(renderer.render(tp, null)).isEqualTo("someName extends Bar")
+        assertThat(renderer.render(tp, tlc)).isEqualTo("someName extends Bar")
     }
 
     @Test
     fun testComplexTypeParameterRenderWithCU() {
         val renderer = TypeParameterRenderer()
-	val tlc = TopLevelClass(FullyQualifiedJavaType("com.foo.Baz"))
-	tlc.addImportedType("com.bar.Foo2")
-	val extendsTypes = listOf(FullyQualifiedJavaType("java.lang.String"),
-	        FullyQualifiedJavaType("com.foo.Bar"), FullyQualifiedJavaType("com.bar.Foo"),
-	        FullyQualifiedJavaType("com.bar.Foo2"))
+        val tlc = TopLevelClass(FullyQualifiedJavaType("com.foo.Baz"))
+        tlc.addImportedType("com.bar.Foo2")
+        val extendsTypes = listOf(FullyQualifiedJavaType("java.lang.String"),
+            FullyQualifiedJavaType("com.foo.Bar"), FullyQualifiedJavaType("com.bar.Foo"),
+            FullyQualifiedJavaType("com.bar.Foo2"))
         val tp = TypeParameter("someName", extendsTypes)
         assertThat(renderer.render(tp, tlc)).isEqualTo("someName extends String & Bar & com.bar.Foo & Foo2")
     }

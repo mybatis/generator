@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,26 +18,11 @@ package org.mybatis.generator.api;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 
 public class GeneratedKotlinFile extends GeneratedFile {
-
     private final KotlinFile kotlinFile;
 
-    private final String fileEncoding;
-
-    private final KotlinFormatter kotlinFormatter;
-
-    public GeneratedKotlinFile(KotlinFile kotlinFile,
-            String targetProject,
-            String fileEncoding,
-            KotlinFormatter kotlinFormatter) {
+    public GeneratedKotlinFile(KotlinFile kotlinFile, String targetProject) {
         super(targetProject);
         this.kotlinFile = kotlinFile;
-        this.fileEncoding = fileEncoding;
-        this.kotlinFormatter = kotlinFormatter;
-    }
-
-    @Override
-    public String getFormattedContent() {
-        return kotlinFormatter.getFormattedContent(kotlinFile);
     }
 
     @Override
@@ -55,8 +40,7 @@ public class GeneratedKotlinFile extends GeneratedFile {
         return false;
     }
 
-    @Override
-    public String getFileEncoding() {
-        return fileEncoding;
+    public KotlinFile getKotlinFile() {
+        return kotlinFile;
     }
 }

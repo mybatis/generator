@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,25 +20,21 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 
 public class IgnoredColumn {
-
     protected final String columnName;
+    private final boolean isColumnNameDelimited;
 
-    private boolean isColumnNameDelimited;
-
-    public IgnoredColumn(String columnName) {
-        super();
-        this.columnName = columnName;
-        isColumnNameDelimited = stringContainsSpace(columnName);
+    public IgnoredColumn(@Nullable String columnName, boolean isColumnNameDelimited) {
+        this.columnName = Objects.requireNonNull(columnName);
+        this.isColumnNameDelimited = isColumnNameDelimited || stringContainsSpace(columnName);
     }
 
     public String getColumnName() {
         return columnName;
-    }
-
-    public void setColumnNameDelimited(boolean isColumnNameDelimited) {
-        this.isColumnNameDelimited = isColumnNameDelimited;
     }
 
     @Override
@@ -57,8 +53,7 @@ public class IgnoredColumn {
 
     public void validate(List<String> errors, String tableName) {
         if (!stringHasValue(columnName)) {
-            errors.add(getString("ValidationError.21", //$NON-NLS-1$
-                    tableName));
+            errors.add(getString("ValidationError.21", tableName)); //$NON-NLS-1$
         }
     }
 

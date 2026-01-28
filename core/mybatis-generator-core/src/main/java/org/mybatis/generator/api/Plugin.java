@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -95,6 +95,13 @@ public interface Plugin {
     void setProperties(Properties properties);
 
     /**
+     * Set the comment generator for the current context.
+     *
+     * @param commentGenerator the comment generator
+     */
+    void setCommentGenerator(CommentGenerator commentGenerator);
+
+    /**
      * This method is called just before the getGeneratedXXXFiles methods are called on the introspected table. Plugins
      * can implement this method to override any of the default attributes, or change the results of database
      * introspection, before any code generation activities occur. Attributes are listed as static Strings with the
@@ -164,11 +171,11 @@ public interface Plugin {
         return Collections.emptyList();
     }
 
-    default List<GeneratedFile> contextGenerateAdditionalFiles() {
+    default List<GenericGeneratedFile> contextGenerateAdditionalFiles() {
         return Collections.emptyList();
     }
 
-    default List<GeneratedFile> contextGenerateAdditionalFiles(IntrospectedTable introspectedTable) {
+    default List<GenericGeneratedFile> contextGenerateAdditionalFiles(IntrospectedTable introspectedTable) {
         return Collections.emptyList();
     }
 
@@ -215,90 +222,6 @@ public interface Plugin {
      *         plugins.
      */
     default boolean clientGenerated(Interface interfaze, IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    /**
-     * This method is no longer called.
-     *
-     * @param method
-     *     the generated count method
-     * @param interfaze
-     *     the partially generated mapper interfaces
-     * @param introspectedTable
-     *     The class containing information about the table as introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     * @deprecated this method is no longer called
-     */
-    @Deprecated
-    default boolean clientBasicCountMethodGenerated(Method method, Interface interfaze,
-                                                    IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    /**
-     * This method is no longer called.
-     *
-     * @param kotlinFunction
-     *     the generated function
-     * @param kotlinFile
-     *     the partially generated file
-     * @param introspectedTable
-     *     The class containing information about the table as introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     * @deprecated this method is no longer called
-     */
-    @Deprecated
-    default boolean clientBasicCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    /**
-     * This method is no longer called.
-     *
-     * @param method
-     *     the generated delete method
-     * @param interfaze
-     *     the partially generated mapper interfaces
-     * @param introspectedTable
-     *     The class containing information about the table as introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     * @deprecated No longer called
-     */
-    @Deprecated
-    default boolean clientBasicDeleteMethodGenerated(Method method, Interface interfaze,
-                                                     IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    /**
-     * This method is no longer called.
-     *
-     * @param kotlinFunction
-     *     the generated delete function
-     * @param kotlinFile
-     *     the partially generated file
-     * @param introspectedTable
-     *     The class containing information about the table as introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     * @deprecated No longer called
-     */
-    @Deprecated
-    default boolean clientBasicDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
         return true;
     }
 
@@ -387,42 +310,6 @@ public interface Plugin {
     }
 
     /**
-     * This method is no longer called.
-     *
-     * @param method
-     *     the generated insert method
-     * @param interfaze
-     *     the partially generated mapper interfaces
-     * @param introspectedTable
-     *     The class containing information about the table as introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     * @deprecated this method is no longer called
-     */
-    @Deprecated
-    default boolean clientBasicInsertMultipleHelperMethodGenerated(Method method, Interface interfaze,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    /**
-     * Unused legacy method.
-     *
-     * @param kotlinFunction generated function
-     * @param kotlinFile generated file
-     * @param introspectedTable introspected table
-     * @return true
-     * @deprecated this method is no longer called
-     */
-    @Deprecated
-    default boolean clientBasicInsertMultipleHelperMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    /**
      * This method is called when the selectMany method has been generated for the mapper interface.
      * This method is only called in the MyBatis3DynamicSql runtime.
      *
@@ -468,48 +355,6 @@ public interface Plugin {
     }
 
     default boolean clientBasicSelectOneMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    /**
-     * This method is no longer called.
-     *
-     * @param method
-     *     the generated update method
-     * @param interfaze
-     *     the partially generated mapper interfaces
-     * @param introspectedTable
-     *     The class containing information about the table as introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     * @deprecated no longer called
-     */
-    @Deprecated
-    default boolean clientBasicUpdateMethodGenerated(Method method, Interface interfaze,
-                                                     IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    /**
-     * This method is no longer called.
-     *
-     * @param kotlinFunction
-     *     the generated update function
-     * @param kotlinFile
-     *     the partially generated file
-     * @param introspectedTable
-     *     The class containing information about the table as introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     * @deprecated no longer called
-     */
-    @Deprecated
-    default boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return true;
     }
@@ -1331,8 +1176,7 @@ public interface Plugin {
      *         plugins. Also, if any plugin returns false, then the
      *         <code>sqlMapGenerated</code> method will not be called.
      */
-    default boolean sqlMapDocumentGenerated(Document document,
-            IntrospectedTable introspectedTable) {
+    default boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
         return true;
     }
 
@@ -1992,25 +1836,6 @@ public interface Plugin {
         return true;
     }
 
-    /**
-     * This method is no longer called.
-     *
-     * @param extensionsFile
-     *     the partially generated file
-     * @param introspectedTable
-     *     The class containing information about the table as introspected from the database
-     * @return true if the file should be generated, false if the generated
-     *         file should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     *
-     * @deprecated this method is no longer called
-     */
-    @Deprecated
-    default boolean mapperExtensionsGenerated(KotlinFile extensionsFile, IntrospectedTable introspectedTable) {
-        return true;
-    }
-
     default boolean mapperGenerated(KotlinFile mapperFile, KotlinType mapper, IntrospectedTable introspectedTable) {
         return true;
     }
@@ -2037,7 +1862,7 @@ public interface Plugin {
 
     /**
      * The motivation for adding this method can be found in
-     * https://github.com/mybatis/generator/issues/1116
+     * <a href="https://github.com/mybatis/generator/issues/1116">https://github.com/mybatis/generator/issues/1116</a>
      *
      * <p>This method is called when the updateByPrimaryKey method
      * has been generated in the dynamic SQL runtime client interface.

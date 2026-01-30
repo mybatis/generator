@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -44,13 +44,11 @@ class JavaFileMergerTest {
     }
 
     static Stream<Arguments> testCases() {
-        Reflections reflections = new Reflections(new ConfigurationBuilder()
+        return new Reflections(new ConfigurationBuilder()
                 .forPackages("org.mybatis.generator.merge.java")
-                .addScanners(Scanners.SubTypes));
-
-        return reflections.getSubTypesOf(MergeTestCase.class).stream()
+                .addScanners(Scanners.SubTypes))
+                .getSubTypesOf(MergeTestCase.class).stream()
                 .flatMap(JavaFileMergerTest::testCaseVariants);
-
     }
 
     private static <T extends MergeTestCase<?>> Stream<Arguments> testCaseVariants(Class<T> clazz) {

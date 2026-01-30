@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.internal;
+package org.mybatis.generator.merge.xml;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
@@ -33,6 +33,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.ShellException;
+import org.mybatis.generator.internal.DomWriter;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;

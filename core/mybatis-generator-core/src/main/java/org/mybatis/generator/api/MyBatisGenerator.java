@@ -49,7 +49,7 @@ import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.generator.internal.ObjectFactory;
-import org.mybatis.generator.internal.XmlFileMergerJaxp;
+import org.mybatis.generator.merge.xml.XmlFileMergerJaxp;
 
 /**
  * This class is the main interface to MyBatis generator. A typical execution of the tool involves these steps:

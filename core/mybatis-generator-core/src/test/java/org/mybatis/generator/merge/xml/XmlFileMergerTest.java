@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.internal;
+package org.mybatis.generator.merge.xml;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,6 +31,7 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.XmlConstants;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.DefaultCommentGenerator;
 import org.xml.sax.InputSource;
 
 /**

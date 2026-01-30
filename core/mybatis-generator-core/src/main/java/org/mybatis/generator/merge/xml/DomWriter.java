@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.internal;
+package org.mybatis.generator.merge.xml;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
@@ -56,7 +56,7 @@ public class DomWriter {
 
     public synchronized String getFormattedDocument() throws ShellException {
         write(document);
-        return sw.toString();
+        return sw.toString() + '\n';
     }
 
     protected Attr[] sortAttributes(@Nullable NamedNodeMap attrs) {

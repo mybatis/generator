@@ -19,8 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Stream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -28,9 +26,6 @@ import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.merge.MergeTestCase;
 
 class JavaFileMergerTest {
-
-    private static final Log log = LogFactory.getLog(JavaFileMergerTest.class);
-
     @ParameterizedTest
     @MethodSource("testCases")
     void allTestCases(MergeTestCase<?> testCase, String parameter) throws Exception {

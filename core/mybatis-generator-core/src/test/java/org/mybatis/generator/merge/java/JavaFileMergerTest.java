@@ -32,7 +32,7 @@ class JavaFileMergerTest {
         var javadocTags = MergeConstants.getOldElementTags();
         var actual = JavaFileMerger.getMergedSource(testCase.newContent(parameter),
                 testCase.existingContent(parameter), javadocTags);
-        assertThat(actual).isEqualTo(testCase.expectedContentAfterMerge(parameter));
+        assertThat(actual).isEqualToNormalizingNewlines(testCase.expectedContentAfterMerge(parameter));
     }
 
     static Stream<Arguments> testCases() {

@@ -33,7 +33,7 @@ class XmlFileMergerTest {
         InputSource existingFile = new InputSource(new StringReader(testCase.existingContent(parameter)));
         InputSource newFile = new InputSource(new StringReader(testCase.newContent(parameter)));
         var actual = XmlFileMergerJaxp.getMergedSource(newFile, existingFile, "Fred");
-        assertThat(actual).isEqualTo(testCase.expectedContentAfterMerge(parameter));
+        assertThat(actual).isEqualToNormalizingNewlines(testCase.expectedContentAfterMerge(parameter));
     }
 
     static Stream<Arguments> testCases() {

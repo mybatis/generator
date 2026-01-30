@@ -1,16 +1,9 @@
 package org.mybatis.generator.merge.java;
 
-import java.util.stream.Stream;
-
-import org.junit.jupiter.params.provider.Arguments;
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldPreserveMultipleCustomMethodsWhenMerging implements MergeTestCase {
-
-    @Override
-    public Stream<Arguments> variants() {
-        return Stream.of(Arguments.of(this, null));
-    }
+public class ShouldPreserveMultipleCustomMethodsWhenMerging
+        implements MergeTestCase<ShouldPreserveMultipleCustomMethodsWhenMerging> {
 
     @Override
     public String existingContent(String parameter) {
@@ -92,5 +85,10 @@ public class ShouldPreserveMultipleCustomMethodsWhenMerging implements MergeTest
                     }
                 }
                 """;
+    }
+
+    @Override
+    public ShouldPreserveMultipleCustomMethodsWhenMerging self() {
+        return this;
     }
 }

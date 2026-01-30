@@ -1,19 +1,13 @@
 package org.mybatis.generator.merge.java;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.List;
 
-import org.junit.jupiter.params.provider.Arguments;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags implements MergeTestCase {
-    @Override
-    public Stream<Arguments> variants() {
-        return Arrays.stream(MergeConstants.getOldElementTags()).map(et ->
-            Arguments.of(this, et)
-        );
-    }
+public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags
+        implements MergeTestCase<ShouldPreserveCustomMethodsWithAllSupportedJavadocTags> {
 
     @Override
     public String existingContent(String parameter) {
@@ -72,5 +66,15 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags implements M
                     }
                 }
                 """;
+    }
+
+    @Override
+    public ShouldPreserveCustomMethodsWithAllSupportedJavadocTags self() {
+        return this;
+    }
+
+    @Override
+    public List<String> parameterVariants() {
+        return Arrays.stream(MergeConstants.getOldElementTags()).toList();
     }
 }

@@ -1,16 +1,11 @@
 package org.mybatis.generator.merge.java;
 
-import java.util.stream.Stream;
+import java.util.List;
 
-import org.junit.jupiter.params.provider.Arguments;
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation implements MergeTestCase {
-    @Override
-    public Stream<Arguments> variants() {
-        return Stream.of("javax.annotation.Generated", "jakarta.annotation.Generated")
-            .map(et -> Arguments.of(this, et));
-    }
+public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation
+        implements MergeTestCase<ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation> {
 
     @Override
     public String existingContent(String parameter) {
@@ -85,4 +80,13 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation imple
                 """, parameter);
     }
 
+    @Override
+    public ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation self() {
+        return this;
+    }
+
+    @Override
+    public List<String> parameterVariants() {
+        return List.of("javax.annotation.Generated", "jakarta.annotation.Generated");
+    }
 }

@@ -1,15 +1,9 @@
 package org.mybatis.generator.merge.java;
 
-import java.util.stream.Stream;
-
-import org.junit.jupiter.params.provider.Arguments;
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag implements MergeTestCase {
-    public Stream<Arguments> variants() {
-        return Stream.of(Arguments.of(this, null));
-    }
-
+public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag
+        implements MergeTestCase<ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag> {
     @Override
     public String existingContent(String parameter) {
         return """
@@ -59,4 +53,10 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag implements Me
                 }
                 """;
     }
+
+    @Override
+    public ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag self() {
+        return this;
+    }
+
 }

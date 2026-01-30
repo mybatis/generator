@@ -54,8 +54,7 @@ public class IdenticalFilesShouldBeTheSameAfterMerge implements MergeTestCase<Id
                        -->
                        select foo from bar where foo <![CDATA[ < ]]> 22
                    </select>
-               </mapper>
-               """;
+               </mapper>""";
     }
 
     @Override

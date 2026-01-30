@@ -56,7 +56,7 @@ public class DomWriter {
 
     public synchronized String getFormattedDocument() throws ShellException {
         write(document);
-        return sw.toString() + '\n';
+        return sw.toString();
     }
 
     protected Attr[] sortAttributes(@Nullable NamedNodeMap attrs) {

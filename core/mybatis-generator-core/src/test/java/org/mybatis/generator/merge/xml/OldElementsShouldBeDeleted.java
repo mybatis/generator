@@ -66,8 +66,7 @@ public class OldElementsShouldBeDeleted implements MergeTestCase<OldElementsShou
                    <!-- @mbg.generated -->
                  </select>
                  <select id="customSelect" />
-               </mapper>
-               """;
+               </mapper>""";
     }
 
     @Override

@@ -28,12 +28,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.merge.MergeTestCase;
 import org.xml.sax.InputSource;
 
-/**
- * This test is related to issue #87 where XML files are slightly different
- * after running through the XML merger.
- *
- * @author Jeff Butler
- */
 class XmlFileMergerTest {
     private static final Log log = LogFactory.getLog(XmlFileMergerTest.class);
 

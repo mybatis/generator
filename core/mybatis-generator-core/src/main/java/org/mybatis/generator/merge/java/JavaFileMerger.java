@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.internal;
+package org.mybatis.generator.merge.java;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 

@@ -228,7 +228,7 @@ public class JavaFileMerger {
         }
     }
 
-    private static TypeDeclaration<?> findMainTypeDeclaration(CompilationUnit compilationUnit) {
+    private static @Nullable TypeDeclaration<?> findMainTypeDeclaration(CompilationUnit compilationUnit) {
         // Return the first public type declaration, or the first type declaration if no public one exists
         TypeDeclaration<?> firstType = null;
         for (TypeDeclaration<?> typeDeclaration : compilationUnit.getTypes()) {

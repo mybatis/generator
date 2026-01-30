@@ -26,9 +26,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.merge.MergeTestCase;
-import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
-import org.reflections.util.ConfigurationBuilder;
 
 class JavaFileMergerTest {
 
@@ -44,20 +41,6 @@ class JavaFileMergerTest {
     }
 
     static Stream<Arguments> testCases() {
-        return new Reflections(new ConfigurationBuilder()
-                .forPackages("org.mybatis.generator.merge.java")
-                .addScanners(Scanners.SubTypes))
-                .getSubTypesOf(MergeTestCase.class).stream()
-                .flatMap(JavaFileMergerTest::testCaseVariants);
-    }
-
-    private static <T extends MergeTestCase<?>> Stream<Arguments> testCaseVariants(Class<T> clazz) {
-        try {
-            T instance = clazz.getDeclaredConstructor().newInstance();
-            return instance.variants();
-        } catch (Exception e) {
-            log.error("Failed to instantiate test case " + clazz.getName(), e);
-            return Stream.empty();
-        }
+        return MergeTestCase.findTestCases("org.mybatis.generator.merge.java");
     }
 }

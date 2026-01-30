@@ -33,7 +33,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.ShellException;
-import org.mybatis.generator.internal.DomWriter;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;

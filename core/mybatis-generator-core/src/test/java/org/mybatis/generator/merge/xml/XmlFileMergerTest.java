@@ -15,23 +15,17 @@
  */
 package org.mybatis.generator.merge.xml;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.StringReader;
-import java.util.Properties;
+import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
-import org.mybatis.generator.api.CommentGenerator;
-import org.mybatis.generator.api.GeneratedXmlFile;
-import org.mybatis.generator.api.dom.DefaultXmlFormatter;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.Document;
-import org.mybatis.generator.api.dom.xml.TextElement;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.XmlConstants;
-import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.internal.DefaultCommentGenerator;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mybatis.generator.merge.MergeTestCase;
 import org.xml.sax.InputSource;
 
 /**
@@ -41,170 +35,18 @@ import org.xml.sax.InputSource;
  * @author Jeff Butler
  */
 class XmlFileMergerTest {
+    private static final Log log = LogFactory.getLog(XmlFileMergerTest.class);
 
-    @Test
-    void testThatFilesAreTheSameAfterMerge() throws Exception {
-        DefaultXmlFormatter xmlFormatter = new DefaultXmlFormatter();
-        Properties p = new Properties();
-        p.setProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_DATE, "true");
-        CommentGenerator commentGenerator = new DefaultCommentGenerator();
-        commentGenerator.addConfigurationProperties(p);
-
-        Document document = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
-                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, getSqlMapElement(commentGenerator));
-
-        GeneratedXmlFile generatedFile1 = new GeneratedXmlFile(document, "TestMapper.xml", "org.mybatis.test", "src",
-                true);
-        String formattedFile1 = xmlFormatter.getFormattedContent(generatedFile1.getDocument());
-        InputSource is1 = new InputSource(new StringReader(formattedFile1));
-
-        GeneratedXmlFile generatedFile2 = new GeneratedXmlFile(document, "TestMapper.xml", "org.mybatis.test", "src",
-                true);
-        InputSource is2 = new InputSource(new StringReader(xmlFormatter.getFormattedContent(generatedFile2.getDocument())));
-
-        String mergedSource = XmlFileMergerJaxp.getMergedSource(is1, is2, "TestMapper.xml");
-
-        assertEquals(formattedFile1, mergedSource);
+    @ParameterizedTest
+    @MethodSource("testCases")
+    void allTestCases(MergeTestCase<?> testCase, String parameter) throws Exception {
+        InputSource existingFile = new InputSource(new StringReader(testCase.existingContent(parameter)));
+        InputSource newFile = new InputSource(new StringReader(testCase.newContent(parameter)));
+        var actual = XmlFileMergerJaxp.getMergedSource(newFile, existingFile, "Fred");
+        assertThat(actual).isEqualTo(testCase.expectedContentAfterMerge(parameter));
     }
 
-    @Test
-    void testThatOldElementsAreDeleted() throws Exception {
-
-        XmlElement root = new XmlElement("mapper");
-        Document existingDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
-                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, root);
-
-        XmlElement element = new XmlElement("select");
-        element.addAttribute(new Attribute("id", "abatorgenerated_select"));
-        root.addElement(element);
-
-        element = new XmlElement("select");
-        element.addAttribute(new Attribute("id", "ibatorgenerated_select"));
-        root.addElement(element);
-
-        element = new XmlElement("select");
-        element.addAttribute(new Attribute("id", "oldway1"));
-        element.addElement(new TextElement("<!-- @ibatorgenerated -->"));
-        root.addElement(element);
-
-        element = new XmlElement("select");
-        element.addAttribute(new Attribute("id", "oldway2"));
-        element.addElement(new TextElement("<!-- @abatorgenerated -->"));
-        root.addElement(element);
-
-        element = new XmlElement("select");
-        element.addAttribute(new Attribute("id", "oldway3"));
-        element.addElement(new TextElement("<!-- @mbggenerated -->"));
-        root.addElement(element);
-
-        element = new XmlElement("select");
-        element.addAttribute(new Attribute("id", "oldway4"));
-        element.addElement(new TextElement("")); // add some white space for the test
-        element.addElement(new TextElement("<!-- @mbg.generated -->"));
-        root.addElement(element);
-
-        element = new XmlElement("select");
-        element.addAttribute(new Attribute("id", "customSelect"));
-        root.addElement(element);
-
-        root = new XmlElement("mapper");
-        Document newDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
-                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, root);
-
-        element = new XmlElement("select");
-        element.addAttribute(new Attribute("id", "newway"));
-        element.addElement(new TextElement("<!-- @mbg.generated -->"));
-        root.addElement(element);
-
-        root = new XmlElement("mapper");
-        Document expectedDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
-                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, root);
-
-        element = new XmlElement("select");
-        element.addAttribute(new Attribute("id", "newway"));
-        element.addElement(new TextElement("<!-- @mbg.generated -->"));
-        root.addElement(element);
-
-        element = new XmlElement("select");
-        element.addAttribute(new Attribute("id", "customSelect"));
-        root.addElement(element);
-
-        DefaultXmlFormatter xmlFormatter = new DefaultXmlFormatter();
-        GeneratedXmlFile existingGeneratedFile = new GeneratedXmlFile(existingDocument, "TestMapper.xml", "org.mybatis.test", "src",
-                true);
-        InputSource existingFileInputSource = new InputSource(new StringReader(xmlFormatter.getFormattedContent(existingGeneratedFile.getDocument())));
-
-        GeneratedXmlFile newGeneratedFile = new GeneratedXmlFile(newDocument, "TestMapper.xml", "org.mybatis.test", "src",
-                true);
-        InputSource newFileInputSource = new InputSource(new StringReader(xmlFormatter.getFormattedContent(newGeneratedFile.getDocument())));
-
-        GeneratedXmlFile expectedGeneratedFile = new GeneratedXmlFile(expectedDocument, "TestMapper.xml", "org.mybatis.test", "src",
-                true);
-
-        String mergedSource = XmlFileMergerJaxp.getMergedSource(newFileInputSource, existingFileInputSource, "TestMapper.xml");
-
-        assertEquals(xmlFormatter.getFormattedContent(expectedGeneratedFile.getDocument()), mergedSource);
-    }
-
-    private XmlElement getSqlMapElement(CommentGenerator commentGenerator) {
-
-        XmlElement answer = new XmlElement("mapper");
-        String namespace = "org.mybatis.test.TestMapper";
-        answer.addAttribute(new Attribute("namespace", namespace));
-
-        commentGenerator.addRootComment(answer);
-
-        addInsertElement(commentGenerator, answer);
-        addCdataNode1(commentGenerator, answer);
-        addCdataNode2(commentGenerator, answer);
-
-        return answer;
-    }
-
-    private void addInsertElement(CommentGenerator commentGenerator, XmlElement parentElement) {
-        XmlElement answer = new XmlElement("insert");
-
-        answer.addAttribute(new Attribute("id", "insert"));
-
-        FullyQualifiedJavaType parameterType;
-        parameterType = new FullyQualifiedJavaType("org.mybatis.test.TestRecord");
-
-        answer.addAttribute(new Attribute("parameterType", parameterType.getFullyQualifiedName()));
-
-        commentGenerator.addComment(answer);
-
-        String insertClause = "insert into " +
-                "myschema.mytable" +
-                " (id, description)";
-
-        String valuesClause = "values (#{id}, #{description})";
-
-        answer.addElement(new TextElement(insertClause));
-
-        answer.addElement(new TextElement(valuesClause));
-
-        parentElement.addElement(answer);
-    }
-
-    private void addCdataNode1(CommentGenerator commentGenerator, XmlElement parentElement) {
-        XmlElement answer = new XmlElement("select");
-        answer.addAttribute(new Attribute("id", "selectWithCdata1"));
-        commentGenerator.addComment(answer);
-
-        answer.addElement(new TextElement("<![CDATA["));
-        answer.addElement(new TextElement("select foo from bar where foo < 22"));
-        answer.addElement(new TextElement("]]>"));
-
-        parentElement.addElement(answer);
-    }
-
-    private void addCdataNode2(CommentGenerator commentGenerator, XmlElement parentElement) {
-        XmlElement answer = new XmlElement("select");
-        answer.addAttribute(new Attribute("id", "selectWithCdata2"));
-        commentGenerator.addComment(answer);
-
-        answer.addElement(new TextElement("select foo from bar where foo <![CDATA[ < ]]> 22"));
-
-        parentElement.addElement(answer);
+    static Stream<Arguments> testCases() {
+        return MergeTestCase.findTestCases("org.mybatis.generator.merge.xml");
     }
 }

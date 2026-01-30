@@ -19,9 +19,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.params.provider.Arguments;
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.util.ConfigurationBuilder;
 
 public interface MergeTestCase<T extends MergeTestCase<T>> {
+    Log log = LogFactory.getLog(MergeTestCase.class);
+
     String existingContent(String parameter);
     String newContent(String parameter);
     String expectedContentAfterMerge(String parameter);
@@ -45,6 +52,26 @@ public interface MergeTestCase<T extends MergeTestCase<T>> {
             return Stream.of(Arguments.argumentSet(name + "null", self, null));
         } else {
             return parameterVariants().stream().map(v -> Arguments.argumentSet(name + v, self, v));
+        }
+    }
+
+    static Stream<Arguments> findTestCases(String searchedPackage) {
+        // seems to be a bug in reflections: https://github.com/ronmamo/reflections/issues/457
+        return new Reflections(new ConfigurationBuilder()
+                .forPackages(searchedPackage)
+                .filterInputsBy(n -> n.startsWith(searchedPackage))
+                .addScanners(Scanners.SubTypes))
+                .getSubTypesOf(MergeTestCase.class).stream()
+                .flatMap(MergeTestCase::testCaseVariants);
+    }
+
+    private static <T extends MergeTestCase<?>> Stream<Arguments> testCaseVariants(Class<T> clazz) {
+        try {
+            T instance = clazz.getDeclaredConstructor().newInstance();
+            return instance.variants();
+        } catch (Exception e) {
+            log.error("Failed to instantiate test case " + clazz.getName(), e);
+            return Stream.empty();
         }
     }
 }

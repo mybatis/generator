@@ -96,7 +96,8 @@ public class JavaFileMerger {
             CompilationUnit existingCompilationUnit = existingParseResult.getResult().orElseThrow();
 
             // Perform the merge
-            CompilationUnit mergedCompilationUnit = performMerge(newCompilationUnit, existingCompilationUnit, javadocTags);
+            CompilationUnit mergedCompilationUnit =
+                    performMerge(newCompilationUnit, existingCompilationUnit, javadocTags);
 
             return mergedCompilationUnit.toString();
         } catch (Exception e) {
@@ -127,9 +128,9 @@ public class JavaFileMerger {
         for (AnnotationExpr annotation : member.getAnnotations()) {
             String annotationName = annotation.getNameAsString();
             // Check for @Generated annotation (both javax and jakarta packages)
-            if ("Generated".equals(annotationName) ||
-                "javax.annotation.Generated".equals(annotationName) ||
-                "jakarta.annotation.Generated".equals(annotationName)) {
+            if ("Generated".equals(annotationName)
+                    || "javax.annotation.Generated".equals(annotationName)
+                    || "jakarta.annotation.Generated".equals(annotationName)) {
                 return true;
             }
         }
@@ -177,12 +178,14 @@ public class JavaFileMerger {
 
         // Add imports from new file
         for (ImportDeclaration importDecl : mergedCompilationUnit.getImports()) {
-            allImports.add(new ImportInfo(importDecl.getNameAsString(), importDecl.isStatic(), importDecl.isAsterisk()));
+            allImports.add(
+                    new ImportInfo(importDecl.getNameAsString(), importDecl.isStatic(), importDecl.isAsterisk()));
         }
 
         // Add imports from existing file (avoiding duplicates)
         for (ImportDeclaration importDecl : existingCompilationUnit.getImports()) {
-            allImports.add(new ImportInfo(importDecl.getNameAsString(), importDecl.isStatic(), importDecl.isAsterisk()));
+            allImports.add(
+                    new ImportInfo(importDecl.getNameAsString(), importDecl.isStatic(), importDecl.isAsterisk()));
         }
 
         // Clear existing imports and add sorted imports
@@ -207,13 +210,14 @@ public class JavaFileMerger {
         }
     }
 
-    private static void addPreservedElements(CompilationUnit existingCompilationUnit, CompilationUnit mergedCompilationUnit, String[] javadocTags) {
+    private static void addPreservedElements(CompilationUnit existingCompilationUnit,
+                                             CompilationUnit mergedCompilationUnit, String[] javadocTags) {
         // Find the main type declarations
         TypeDeclaration<?> existingTypeDeclaration = findMainTypeDeclaration(existingCompilationUnit);
         TypeDeclaration<?> mergedTypeDeclaration = findMainTypeDeclaration(mergedCompilationUnit);
 
-        if (existingTypeDeclaration instanceof ClassOrInterfaceDeclaration existingClassDeclaration &&
-            mergedTypeDeclaration instanceof ClassOrInterfaceDeclaration mergedClassDeclaration) {
+        if (existingTypeDeclaration instanceof ClassOrInterfaceDeclaration existingClassDeclaration
+                && mergedTypeDeclaration instanceof ClassOrInterfaceDeclaration mergedClassDeclaration) {
 
             // Add only non-generated members from the existing class to the end of merged class
             for (BodyDeclaration<?> member : existingClassDeclaration.getMembers()) {

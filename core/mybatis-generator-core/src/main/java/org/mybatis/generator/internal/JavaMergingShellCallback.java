@@ -19,6 +19,7 @@ import java.io.File;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.exception.ShellException;
+import org.mybatis.generator.merge.java.JavaFileMerger;
 
 public class JavaMergingShellCallback extends DefaultShellCallback {
 

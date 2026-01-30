@@ -17,16 +17,22 @@ package org.mybatis.generator.merge.java;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.merge.MergeTestCase;
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.util.ConfigurationBuilder;
 
 class JavaFileMergerTest {
+
+    private static final Log log = LogFactory.getLog(JavaFileMergerTest.class);
 
     @ParameterizedTest
     @MethodSource("testCases")
@@ -38,12 +44,22 @@ class JavaFileMergerTest {
     }
 
     static Stream<Arguments> testCases() {
-        return Stream.of(
-                new ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag().variants(),
-                new ShouldMergeInputsCorrectly().variants(),
-                new ShouldPreserveMultipleCustomMethodsWhenMerging().variants(),
-                new ShouldPreserveCustomMethodsWithAllSupportedJavadocTags().variants(),
-                new ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation().variants()
-        ).flatMap(Function.identity());
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+                .forPackages("org.mybatis.generator.merge.java")
+                .addScanners(Scanners.SubTypes));
+
+        return reflections.getSubTypesOf(MergeTestCase.class).stream()
+                .flatMap(JavaFileMergerTest::testCaseVariants);
+
+    }
+
+    private static <T extends MergeTestCase<?>> Stream<Arguments> testCaseVariants(Class<T> clazz) {
+        try {
+            T instance = clazz.getDeclaredConstructor().newInstance();
+            return instance.variants();
+        } catch (Exception e) {
+            log.error("Failed to instantiate test case " + clazz.getName(), e);
+            return Stream.empty();
+        }
     }
 }

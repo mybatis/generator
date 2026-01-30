@@ -24,11 +24,12 @@ public interface MergeTestCase<T extends MergeTestCase<T>> {
     }
 
     default Stream<Arguments> variants() {
-        String name = "testCase = " + self().getClass().getSimpleName() + ", parameter = ";
+        T self = self();
+        String name = "testCase = " + self.getClass().getSimpleName() + ", parameter = ";
         if (parameterVariants().isEmpty()) {
-            return Stream.of(Arguments.argumentSet(name + "null", self(), null));
+            return Stream.of(Arguments.argumentSet(name + "null", self, null));
         } else {
-            return parameterVariants().stream().map(v -> Arguments.argumentSet(name + v, self(), v));
+            return parameterVariants().stream().map(v -> Arguments.argumentSet(name + v, self, v));
         }
     }
 }

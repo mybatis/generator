@@ -17,7 +17,7 @@ package org.mybatis.generator.merge.java;
 
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldMergeInputsCorrectly implements MergeTestCase<ShouldMergeInputsCorrectly> {
+public class ShouldMergeInputsCorrectly extends MergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return """
@@ -79,10 +79,5 @@ public class ShouldMergeInputsCorrectly implements MergeTestCase<ShouldMergeInpu
                     }
                 }
                 """;
-    }
-
-    @Override
-    public ShouldMergeInputsCorrectly self() {
-        return this;
     }
 }

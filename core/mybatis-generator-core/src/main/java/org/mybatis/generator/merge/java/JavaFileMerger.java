@@ -23,7 +23,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import com.github.javaparser.JavaParser;
@@ -267,7 +266,6 @@ public class JavaFileMerger {
     private static void deleteDuplicateMemberIfExists(TypeDeclaration<?> mergedTypeDeclaration,
                                                       BodyDeclaration<?> member) {
         mergedTypeDeclaration.getMembers().stream()
-                .filter(Objects::nonNull)
                 .filter(td -> membersMatch(td, member))
                 .findFirst()
                 .ifPresent(mergedTypeDeclaration::remove);

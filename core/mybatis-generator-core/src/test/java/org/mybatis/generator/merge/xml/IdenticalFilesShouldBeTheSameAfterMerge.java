@@ -23,7 +23,7 @@ import org.mybatis.generator.merge.MergeTestCase;
  *
  * @author Jeff Butler
  */
-public class IdenticalFilesShouldBeTheSameAfterMerge implements MergeTestCase<IdenticalFilesShouldBeTheSameAfterMerge> {
+public class IdenticalFilesShouldBeTheSameAfterMerge extends MergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return """
@@ -65,10 +65,5 @@ public class IdenticalFilesShouldBeTheSameAfterMerge implements MergeTestCase<Id
     @Override
     public String expectedContentAfterMerge(String parameter) {
         return existingContent(parameter);
-    }
-
-    @Override
-    public IdenticalFilesShouldBeTheSameAfterMerge self() {
-        return this;
     }
 }

@@ -17,7 +17,7 @@ package org.mybatis.generator.merge.xml;
 
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class OldElementsShouldBeDeleted implements MergeTestCase<OldElementsShouldBeDeleted> {
+public class OldElementsShouldBeDeleted extends MergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return """
@@ -67,10 +67,5 @@ public class OldElementsShouldBeDeleted implements MergeTestCase<OldElementsShou
                  </select>
                  <select id="customSelect" />
                </mapper>""";
-    }
-
-    @Override
-    public OldElementsShouldBeDeleted self() {
-        return this;
     }
 }

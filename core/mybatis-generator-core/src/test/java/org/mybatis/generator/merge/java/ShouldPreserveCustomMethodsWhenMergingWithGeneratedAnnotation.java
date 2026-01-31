@@ -19,9 +19,7 @@ import java.util.List;
 
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation
-        implements MergeTestCase<ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation> {
-
+public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation extends MergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return String.format("""
@@ -93,11 +91,6 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation
                     }
                 }
                 """, parameter);
-    }
-
-    @Override
-    public ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation self() {
-        return this;
     }
 
     @Override

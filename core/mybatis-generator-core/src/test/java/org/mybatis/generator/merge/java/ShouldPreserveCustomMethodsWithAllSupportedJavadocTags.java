@@ -21,9 +21,7 @@ import java.util.List;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags
-        implements MergeTestCase<ShouldPreserveCustomMethodsWithAllSupportedJavadocTags> {
-
+public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends MergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return String.format("""
@@ -81,11 +79,6 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags
                     }
                 }
                 """;
-    }
-
-    @Override
-    public ShouldPreserveCustomMethodsWithAllSupportedJavadocTags self() {
-        return this;
     }
 
     @Override

@@ -26,36 +26,35 @@ import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.util.ConfigurationBuilder;
 
-public interface MergeTestCase<T extends MergeTestCase<T>> {
-    Log log = LogFactory.getLog(MergeTestCase.class);
+public abstract class MergeTestCase {
+    private static final Log LOG = LogFactory.getLog(MergeTestCase.class);
 
-    String existingContent(String parameter);
-    String newContent(String parameter);
-    String expectedContentAfterMerge(String parameter);
-    T self();
+    public abstract String existingContent(String parameter);
+    public abstract String newContent(String parameter);
+    public abstract String expectedContentAfterMerge(String parameter);
 
     /**
-     * Provide a list of parameter variants. If empty, then the test case will be run one time with null passed as a
-     * parameter to the content methods. If not empty, the test case will be run multiple times - once for each value
+     * Provide a list of parameter variants. If empty, then the test case will run one time with null passed as a
+     * parameter to the content methods. If not empty, the test case will run multiple times - once for each value
      * in the list, and the value will be passed to the content methods.
      *
      * @return a list of parameter variants. Empty by default.
      */
-    default List<String> parameterVariants() {
+    public List<String> parameterVariants() {
         return Collections.emptyList();
     }
 
-    default Stream<Arguments> variants() {
-        T self = self();
-        String name = "testCase = " + self.getClass().getSimpleName() + ", parameter = ";
+    private Stream<Arguments> variants() {
+        String name = "testCase = " + getClass().getSimpleName() + ", parameter = ";
         if (parameterVariants().isEmpty()) {
-            return Stream.of(Arguments.argumentSet(name + "null", self, null));
+            return Stream.of(Arguments.argumentSet(name + "null", this, null));
         } else {
-            return parameterVariants().stream().map(v -> Arguments.argumentSet(name + v, self, v));
+            return parameterVariants().stream().map(v -> Arguments.argumentSet(name + v, this, v));
         }
     }
 
-    static Stream<Arguments> findTestCases(String searchedPackage) {
+    public static Stream<Arguments> findTestCases(String searchedPackage) {
+        // need to add the name filter as well as the search package
         // seems to be a bug in reflections: https://github.com/ronmamo/reflections/issues/457
         return new Reflections(new ConfigurationBuilder()
                 .forPackages(searchedPackage)
@@ -65,12 +64,12 @@ public interface MergeTestCase<T extends MergeTestCase<T>> {
                 .flatMap(MergeTestCase::testCaseVariants);
     }
 
-    private static <T extends MergeTestCase<?>> Stream<Arguments> testCaseVariants(Class<T> clazz) {
+    private static Stream<Arguments> testCaseVariants(Class<? extends MergeTestCase> clazz) {
         try {
-            T instance = clazz.getDeclaredConstructor().newInstance();
+            MergeTestCase instance = clazz.getDeclaredConstructor().newInstance();
             return instance.variants();
         } catch (Exception e) {
-            log.error("Failed to instantiate test case " + clazz.getName(), e);
+            LOG.error("Failed to instantiate test case " + clazz.getName(), e);
             return Stream.empty();
         }
     }

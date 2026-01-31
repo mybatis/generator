@@ -17,8 +17,7 @@ package org.mybatis.generator.merge.java;
 
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag
-        implements MergeTestCase<ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag> {
+public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends MergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return """
@@ -68,10 +67,4 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag
                 }
                 """;
     }
-
-    @Override
-    public ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag self() {
-        return this;
-    }
-
 }

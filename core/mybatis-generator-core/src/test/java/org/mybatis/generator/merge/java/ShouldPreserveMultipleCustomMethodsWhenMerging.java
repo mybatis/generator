@@ -17,9 +17,7 @@ package org.mybatis.generator.merge.java;
 
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldPreserveMultipleCustomMethodsWhenMerging
-        implements MergeTestCase<ShouldPreserveMultipleCustomMethodsWhenMerging> {
-
+public class ShouldPreserveMultipleCustomMethodsWhenMerging extends MergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return  """
@@ -100,10 +98,5 @@ public class ShouldPreserveMultipleCustomMethodsWhenMerging
                     }
                 }
                 """;
-    }
-
-    @Override
-    public ShouldPreserveMultipleCustomMethodsWhenMerging self() {
-        return this;
     }
 }

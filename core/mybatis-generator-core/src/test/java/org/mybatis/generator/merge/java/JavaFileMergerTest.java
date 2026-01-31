@@ -28,7 +28,7 @@ import org.mybatis.generator.merge.MergeTestCase;
 class JavaFileMergerTest {
     @ParameterizedTest
     @MethodSource("testCases")
-    void allTestCases(MergeTestCase<?> testCase, String parameter) throws Exception {
+    void allTestCases(MergeTestCase testCase, String parameter) throws Exception {
         var javadocTags = MergeConstants.getOldElementTags();
         var actual = JavaFileMerger.getMergedSource(testCase.newContent(parameter),
                 testCase.existingContent(parameter), javadocTags);

@@ -34,7 +34,12 @@ import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.MemberValuePair;
+import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.ShellException;
 
@@ -127,16 +132,43 @@ public class JavaFileMerger {
 
     private static boolean hasGeneratedAnnotation(BodyDeclaration<?> member) {
         for (AnnotationExpr annotation : member.getAnnotations()) {
-            // TODO - only check the generated annotations from us!
             String annotationName = annotation.getNameAsString();
             // Check for @Generated annotation (both javax and jakarta packages)
-            if ("Generated".equals(annotationName)
-                    || "javax.annotation.Generated".equals(annotationName)
-                    || "jakarta.annotation.Generated".equals(annotationName)) {
-                return true;
+            if ("Generated".equals(annotationName)//$NON-NLS-1$
+                    || "javax.annotation.Generated".equals(annotationName)//$NON-NLS-1$
+                    || "jakarta.annotation.Generated".equals(annotationName)) {//$NON-NLS-1$
+                return isOurGeneratedAnnotation(annotation);
             }
         }
         return false;
+    }
+
+    private static boolean isOurGeneratedAnnotation(AnnotationExpr annotationExpr) {
+        if (annotationExpr.isSingleMemberAnnotationExpr()) {
+            SingleMemberAnnotationExpr singleMemberAnnotationExpr = annotationExpr.asSingleMemberAnnotationExpr();
+            if (singleMemberAnnotationExpr.getMemberValue().isStringLiteralExpr()) {
+                return annotationValueMatchesMyBatisGenerator(singleMemberAnnotationExpr.getMemberValue().asStringLiteralExpr());
+            }
+        } else if(annotationExpr.isNormalAnnotationExpr()) {
+            return annotationExpr.asNormalAnnotationExpr().getPairs().stream()
+                    .filter(JavaFileMerger::isValuePair)
+                    .map(MemberValuePair::getValue)
+                    .filter(Expression::isStringLiteralExpr)
+                    .map(Expression::asStringLiteralExpr)
+                    .findFirst()
+                    .map(JavaFileMerger::annotationValueMatchesMyBatisGenerator)
+                    .orElse(false);
+        }
+
+        return false;
+    }
+
+    private static boolean isValuePair(MemberValuePair pair) {
+        return pair.getName().asString().equals("value");//$NON-NLS-1$
+    }
+
+    private static boolean annotationValueMatchesMyBatisGenerator(StringLiteralExpr expr) {
+        return expr.asString().equals(MyBatisGenerator.class.getName());
     }
 
     private static boolean hasGeneratedJavadocTag(BodyDeclaration<?> member, String[] javadocTags) {

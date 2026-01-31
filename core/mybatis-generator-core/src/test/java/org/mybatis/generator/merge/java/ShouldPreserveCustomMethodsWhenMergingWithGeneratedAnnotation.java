@@ -29,7 +29,17 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
                 public class TestMapper {
 
-                    @Generated("MyBatis Generator")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator")
+                    public int annotationVariant1() {
+                        return 0;
+                    }
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public int annotationVariant2() {
+                        return 0;
+                    }
+
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
                     public int deleteByPrimaryKey(Integer id) {
                         return 0;
                     }
@@ -51,13 +61,13 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
                 public class TestMapper {
 
-                    @Generated("MyBatis Generator")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
                     public int deleteByPrimaryKey(Integer id) {
                         // Updated implementation
                         return 1;
                     }
 
-                    @Generated("MyBatis Generator")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
                     public int insert(Object record) {
                         return 0;
                     }
@@ -74,13 +84,13 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
                 public class TestMapper {
 
-                    @Generated("MyBatis Generator")
+                    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "Source field: awful table.first name")
                     public int deleteByPrimaryKey(Integer id) {
                         // Updated implementation
                         return 1;
                     }
 
-                    @Generated("MyBatis Generator")
+                    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "Source field: awful table.first name")
                     public int insert(Object record) {
                         return 0;
                     }

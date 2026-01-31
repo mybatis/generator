@@ -36,7 +36,6 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MemberValuePair;
-import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.MyBatisGenerator;
@@ -136,7 +135,7 @@ public class JavaFileMerger {
             // Check for @Generated annotation (both javax and jakarta packages)
             if ("Generated".equals(annotationName)//$NON-NLS-1$
                     || "javax.annotation.Generated".equals(annotationName)//$NON-NLS-1$
-                    || "jakarta.annotation.Generated".equals(annotationName)) {//$NON-NLS-1$
+                    || "jakarta.annotation.Generated".equals(annotationName)) { //$NON-NLS-1$
                 return isOurGeneratedAnnotation(annotation);
             }
         }
@@ -145,11 +144,11 @@ public class JavaFileMerger {
 
     private static boolean isOurGeneratedAnnotation(AnnotationExpr annotationExpr) {
         if (annotationExpr.isSingleMemberAnnotationExpr()) {
-            SingleMemberAnnotationExpr singleMemberAnnotationExpr = annotationExpr.asSingleMemberAnnotationExpr();
-            if (singleMemberAnnotationExpr.getMemberValue().isStringLiteralExpr()) {
-                return annotationValueMatchesMyBatisGenerator(singleMemberAnnotationExpr.getMemberValue().asStringLiteralExpr());
+            Expression value = annotationExpr.asSingleMemberAnnotationExpr().getMemberValue();
+            if (value.isStringLiteralExpr()) {
+                return annotationValueMatchesMyBatisGenerator(value.asStringLiteralExpr());
             }
-        } else if(annotationExpr.isNormalAnnotationExpr()) {
+        } else if (annotationExpr.isNormalAnnotationExpr()) {
             return annotationExpr.asNormalAnnotationExpr().getPairs().stream()
                     .filter(JavaFileMerger::isValuePair)
                     .map(MemberValuePair::getValue)

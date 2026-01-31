@@ -17,6 +17,11 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
               
               public class PkfieldsExample {
                   /**
+                   * @mbg.generated do_not_delete_during_merge
+                   */
+                  protected int id;
+
+                  /**
                    * @mbg.generated
                    */
                   protected List<Criteria> oredCriteria;
@@ -26,6 +31,13 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
                    */
                   public PkfieldsExample() {
                       oredCriteria = new ArrayList<>();
+                  }
+              
+                  /**
+                   * @mbg.generated do_not_delete_during_merge
+                   */
+                  public int getId() {
+                      return id;
                   }
               
                   /**
@@ -84,6 +96,11 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
               
               public class PkfieldsExample {
                   /**
+                   * @mbg.generated do_not_delete_during_merge
+                   */
+                  protected int id;
+
+                  /**
                    * @mbg.generated
                    */
                   public void reset() {
@@ -93,6 +110,13 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
                    * @mbg.generated
                    */
                   protected abstract static class GeneratedCriteria {
+                  }
+              
+                  /**
+                   * @mbg.generated do_not_delete_during_merge
+                   */
+                  public int getId() {
+                      return id;
                   }
               
                   /**
@@ -126,6 +150,18 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
                    * @mbg.generated
                    */
                   protected abstract static class GeneratedCriteria {
+                  }
+              
+                  /**
+                   * @mbg.generated do_not_delete_during_merge
+                   */
+                  protected int id;
+
+                  /**
+                   * @mbg.generated do_not_delete_during_merge
+                   */
+                  public int getId() {
+                      return id;
                   }
               
                   /**

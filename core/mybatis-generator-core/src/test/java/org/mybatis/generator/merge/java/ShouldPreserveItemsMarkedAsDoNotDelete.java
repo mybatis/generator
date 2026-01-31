@@ -132,6 +132,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
                    * @mbg.generated do_not_delete_during_merge
                    */
                   public static class Criteria extends GeneratedCriteria {
+
                       protected Criteria() {
                           super();
                       }

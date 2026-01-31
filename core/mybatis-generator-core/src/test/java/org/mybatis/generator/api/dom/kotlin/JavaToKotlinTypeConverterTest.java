@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,45 +17,33 @@ package org.mybatis.generator.api.dom.kotlin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
 class JavaToKotlinTypeConverterTest {
 
-    @Test
-    void testPrimitiveByte() {
-        FullyQualifiedJavaType jt = new FullyQualifiedJavaType("byte");
-        FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
+    @ParameterizedTest
+    @MethodSource("primitiveVariations")
+    void testPrimitiveVariation(FullyQualifiedJavaType javaType, String expected) {
+        FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(javaType);
 
-        assertThat(kt.getShortNameWithTypeArguments()).isEqualTo("Byte");
+        assertThat(kt.getShortNameWithTypeArguments()).isEqualTo(expected);
         assertThat(kt.getImportList()).isEmpty();
     }
 
-    @Test
-    void testPrimitiveByteArray() {
-        FullyQualifiedJavaType jt = new FullyQualifiedJavaType("byte[]");
-        FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
-
-        assertThat(kt.getShortNameWithTypeArguments()).isEqualTo("ByteArray");
-        assertThat(kt.getImportList()).isEmpty();
-    }
-
-    @Test
-    void testByteWrapper() {
-        FullyQualifiedJavaType jt = new FullyQualifiedJavaType("java.lang.Byte");
-        FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
-
-        assertThat(kt.getShortNameWithTypeArguments()).isEqualTo("Byte");
-        assertThat(kt.getImportList()).isEmpty();
-    }
-
-    @Test
-    void testByteWrapperArray() {
-        FullyQualifiedJavaType jt = new FullyQualifiedJavaType("java.lang.Byte[]");
-        FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
-
-        assertThat(kt.getShortNameWithTypeArguments()).isEqualTo("Array<Byte>");
-        assertThat(kt.getImportList()).isEmpty();
+    static Stream<Arguments> primitiveVariations() {
+        return Stream.of(
+                Arguments.argumentSet("primitive byte", new FullyQualifiedJavaType("byte"), "Byte"),
+                Arguments.argumentSet("primitive byte array", new FullyQualifiedJavaType("byte[]"), "ByteArray"),
+                Arguments.argumentSet("byte wrapper", new FullyQualifiedJavaType("java.lang.Byte"), "Byte"),
+                Arguments.argumentSet("byte wrapper array", new FullyQualifiedJavaType("java.lang.Byte[]"),
+                        "Array<Byte>")
+        );
     }
 
     @Test

@@ -33,7 +33,12 @@ import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.MemberValuePair;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.ShellException;
 
 /**
@@ -43,7 +48,6 @@ import org.mybatis.generator.exception.ShellException;
  * @author Freeman
  */
 public class JavaFileMerger {
-
     private JavaFileMerger() {
     }
 
@@ -128,13 +132,41 @@ public class JavaFileMerger {
         for (AnnotationExpr annotation : member.getAnnotations()) {
             String annotationName = annotation.getNameAsString();
             // Check for @Generated annotation (both javax and jakarta packages)
-            if ("Generated".equals(annotationName)
-                    || "javax.annotation.Generated".equals(annotationName)
-                    || "jakarta.annotation.Generated".equals(annotationName)) {
-                return true;
+            if ("Generated".equals(annotationName)//$NON-NLS-1$
+                    || "javax.annotation.Generated".equals(annotationName)//$NON-NLS-1$
+                    || "jakarta.annotation.Generated".equals(annotationName)) { //$NON-NLS-1$
+                return isOurGeneratedAnnotation(annotation);
             }
         }
         return false;
+    }
+
+    private static boolean isOurGeneratedAnnotation(AnnotationExpr annotationExpr) {
+        if (annotationExpr.isSingleMemberAnnotationExpr()) {
+            Expression value = annotationExpr.asSingleMemberAnnotationExpr().getMemberValue();
+            if (value.isStringLiteralExpr()) {
+                return annotationValueMatchesMyBatisGenerator(value.asStringLiteralExpr());
+            }
+        } else if (annotationExpr.isNormalAnnotationExpr()) {
+            return annotationExpr.asNormalAnnotationExpr().getPairs().stream()
+                    .filter(JavaFileMerger::isValuePair)
+                    .map(MemberValuePair::getValue)
+                    .filter(Expression::isStringLiteralExpr)
+                    .map(Expression::asStringLiteralExpr)
+                    .findFirst()
+                    .map(JavaFileMerger::annotationValueMatchesMyBatisGenerator)
+                    .orElse(false);
+        }
+
+        return false;
+    }
+
+    private static boolean isValuePair(MemberValuePair pair) {
+        return pair.getName().asString().equals("value");//$NON-NLS-1$
+    }
+
+    private static boolean annotationValueMatchesMyBatisGenerator(StringLiteralExpr expr) {
+        return expr.asString().equals(MyBatisGenerator.class.getName());
     }
 
     private static boolean hasGeneratedJavadocTag(BodyDeclaration<?> member, String[] javadocTags) {
@@ -143,7 +175,7 @@ public class JavaFileMerger {
             String commentContent = member.getComment().orElseThrow().getContent();
             for (String tag : javadocTags) {
                 if (commentContent.contains(tag)) {
-                    return true;
+                    return !commentContent.contains(MergeConstants.DO_NOT_DELETE_DURING_MERGE);
                 }
             }
         }
@@ -222,10 +254,36 @@ public class JavaFileMerger {
             // Add only non-generated members from the existing class to the end of merged class
             for (BodyDeclaration<?> member : existingClassDeclaration.getMembers()) {
                 if (!isGeneratedElement(member, javadocTags)) {
+                    // If there is a member in the merged type that matches an existing member, we need to delete it.
+                    // Some generated elements could survive if they have the do_not_delete_during_merge text
+                    deleteDuplicateMemberIfExists(mergedClassDeclaration, member);
                     mergedClassDeclaration.addMember(member.clone());
                 }
             }
         }
+    }
+
+    private static void deleteDuplicateMemberIfExists(TypeDeclaration<?> mergedTypeDeclaration,
+                                                      BodyDeclaration<?> member) {
+        mergedTypeDeclaration.getMembers().stream()
+                .filter(td -> membersMatch(td, member))
+                .findFirst()
+                .ifPresent(mergedTypeDeclaration::remove);
+    }
+
+    private static boolean membersMatch(BodyDeclaration<?> member1, BodyDeclaration<?> member2) {
+        if (member1.isTypeDeclaration() && member2.isTypeDeclaration()) {
+            return member1.asTypeDeclaration().getNameAsString()
+                    .equals(member2.asTypeDeclaration().getNameAsString());
+        } else if (member1.isCallableDeclaration() && member2.isCallableDeclaration()) {
+            return member1.asCallableDeclaration().getSignature().asString()
+                    .equals(member2.asCallableDeclaration().getSignature().asString());
+        } else if (member1.isFieldDeclaration() && member2.isFieldDeclaration()) {
+            return member1.asFieldDeclaration().toString()
+                    .equals(member2.asFieldDeclaration().toString());
+        }
+
+        return false;
     }
 
     private static @Nullable TypeDeclaration<?> findMainTypeDeclaration(CompilationUnit compilationUnit) {

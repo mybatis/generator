@@ -53,4 +53,6 @@ public class MergeConstants {
         return Arrays.stream(OLD_ELEMENT_TAGS)
                 .anyMatch(comment::contains);
     }
+
+    public static String DO_NOT_DELETE_DURING_MERGE = "do_not_delete_during_merge"; //$NON-NLS-1$
 }

@@ -135,7 +135,8 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append(" * "); //$NON-NLS-1$
         sb.append(MergeConstants.NEW_ELEMENT_TAG);
         if (markAsDoNotDelete) {
-            sb.append(" do_not_delete_during_merge"); //$NON-NLS-1$
+            sb.append(" ") //$NON-NLS-1$
+                    .append(MergeConstants.DO_NOT_DELETE_DURING_MERGE);
         }
         String s = getDateString();
         if (s != null) {

@@ -78,8 +78,7 @@ public class LegacyJavaRuntime extends AbstractRuntime {
     private <T extends AbstractJavaGenerator.AbstractJavaGeneratorBuilder<T>>
             AbstractJavaGenerator buildClientGenerator(String builderType) {
         @SuppressWarnings("unchecked")
-        T builder = (T) ObjectFactory.createInternalObject(builderType,
-                AbstractJavaGenerator.AbstractJavaGeneratorBuilder.class);
+        T builder = (T) ObjectFactory.createInternalObject(builderType);
 
         return initializeSubBuilder(builder)
                 .withProject(getClientProject().orElseThrow(() ->

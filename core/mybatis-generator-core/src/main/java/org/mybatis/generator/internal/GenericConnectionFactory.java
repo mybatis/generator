@@ -65,7 +65,7 @@ public class GenericConnectionFactory implements ConnectionFactory {
         Driver driver;
 
         try {
-            Class<Driver> clazz = ObjectFactory.externalClassForName(Objects.requireNonNull(driverClass), Driver.class);
+            Class<Driver> clazz = ObjectFactory.externalClassForName(Objects.requireNonNull(driverClass));
             driver = clazz.getConstructor().newInstance();
         } catch (Exception e) {
             throw new InternalException(getString("RuntimeError.8"), e); //$NON-NLS-1$

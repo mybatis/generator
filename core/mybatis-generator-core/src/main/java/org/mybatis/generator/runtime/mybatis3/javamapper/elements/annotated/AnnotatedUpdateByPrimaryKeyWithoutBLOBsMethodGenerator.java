@@ -48,6 +48,7 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
             return this;
         }
 
+        @Override
         public AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator build() {
             return new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(this);
         }

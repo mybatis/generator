@@ -45,7 +45,7 @@ public class GenerationEngine {
         // items in the configuration.
         runtimes = builder.introspectedTables.stream().map(introspectedTable -> {
             AbstractRuntime.AbstractRuntimeBuilder<?> runtimeBuilder = ObjectFactory.createInternalObject(
-                    contextValues.runtimeBuilderClassName(), AbstractRuntime.AbstractRuntimeBuilder.class);
+                    contextValues.runtimeBuilderClassName());
             return runtimeBuilder
                     .withIntrospectedTable(introspectedTable)
                     .withContext(context)

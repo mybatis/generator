@@ -70,7 +70,7 @@ public class JDBCConnectionFactory {
         Driver driver;
 
         try {
-            Class<Driver> clazz = ObjectFactory.externalClassForName(config.getDriverClass(), Driver.class);
+            Class<Driver> clazz = ObjectFactory.externalClassForName(config.getDriverClass());
             driver = clazz.getConstructor().newInstance();
         } catch (Exception e) {
             throw new InternalException(getString("RuntimeError.8"), e); //$NON-NLS-1$

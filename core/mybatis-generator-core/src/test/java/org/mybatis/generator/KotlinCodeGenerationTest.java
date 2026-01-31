@@ -18,7 +18,6 @@ package org.mybatis.generator;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.params.ParameterizedTest;

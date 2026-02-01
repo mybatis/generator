@@ -36,6 +36,11 @@ import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MemberValuePair;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.printer.DefaultPrettyPrinter;
+import com.github.javaparser.printer.configuration.DefaultConfigurationOption;
+import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
+import com.github.javaparser.printer.configuration.PrinterConfiguration;
+import com.github.javaparser.printer.configuration.imports.EclipseImportOrderingStrategy;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.MergeConstants;
@@ -103,7 +108,15 @@ public class JavaFileMerger {
             CompilationUnit mergedCompilationUnit =
                     performMerge(newCompilationUnit, existingCompilationUnit, javadocTags);
 
-            return mergedCompilationUnit.toString();
+            // sort imports in Eclipse order for now. We need to add a way to configure this
+            PrinterConfiguration printerConfiguration = new DefaultPrinterConfiguration();
+            printerConfiguration.addOption(
+                    new DefaultConfigurationOption(DefaultPrinterConfiguration.ConfigOption.SORT_IMPORTS_STRATEGY,
+                            new EclipseImportOrderingStrategy()));
+            printerConfiguration.addOption(
+                    new DefaultConfigurationOption(DefaultPrinterConfiguration.ConfigOption.ORDER_IMPORTS, true));
+            DefaultPrettyPrinter printer = new DefaultPrettyPrinter(printerConfiguration);
+            return printer.print(mergedCompilationUnit);
         } catch (Exception e) {
             throw new ShellException("Error merging Java files: " + e.getMessage(), e);
         }
@@ -184,26 +197,7 @@ public class JavaFileMerger {
 
     private static void mergeImports(CompilationUnit existingCompilationUnit,
                                      CompilationUnit mergedCompilationUnit) {
-        record ImportInfo(String name, boolean isStatic, boolean isAsterisk) implements Comparable<ImportInfo> {
-            @Override
-            public int compareTo(ImportInfo other) {
-                // Static imports come last
-                if (this.isStatic != other.isStatic) {
-                    return this.isStatic ? 1 : -1;
-                }
-
-                // Within the same category (static or non-static), sort by import order priority
-                int priorityThis = getImportPriority(this.name);
-                int priorityOther = getImportPriority(other.name);
-
-                if (priorityThis != priorityOther) {
-                    return Integer.compare(priorityThis, priorityOther);
-                }
-
-                // Within the same priority, use natural ordering (case-insensitive)
-                return String.CASE_INSENSITIVE_ORDER.compare(this.name, other.name);
-            }
-        }
+        record ImportInfo(String name, boolean isStatic, boolean isAsterisk) { }
 
         // Collect all imports from both compilation units
         Set<ImportInfo> allImports = new LinkedHashSet<>();
@@ -223,23 +217,9 @@ public class JavaFileMerger {
         // Clear existing imports and add sorted imports
         mergedCompilationUnit.getImports().clear();
 
-        // Sort imports according to best practices and add them back
-        allImports.stream()
-                .sorted()
+        allImports
                 .forEach(importInfo -> mergedCompilationUnit.addImport(
                         importInfo.name(), importInfo.isStatic(), importInfo.isAsterisk()));
-    }
-
-    private static int getImportPriority(String importName) {
-        if (importName.startsWith("java.")) {
-            return 10;
-        } else if (importName.startsWith("javax.")) {
-            return 20;
-        } else if (importName.startsWith("jakarta.")) {
-            return 30;
-        } else {
-            return 40; // Third-party and project imports
-        }
     }
 
     private static void addPreservedElements(CompilationUnit existingCompilationUnit,

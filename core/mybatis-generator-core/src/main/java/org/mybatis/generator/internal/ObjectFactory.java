@@ -95,7 +95,7 @@ public class ObjectFactory {
      *             the class not found exception
      */
     @SuppressWarnings("unchecked")
-    public static <T> Class<T> externalClassForName(String type, Class<T> t) throws ClassNotFoundException {
+    public static <T> Class<T> externalClassForName(String type) throws ClassNotFoundException {
         Class<T> clazz;
 
         for (ClassLoader classLoader : externalClassLoaders) {
@@ -107,14 +107,14 @@ public class ObjectFactory {
             }
         }
 
-        return internalClassForName(type, t);
+        return internalClassForName(type);
     }
 
-    public static <T> T createExternalObject(String type, Class<T> t) {
+    public static <T> T createExternalObject(String type) {
         T answer;
 
         try {
-            Class<T> clazz = externalClassForName(type, t);
+            Class<T> clazz = externalClassForName(type);
             answer = clazz.getConstructor().newInstance();
         } catch (Exception e) {
             throw new InternalException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
@@ -124,7 +124,7 @@ public class ObjectFactory {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> Class<T> internalClassForName(String type, Class<T> t) throws ClassNotFoundException {
+    public static <T> Class<T> internalClassForName(String type) throws ClassNotFoundException {
         Class<?> clazz = null;
 
         try {
@@ -161,11 +161,11 @@ public class ObjectFactory {
         return Optional.ofNullable(url);
     }
 
-    public static <T> T createInternalObject(String type, Class<T> t) {
+    public static <T> T createInternalObject(String type) {
         T answer;
 
         try {
-            Class<T> clazz = internalClassForName(type, t);
+            Class<T> clazz = internalClassForName(type);
             answer = clazz.getConstructor().newInstance();
         } catch (Exception e) {
             throw new InternalException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
@@ -179,7 +179,7 @@ public class ObjectFactory {
                 .map(JavaTypeResolverConfiguration::getImplementationType)
                 .orElse(Defaults.DEFAULT_JAVA_TYPE_RESOLVER);
 
-        JavaTypeResolver answer = createInternalObject(type, JavaTypeResolver.class);
+        JavaTypeResolver answer = createInternalObject(type);
         answer.setWarnings(warnings);
 
         context.getJavaTypeResolverConfiguration()
@@ -192,7 +192,7 @@ public class ObjectFactory {
 
     public static Plugin createPlugin(Context context, PluginConfiguration pluginConfiguration,
                                       CommentGenerator commentGenerator) {
-        Plugin plugin = createInternalObject(pluginConfiguration.getConfigurationType().orElseThrow(), Plugin.class);
+        Plugin plugin = createInternalObject(pluginConfiguration.getConfigurationType().orElseThrow());
         plugin.setContext(context);
         plugin.setProperties(pluginConfiguration.getProperties());
         plugin.setCommentGenerator(commentGenerator);
@@ -206,7 +206,7 @@ public class ObjectFactory {
                 .map(CommentGeneratorConfiguration::getImplementationType)
                 .orElse(Defaults.DEFAULT_COMMENT_GENERATOR);
 
-        answer = createInternalObject(type, CommentGenerator.class);
+        answer = createInternalObject(type);
 
         context.getCommentGeneratorConfiguration()
                 .ifPresent(c -> answer.addConfigurationProperties(c.getProperties()));
@@ -219,7 +219,7 @@ public class ObjectFactory {
 
         String type = config.getImplementationType();
 
-        answer = createInternalObject(type, ConnectionFactory.class);
+        answer = createInternalObject(type);
         answer.addConfigurationProperties(config.getProperties());
 
         return answer;
@@ -231,7 +231,7 @@ public class ObjectFactory {
             type = Defaults.DEFAULT_JAVA_FORMATTER;
         }
 
-        JavaFormatter answer = createInternalObject(type, JavaFormatter.class);
+        JavaFormatter answer = createInternalObject(type);
 
         answer.setContext(context);
 
@@ -244,7 +244,7 @@ public class ObjectFactory {
             type = Defaults.DEFAULT_KOTLIN_FORMATTER;
         }
 
-        KotlinFormatter answer = createInternalObject(type, KotlinFormatter.class);
+        KotlinFormatter answer = createInternalObject(type);
 
         answer.setContext(context);
 
@@ -257,7 +257,7 @@ public class ObjectFactory {
             type = Defaults.DEFAULT_XML_FORMATTER;
         }
 
-        XmlFormatter answer = createInternalObject(type, XmlFormatter.class);
+        XmlFormatter answer = createInternalObject(type);
 
         answer.setContext(context);
 
@@ -266,7 +266,7 @@ public class ObjectFactory {
 
     public static IntrospectedColumn createIntrospectedColumn(Context context) {
         String type = context.getIntrospectedColumnImpl().orElse(IntrospectedColumn.class.getName());
-        IntrospectedColumn answer = createInternalObject(type, IntrospectedColumn.class);
+        IntrospectedColumn answer = createInternalObject(type);
         answer.setContext(context);
 
         return answer;

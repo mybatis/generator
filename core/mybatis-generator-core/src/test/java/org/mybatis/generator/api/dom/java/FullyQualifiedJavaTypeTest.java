@@ -20,7 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.dom.java.render.ParameterRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
 
@@ -226,26 +231,23 @@ class FullyQualifiedJavaTypeTest {
         assertTrue(fqjt.getImportList().contains("org.foo.Bar.Inner"));
     }
 
-    @Test
-    void testByteArray1() {
-        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("byte[]");
-        assertFalse(fqjt.isPrimitive());
-        assertTrue(fqjt.isArray());
+    @ParameterizedTest
+    @MethodSource("arrayVariants")
+    void testArrayVariant(String fullTypeSpec) {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(fullTypeSpec);
+        assertThat(fqjt.isPrimitive()).isFalse();
+        assertThat(fqjt.isArray()).isTrue();
     }
 
-    @Test
-    void testByteArray2() {
-        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("byte[ ]");
-        assertFalse(fqjt.isPrimitive());
-        assertTrue(fqjt.isArray());
+    static Stream<Arguments> arrayVariants() {
+        return Stream.of(
+                Arguments.argumentSet("byte array 1", "byte[]"),
+                Arguments.argumentSet("byte array 2", "byte[ ]"),
+                Arguments.argumentSet("String array", "java.lang.String[]"),
+                Arguments.argumentSet("complex array", "java.util.List<String>[]")
+        );
     }
 
-    @Test
-    void testStringArray() {
-        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.lang.String[]");
-        assertFalse(fqjt.isPrimitive());
-        assertTrue(fqjt.isArray());
-    }
 
     @Test
     void testStringArray2() {
@@ -253,13 +255,6 @@ class FullyQualifiedJavaTypeTest {
         assertEquals(1, fqjt.getImportList().size());
         assertEquals("java.math.BigDecimal", fqjt.getImportList().get(0));
         assertEquals("BigDecimal[]", fqjt.getShortName());
-        assertFalse(fqjt.isPrimitive());
-        assertTrue(fqjt.isArray());
-    }
-
-    @Test
-    void testComplexArray() {
-        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.List<String>[]");
         assertFalse(fqjt.isPrimitive());
         assertTrue(fqjt.isArray());
     }
@@ -290,7 +285,13 @@ class FullyQualifiedJavaTypeTest {
         TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
         String out = renderer.render(interfaze);
 
-        assertThat(out).isEqualToNormalizingNewlines("package foo;\n\npublic interface Bar {\n    void setConverter(Class<?> converterType);\n}");
+        assertThat(out).isEqualToNormalizingNewlines(
+                """
+                package foo;
+            
+                public interface Bar {
+                    void setConverter(Class<?> converterType);
+                }""");
     }
 
     @Test
@@ -310,7 +311,13 @@ class FullyQualifiedJavaTypeTest {
         TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
         String out = renderer.render(interfaze);
 
-        assertThat(out).isEqualToNormalizingNewlines("package foo;\n\npublic interface Bar {\n    void setConverter(Class<? extends String> converterType);\n}");
+        assertThat(out).isEqualToNormalizingNewlines(
+                """
+                package foo;
+                
+                public interface Bar {
+                    void setConverter(Class<? extends String> converterType);
+                }""");
     }
 
     @Test
@@ -331,7 +338,13 @@ class FullyQualifiedJavaTypeTest {
         TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
         String out = renderer.render(interfaze);
 
-        assertThat(out).isEqualToNormalizingNewlines("package foo;\n\npublic interface Bar {\n    void setConverter(Class<? extends HttpMessageConverter<?>> converterType);\n}");
+        assertThat(out).isEqualToNormalizingNewlines(
+                """
+                package foo;
+                
+                public interface Bar {
+                    void setConverter(Class<? extends HttpMessageConverter<?>> converterType);
+                }""");
     }
 
     @Test

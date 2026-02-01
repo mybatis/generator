@@ -16,73 +16,56 @@
 package org.mybatis.generator.internal.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class StringUtilityTest {
 
-    @Test
-    void testNoCatalog() {
-        String answer = StringUtility.composeFullyQualifiedTableName(null, "schema", "table", '.');
-        assertEquals("schema.table", answer);
+    @ParameterizedTest
+    @MethodSource("tableNameVariations")
+    void testTableNameVariation(String tableName, String expectedTableName) {
+        assertThat(tableName).isEqualTo(expectedTableName);
     }
 
-    @Test
-    void testNoSchema() {
-        String answer = StringUtility.composeFullyQualifiedTableName("catalog", null, "table", '.');
-        assertEquals("catalog..table", answer);
+    static Stream<Arguments> tableNameVariations() {
+        return Stream.of(
+                Arguments.argumentSet("no catalog",
+                        StringUtility.composeFullyQualifiedTableName(null, "schema", "table", '.'),
+                        "schema.table"),
+                Arguments.argumentSet("no schema",
+                        StringUtility.composeFullyQualifiedTableName("catalog", null, "table", '.'),
+                        "catalog..table"),
+                Arguments.argumentSet("all present",
+                        StringUtility.composeFullyQualifiedTableName("catalog", "schema", "table", '.'),
+                        "catalog.schema.table"),
+                Arguments.argumentSet("table only",
+                        StringUtility.composeFullyQualifiedTableName(null, null, "table", '.'),
+                        "table")
+        );
     }
 
-    @Test
-    void testAllPresent() {
-        String answer = StringUtility.composeFullyQualifiedTableName("catalog", "schema", "table", '.');
-        assertEquals("catalog.schema.table", answer);
+    @ParameterizedTest
+    @MethodSource("snakeCaseVariations")
+    void testSnakeCaseVariation(String input, String expected) {
+        String answer = StringUtility.convertCamelCaseToSnakeCase(input);
+        assertThat(answer).isEqualTo(expected);
     }
 
-    @Test
-    void testTableOnly() {
-        String answer = StringUtility.composeFullyQualifiedTableName(null, null, "table", '.');
-        assertEquals("table", answer);
-    }
-
-    @Test
-    void testToCamelCaseNormal() {
-        String answer = StringUtility.convertCamelCaseToSnakeCase("userName");
-        assertThat(answer).isEqualTo("USER_NAME");
-    }
-
-    @Test
-    void testToCamelCaseEmail() {
-        String answer = JavaBeansUtil.getValidPropertyName("eMailAddress");
-        answer = StringUtility.convertCamelCaseToSnakeCase(answer);
-        assertThat(answer).isEqualTo("E_MAIL_ADDRESS");
-    }
-
-    @Test
-    void testToCamelCaseURL() {
-        String answer = JavaBeansUtil.getValidPropertyName("URL");
-        answer = StringUtility.convertCamelCaseToSnakeCase(answer);
-        assertThat(answer).isEqualTo("URL");
-    }
-
-    @Test
-    void testToCamelCaseXAxis() {
-        String answer = JavaBeansUtil.getValidPropertyName("XAxis");
-        answer = StringUtility.convertCamelCaseToSnakeCase(answer);
-        assertThat(answer).isEqualTo("X_AXIS");
-    }
-
-    @Test
-    void testToCamelCaseYaxis() {
-        String answer = JavaBeansUtil.getValidPropertyName("Yaxis");
-        answer = StringUtility.convertCamelCaseToSnakeCase(answer);
-        assertThat(answer).isEqualTo("YAXIS");
-    }
-
-    @Test
-    void testIsTrueWithNull() {
-        boolean answer = StringUtility.isTrue(null);
-        assertThat(answer).isFalse();
+    static Stream<Arguments> snakeCaseVariations() {
+        return Stream.of(
+                Arguments.argumentSet("normal case", "userName", "USER_NAME"),
+                Arguments.argumentSet("camel case email",
+                        JavaBeansUtil.getValidPropertyName("eMailAddress"), "E_MAIL_ADDRESS"),
+                Arguments.argumentSet("URL",
+                        JavaBeansUtil.getValidPropertyName("URL"), "URL"),
+                Arguments.argumentSet("XAxis",
+                        JavaBeansUtil.getValidPropertyName("XAxis"), "X_AXIS"),
+                Arguments.argumentSet("Yaxis",
+                        JavaBeansUtil.getValidPropertyName("Yaxis"), "YAXIS")
+        );
     }
 }

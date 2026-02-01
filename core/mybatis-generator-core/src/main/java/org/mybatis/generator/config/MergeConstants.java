@@ -54,5 +54,5 @@ public class MergeConstants {
                 .anyMatch(comment::contains);
     }
 
-    public static String DO_NOT_DELETE_DURING_MERGE = "do_not_delete_during_merge"; //$NON-NLS-1$
+    public static final String DO_NOT_DELETE_DURING_MERGE = "do_not_delete_during_merge"; //$NON-NLS-1$
 }

@@ -17,33 +17,45 @@ package org.mybatis.generator.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.config.DomainObjectRenamingRule;
 
 class FullyQualifiedTableTest {
 
-    @Test
-    void testNormalCase() {
+    @ParameterizedTest
+    @MethodSource("variants")
+    void testIt(FullyQualifiedTable fullyQualifiedTable, String expectedName) {
+        assertThat(fullyQualifiedTable.getDomainObjectName()).isEqualTo(expectedName);
+    }
+
+    static Stream<Arguments> variants() {
+        return Stream.of(testNormalCase(), testNormalCaseWithPrefix(), testRenamingRule(), testRenamingRule2(),
+                testRenamingRuleNoUnderscore(), testRenamingRuleNoUnderscore2());
+    }
+
+    static Arguments testNormalCase() {
         FullyQualifiedTable fqt = new FullyQualifiedTable.Builder()
                 .withIntrospectedSchema("myschema")
                 .withIntrospectedTableName("mytable")
                 .build();
 
-        assertThat(fqt.getDomainObjectName()).isEqualTo("Mytable");
+        return Arguments.argumentSet("normalCase", fqt, "Mytable");
     }
 
-    @Test
-    void testNormalCaseWithPrefix() {
+    static Arguments testNormalCaseWithPrefix() {
         FullyQualifiedTable fqt = new FullyQualifiedTable.Builder()
                 .withIntrospectedSchema("myschema")
                 .withIntrospectedTableName("sys_mytable")
                 .build();
 
-        assertThat(fqt.getDomainObjectName()).isEqualTo("SysMytable");
+        return Arguments.argumentSet("normalCaseWithPrefix", fqt, "SysMytable");
     }
 
-    @Test
-    void testRenamingRule() {
+    static Arguments testRenamingRule() {
         DomainObjectRenamingRule renamingRule = new DomainObjectRenamingRule("^Sys", "");
 
         FullyQualifiedTable fqt = new FullyQualifiedTable.Builder()
@@ -52,11 +64,10 @@ class FullyQualifiedTableTest {
                 .withDomainObjectRenamingRule(renamingRule)
                 .build();
 
-        assertThat(fqt.getDomainObjectName()).isEqualTo("Mytable");
+        return Arguments.argumentSet("renamingRule", fqt, "Mytable");
     }
 
-    @Test
-    void testRenamingRule2() {
+    static Arguments testRenamingRule2() {
         DomainObjectRenamingRule renamingRule = new DomainObjectRenamingRule("^Sys", "");
         FullyQualifiedTable fqt = new FullyQualifiedTable.Builder()
                 .withIntrospectedSchema("myschema")
@@ -64,11 +75,10 @@ class FullyQualifiedTableTest {
                 .withDomainObjectRenamingRule(renamingRule)
                 .build();
 
-        assertThat(fqt.getDomainObjectName()).isEqualTo("MyTable");
+        return Arguments.argumentSet("renamingRule2", fqt, "MyTable");
     }
 
-    @Test
-    void testRenamingRuleNoUnderscore() {
+    static Arguments testRenamingRuleNoUnderscore() {
         DomainObjectRenamingRule renamingRule = new DomainObjectRenamingRule("^Sys", "");
         FullyQualifiedTable fqt = new FullyQualifiedTable.Builder()
                 .withIntrospectedSchema("myschema")
@@ -76,11 +86,10 @@ class FullyQualifiedTableTest {
                 .withDomainObjectRenamingRule(renamingRule)
                 .build();
 
-        assertThat(fqt.getDomainObjectName()).isEqualTo("Mytable");
+        return Arguments.argumentSet("renamingRuleNoUnderscore", fqt, "Mytable");
     }
 
-    @Test
-    void testRenamingRuleNoUnderscore2() {
+    static Arguments testRenamingRuleNoUnderscore2() {
         DomainObjectRenamingRule renamingRule = new DomainObjectRenamingRule("^Sys", "");
 
         FullyQualifiedTable fqt = new FullyQualifiedTable.Builder()
@@ -89,6 +98,6 @@ class FullyQualifiedTableTest {
                 .withDomainObjectRenamingRule(renamingRule)
                 .build();
 
-        assertThat(fqt.getDomainObjectName()).isEqualTo("MyTable");
+        return Arguments.argumentSet("renamingRuleNoUnderscore2", fqt, "MyTable");
     }
 }

@@ -17,98 +17,63 @@ package org.mybatis.generator.api.dom.kotlin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class FullyQualifiedKotlinTypeTest {
 
-    @Test
-    void testKotlinPrimitive() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("kotlin.String"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("String"); //$NON-NLS-1$
+    @ParameterizedTest
+    @MethodSource("simpleVariants")
+    void testSimpleVariant(String fullTypeSpec, String expectedShortName) {
+        FullyQualifiedKotlinType fqjt = new FullyQualifiedKotlinType(fullTypeSpec);
+        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo(expectedShortName);
         assertThat(fqjt.getImportList()).isEmpty();
     }
 
-    @Test
-    void testKotlinPrimitive2() {
+    static Stream<Arguments> simpleVariants() {
+        return Stream.of(
+                Arguments.argumentSet("kotlin primitive", "kotlin.String", "String"),
+                Arguments.argumentSet("kotlin primitive2", "String", "String"),
+                Arguments.argumentSet("kotlin generic type 1",
+                        "kotlin.collections.List<kotlin.String>", "List<String>"),
+                Arguments.argumentSet("kotlin generic type 2", "List<kotlin.String>", "List<String>"),
+                Arguments.argumentSet("kotlin generic type 3",
+                        "kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>>",
+                        "Map<String, List<String>>"),
+                Arguments.argumentSet("kotlin generic type 4", "List<Map<String, String>>",
+                        "List<Map<String, String>>")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("complexVariants")
+    void testComplexVariant(String fullTypeSpec, String expectedShortName, List<String> expectedImportList) {
         FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("String"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("String"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();
+                new FullyQualifiedKotlinType(fullTypeSpec);
+        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo(expectedShortName);
+        assertThat(fqjt.getImportList()).hasSize(expectedImportList.size());
+        assertThat(fqjt.getImportList()).containsExactlyInAnyOrderElementsOf(expectedImportList);
     }
 
-    @Test
-    void testSimpleType() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("com.foo.Bar"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("Bar"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).hasSize(1);
-        assertThat(fqjt.getImportList()).contains("com.foo.Bar");
-    }
-
-    @Test
-    void testSimpleType2() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("com.foo.bar"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("bar"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).hasSize(1);
-        assertThat(fqjt.getImportList()).contains("com.foo.bar"); //$NON-NLS-1$
-    }
-
-    @Test
-    void testGenericType1() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("kotlin.collections.List<kotlin.String>"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<String>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();
-    }
-
-    @Test
-    void testGenericType2() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("List<String>"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<String>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();
-    }
-
-    @Test
-    void testGenericType3() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>>"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("Map<String, List<String>>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();
-    }
-
-    @Test
-    void testGenericType4() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("List<Map<String, String>>"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<Map<String, String>>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();
-    }
-
-    @Test
-    void testUppercasePackage1() {
-        FullyQualifiedKotlinType fqjt = new FullyQualifiedKotlinType("org.foo.Bar.Inner");
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("Inner"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).hasSize(1);
-        assertThat(fqjt.getImportList()).contains("org.foo.Bar.Inner");
-    }
-
-    @Test
-    void testUppercasePackage2() {
-        FullyQualifiedKotlinType fqjt = new FullyQualifiedKotlinType("org.foo.Bar.Inner.Inner");
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("Inner"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).hasSize(1);
-        assertThat(fqjt.getImportList()).contains("org.foo.Bar.Inner.Inner");
-    }
-
-    @Test
-    void testUppercasePackage3() {
-        FullyQualifiedKotlinType fqjt = new FullyQualifiedKotlinType("java.util.List<org.foo.Bar.Inner>");
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<Inner>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).hasSize(2);
-        assertThat(fqjt.getImportList()).contains("java.util.List", "org.foo.Bar.Inner");
+    static Stream<Arguments> complexVariants() {
+        return Stream.of(
+                Arguments.argumentSet("simple type 1", "com.foo.Bar", "Bar",
+                        List.of("com.foo.Bar")),
+                Arguments.argumentSet("simple type 2", "com.foo.bar", "bar",
+                        List.of("com.foo.bar")),
+                Arguments.argumentSet("uppercase package 1", "org.foo.Bar.Inner", "Inner",
+                        List.of("org.foo.Bar.Inner")),
+                Arguments.argumentSet("uppercase package 2", "org.foo.Bar.Inner.Inner", "Inner",
+                        List.of("org.foo.Bar.Inner.Inner")),
+                Arguments.argumentSet("uppercase package 3", "java.util.List<org.foo.Bar.Inner>",
+                        "List<Inner>",
+                        List.of("java.util.List", "org.foo.Bar.Inner"))
+        );
     }
 
     @Test

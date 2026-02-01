@@ -82,7 +82,7 @@ public class SqlScriptRunner {
         Connection connection = null;
 
         try {
-            Class<Driver> driverClass = ObjectFactory.externalClassForName(driver, Driver.class);
+            Class<Driver> driverClass = ObjectFactory.externalClassForName(driver);
             Driver theDriver = driverClass.getDeclaredConstructor().newInstance();
 
             Properties properties = new Properties();

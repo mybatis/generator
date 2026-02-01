@@ -86,7 +86,9 @@ class JavaCodeGenerationTest {
     }
 
     static void createDatabase() throws Exception {
-        SqlScriptRunner scriptRunner = new SqlScriptRunner(JavaCodeGenerationTest.class.getResourceAsStream("/scripts/CreateDB.sql"), "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:aname", "sa", "");
+        SqlScriptRunner scriptRunner =
+                new SqlScriptRunner(JavaCodeGenerationTest.class.getResourceAsStream("/scripts/CreateDB.sql"),
+                        "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:aname", "sa", "");
         scriptRunner.executeScript();
     }
 }

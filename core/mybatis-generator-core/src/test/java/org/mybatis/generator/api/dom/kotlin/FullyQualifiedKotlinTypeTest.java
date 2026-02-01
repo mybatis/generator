@@ -17,24 +17,36 @@ package org.mybatis.generator.api.dom.kotlin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class FullyQualifiedKotlinTypeTest {
 
-    @Test
-    void testKotlinPrimitive() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("kotlin.String"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("String"); //$NON-NLS-1$
+    @ParameterizedTest
+    @MethodSource("variants")
+    void testKotlinVariant(String fullTypeSpec, String expectedShortName) {
+        FullyQualifiedKotlinType fqjt = new FullyQualifiedKotlinType(fullTypeSpec);
+        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo(expectedShortName);
         assertThat(fqjt.getImportList()).isEmpty();
     }
 
-    @Test
-    void testKotlinPrimitive2() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("String"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("String"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();
+    static Stream<Arguments> variants() {
+        return Stream.of(
+                Arguments.argumentSet("kotlin primitive", "kotlin.String", "String"),
+                Arguments.argumentSet("kotlin primitive2", "String", "String"),
+                Arguments.argumentSet("kotlin generic type 1",
+                        "kotlin.collections.List<kotlin.String>", "List<String>"),
+                Arguments.argumentSet("kotlin generic type 2", "List<kotlin.String>", "List<String>"),
+                Arguments.argumentSet("kotlin generic type 3",
+                        "kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>>",
+                        "Map<String, List<String>>"),
+                Arguments.argumentSet("kotlin generic type 4", "List<Map<String, String>>",
+                        "List<Map<String, String>>")
+        );
     }
 
     @Test
@@ -53,38 +65,6 @@ class FullyQualifiedKotlinTypeTest {
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("bar"); //$NON-NLS-1$
         assertThat(fqjt.getImportList()).hasSize(1);
         assertThat(fqjt.getImportList()).contains("com.foo.bar"); //$NON-NLS-1$
-    }
-
-    @Test
-    void testGenericType1() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("kotlin.collections.List<kotlin.String>"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<String>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();
-    }
-
-    @Test
-    void testGenericType2() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("List<String>"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<String>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();
-    }
-
-    @Test
-    void testGenericType3() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>>"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("Map<String, List<String>>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();
-    }
-
-    @Test
-    void testGenericType4() {
-        FullyQualifiedKotlinType fqjt =
-            new FullyQualifiedKotlinType("List<Map<String, String>>"); //$NON-NLS-1$
-        assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<Map<String, String>>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();
     }
 
     @Test

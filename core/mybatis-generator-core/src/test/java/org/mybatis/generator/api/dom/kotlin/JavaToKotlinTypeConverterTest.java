@@ -29,8 +29,9 @@ class JavaToKotlinTypeConverterTest {
 
     @ParameterizedTest
     @MethodSource("primitiveVariations")
-    void testPrimitiveVariation(FullyQualifiedJavaType javaType, String expected) {
-        FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(javaType);
+    void testPrimitiveVariation(String javaType, String expected) {
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(javaType);
+        FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(type);
 
         assertThat(kt.getShortNameWithTypeArguments()).isEqualTo(expected);
         assertThat(kt.getImportList()).isEmpty();
@@ -38,11 +39,10 @@ class JavaToKotlinTypeConverterTest {
 
     static Stream<Arguments> primitiveVariations() {
         return Stream.of(
-                Arguments.argumentSet("primitive byte", new FullyQualifiedJavaType("byte"), "Byte"),
-                Arguments.argumentSet("primitive byte array", new FullyQualifiedJavaType("byte[]"), "ByteArray"),
-                Arguments.argumentSet("byte wrapper", new FullyQualifiedJavaType("java.lang.Byte"), "Byte"),
-                Arguments.argumentSet("byte wrapper array", new FullyQualifiedJavaType("java.lang.Byte[]"),
-                        "Array<Byte>")
+                Arguments.argumentSet("primitive byte", "byte", "Byte"),
+                Arguments.argumentSet("primitive byte array", "byte[]", "ByteArray"),
+                Arguments.argumentSet("byte wrapper", "java.lang.Byte", "Byte"),
+                Arguments.argumentSet("byte wrapper array", "java.lang.Byte[]", "Array<Byte>")
         );
     }
 

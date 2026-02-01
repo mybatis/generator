@@ -288,7 +288,7 @@ class FullyQualifiedJavaTypeTest {
         assertThat(out).isEqualToNormalizingNewlines(
                 """
                 package foo;
-            
+
                 public interface Bar {
                     void setConverter(Class<?> converterType);
                 }""");
@@ -314,7 +314,7 @@ class FullyQualifiedJavaTypeTest {
         assertThat(out).isEqualToNormalizingNewlines(
                 """
                 package foo;
-                
+
                 public interface Bar {
                     void setConverter(Class<? extends String> converterType);
                 }""");
@@ -341,7 +341,7 @@ class FullyQualifiedJavaTypeTest {
         assertThat(out).isEqualToNormalizingNewlines(
                 """
                 package foo;
-                
+
                 public interface Bar {
                     void setConverter(Class<? extends HttpMessageConverter<?>> converterType);
                 }""");

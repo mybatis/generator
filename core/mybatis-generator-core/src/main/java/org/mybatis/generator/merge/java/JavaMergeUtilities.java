@@ -105,7 +105,7 @@ public class JavaMergeUtilities {
             return bodyDeclaration.asClassOrInterfaceDeclaration().getImplementedTypes();
         } else if (bodyDeclaration.isEnumDeclaration()) {
             return bodyDeclaration.asEnumDeclaration().getImplementedTypes();
-        } else if(bodyDeclaration.isRecordDeclaration()) {
+        } else if (bodyDeclaration.isRecordDeclaration()) {
             return bodyDeclaration.asRecordDeclaration().getImplementedTypes();
         }
 
@@ -117,7 +117,7 @@ public class JavaMergeUtilities {
             bodyDeclaration.asClassOrInterfaceDeclaration().addImplementedType(superInterface);
         } else if (bodyDeclaration.isEnumDeclaration()) {
             bodyDeclaration.asEnumDeclaration().addImplementedType(superInterface);
-        } else if(bodyDeclaration.isRecordDeclaration()) {
+        } else if (bodyDeclaration.isRecordDeclaration()) {
             bodyDeclaration.asRecordDeclaration().addImplementedType(superInterface);
         }
     }

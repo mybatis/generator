@@ -138,7 +138,8 @@ public class JavaFileMerger {
 
         // Look for custom super interfaces in the existing file and merge into the new file
         JavaMergeUtilities
-                .findCustomSuperInterfaces(existingFileParseResults.typeDeclaration, newFileParseResults.typeDeclaration)
+                .findCustomSuperInterfaces(existingFileParseResults.typeDeclaration,
+                        newFileParseResults.typeDeclaration)
                 .forEach(t -> JavaMergeUtilities.addSuperInterface(newFileParseResults.typeDeclaration, t));
 
         // Return the new (merged) file

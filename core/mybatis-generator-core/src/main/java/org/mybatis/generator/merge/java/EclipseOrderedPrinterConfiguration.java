@@ -20,7 +20,7 @@ import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
 import com.github.javaparser.printer.configuration.imports.EclipseImportOrderingStrategy;
 
 /**
- * Printer configuration that orders imports in "Eclipse" order (statics first, etc.)
+ * Printer configuration that orders imports in "Eclipse" order (statics first, etc.).
  */
 public class EclipseOrderedPrinterConfiguration extends DefaultPrinterConfiguration {
     public EclipseOrderedPrinterConfiguration() {

@@ -16,6 +16,7 @@
 package org.mybatis.generator.merge.java;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,8 @@ import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.nodeTypes.NodeWithSimpleName;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 
 public class JavaMergeUtilities {
     private JavaMergeUtilities() {
@@ -79,6 +82,44 @@ public class JavaMergeUtilities {
         }
 
         return false;
+    }
+
+    public static List<ClassOrInterfaceType> findCustomSuperInterfaces(BodyDeclaration<?> existingType,
+                                                                       BodyDeclaration<?> newType) {
+        List<ClassOrInterfaceType> customSuperInterfaces = new ArrayList<>();
+
+        List<String> newFileSuperInterfaces = findSuperInterfaces(newType).stream()
+                .map(NodeWithSimpleName::getNameAsString).toList();
+
+        for (ClassOrInterfaceType id : findSuperInterfaces(existingType)) {
+            if (!newFileSuperInterfaces.contains(id.getNameAsString())) {
+                customSuperInterfaces.add(id);
+            }
+        }
+
+        return customSuperInterfaces;
+    }
+
+    public static List<ClassOrInterfaceType> findSuperInterfaces(BodyDeclaration<?> bodyDeclaration) {
+        if (bodyDeclaration.isClassOrInterfaceDeclaration()) {
+            return bodyDeclaration.asClassOrInterfaceDeclaration().getImplementedTypes();
+        } else if (bodyDeclaration.isEnumDeclaration()) {
+            return bodyDeclaration.asEnumDeclaration().getImplementedTypes();
+        } else if(bodyDeclaration.isRecordDeclaration()) {
+            return bodyDeclaration.asRecordDeclaration().getImplementedTypes();
+        }
+
+        return Collections.emptyList();
+    }
+
+    public static void addSuperInterface(BodyDeclaration<?> bodyDeclaration, ClassOrInterfaceType superInterface) {
+        if (bodyDeclaration.isClassOrInterfaceDeclaration()) {
+            bodyDeclaration.asClassOrInterfaceDeclaration().addImplementedType(superInterface);
+        } else if (bodyDeclaration.isEnumDeclaration()) {
+            bodyDeclaration.asEnumDeclaration().addImplementedType(superInterface);
+        } else if(bodyDeclaration.isRecordDeclaration()) {
+            bodyDeclaration.asRecordDeclaration().addImplementedType(superInterface);
+        }
     }
 
     /**

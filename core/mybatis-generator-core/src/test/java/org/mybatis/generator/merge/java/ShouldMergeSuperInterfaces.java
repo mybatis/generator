@@ -17,16 +17,19 @@ package org.mybatis.generator.merge.java;
 
 import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldReturnNewFileUnmodified extends MergeTestCase {
+public class ShouldMergeSuperInterfaces extends MergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return
                 """
                 package foo;
 
+                import java.io.Serializable;
                 import javax.annotation.Generated;
 
-                public class Bar {
+                public class Foo implements Serializable {
+                    private static final long serialVersionUID = 1L;
+
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     public String hello() {
                         return "hello";
@@ -37,25 +40,16 @@ public class ShouldReturnNewFileUnmodified extends MergeTestCase {
 
     @Override
     public String newContent(String parameter) {
-        // imports are intentionally in a crazy order - this test covers the case where the
-        // new file should be returned as is
         return
                 """
                 package foo;
 
-                import java.sql.Date;
-                import static foo.Thing.thing;
                 import javax.annotation.Generated;
 
-                public class Bar {
+                public class Foo {
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     public String hello() {
                         return "hello";
-                    }
-
-                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    public Date someDate() {
-                        return thing();
                     }
                 }
                 """;
@@ -63,6 +57,23 @@ public class ShouldReturnNewFileUnmodified extends MergeTestCase {
 
     @Override
     public String expectedContentAfterMerge(String parameter) {
-        return newContent(parameter);
+        return
+                """
+                package foo;
+
+                import java.io.Serializable;
+
+                import javax.annotation.Generated;
+
+                public class Foo implements Serializable {
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String hello() {
+                        return "hello";
+                    }
+
+                    private static final long serialVersionUID = 1L;
+                }
+                """;
     }
 }

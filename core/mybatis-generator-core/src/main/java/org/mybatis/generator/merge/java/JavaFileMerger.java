@@ -127,6 +127,11 @@ public class JavaFileMerger {
         // Add custom elements from the existing file to the new file
         customMemberGatherer.allCustomMembers().forEach(newFileParseResults.typeDeclaration::addMember);
 
+        // Look for custom super interfaces in the existing file and merge into the new file
+        JavaMergeUtilities
+                .findCustomSuperInterfaces(existingFileParseResults.typeDeclaration, newFileParseResults.typeDeclaration)
+                .forEach(t -> JavaMergeUtilities.addSuperInterface(newFileParseResults.typeDeclaration, t));
+
         // Return the new (merged) file
         DefaultPrettyPrinter printer = new DefaultPrettyPrinter(printerConfiguration);
         return printer.print(newFileParseResults.compilationUnit);

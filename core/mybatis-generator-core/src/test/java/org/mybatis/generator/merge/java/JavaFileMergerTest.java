@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mybatis.generator.exception.MultiMessageException;
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.merge.MergeTestCase;
 
@@ -48,7 +49,8 @@ class JavaFileMergerTest {
 
         assertThatExceptionOfType(ShellException.class).isThrownBy(() ->
                 javaFileMerger.getMergedSource(badExistingFile, badExistingFile))
-                .withMessageStartingWith("Failed to parse existing file");
+                .withMessage("Failed to parse existing Java file during Java merge")
+                .withCauseInstanceOf(MultiMessageException.class);
     }
 
     @Test
@@ -59,7 +61,8 @@ class JavaFileMergerTest {
 
         assertThatExceptionOfType(ShellException.class).isThrownBy(() ->
                         javaFileMerger.getMergedSource(badNewFile, existingFile))
-                .withMessageStartingWith("Failed to parse new file");
+                .withMessage("Failed to parse new Java file during Java merge")
+                .withCauseInstanceOf(MultiMessageException.class);
     }
 
     @Test
@@ -69,6 +72,6 @@ class JavaFileMergerTest {
 
         assertThatExceptionOfType(ShellException.class).isThrownBy(() ->
                         javaFileMerger.getMergedSource(existingFileNoTypes, existingFileNoTypes))
-                .withMessage("Failed to find main type declaration in existing file");
+                .withMessage("Failed to find a type declaration in existing Java file during Java merge");
     }
 }

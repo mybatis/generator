@@ -25,13 +25,14 @@ import java.nio.file.Files;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseResult;
+import com.github.javaparser.Problem;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.printer.DefaultPrettyPrinter;
 import com.github.javaparser.printer.configuration.PrinterConfiguration;
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.exception.InternalException;
+import org.mybatis.generator.exception.MultiMessageException;
 import org.mybatis.generator.exception.ShellException;
 
 /**
@@ -86,8 +87,7 @@ public class JavaFileMerger {
             String existingFileContent = readFileContent(existingFile, fileEncoding);
             return getMergedSource(newFileContent, existingFileContent);
         } catch (IOException e) {
-            // TODO - wrong error message
-            throw new ShellException(getString("Warning.13", existingFile.getName()), e);
+            throw new ShellException(getString("Warning.32", existingFile.getName()), e); //$NON-NLS-1$
         }
     }
 
@@ -132,19 +132,20 @@ public class JavaFileMerger {
         return printer.print(newFileParseResults.compilationUnit);
     }
 
-    private ParseResults parseAndFindMainTypeDeclaration(JavaParser javaParser, String source,
-                                                                FileType fileType) throws ShellException {
+    private ParseResults parseAndFindMainTypeDeclaration(JavaParser javaParser, String source, FileType fileType)
+            throws ShellException {
         ParseResult<CompilationUnit> parseResult = javaParser.parse(source);
-        if (!parseResult.isSuccessful()) {
-            // TODO - externalize
-            throw new ShellException("Failed to parse " //$NON-NLS-1$
-                    + fileType + ": " + parseResult.getProblems()); //$NON-NLS-1$
+
+        // little hack to pull the result out of the lambda. This allows us to avoid "orElseThrow()" later on
+        @Nullable CompilationUnit[] compilationUnits = new CompilationUnit [1];
+        parseResult.ifSuccessful(cu -> compilationUnits[0] = cu);
+
+        if (compilationUnits[0] == null) {
+            var mme = new MultiMessageException(parseResult.getProblems().stream().map(Problem::toString).toList());
+            throw new ShellException(getString("RuntimeError.28", fileType.toString()), mme); //$NON-NLS-1$
         }
 
-        // TODO - externalize
-        CompilationUnit compilationUnit = parseResult.getResult()
-                .orElseThrow(() -> new InternalException("No CU when no problems reported"));
-        return new ParseResults(compilationUnit, findMainTypeDeclaration(compilationUnit, fileType));
+        return new ParseResults(compilationUnits[0], findMainTypeDeclaration(compilationUnits[0], fileType));
     }
 
     private void deleteDuplicateMemberIfExists(TypeDeclaration<?> newTypeDeclaration,
@@ -168,8 +169,7 @@ public class JavaFileMerger {
             }
         }
         if (firstType == null) {
-            // TODO - externalize
-            throw new ShellException("Failed to find main type declaration in " + fileType); //$NON-NLS-1$
+            throw new ShellException(getString("RuntimeError.29", fileType.toString())); //$NON-NLS-1$
         }
         return firstType;
     }
@@ -185,8 +185,8 @@ public class JavaFileMerger {
     private record ParseResults(CompilationUnit compilationUnit, TypeDeclaration<?> typeDeclaration) {}
 
     private enum FileType {
-        NEW_FILE("new file"), //$NON-NLS-1$
-        EXISTING_FILE("existing file"); //$NON-NLS-1$
+        NEW_FILE("new Java file"), //$NON-NLS-1$
+        EXISTING_FILE("existing Java file"); //$NON-NLS-1$
 
         private final String displayText;
 

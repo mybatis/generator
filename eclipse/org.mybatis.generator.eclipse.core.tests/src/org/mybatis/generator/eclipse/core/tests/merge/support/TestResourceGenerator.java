@@ -107,6 +107,7 @@ public class TestResourceGenerator {
         
         Method method = new Method("count");
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setAbstract(true);
         commentGenerator.addMethodComment(method);
         itf.addMethod(method);
         
@@ -114,6 +115,7 @@ public class TestResourceGenerator {
         method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "a"));
         method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "b"));
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setAbstract(true);
         commentGenerator.addMethodComment(method);
         itf.addMethod(method);
 
@@ -128,6 +130,7 @@ public class TestResourceGenerator {
         method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "a"));
         method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "b"));
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setAbstract(true);
         commentGenerator.addMethodComment(method);
         itf.addMethod(method);
 
@@ -136,6 +139,7 @@ public class TestResourceGenerator {
         method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "b"));
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addAnnotation("@Generated(value=\"" + MyBatisGenerator.class.getName() + "\")");
+        method.setAbstract(true);
         itf.addMethod(method);
 
         method = new Method("multiply");
@@ -143,6 +147,7 @@ public class TestResourceGenerator {
         method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "b"));
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addAnnotation("@Generated(\"" + MyBatisGenerator.class.getName() + "\")");
+        method.setAbstract(true);
         itf.addMethod(method);
 
         method = new Method("add");
@@ -150,6 +155,7 @@ public class TestResourceGenerator {
         method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "b"));
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addAnnotation("@javax.annotation.Generated(\"" + MyBatisGenerator.class.getName() + "\")");
+        method.setAbstract(true);
         itf.addMethod(method);
 
         method = new Method("add2");
@@ -157,10 +163,12 @@ public class TestResourceGenerator {
         method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "b"));
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addAnnotation("@javax.annotation.Generated(value=\"" + MyBatisGenerator.class.getName() + "\")");
+        method.setAbstract(true);
         itf.addMethod(method);
 
         method = new Method("nonGeneratedMethod");
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setAbstract(true);
         itf.addMethod(method);
 
         return new DefaultJavaFormatter().getFormattedContent(itf);

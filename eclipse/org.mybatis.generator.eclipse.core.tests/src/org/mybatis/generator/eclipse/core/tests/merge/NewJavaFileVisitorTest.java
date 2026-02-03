@@ -16,9 +16,7 @@
  */
 package org.mybatis.generator.eclipse.core.tests.merge;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mybatis.generator.eclipse.core.merge.EclipseDomUtils.getCompilationUnitFromSource;
 
 import java.io.IOException;
@@ -29,7 +27,6 @@ import org.eclipse.jdt.core.dom.SimpleType;
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.eclipse.core.merge.NewJavaFileVisitor;
 import org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator;
-import org.mybatis.generator.eclipse.test.Utilities;
 
 public class NewJavaFileVisitorTest {
 
@@ -38,11 +35,11 @@ public class NewJavaFileVisitorTest {
         CompilationUnit cu = getCompilationUnitFromSource(TestResourceGenerator.simpleClassWithAllGeneratedItems());
         NewJavaFileVisitor visitor = new NewJavaFileVisitor();
         cu.accept(visitor);
-        assertThat(visitor.getImports().size(), is(0));
-        assertThat(visitor.getNewNodes().size(), is(3));
-        assertThat(visitor.getSuperclass(), is(nullValue()));
-        assertThat(visitor.getSuperInterfaceTypes().size(), is(0));
-        assertThat(visitor.isInterface(), is(false));
+        assertThat(visitor.getImports()).isEmpty();
+        assertThat(visitor.getNewNodes()).hasSize(3);
+        assertThat(visitor.getSuperclass()).isNull();
+        assertThat(visitor.getSuperInterfaceTypes()).isEmpty();
+        assertThat(visitor.isInterface()).isFalse();
     }
 
     @Test
@@ -52,12 +49,12 @@ public class NewJavaFileVisitorTest {
         CompilationUnit cu = getCompilationUnitFromResource(resource);
         NewJavaFileVisitor visitor = new NewJavaFileVisitor();
         cu.accept(visitor);
-        assertThat(visitor.getImports().size(), is(1));
-        assertThat(visitor.getNewNodes().size(), is(50));
-        assertThat(visitor.getSuperclass().isSimpleType(), is(true));
-        assertThat(((SimpleType) visitor.getSuperclass()).getName().getFullyQualifiedName(), is("AwfulTableKey"));
-        assertThat(visitor.getSuperInterfaceTypes().size(), is(0));
-        assertThat(visitor.isInterface(), is(false));
+        assertThat(visitor.getImports()).hasSize(1);
+        assertThat(visitor.getNewNodes()).hasSize(50);
+        assertThat(visitor.getSuperclass().isSimpleType()).isTrue();
+        assertThat(((SimpleType) visitor.getSuperclass()).getName().getFullyQualifiedName()).isEqualTo("AwfulTableKey");
+        assertThat(visitor.getSuperInterfaceTypes()).isEmpty();
+        assertThat(visitor.isInterface()).isFalse();
     }
 
     @Test
@@ -67,11 +64,11 @@ public class NewJavaFileVisitorTest {
         CompilationUnit cu = getCompilationUnitFromResource(resource);
         NewJavaFileVisitor visitor = new NewJavaFileVisitor();
         cu.accept(visitor);
-        assertThat(visitor.getImports().size(), is(2));
-        assertThat(visitor.getNewNodes().size(), is(17));
-        assertThat(visitor.getSuperclass(), is(nullValue()));
-        assertThat(visitor.getSuperInterfaceTypes().size(), is(0));
-        assertThat(visitor.isInterface(), is(false));
+        assertThat(visitor.getImports()).hasSize(2);
+        assertThat(visitor.getNewNodes()).hasSize(17);
+        assertThat(visitor.getSuperclass()).isNull();
+        assertThat(visitor.getSuperInterfaceTypes()).isEmpty();
+        assertThat(visitor.isInterface()).isFalse();
     }
 
     @Test
@@ -81,15 +78,15 @@ public class NewJavaFileVisitorTest {
         CompilationUnit cu = getCompilationUnitFromResource(resource);
         NewJavaFileVisitor visitor = new NewJavaFileVisitor();
         cu.accept(visitor);
-        assertThat(visitor.getImports().size(), is(11));
-        assertThat(visitor.getNewNodes().size(), is(11));
-        assertThat(visitor.getSuperclass(), is(nullValue()));
-        assertThat(visitor.getSuperInterfaceTypes().size(), is(0));
-        assertThat(visitor.isInterface(), is(true));
+        assertThat(visitor.getImports()).hasSize(11);
+        assertThat(visitor.getNewNodes()).hasSize(11);
+        assertThat(visitor.getSuperclass()).isNull();
+        assertThat(visitor.getSuperInterfaceTypes()).isEmpty();
+        assertThat(visitor.isInterface()).isTrue();
     }
 
     public static CompilationUnit getCompilationUnitFromResource(InputStream resource) throws IOException {
-        String javaSource = Utilities.getResourceAsString(resource);
+        String javaSource = ExistingJavaFileVisitorTest.getResourceAsString(resource);
         return getCompilationUnitFromSource(javaSource);
     }
 }

@@ -16,10 +16,7 @@
  */
 package org.mybatis.generator.eclipse.core.tests.callback;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.createJavaProject;
 import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.deleteProject;
 import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.getWorkspace;
@@ -55,8 +52,8 @@ public class EclipseShellCallbackTest {
     public void testCalculatingDirectoryOnDefaultSourceFolder() throws ShellException {
         EclipseShellCallback callback = new EclipseShellCallback();
         File directory = callback.getDirectory(javaProject.getElementName(), "org.mybatis.test");
-        assertThat(directory, is(notNullValue()));
-        assertThat(directory.exists(), is(true));
+        assertThat(directory).isNotNull();
+        assertThat(directory.exists()).isTrue();
         
         IPath actualPath = new Path(directory.getAbsolutePath());
         IPath workspacePath = getWorkspace().getRoot().getLocation();
@@ -67,15 +64,15 @@ public class EclipseShellCallbackTest {
                 .append("org")
                 .append("mybatis")
                 .append("test");
-        assertThat(expectedPath, is(equalTo(actualPath)));
+        assertThat(expectedPath).isEqualTo(actualPath);
     }
 
     @Test
     public void testCalculatingDirectoryOnSpecificSourceFolder() throws ShellException {
         EclipseShellCallback callback = new EclipseShellCallback();
         File directory = callback.getDirectory(javaProject.getElementName() + "/generatedsrc", "org.mybatis.test");
-        assertThat(directory, is(notNullValue()));
-        assertThat(directory.exists(), is(true));
+        assertThat(directory).isNotNull();
+        assertThat(directory.exists()).isTrue();
         
         IPath actualPath = new Path(directory.getAbsolutePath());
         IPath workspacePath = getWorkspace().getRoot().getLocation();
@@ -84,7 +81,7 @@ public class EclipseShellCallbackTest {
                 .append("org")
                 .append("mybatis")
                 .append("test");
-        assertThat(expectedPath, is(equalTo(actualPath)));
+        assertThat(expectedPath).isEqualTo(actualPath);
     }
 
     @Test

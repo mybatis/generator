@@ -25,6 +25,7 @@ import java.nio.file.Files;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseResult;
+import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.Problem;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.BodyDeclaration;
@@ -100,7 +101,9 @@ public class JavaFileMerger {
      * @throws ShellException if the file cannot be merged for some reason
      */
     public String getMergedSource(String newFileContent, String existingFileContent) throws ShellException {
-        JavaParser javaParser = new JavaParser();
+        ParserConfiguration parserConfiguration = new ParserConfiguration();
+        parserConfiguration.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_25);
+        JavaParser javaParser = new JavaParser(parserConfiguration);
 
         ParseResults existingFileParseResults = parseAndFindMainTypeDeclaration(javaParser, existingFileContent,
                 FileType.EXISTING_FILE);

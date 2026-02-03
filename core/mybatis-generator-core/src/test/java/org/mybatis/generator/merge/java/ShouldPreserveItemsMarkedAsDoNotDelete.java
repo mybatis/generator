@@ -32,7 +32,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
 
               public class PkfieldsExample {
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (existing)
                    */
                   protected int id;
 
@@ -48,10 +48,14 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
                       oredCriteria = new ArrayList<>();
                   }
 
+                  public void customMethod() {
+                  }
+
                   /**
                    * @mbg.generated do_not_delete_during_merge
                    */
                   public int getId() {
+                      // existing
                       return id;
                   }
 
@@ -94,9 +98,6 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
                    */
                   public static class Criterion {
                       private String condition;
-                  }
-
-                  public void customMethod() {
                   }
               }
               """;
@@ -167,8 +168,11 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
                   protected abstract static class GeneratedCriteria {
                   }
 
+                  public void customMethod() {
+                  }
+
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (existing)
                    */
                   protected int id;
 
@@ -176,6 +180,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
                    * @mbg.generated do_not_delete_during_merge
                    */
                   public int getId() {
+                      // existing
                       return id;
                   }
 
@@ -191,9 +196,6 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
                       public boolean isValid() {
                           return true;
                       }
-                  }
-
-                  public void customMethod() {
                   }
               }
               """;

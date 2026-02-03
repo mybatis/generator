@@ -21,6 +21,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.github.javaparser.ast.body.BodyDeclaration;
+import com.github.javaparser.ast.body.EnumConstantDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.expr.AnnotationExpr;
@@ -46,36 +47,56 @@ import org.mybatis.generator.config.MergeConstants;
  * If both lists are empty, there is no need to merge any members into a new file, and the new file can be used as is.
  */
 public class CustomMemberGatherer {
-    private final List<BodyDeclaration<?>> customMembers = new ArrayList<>();
-    private final List<BodyDeclaration<?>> doNotDeleteMembers = new ArrayList<>();
+    private final List<BodyDeclaration<?>> customBodyMembers = new ArrayList<>();
+    private final List<BodyDeclaration<?>> doNotDeleteBodyMembers = new ArrayList<>();
+    private final List<EnumConstantDeclaration> customEnumConstants = new ArrayList<>();
 
     public CustomMemberGatherer(TypeDeclaration<?> typeDeclaration) {
-        typeDeclaration.getMembers().forEach(this::gatherCustomMemberIfNeeded);
+        typeDeclaration.getMembers().forEach(this::gatherCustomBodyMemberIfNeeded);
+
+        if (typeDeclaration.isEnumDeclaration()) {
+            typeDeclaration.asEnumDeclaration().getEntries().forEach(this::gatherCustomEnumConstantIfNeeded);
+        }
     }
 
     public boolean hasAnyMembersToMerge() {
-        return !customMembers.isEmpty() || !doNotDeleteMembers.isEmpty();
+        return !customBodyMembers.isEmpty() || !doNotDeleteBodyMembers.isEmpty() || !customEnumConstants.isEmpty();
     }
 
-    public Stream<BodyDeclaration<?>> allCustomMembers() {
-        return Stream.of(customMembers.stream(), doNotDeleteMembers.stream())
+    public Stream<BodyDeclaration<?>> allCustomBodyMembers() {
+        return Stream.of(customBodyMembers.stream(), doNotDeleteBodyMembers.stream())
                 .flatMap(Function.identity());
     }
 
-    public Stream<BodyDeclaration<?>> doNotDeleteMembers() {
-        return doNotDeleteMembers.stream();
+    public Stream<BodyDeclaration<?>> doNotDeleteBodyMembers() {
+        return doNotDeleteBodyMembers.stream();
     }
 
-    private void gatherCustomMemberIfNeeded(BodyDeclaration<?> member) {
+    public Stream<EnumConstantDeclaration> customEnumConstants() {
+        return customEnumConstants.stream();
+    }
+
+    private void gatherCustomBodyMemberIfNeeded(BodyDeclaration<?> member) {
         if (hasGeneratedAnnotation(member)) {
             return;
         }
 
         GeneratedType generatedType = checkForGeneratedJavadocTag(member);
         if (generatedType == GeneratedType.NOT_GENERATED) {
-            customMembers.add(member);
+            customBodyMembers.add(member);
         } else if (generatedType == GeneratedType.GENERATED_KEEP) {
-            doNotDeleteMembers.add(member);
+            doNotDeleteBodyMembers.add(member);
+        }
+    }
+
+    private void gatherCustomEnumConstantIfNeeded(EnumConstantDeclaration member) {
+        if (hasGeneratedAnnotation(member)) {
+            return;
+        }
+
+        GeneratedType generatedType = checkForGeneratedJavadocTag(member);
+        if (generatedType == GeneratedType.NOT_GENERATED || generatedType == GeneratedType.GENERATED_KEEP) {
+            customEnumConstants.add(member);
         }
     }
 

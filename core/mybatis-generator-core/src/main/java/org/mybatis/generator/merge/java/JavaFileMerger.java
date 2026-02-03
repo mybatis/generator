@@ -119,7 +119,7 @@ public class JavaFileMerger {
                 FileType.NEW_FILE);
 
         // Delete elements in the new file that match doNotDeleteMembers from the existing file
-        customMemberGatherer.doNotDeleteMembers()
+        customMemberGatherer.doNotDeleteBodyMembers()
                 .forEach(m -> deleteDuplicateMemberIfExists(newFileParseResults.typeDeclaration, m));
 
         // Look for custom imports in the existing file and merge into the new file
@@ -127,8 +127,14 @@ public class JavaFileMerger {
                 .findCustomImports(existingFileParseResults.compilationUnit, newFileParseResults.compilationUnit)
                 .forEach(newFileParseResults.compilationUnit::addImport);
 
-        // Add custom elements from the existing file to the new file
-        customMemberGatherer.allCustomMembers().forEach(newFileParseResults.typeDeclaration::addMember);
+        // Add custom body members from the existing file to the new file
+        customMemberGatherer.allCustomBodyMembers().forEach(newFileParseResults.typeDeclaration::addMember);
+
+        // Add custom enum constants from the existing file to the new file
+        if (newFileParseResults.typeDeclaration.isEnumDeclaration()) {
+            customMemberGatherer.customEnumConstants()
+                    .forEach(newFileParseResults.typeDeclaration.asEnumDeclaration()::addEntry);
+        }
 
         // Look for custom super interfaces in the existing file and merge into the new file
         JavaMergeUtilities

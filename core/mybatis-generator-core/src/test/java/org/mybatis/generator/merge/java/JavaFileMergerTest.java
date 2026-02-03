@@ -16,26 +16,59 @@
 package org.mybatis.generator.merge.java;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mybatis.generator.config.MergeConstants;
+import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.merge.MergeTestCase;
 
 class JavaFileMergerTest {
     @ParameterizedTest
-    @MethodSource("testCases")
-    void allTestCases(MergeTestCase testCase, String parameter) throws Exception {
-        var javadocTags = MergeConstants.getOldElementTags();
-        var actual = JavaFileMerger.getMergedSource(testCase.newContent(parameter),
-                testCase.existingContent(parameter), javadocTags);
+    @MethodSource("mergeTestCases")
+    void mergeTestCases(MergeTestCase testCase, String parameter) throws Exception {
+        JavaFileMerger javaFileMerger = new JavaFileMerger(new EclipseOrderedPrinterConfiguration());
+        var actual = javaFileMerger.getMergedSource(testCase.newContent(parameter),
+                testCase.existingContent(parameter));
         assertThat(actual).isEqualToNormalizingNewlines(testCase.expectedContentAfterMerge(parameter));
     }
 
-    static Stream<Arguments> testCases() {
+    static Stream<Arguments> mergeTestCases() {
         return MergeTestCase.findTestCases("org.mybatis.generator.merge.java");
+    }
+
+    @Test
+    void testBadExistingFile() {
+        JavaFileMerger javaFileMerger = new JavaFileMerger(new EclipseOrderedPrinterConfiguration());
+        String badExistingFile = "some random text";
+
+        assertThatExceptionOfType(ShellException.class).isThrownBy(() ->
+                javaFileMerger.getMergedSource(badExistingFile, badExistingFile))
+                .withMessageStartingWith("Failed to parse existing file");
+    }
+
+    @Test
+    void testBadNewFile() {
+        JavaFileMerger javaFileMerger = new JavaFileMerger(new EclipseOrderedPrinterConfiguration());
+        String existingFile = "public class Foo { public int i; }";
+        String badNewFile = "some random text";
+
+        assertThatExceptionOfType(ShellException.class).isThrownBy(() ->
+                        javaFileMerger.getMergedSource(badNewFile, existingFile))
+                .withMessageStartingWith("Failed to parse new file");
+    }
+
+    @Test
+    void testNoTypeInExistingFile() {
+        JavaFileMerger javaFileMerger = new JavaFileMerger(new EclipseOrderedPrinterConfiguration());
+        String existingFileNoTypes = "package foo.bar;";
+
+        assertThatExceptionOfType(ShellException.class).isThrownBy(() ->
+                        javaFileMerger.getMergedSource(existingFileNoTypes, existingFileNoTypes))
+                .withMessage("Failed to find main type declaration in existing file");
     }
 }

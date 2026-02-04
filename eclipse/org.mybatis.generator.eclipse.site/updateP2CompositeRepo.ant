@@ -28,7 +28,7 @@
     qualifiedVersion  (standard Tycho property)
     project.build.directory (standard Maven property - points to the target directory)
     p2.repo.base.directory (the location of the composite repo.  This might have been initialized
-        by pulling a current copy from jfrog)
+        by pulling a current copy from GitHub)
     
 -->
 <project name="project" default="updateRepo">

@@ -236,7 +236,7 @@
    </license>
 
    <url>
-      <update label="MyBatis Generator Update Site" url="https://mybatis.jfrog.io/artifactory/generator-eclipse-release/"/>
+      <update label="MyBatis Generator Update Site" url="https://jeffgbutler.github.io/mybatis-generator-update-site/"/>
    </url>
 
    <plugin

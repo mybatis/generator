@@ -37,7 +37,7 @@ public class JavaFileMergerTest {
         
         mergedSource = mergedSource.replace("\t", "    ");
         
-        assertThat(mergedSource).isEqualTo(
+        assertThat(mergedSource).isEqualToNormalizingNewlines(
                 """
                 package org.mybatis.test;
 
@@ -88,7 +88,7 @@ public class JavaFileMergerTest {
         
         mergedSource = mergedSource.replace("\t", "    ");
         
-        assertThat(mergedSource).isEqualTo(
+        assertThat(mergedSource).isEqualToNormalizingNewlines(
                 """
                 package org.mybatis.test;
 

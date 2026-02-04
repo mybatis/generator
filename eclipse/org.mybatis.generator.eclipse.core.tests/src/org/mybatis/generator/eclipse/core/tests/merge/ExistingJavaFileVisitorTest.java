@@ -52,7 +52,7 @@ public class ExistingJavaFileVisitorTest {
         textEdit.apply(document);
         String result = document.get();
 
-        assertThat(result).isEqualTo(
+        assertThat(result).isEqualToNormalizingNewlines(
             """
             package org.mybatis.generator.eclipse.core.tests.merge.resources;
 
@@ -80,7 +80,7 @@ public class ExistingJavaFileVisitorTest {
         textEdit.apply(document);
         String result = document.get();
 
-        assertThat(result).isEqualTo(
+        assertThat(result).isEqualToNormalizingNewlines(
                 """
                 package org.mybatis.generator.eclipse.core.tests.merge.resources;
 
@@ -121,7 +121,7 @@ public class ExistingJavaFileVisitorTest {
         textEdit.apply(document);
         String result = document.get();
 
-        assertThat(result).isEqualTo(
+        assertThat(result).isEqualToNormalizingNewlines(
                 """
                 package org.mybatis.generator.eclipse.core.tests.merge.resources;
 

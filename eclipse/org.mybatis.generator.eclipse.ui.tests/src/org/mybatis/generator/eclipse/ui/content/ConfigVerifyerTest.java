@@ -16,8 +16,7 @@
  */
 package org.mybatis.generator.eclipse.ui.content;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 import java.io.InputStream;
@@ -33,7 +32,7 @@ public class ConfigVerifyerTest {
         InputStream resource = getClass()
                 .getResourceAsStream("/org/mybatis/generator/eclipse/ui/content/GoodConfigFile.xml");
         
-        assertThat(cf.isConfigFile(resource), is(true));
+        assertThat(cf.isConfigFile(resource)).isTrue();
     }
 
     @Test
@@ -42,6 +41,6 @@ public class ConfigVerifyerTest {
         InputStream resource = getClass()
                 .getResourceAsStream("/org/mybatis/generator/eclipse/ui/content/NotAConfigFile.xml");
         
-        assertThat(cf.isConfigFile(resource), is(false));
+        assertThat(cf.isConfigFile(resource)).isFalse();
     }
 }

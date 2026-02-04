@@ -28,6 +28,10 @@ import org.mybatis.generator.internal.DefaultCommentGenerator;
  *
  */
 public class TestCommentGenerator extends DefaultCommentGenerator {
+    public TestCommentGenerator() {
+        super();
+        suppressDate = true;
+    }
 
     public void addFieldComment(Field field) {
         field.addJavaDocLine("/**"); //$NON-NLS-1$

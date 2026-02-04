@@ -17,12 +17,6 @@
 					<type>jar</type>
 				</dependency>
 				<dependency>
-					<groupId>org.hamcrest</groupId>
-					<artifactId>hamcrest</artifactId>
-					<version>3.0</version>
-					<type>jar</type>
-				</dependency>
-				<dependency>
 					<groupId>org.junit.jupiter</groupId>
 					<artifactId>junit-jupiter-engine</artifactId>
 					<version>6.0.2</version>
@@ -40,6 +34,11 @@
 					<version>6.0.2</version>
 					<type>jar</type>
 				</dependency>
+				<dependency>
+                    <groupId>org.assertj</groupId>
+                    <artifactId>assertj-core</artifactId>
+                    <version>3.27.7</version>
+                </dependency>
 			</dependencies>
 		</location>
 	</locations>

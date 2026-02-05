@@ -8,8 +8,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: junit-jupiter-api;bundle-version="6.0.2",
  assertj-core;bundle-version="3.27.7"
 Automatic-Module-Name: org.mybatis.generator.eclipse.core.tests
-Export-Package: org.mybatis.generator.eclipse.core.tests,
- org.mybatis.generator.eclipse.core.tests.callback,
+Export-Package: org.mybatis.generator.eclipse.core.tests.callback,
  org.mybatis.generator.eclipse.core.tests.merge,
  org.mybatis.generator.eclipse.core.tests.merge.resources,
  org.mybatis.generator.eclipse.core.tests.merge.support

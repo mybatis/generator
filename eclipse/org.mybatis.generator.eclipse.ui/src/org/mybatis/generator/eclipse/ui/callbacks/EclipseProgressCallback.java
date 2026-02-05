@@ -14,7 +14,7 @@
  *    limitations under the License.
  *
  */
-package org.mybatis.generator.eclipse.core.callback;
+package org.mybatis.generator.eclipse.ui.callbacks;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;

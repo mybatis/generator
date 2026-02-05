@@ -14,7 +14,7 @@
  *    limitations under the License.
  *
  */
-package org.mybatis.generator.eclipse.core.tests.callback;
+package org.mybatis.generator.eclipse.ui.callbacks;
 
 import java.io.File;
 import java.util.HashMap;

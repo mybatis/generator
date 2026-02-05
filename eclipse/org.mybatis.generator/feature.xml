@@ -244,10 +244,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.mybatis.generator.eclipse.core"
-         version="0.0.0"/>
-
-   <plugin
          id="org.mybatis.generator.eclipse.doc"
          version="0.0.0"/>
 

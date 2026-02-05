@@ -14,12 +14,12 @@
  *    limitations under the License.
  *
  */
-package org.mybatis.generator.eclipse.core.tests.callback;
+package org.mybatis.generator.eclipse.ui.callbacks;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.createJavaProject;
-import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.deleteProject;
-import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.getWorkspace;
+import static org.mybatis.generator.eclipse.ui.callbacks.WorkspaceUtilities.createJavaProject;
+import static org.mybatis.generator.eclipse.ui.callbacks.WorkspaceUtilities.deleteProject;
+import static org.mybatis.generator.eclipse.ui.callbacks.WorkspaceUtilities.getWorkspace;
 
 import java.io.File;
 
@@ -31,7 +31,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mybatis.generator.eclipse.core.callback.EclipseShellCallback;
 import org.mybatis.generator.exception.ShellException;
 
 public class EclipseShellCallbackTest {

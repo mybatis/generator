@@ -5,8 +5,7 @@ Bundle-SymbolicName: org.mybatis.generator.eclipse.ui;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.mybatis.generator.eclipse.ui.Activator
 Bundle-Vendor: mybatis.org
-Require-Bundle: org.mybatis.generator.eclipse.core;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.ui;bundle-version="[3.206.100,4.0.0)",
+Require-Bundle: org.eclipse.ui;bundle-version="[3.206.100,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.31.100,4.0.0)",
  org.apache.ant;bundle-version="[1.10.14,2.0.0)",
  org.eclipse.ant.core;bundle-version="[3.7.400,4.0.0)",
@@ -21,7 +20,8 @@ Require-Bundle: org.mybatis.generator.eclipse.core;bundle-version="[2.0.0,3.0.0)
  org.eclipse.core.expressions;bundle-version="[3.9.400,4.0.0)",
  org.eclipse.core.variables;bundle-version="[3.6.500,4.0.0)",
  org.eclipse.equinox.security;bundle-version="[1.4.400,2.0.0)",
- org.eclipse.ui.console;bundle-version="[3.14.100,4.0.0)"
+ org.eclipse.ui.console;bundle-version="[3.14.100,4.0.0)",
+ org.mybatis.generator.core;bundle-version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Export-Package: org.mybatis.generator.eclipse.ui,

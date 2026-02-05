@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +16,7 @@
  */
 package org.mybatis.generator.eclipse.core.callback;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,10 +31,16 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
 import org.mybatis.generator.api.ShellCallback;
-import org.mybatis.generator.eclipse.core.merge.InvalidExistingFileException;
-import org.mybatis.generator.eclipse.core.merge.JavaFileMerger;
 import org.mybatis.generator.exception.ShellException;
+
+import com.github.javaparser.printer.configuration.DefaultConfigurationOption;
+import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
+import com.github.javaparser.printer.configuration.Indentation;
+import com.github.javaparser.printer.configuration.Indentation.IndentType;
+import com.github.javaparser.printer.configuration.PrinterConfiguration;
+import com.github.javaparser.printer.configuration.imports.EclipseImportOrderingStrategy;
 
 /**
  * @author Jeff Butler
@@ -49,21 +51,53 @@ public class EclipseShellCallback implements ShellCallback {
     private Map<String, IFolder> folders;
 
     private Map<String, IPackageFragmentRoot> sourceFolders;
+    
+    private final PrinterConfiguration printerConfiguration;
 
     /**
      * 
      */
     public EclipseShellCallback() {
-        super();
+        printerConfiguration = calculatePrinterConfiguration();
         projects = new HashMap<>();
         folders = new HashMap<>();
         sourceFolders = new HashMap<>();
     }
+    
+    private PrinterConfiguration calculatePrinterConfiguration() {
+        // tab, space, mixed
+        String tabCharacter = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_TAB_CHAR);
+        // size of one tabulation
+        String tabSize = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_TAB_SIZE);
+        int iTabSize = Integer.parseInt(tabSize);
+        // only used in "mixed" - number of characters that represent a tab
+        String indentationSize = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_INDENTATION_SIZE);
+        int iIndentationSize = Integer.parseInt(indentationSize);
 
-    /*
-     * (non-Javadoc)
-     * @see org.mybatis.generator.api.ShellCallback#getDirectory(java.lang.String, java.lang.String)
-     */
+        PrinterConfiguration printerConfiguration = new DefaultPrinterConfiguration();
+        printerConfiguration.addOption(new DefaultConfigurationOption(
+                DefaultPrinterConfiguration.ConfigOption.SORT_IMPORTS_STRATEGY, new EclipseImportOrderingStrategy()));
+        printerConfiguration.addOption(new DefaultConfigurationOption(
+                DefaultPrinterConfiguration.ConfigOption.ORDER_IMPORTS, true));
+        
+        Indentation indentation;
+        if ("tab".equalsIgnoreCase(tabCharacter)) {
+            // JavaParser only supports a tab size of four
+            var ts = iTabSize / 4;
+            ts = ts == 0 ? 1 : ts;
+            indentation = new Indentation(IndentType.TABS, ts);
+        } else if ("mixed".equalsIgnoreCase(tabCharacter)) {
+            indentation = new Indentation(IndentType.SPACES, iIndentationSize);
+        } else {
+            indentation = new Indentation(IndentType.SPACES, iTabSize);
+        }
+        printerConfiguration.addOption(new DefaultConfigurationOption(
+                DefaultPrinterConfiguration.ConfigOption.INDENTATION, indentation));
+        
+        return printerConfiguration;
+        
+    }
+
     @Override
     public File getDirectory(String targetProject, String targetPackage) throws ShellException {
         if (targetProject.startsWith("/") || targetProject.startsWith("\\")) {
@@ -279,66 +313,7 @@ public class EclipseShellCallback implements ShellCallback {
     }
 
     @Override
-    public String mergeJavaFile(String newFileSource,
-            File existingFile, String[] javadocTags, String fileEncoding)
-            throws ShellException {
-        String existingFileContent = getExistingFileContents(existingFile, fileEncoding);
-        JavaFileMerger merger = new JavaFileMerger(newFileSource, existingFileContent, javadocTags);
-        try {
-            return merger.getMergedSource();
-        } catch (InvalidExistingFileException e) {
-            throw translateInvalidExistingFileException(e, existingFile);
-        }
-    }
-    
-    private ShellException translateInvalidExistingFileException (InvalidExistingFileException e, File existingFile) {
-        String message = null;
-        
-        switch(e.getErrorCode()) {
-        case NO_TYPES_DEFINED_IN_FILE:
-            message = "No types defined in file " + existingFile.getAbsolutePath();
-            break;
-        }
-        
-        return new ShellException(message);
-    }
-
-    private String getExistingFileContents(File existingFile, String fileEncoding) throws ShellException {
-        if (!existingFile.exists()) {
-            // this should not happen because MyBatis Generator only returns the
-            // file
-            // calculated by the eclipse callback
-            StringBuilder sb = new StringBuilder();
-            sb.append("The file ");
-            sb.append(existingFile.getAbsolutePath());
-            sb.append(" does not exist");
-            throw new ShellException(sb.toString());
-        }
-
-        try {
-            StringBuilder sb = new StringBuilder();
-            FileInputStream fis = new FileInputStream(existingFile);
-            InputStreamReader isr;
-            if (fileEncoding == null) {
-                isr = new InputStreamReader(fis);
-            } else {
-                isr = new InputStreamReader(fis, fileEncoding);
-            }
-            BufferedReader br = new BufferedReader(isr);
-            char[] buffer = new char[1024];
-            int returnedBytes = br.read(buffer);
-            while (returnedBytes != -1) {
-                sb.append(buffer, 0, returnedBytes);
-                returnedBytes = br.read(buffer);
-            }
-
-            br.close();
-            return sb.toString();
-        } catch (IOException e) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("IOException reading the file ");
-            sb.append(existingFile.getAbsolutePath());
-            throw new ShellException(sb.toString(), e);
-        }
+    public PrinterConfiguration getMergedJavaFilePrinterConfiguration() {
+        return printerConfiguration;
     }
 }

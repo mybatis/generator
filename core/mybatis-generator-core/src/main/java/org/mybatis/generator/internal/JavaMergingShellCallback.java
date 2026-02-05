@@ -15,13 +15,6 @@
  */
 package org.mybatis.generator.internal;
 
-import java.io.File;
-
-import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.exception.ShellException;
-import org.mybatis.generator.merge.java.EclipseOrderedPrinterConfiguration;
-import org.mybatis.generator.merge.java.JavaFileMerger;
-
 public class JavaMergingShellCallback extends DefaultShellCallback {
 
     public JavaMergingShellCallback(boolean overwrite) {
@@ -31,12 +24,5 @@ public class JavaMergingShellCallback extends DefaultShellCallback {
     @Override
     public boolean isMergeSupported() {
         return true;
-    }
-
-    @Override
-    public String mergeJavaFile(String newFileSource, File existingFile,
-                                String[] javadocTags, @Nullable String fileEncoding) throws ShellException {
-        JavaFileMerger javaFileMerger = new JavaFileMerger(new EclipseOrderedPrinterConfiguration());
-        return javaFileMerger.getMergedSource(newFileSource, existingFile, fileEncoding);
     }
 }

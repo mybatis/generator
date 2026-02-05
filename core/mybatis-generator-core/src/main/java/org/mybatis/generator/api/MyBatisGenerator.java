@@ -43,12 +43,12 @@ import org.mybatis.generator.codegen.IntrospectionEngine;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.merge.java.JavaFileMerger;
 import org.mybatis.generator.merge.xml.XmlFileMergerJaxp;
 
 /**
@@ -71,6 +71,7 @@ public class MyBatisGenerator {
     private final ProgressCallback progressCallback;
     private final Set<String> contextIds;
     private final Set<String> fullyQualifiedTableNames;
+    private final JavaFileMerger javaFileMerger;
 
     private final List<GenerationResults> generationResultsList = new ArrayList<>();
 
@@ -80,6 +81,7 @@ public class MyBatisGenerator {
         progressCallback = Objects.requireNonNullElse(builder.progressCallback, NULL_PROGRESS_CALLBACK);
         fullyQualifiedTableNames = builder.fullyQualifiedTableNames;
         contextIds = builder.contextIds;
+        javaFileMerger = new JavaFileMerger(shellCallback.getMergedJavaFilePrinterConfiguration());
     }
 
     /**
@@ -279,8 +281,7 @@ public class MyBatisGenerator {
             targetFile = directory.toPath().resolve(gjf.getFileName());
             if (Files.exists(targetFile)) {
                 if (shellCallback.isMergeSupported()) {
-                    source = shellCallback.mergeJavaFile(source, targetFile.toFile(),
-                            MergeConstants.getOldElementTags(), javaFileEncoding);
+                    source = javaFileMerger.getMergedSource(source, targetFile.toFile(), javaFileEncoding);
                 } else if (shellCallback.isOverwriteEnabled()) {
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {

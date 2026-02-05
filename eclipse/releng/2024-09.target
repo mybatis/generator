@@ -11,9 +11,9 @@
 		<location includeDependencyDepth="infinite" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
 			<dependencies>
 				<dependency>
-					<groupId>com.github.javaparser</groupId>
-					<artifactId>javaparser-core</artifactId>
-					<version>3.28.0</version>
+					<groupId>org.assertj</groupId>
+					<artifactId>assertj-core</artifactId>
+					<version>3.27.7</version>
 					<type>jar</type>
 				</dependency>
 				<dependency>
@@ -34,11 +34,6 @@
 					<version>6.0.2</version>
 					<type>jar</type>
 				</dependency>
-				<dependency>
-                    <groupId>org.assertj</groupId>
-                    <artifactId>assertj-core</artifactId>
-                    <version>3.27.7</version>
-                </dependency>
 			</dependencies>
 		</location>
 	</locations>

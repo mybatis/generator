@@ -35,6 +35,7 @@
     <module>org.mybatis.generator.eclipse.ui.tests</module>
     <module>org.mybatis.generator.eclipse.site</module>
     <module>org.mybatis.generator.eclipse.core.tests</module>
+    <module>org.mybatis.generator.eclipse.dependencies</module>
   </modules>
 
   <properties>

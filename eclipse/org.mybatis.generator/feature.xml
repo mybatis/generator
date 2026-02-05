@@ -255,4 +255,8 @@
          id="org.mybatis.generator.eclipse.ui"
          version="0.0.0"/>
 
+   <plugin
+         id="org.mybatis.generator.eclipse.dependencies"
+         version="0.0.0"/>
+
 </feature>

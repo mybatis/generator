@@ -19,10 +19,16 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
 
 public class GeneratedJavaFile extends GeneratedFile {
     private final CompilationUnit compilationUnit;
+    private final boolean isMergeable;
 
     public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject) {
+        this(compilationUnit, targetProject, true);
+    }
+
+    public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject, boolean isMergeable) {
         super(targetProject);
         this.compilationUnit = compilationUnit;
+        this.isMergeable = isMergeable;
     }
 
     @Override
@@ -36,12 +42,10 @@ public class GeneratedJavaFile extends GeneratedFile {
     }
 
     /**
-     * This method is required by the Eclipse Java merger. If you are not
-     * running in Eclipse, or some other system that implements the Java merge
-     * function, you may return null from this method.
+     * Return the compilation unit created for this file. The compilation unit will be run through the
+     * Java formatter before it is written to disk.
      *
-     * @return the CompilationUnit associated with this file, or null if the
-     *         file is not mergeable.
+     * @return the CompilationUnit associated with this file.
      */
     public CompilationUnit getCompilationUnit() {
         return compilationUnit;
@@ -50,10 +54,10 @@ public class GeneratedJavaFile extends GeneratedFile {
     /**
      * A Java file is mergeable if the getCompilationUnit() method returns a valid compilation unit.
      *
-     * @return true, if is mergeable
+     * @return true if this file is mergeable
      */
     @Override
     public boolean isMergeable() {
-        return true;
+        return isMergeable;
     }
 }

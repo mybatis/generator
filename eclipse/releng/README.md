@@ -14,6 +14,9 @@ Find p2 Repository sites for the various releases here: https://github.com/eclip
 
 ## How To Update Dependencies for Eclipse
 
+Dependency management for this project takes some inspiration from Eclipse's Orbit project
+here: https://github.com/eclipse-orbit/orbit-simrel/tree/main/maven-bnd
+
 Unfortunately, dependencies are in several locations. Updating dependencies starts with selecting an
 Eclipse version to target. We normally try to support several prior versions of Eclipse, so the use
 of a platform definition file is essential.

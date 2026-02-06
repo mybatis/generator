@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.206.100,4.0.0)",
  org.eclipse.core.variables;bundle-version="[3.6.500,4.0.0)",
  org.eclipse.equinox.security;bundle-version="[1.4.400,2.0.0)",
  org.eclipse.ui.console;bundle-version="[3.14.100,4.0.0)",
- org.mybatis.generator.core;bundle-version="2.0.0"
+ org.mybatis.generator.core;bundle-version="2.0.0",
+ com.github.javaparser.javaparser-core;bundle-version="3.28.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Export-Package: org.mybatis.generator.eclipse.ui,

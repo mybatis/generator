@@ -21,7 +21,7 @@
    <feature id="org.mybatis.generator">
       <category name="org.mybatis.generator.category"/>
    </feature>
-   <feature id="org.mybatis.generator.source">
+   <feature id="org.mybatis.generator.source.feature">
       <category name="org.mybatis.generator.category"/>
    </feature>
    <category-def name="org.mybatis.generator.category" label="MyBatis Generator"/>

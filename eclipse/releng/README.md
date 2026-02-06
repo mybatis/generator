@@ -1,15 +1,10 @@
 # Release Engineering Support
 
-This project includes target platform definition files for Eclipse to support running and debugging
-the feature and plugins in Eclipse. These files are used to make sure we maintain backwards compatibility.
+This project includes target platform definition for Eclipse to support running and debugging
+the feature and plugins in Eclipse. The target platform is used to make sure we maintain backwards compatibility with
+a few prior Eclipse releases, and it also manages the dependencies we need from Maven.
 
-| Target File | Our Version | P2 Repository                                  | Notes                                                  |
-|-------------|-------------|------------------------------------------------|--------------------------------------------------------|
-| 2018-12     | 1.4.1       | https://download.eclipse.org/releases/2018-12/ | First Eclipse version that supports Java 11 in the AST |
-| 2021-06     | 1.4.2       | https://download.eclipse.org/releases/2021-06/ | First Eclipse version that supports M1 Mac             |
-| 2022-09     | 1.4.3       | https://download.eclipse.org/releases/2022-09/ | First Eclipse version that requires Java 17            |
-| 2024-09     | 2.0.0       | https://download.eclipse.org/releases/2024-09/ | Fixed a nasty SWT rendering rendering error on MacOS  |
-
+When updating the plugin, it is a good idea to update the supported eclipse version in the target file.
 Find p2 Repository sites for the various releases here: https://github.com/eclipse-simrel/.github/blob/main/wiki/Simultaneous_Release.md
 
 ## How To Update Dependencies for Eclipse
@@ -26,9 +21,7 @@ of a platform definition file is essential.
 The parent POM has some build dependencies. Updates to this file should be handled automatically
 by the GitHub renovate bot.
 
-The parent pom also has a link to the target platform file for the build - this should be manually
-updated to match the target platform selected (change the configuration of the target-platform-configuration
-plugin).
+The parent pom also has a link to the target platform file for the build.
 
 ### Tycho Build Extension
 
@@ -37,34 +30,38 @@ Update the version in .mvn/extensions.xml to match the Tycho version in the pare
 
 ### Plugin Dependencies
 
-Once a target platform has been selected, update the dependencies in the MANIFEST.MF files in the
+Once the target platform has been updated, update the dependencies in the MANIFEST.MF files in the
 following projects:
 
 - org.mybatis.generator.core
-- org.mybatis.generator.eclipse.core
-- org.mybatis.generator.eclipse.core.tests
-- org.mybatis.generator.eclipse.test.utilities
-- org.mybatis.generator.eclipse.test.utilities.tests
 - org.mybatis.generator.eclipse.ui
 - org.mybatis.generator.eclipse.ui.tests
 
 ### Runtime Dependencies
 
-Runtime dependencies for the core generator are in the "lib" directory of the org.mybatis.generator.core project. They should be
-upgraded to match the versions used in the core project. If you import new versions of a library, make sure to update the
-MANIFEST.MF file in that project.
+Runtime dependencies for the core generator are made available through Eclipse bnd. Entries in
+[MyBatisGenerator.target](./MyBatisGenerator.target) generate a new feature for every runtime dependency.
+They should be upgraded to match the versions used in the core project. If you update a version,
+make sure to update the MANIFEST.MF file in the related project.
 
-We only bundle dependencies that are not available on the Eclipse update sites. It would be possible for us to repackage these
-dependencies as ORGi bundles and host them on our own update site, but that's a lot of work for very little benefit.
+We also redistribute these runtime dependencies on our update site. Entries in the site project's
+`category.xml` file list the items we want to redistribute. If you add a new dependency, make
+sure to update that file accordingly.
 
-Some runtime dependencies (like Ant) are optional, and also available from Eclipse. So we can reference them directly in the MANIFST.MF.
+We only bundle and redistribute dependencies that are not available on the Eclipse update sites.
 
-### Optional Dependencies
+Some runtime dependencies (like Ant) are optional, and also available from Eclipse. So we can reference
+them directly in the MANIFST.MF.
 
-Some dependencies (like Hamcrest 3 and Junit 6) are not available in the target platform, but only needed during the build phase. For these
-dependencies, we can reference them in the `.target` file directly from Maven central. This makes them available for development and build.
+### Test Dependencies
 
-JUnit 6 will eventually be made available directly from Eclipse, so we can remove the Maven reference in the future.
+Some dependencies (like AssertJ and JUnit 6) may not be available in the target platform, but only needed
+during the build phase. For these dependencies, we can reference them in
+[MyBatisGenerator.target](./MyBatisGenerator.target) directly
+from Maven central. This makes them available for development and build.
+
+JUnit 6 will eventually be made available directly from Eclipse when we upgrade to a newer platform, so we can
+remove that Maven reference in the future.
 
 ### Update Java Execution Environment
 
@@ -74,10 +71,6 @@ If that happens, update the execution environment in the MANIFEST.MF files in th
 following projects:
 
 - org.mybatis.generator.core
-- org.mybatis.generator.eclipse.core
-- org.mybatis.generator.eclipse.core.tests
-- org.mybatis.generator.eclipse.test.utilities
-- org.mybatis.generator.eclipse.test.utilities.tests
 - org.mybatis.generator.eclipse.ui
 - org.mybatis.generator.eclipse.ui.tests
 

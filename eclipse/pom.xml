@@ -189,7 +189,7 @@
         <version>${tycho-version}</version>
         <configuration>
           <target>
-            <file>../releng/2024-09.target</file>
+            <file>../releng/MyBatisGenerator.target</file>
           </target>
           <environments>
             <environment>

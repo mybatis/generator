@@ -48,7 +48,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     private final Properties properties = new Properties();
 
-    protected boolean suppressDate;
+    private boolean suppressDate;
 
     private boolean suppressAllComments;
 

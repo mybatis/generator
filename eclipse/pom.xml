@@ -28,6 +28,7 @@
 
   <modules>
     <module>org.mybatis.generator</module>
+    <module>org.mybatis.generator.source.feature</module>
     <module>org.mybatis.generator.core</module>
     <module>org.mybatis.generator.eclipse.doc</module>
     <module>org.mybatis.generator.eclipse.ui</module>
@@ -149,18 +150,6 @@
             <goals>
               <goal>plugin-source</goal>
             </goals>
-          </execution>
-          <execution>
-            <id>feature-source</id>
-            <goals>
-              <goal>feature-source</goal>
-            </goals>
-            <configuration>
-              <labelSuffix> - Source Feature</labelSuffix>
-              <excludes>
-                <plugin id="org.mybatis.generator.eclipse.doc"/>
-              </excludes>
-            </configuration>
           </execution>
         </executions>
       </plugin>

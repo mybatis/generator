@@ -107,6 +107,11 @@
             <target>17</target>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-gpg-plugin</artifactId>
+          <version>${tycho-version}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 

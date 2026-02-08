@@ -40,11 +40,10 @@ class MyBatisGeneratorTest {
         assert is != null;
         Configuration config = cp.parseConfiguration(is);
 
-        DefaultShellCallback shellCallback = new DefaultShellCallback(true);
-
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)
-                .withShellCallback(shellCallback)
+                .withShellCallback(new DefaultShellCallback())
+                .withOverwriteEnabled(true)
                 .build();
 
         InvalidConfigurationException e =
@@ -67,11 +66,10 @@ class MyBatisGeneratorTest {
                 .build();
         config.addContext(context);
 
-        DefaultShellCallback shellCallback = new DefaultShellCallback(true);
-
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)
-                .withShellCallback(shellCallback)
+                .withShellCallback(new DefaultShellCallback())
+                .withOverwriteEnabled(true)
                 .build();
 
         InvalidConfigurationException e =
@@ -94,11 +92,10 @@ class MyBatisGeneratorTest {
                 .build();
         config.addContext(context);
 
-        DefaultShellCallback shellCallback = new DefaultShellCallback(true);
-
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)
-                .withShellCallback(shellCallback)
+                .withShellCallback(new DefaultShellCallback())
+                .withOverwriteEnabled(true)
                 .build();
 
         InvalidConfigurationException e =

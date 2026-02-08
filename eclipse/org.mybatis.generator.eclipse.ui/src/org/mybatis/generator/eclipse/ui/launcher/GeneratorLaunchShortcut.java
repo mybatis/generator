@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -36,6 +36,8 @@ import org.eclipse.debug.ui.ILaunchShortcut;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
+import org.eclipse.jdt.launching.IRuntimeClasspathEntry;
+import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -163,6 +165,8 @@ public class GeneratorLaunchShortcut implements ILaunchShortcut {
         
         wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, getJavaProjectNameFromResource(file));
 
+        addProjectToUserClasspath(wc, file);
+
         ILaunchConfiguration config = wc.doSave();
         return config;
     }
@@ -177,6 +181,21 @@ public class GeneratorLaunchShortcut implements ILaunchShortcut {
         return DebugPlugin.getDefault().getLaunchManager();
     }
 
+    public static IJavaProject getJavaProjectFromResource(IResource resource) {
+        IJavaProject javaProject = null;
+        IProject project = resource.getProject();
+        try {
+            if (project != null && project.exists() && project.hasNature(JavaCore.NATURE_ID)) {
+                // add the JavaProject name to the launch - this will add it to the
+                // classpath of the launch automatically
+                javaProject = JavaCore.create(project);
+            }
+        } catch (CoreException e) {
+            // just ignore it - no ultimate harm done if we can't find the Java project
+        }
+        return javaProject;
+    }
+
     /**
      * This will return null if there isn't a JavaProject associated with this
      * resource.
@@ -185,18 +204,26 @@ public class GeneratorLaunchShortcut implements ILaunchShortcut {
      * @return the JavaProject name if there is one
      */
     public static String getJavaProjectNameFromResource(IResource resource) {
-        String name = null;
-        IProject project = resource.getProject();
-        try {
-            if (project != null && project.exists() && project.hasNature(JavaCore.NATURE_ID)) {
-                // add the JavaProject name to the launch - this will add it to the
-                // classpath of the launch automatically
-                IJavaProject javaProject = JavaCore.create(project);
-                name = javaProject.getElementName();
-            }
-        } catch (CoreException e) {
-            // just ignore it - no ultimate harm done if we can't find the Java project
+        IJavaProject project = getJavaProjectFromResource(resource);
+        if (project == null) {
+            return null;
         }
-        return name;
+        return project.getElementName();
+    }
+    
+    private void addProjectToUserClasspath(ILaunchConfigurationWorkingCopy wc, IResource resource) {
+    	IJavaProject project = getJavaProjectFromResource(resource);
+        if (project == null) {
+            return;
+        }
+
+        try {
+            IRuntimeClasspathEntry entry = JavaRuntime.newProjectRuntimeClasspathEntry(project, IRuntimeClasspathEntry.USER_CLASSES);
+            List<String> classpath = List.of(entry.getMemento());
+            wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_DEFAULT_CLASSPATH, false);
+            wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_CLASSPATH, classpath);
+        } catch (CoreException e) {
+            // ignore - no harm if we can't do this
+        }
     }
 }

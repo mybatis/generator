@@ -34,14 +34,23 @@ import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
-import org.mybatis.generator.eclipse.core.callback.EclipseProgressCallback;
-import org.mybatis.generator.eclipse.core.callback.EclipseShellCallback;
+import org.mybatis.generator.eclipse.ui.callbacks.EclipseProgressCallback;
+import org.mybatis.generator.eclipse.ui.callbacks.EclipseShellCallback;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.util.StringUtility;
+
+import com.github.javaparser.printer.configuration.DefaultConfigurationOption;
+import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
+import com.github.javaparser.printer.configuration.Indentation;
+import com.github.javaparser.printer.configuration.PrinterConfiguration;
+import com.github.javaparser.printer.configuration.Indentation.IndentType;
+import com.github.javaparser.printer.configuration.imports.EclipseImportOrderingStrategy;
 
 /**
  * @author Jeff Butler
@@ -132,6 +141,9 @@ public class GeneratorAntTask extends Task {
             		.withProgressCallback(progressCallback)
             		.withContextIds(contexts)
             		.withFullyQualifiedTableNames(fullyqualifiedTables)
+            		.withPrinterConfiguration(calculatePrinterConfiguration())
+            		.withJavaFileMergeEnabled(true)
+            		.withOverwriteEnabled(false)
             		.build();
 
             warnings.addAll(generator.generateAndWrite());
@@ -196,5 +208,38 @@ public class GeneratorAntTask extends Task {
 
     public void setFullyQualifiedTableNames(String fullyQualifiedTableNames) {
         this.fullyQualifiedTableNames = fullyQualifiedTableNames;
+    }
+
+    private PrinterConfiguration calculatePrinterConfiguration() {
+        // tab, space, mixed
+        String tabCharacter = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_TAB_CHAR);
+        // size of one tabulation
+        String tabSize = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_TAB_SIZE);
+        int iTabSize = Integer.parseInt(tabSize);
+        // only used in "mixed" - number of characters that represent a tab
+        String indentationSize = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_INDENTATION_SIZE);
+        int iIndentationSize = Integer.parseInt(indentationSize);
+
+        PrinterConfiguration printerConfiguration = new DefaultPrinterConfiguration();
+        printerConfiguration.addOption(new DefaultConfigurationOption(
+                DefaultPrinterConfiguration.ConfigOption.SORT_IMPORTS_STRATEGY, new EclipseImportOrderingStrategy()));
+        printerConfiguration.addOption(new DefaultConfigurationOption(
+                DefaultPrinterConfiguration.ConfigOption.ORDER_IMPORTS, true));
+        
+        Indentation indentation;
+        if ("tab".equalsIgnoreCase(tabCharacter)) {
+            // JavaParser only supports a tab size of four
+            var ts = iTabSize / 4;
+            ts = ts == 0 ? 1 : ts;
+            indentation = new Indentation(IndentType.TABS, ts);
+        } else if ("mixed".equalsIgnoreCase(tabCharacter)) {
+            indentation = new Indentation(IndentType.SPACES, iIndentationSize);
+        } else {
+            indentation = new Indentation(IndentType.SPACES, iTabSize);
+        }
+        printerConfiguration.addOption(new DefaultConfigurationOption(
+                DefaultPrinterConfiguration.ConfigOption.INDENTATION, indentation));
+        
+        return printerConfiguration;
     }
 }

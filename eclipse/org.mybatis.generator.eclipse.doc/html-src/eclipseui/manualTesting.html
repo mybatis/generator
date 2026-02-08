@@ -169,9 +169,9 @@ create table mbgtest.i (id int not null, description varchar(50), primary key(id
 create table mbgtest.j (id int not null, description varchar(50), primary key(id));
       </pre>
     </li>
-    <li>Open the launch configuration for this new configuration file.  The launch
+    <li>Open the run configuration for this new configuration file.  The run
         configuration should be named MBGTest-generatorConfig.xml</li>
-    <li>Alter the launch configuration to run the script before code generation:
+    <li>Alter the run configuration to run the script before code generation:
       <ul>
         <li>Open the SQL Script tab</li>
         <li>Use the "Workspace..." button to navigate to the new SQL script</li>
@@ -184,7 +184,7 @@ create table mbgtest.j (id int not null, description varchar(50), primary key(id
         <li>Add an environment variable - set "driver" to "org.hsqldb.jdbcDriver"</li>
       </ul>
     </li>
-    <li>Run the launch configuration</li>
+    <li>Run the run configuration</li>
     <li>Verify that code is generated in the two different source folders.  Code for table "a"
         should be in the "src" folder, code for tables "b" through "j" should be in the
         "generatedsrc" folder.  Verify that there are no compilation errors or warnings.</li>
@@ -214,7 +214,7 @@ create table mbgtest.j (id int not null, description varchar(50), primary key(id
   <li>Right click on the configuration file, and then
       take the option "Run As&gt;Run MyBatis Generator"</li>
   <li>Verify that <code>gen.model.A</code> now extends <code>BaseModel</code>. You should not have needed to
-      alter the launch configuration classpath - the launch configuration automatically adds the project
+      alter the run configuration classpath - the run configuration automatically adds the project
       to the classpath of the generator.</li>
   <li>Also verify that there are no errors in <code>gen.model.A</code> - the generator
      should not have generated a get and set method that override the final
@@ -255,7 +255,7 @@ create table mbgtest.j (id int not null, description varchar(50), primary key(id
   <li>Delete the Java class <code>gen.src.model.A</code>.  There will now be errors in the
       workspace.</li>
   <li>Right click on the new <code>build.xml</code> file, then select the
-      menu option "Run As&gt;Ant Build...".  You should see the Ant launch configuration
+      menu option "Run As&gt;Ant Build...".  You should see the Ant run configuration
       dialog open.</li>
   <li>Select the "JRE" tab, then select the "Run in the same JRE as the workspace" radio
       button.</li>
@@ -266,7 +266,7 @@ create table mbgtest.j (id int not null, description varchar(50), primary key(id
     JRE as the workspace. 
   </li>
   <li>Right click on the new <code>build.xml</code> file, then select the
-      menu option "Run As&gt;Ant Build...".  You should see the Ant launch configuration
+      menu option "Run As&gt;Ant Build...".  You should see the Ant run configuration
       dialog open.</li>
   <li>Select the "Classpath" tab, then add the HSQLDB driver to "User Entries"</li>
   <li>Press the "Run" button</li>

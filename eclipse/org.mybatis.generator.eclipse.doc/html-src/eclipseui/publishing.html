@@ -47,17 +47,14 @@ access when running this build.</p>
        the updated artifacts for uploading to GitHub.
    </li>
    <li>Copy all the files from <code>target/p2-composite-repo</code> into your git clone of the update site,
-	   then commit the changes. There are typically 17 files uploaded.</li>
+	   then commit the changes. There are typically 17-20 files uploaded.</li>
    <li>After the version is published, you should update the version number in the
        following files:
        <ul>
          <li><code>org.mybatis.generator/feature.xml</code></li>
+		 <li><code>org.mybatis.generator.source.feature/feature.xml</code></li>
          <li><code>org.mybatis.generator.core/META-INF/MANIFEST.MF</code></li>
          <li><code>org.mybatis.generator.core/pom.xml</code></li>
-         <li><code>org.mybatis.generator.eclipse.core/META-INF/MANIFEST.MF</code></li>
-         <li><code>org.mybatis.generator.eclipse.core/pom.xml</code></li>
-         <li><code>org.mybatis.generator.eclipse.core.tests/META-INF/MANIFEST.MF</code></li>
-         <li><code>org.mybatis.generator.eclipse.core.tests/pom.xml</code></li>
          <li><code>org.mybatis.generator.eclipse.doc/META-INF/MANIFEST.MF</code></li>
          <li><code>org.mybatis.generator.eclipse.doc/pom.xml</code></li>
          <li><code>org.mybatis.generator.eclipse.parent/pom.xml</code></li>

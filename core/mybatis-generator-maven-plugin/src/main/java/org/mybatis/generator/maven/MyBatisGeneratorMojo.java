@@ -33,7 +33,6 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
@@ -204,19 +203,14 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
             Configuration config = cp.parseConfiguration(configurationFile);
             warnings.addAll(cp.getWarnings());
 
-            ShellCallback callback;
-            if (javaMergeEnabled) {
-                callback = new JavaMergingMavenShellCallback(this, overwrite);
-            } else {
-                callback = new MavenShellCallback(this, overwrite);
-            }
-
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                     .withConfiguration(config)
-                    .withShellCallback(callback)
+                    .withShellCallback(new MavenShellCallback(this))
                     .withProgressCallback(new MavenProgressCallback(getLog(), verbose))
                     .withContextIds(contextsToRun)
                     .withFullyQualifiedTableNames(fullyQualifiedTables)
+                    .withOverwriteEnabled(overwrite)
+                    .withJavaFileMergeEnabled(javaMergeEnabled)
                     .build();
 
             warnings.addAll(myBatisGenerator.generateAndWrite());

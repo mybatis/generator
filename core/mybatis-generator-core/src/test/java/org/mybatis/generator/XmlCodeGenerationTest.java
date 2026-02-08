@@ -75,11 +75,10 @@ class XmlCodeGenerationTest {
         }
         Configuration config = cp.parseConfiguration(is);
 
-        DefaultShellCallback shellCallback = new DefaultShellCallback(true);
-
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)
-                .withShellCallback(shellCallback)
+                .withShellCallback(new DefaultShellCallback())
+                .withOverwriteEnabled(true)
                 .build();
         myBatisGenerator.generateOnly();
         return myBatisGenerator.getGeneratedXmlFiles();

@@ -18,15 +18,21 @@
 
 -->
 <site>
-   <feature id="org.mybatis.generator" version="0.0.0">
+   <feature id="org.mybatis.generator">
       <category name="org.mybatis.generator.category"/>
    </feature>
-   <feature id="org.mybatis.generator.source" version="0.0.0">
+   <feature id="org.mybatis.generator.source.feature">
       <category name="org.mybatis.generator.category"/>
    </feature>
-   <category-def name="org.mybatis.generator.category" label="MyBatis Generator">
-      <description>
-         MyBatis Generator
-      </description>
-   </category-def>
+   <category-def name="org.mybatis.generator.category" label="MyBatis Generator"/>
+   <feature id="org.mybatis.generator.dependency.commons-logging" >
+     <category name="org.mybatis.generator.dependencies.third.party" />
+   </feature>
+   <feature id="org.mybatis.generator.dependency.javaparser" >
+     <category name="org.mybatis.generator.dependencies.third.party" />
+   </feature>
+   <feature id="org.mybatis.generator.dependency.jspecify" >
+     <category name="org.mybatis.generator.dependencies.third.party" />
+   </feature>
+   <category-def name="org.mybatis.generator.dependencies.third.party" label="Redistributed Third Party Dependencies" />
 </site>

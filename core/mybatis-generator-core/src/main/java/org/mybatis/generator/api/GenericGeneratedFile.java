@@ -28,12 +28,13 @@ public abstract class GenericGeneratedFile extends GeneratedFile {
         super(targetProject);
     }
 
+    @Override
+    public boolean isMergeable() {
+        return false;
+    }
+
     /**
-     * Returns the entire contents of the generated file. Clients
-     * can simply save the value returned from this method as the file contents.
-     * Subclasses such as @see org.mybatis.generator.api.GeneratedJavaFile offer
-     * more fine -grained access to file parts, but still implement this method
-     * in the event that the entire contents are desired.
+     * Returns the entire contents of the generated file. MyBatis Generator will simply save this content as-is.
      *
      * @return Returns the content.
      */

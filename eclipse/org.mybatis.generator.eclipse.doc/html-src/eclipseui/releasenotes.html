@@ -26,6 +26,20 @@
 </head>
 <body>
 <h1>MyBatis Generator Eclipse Feature Release Notes</h1>
+<h2>Version 2.0.0</h2>
+<ul>
+  <li>We're removed the Eclipse based Java merger in favor of the Java merger in the base project which is well tested and more capable
+    than the older Eclipse merger. You will hopefully experience no impact form this. Please let us know if something is broken.
+  </li>
+  <li>We've removed the custom logging implementation selection buttons in the run configuration. The core product has standardized on
+    commons-logging which should allow you to configure logging any way you desire.
+  </li>
+  <li>The core library has some runtime dependencies on libraries that are not included in most Eclipse installations. You will see that
+	some dependency plugins are also installed when you install the feature.</li>
+  <li>The Generator feature now requires Java 17 minimum</li>
+  <li>The minimum Eclipse version is now 4.33 (2024-09)</li>
+</ul>
+
 <h2>Version 1.4.2</h2>
 <ul>
   <li>Removed Log4J Version 1.x from the UI.</li>

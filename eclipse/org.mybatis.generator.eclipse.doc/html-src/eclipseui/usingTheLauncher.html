@@ -53,11 +53,11 @@ of the launch.  Classpath entries should be added for the following things:</p>
       itself to the launch classpath as it will already be added by the launcher)</li>
 </ul>
 <p>The launcher will automatically add the Java project containing the configuration file to the
-classpath.</p>
+classpath if you create the configuration using the context menu on a configuration file.</p>
 <p>Adding entries to the launcher classpath is generally preferable to using
 a <code>&lt;classPathEntry&gt;</code> configuration element in the generator
 configuration file.  However, if you use a dependency JAR that relies on native code
-(such as some DB2 drivers) it would be better to use the  
+(such as some older DB2 drivers) it would be better to use the  
 <code>&lt;classPathEntry&gt;</code> configuration element.  This because native
 code can only be loaded by a single classloader and it is likely that
 the generator classloader will be garbage collected before the launch classloader.</p>

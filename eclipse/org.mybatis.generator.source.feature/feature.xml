@@ -18,17 +18,17 @@
 
 -->
 <feature
-      id="org.mybatis.generator"
-      label="MyBatis Generator"
+      id="org.mybatis.generator.source.feature"
+      label="MyBatis Generator Source Feature"
       version="2.0.0.qualifier"
-      provider-name="mybatis.org">
+      provider-name="MyBatis.org">
 
    <description url="http://www.mybatis.org/generator/">
-      MyBatis Generator - a code generator for MyBatis
+      MyBatis Generator - a code generator for MyBatis (Source Code)
    </description>
 
    <copyright>
-      Copyright 2025 Jeff Butler
+      Copyright 2026 Jeff Butler
    </copyright>
 
    <license url="http://www.apache.org/licenses/LICENSE-2.0">
@@ -240,15 +240,11 @@
    </url>
 
    <plugin
-         id="org.mybatis.generator.core"
+         id="org.mybatis.generator.core.source"
          version="0.0.0"/>
 
    <plugin
-         id="org.mybatis.generator.eclipse.doc"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.mybatis.generator.eclipse.ui"
+         id="org.mybatis.generator.eclipse.ui.source"
          version="0.0.0"/>
 
 </feature>

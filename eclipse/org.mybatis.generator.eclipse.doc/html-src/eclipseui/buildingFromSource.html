@@ -37,10 +37,10 @@ projects into your IDE as Maven projects - it will not work. The projects need t
 regular Eclipse projects.</p>
 
 <h2>Feature Structure</h2>
-<p>There are nine total projects that makeup the feature. Some projects are just for build support and testing.</p> 
-<p>The published MBG feature is composed of five different Eclipse projects - a feature project,
-and four plugin projects.
-The feature project groups the four plugins together for easy installation.
+<p>There are eight total projects that makeup the feature. Some projects are just for build support and testing.</p> 
+<p>The published MBG feature is composed of five different Eclipse projects - two feature projects,
+and three plugin projects.
+One feature project groups the three plugins together for easy installation, the second feature project contains source code.
 Those projects are structured as follows:</p>
 <table cellspacing="0" cellpadding="5" border="1">
   <tr>
@@ -49,7 +49,11 @@ Those projects are structured as follows:</p>
   </tr>
   <tr>
     <td><code>org.mybatis.generator</code></td>
-    <td>This project is the Eclipse feature project for MBG.</td>
+    <td>This project is the main Eclipse feature project for MBG.</td>
+  </tr>
+  <tr>
+    <td><code>org.mybatis.generator.source.feature</code></td>
+    <td>This project is the source feature for the plugin code.</td>
   </tr>
   <tr>
     <td><code>org.mybatis.generator.core</code></td>
@@ -58,12 +62,6 @@ Those projects are structured as follows:</p>
       There is an Ant build file in this plugin (copySource.xml) that performs the copy.
       If you find a bug in the core MBG, you must make the correction in the
       core source tree - NOT this plugin.</td>
-  </tr>
-  <tr>
-    <td><code>org.mybatis.generator.eclipse.core</code></td>
-    <td>This plugin holds Java support classes for the other plugins.  This plugin does not contribute
-        to the Eclipse user interface.  This plugin includes classes for Java file
-        merging, and Eclipse implementations of the MBG callback interfaces.</td>
   </tr>
   <tr>
     <td><code>org.mybatis.generator.eclipse.doc</code></td>
@@ -89,7 +87,7 @@ Those projects are structured as follows:</p>
 </table>
 
 <h2>Other Projects</h2>
-<p>There are four other Eclipse projects that are used in the build of the feature:</p>
+<p>There are three other Eclipse projects that are used in the build of the feature:</p>
 <table cellspacing="0" cellpadding="5" border="1">
   <tr>
     <th>Project</th>
@@ -98,11 +96,6 @@ Those projects are structured as follows:</p>
   <tr>
     <td><code>org.mybatis.generator.eclipse.site</code></td>
     <td>This project is a P2 publishing site that is used to publish the feature.</td>
-  </tr>
-  <tr>
-    <td><code>org.mybatis.generator.eclipse.core.tests</code></td>
-    <td>This project is a plugin fragment that holds unit tests for the
-        org.mybatis.generator.eclipse.core plugin.</td>
   </tr>
   <tr>
     <td><code>org.mybatis.generator.eclipse.ui.tests</code></td>
@@ -139,7 +132,7 @@ familiar with git and the Eclipse plug-in development environment (PDE).</p>
         (File&gt;Import&gt;General&gt;Existing Projects into Workspace)
       </li>
       <li>Set the root directory to the "eclipse" sub-directory in your Git clone</li>
-      <li>Select all nine projects, do not copy the projects into
+      <li>Select all eight projects, do not copy the projects into
         your workspace.
         The filled out wizard looks similar to this: <br />
         <p><img src="importWizard.png" alt="Eclipse Project Import Wizard"/></p>
@@ -147,11 +140,11 @@ familiar with git and the Eclipse plug-in development environment (PDE).</p>
       <li>Press "Finish", wait for the workspace to build.</li>
     </ol>
   </li>
-  <li>The project includes Eclipse target platform definition files. The purpose is to set the minimum version
+  <li>The "releng" project includes an Eclipse target platform definition file. The purpose is to set the minimum version
    of Eclipse supported by the feature and to ensure that you do not inadvertently use Eclipse features from later
    versions. The target platform files also provide access to dependencies needed during the build. 
-   Target platform files are in the <code>releng</code> project. To activate
-   the target platform, open the proper target file and click on the link that says "Set as active target platform". This action
+   To activate
+   the target platform, open the target file and click on the link that says "Set as active target platform". This action
    may take a few minutes to complete. The README in the releng project contains information about which target platform file to use.
   </li>
   <li>You will likely have workspace errors due to missing source code in the
@@ -222,20 +215,13 @@ familiar with git and the Eclipse plug-in development environment (PDE).</p>
       to the source lookup path to solve that issue.</p>
     </td>
   </tr>
-  <tr>
-    <td><code>org.mybatis.generator.eclipse.core.merge.JavaFileMerger</code></td>
-    <td>This class implements the Java file merge function.  You can set a breakpoint
-      in the <code>getMergedSource</code> method to follow the merging process.
-    </td>
-  </tr>
 </table>
 
 <h2>Running the Unit Tests</h2>
-<p>The plugin fragment project <code>org.mybatis.generator.eclipse.core.tests</code>
+<p>The plugin fragment project <code>org.mybatis.generator.eclipse.ui.tests</code>
 contains unit tests for many of the classes in the
-<code>org.mybatis.generator.eclipse.core</code> project.
-These tests cover the core functionality of Java code merging and workspace file resolution
-that is an extra capability added by the eclipse feature.</p>
+<code>org.mybatis.generator.eclipse.ui</code> project.
+These tests cover the core plugin functionality of workspace file resolution.</p>
 <p>The tests will be run during a maven build of the feature, but you can also run them
 directly in eclipse. Running these unit tests is similar to running regular unit tests in
 eclipse with the following exceptions:</p>

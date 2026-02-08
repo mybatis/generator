@@ -28,13 +28,12 @@
 
   <modules>
     <module>org.mybatis.generator</module>
+    <module>org.mybatis.generator.source.feature</module>
     <module>org.mybatis.generator.core</module>
-    <module>org.mybatis.generator.eclipse.core</module>
     <module>org.mybatis.generator.eclipse.doc</module>
     <module>org.mybatis.generator.eclipse.ui</module>
     <module>org.mybatis.generator.eclipse.ui.tests</module>
     <module>org.mybatis.generator.eclipse.site</module>
-    <module>org.mybatis.generator.eclipse.core.tests</module>
   </modules>
 
   <properties>
@@ -108,6 +107,11 @@
             <target>17</target>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-gpg-plugin</artifactId>
+          <version>${tycho-version}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -152,18 +156,6 @@
               <goal>plugin-source</goal>
             </goals>
           </execution>
-          <execution>
-            <id>feature-source</id>
-            <goals>
-              <goal>feature-source</goal>
-            </goals>
-            <configuration>
-              <labelSuffix> - Source Feature</labelSuffix>
-              <excludes>
-                <plugin id="org.mybatis.generator.eclipse.doc"/>
-              </excludes>
-            </configuration>
-          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -191,7 +183,7 @@
         <version>${tycho-version}</version>
         <configuration>
           <target>
-            <file>../releng/2024-09.target</file>
+            <file>../releng/MyBatisGenerator.target</file>
           </target>
           <environments>
             <environment>

@@ -49,6 +49,7 @@ import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.merge.java.JavaFileMerger;
+import org.mybatis.generator.merge.java.JavaMergerFactory;
 import org.mybatis.generator.merge.xml.XmlFileMergerJaxp;
 
 /**
@@ -72,16 +73,27 @@ public class MyBatisGenerator {
     private final Set<String> contextIds;
     private final Set<String> fullyQualifiedTableNames;
     private final JavaFileMerger javaFileMerger;
+    private final boolean isOverwriteEnabled;
+    private final boolean isJavaFileMergeEnabled;
 
     private final List<GenerationResults> generationResultsList = new ArrayList<>();
 
     private MyBatisGenerator(Builder builder) {
         configuration = Objects.requireNonNull(builder.configuration, getString("RuntimeError.2")); //$NON-NLS-1$
-        shellCallback = Objects.requireNonNullElseGet(builder.shellCallback, () -> new DefaultShellCallback(false));
+        shellCallback = Objects.requireNonNullElseGet(builder.shellCallback, DefaultShellCallback::new);
         progressCallback = Objects.requireNonNullElse(builder.progressCallback, NULL_PROGRESS_CALLBACK);
         fullyQualifiedTableNames = builder.fullyQualifiedTableNames;
         contextIds = builder.contextIds;
-        javaFileMerger = new JavaFileMerger(shellCallback.getMergedJavaFilePrinterConfiguration());
+
+        if (builder.isJavaFileMergeEnabled) {
+            isJavaFileMergeEnabled = true;
+            javaFileMerger = JavaMergerFactory.defaultMerger(builder.printerConfiguration);
+        } else {
+            isJavaFileMergeEnabled = false;
+            javaFileMerger = (newContent, existingContent) -> newContent;
+        }
+
+        isOverwriteEnabled = builder.isOverwriteEnabled;
     }
 
     /**
@@ -280,9 +292,9 @@ public class MyBatisGenerator {
             File directory = shellCallback.getDirectory(gjf.getTargetProject(), gjf.getTargetPackage());
             targetFile = directory.toPath().resolve(gjf.getFileName());
             if (Files.exists(targetFile)) {
-                if (shellCallback.isMergeSupported()) {
+                if (isJavaFileMergeEnabled) {
                     source = javaFileMerger.getMergedSource(source, targetFile.toFile(), javaFileEncoding);
-                } else if (shellCallback.isOverwriteEnabled()) {
+                } else if (isOverwriteEnabled) {
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
                     targetFile = getUniqueFileName(directory, gjf.getFileName());
@@ -307,7 +319,7 @@ public class MyBatisGenerator {
             File directory = shellCallback.getDirectory(gf.getTargetProject(), gf.getTargetPackage());
             targetFile = directory.toPath().resolve(gf.getFileName());
             if (Files.exists(targetFile)) {
-                if (shellCallback.isOverwriteEnabled()) {
+                if (isOverwriteEnabled) {
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
                     targetFile = getUniqueFileName(directory, gf.getFileName());
@@ -331,7 +343,7 @@ public class MyBatisGenerator {
             File directory = shellCallback.getDirectory(gf.getTargetProject(), gf.getTargetPackage());
             targetFile = directory.toPath().resolve(gf.getFileName());
             if (Files.exists(targetFile)) {
-                if (shellCallback.isOverwriteEnabled()) {
+                if (isOverwriteEnabled) {
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
                     targetFile = getUniqueFileName(directory, gf.getFileName());
@@ -357,7 +369,7 @@ public class MyBatisGenerator {
             if (Files.exists(targetFile)) {
                 if (gxf.isMergeable()) {
                     source = XmlFileMergerJaxp.getMergedSource(source, targetFile.toFile());
-                } else if (shellCallback.isOverwriteEnabled()) {
+                } else if (isOverwriteEnabled) {
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
                     targetFile = getUniqueFileName(directory, gxf.getFileName());
@@ -503,6 +515,9 @@ public class MyBatisGenerator {
         private @Nullable ProgressCallback progressCallback;
         private final Set<String> contextIds = new HashSet<>();
         private final Set<String> fullyQualifiedTableNames = new HashSet<>();
+        private boolean isOverwriteEnabled = false;
+        private boolean isJavaFileMergeEnabled = false;
+        private @Nullable Object printerConfiguration;
 
         public Builder withConfiguration(Configuration configuration) {
             this.configuration = configuration;
@@ -546,6 +561,47 @@ public class MyBatisGenerator {
          */
         public Builder withFullyQualifiedTableNames(Set<String> fullyQualifiedTableNames) {
             this.fullyQualifiedTableNames.addAll(fullyQualifiedTableNames);
+            return this;
+        }
+
+        /**
+         * If true, then newly generated files will overwrite existing files if there is a collision.
+         * If false, then newly generated files will be written with a unique name when there is a collision.
+         *
+         * <p>The default is <code>false</code></p>
+         *
+         * @param overwriteEnabled where newly generated files should overwrite existing files if there is a collision
+         * @return this builder
+         */
+        public Builder withOverwriteEnabled(boolean overwriteEnabled) {
+            this.isOverwriteEnabled = overwriteEnabled;
+            return this;
+        }
+
+        /**
+         * If true, then newly generated Java files will be merged if they collide with existing files.
+         * If false, then the {@link #withOverwriteEnabled(boolean)} value governs what happens on a collision.
+         *
+         * <p>The default is <code>false</code></p>
+         *
+         * @param javaFileMergeEnabled where the Java file merger support should be enabled
+         * @return this builder
+         */
+        public Builder withJavaFileMergeEnabled(boolean javaFileMergeEnabled) {
+            this.isJavaFileMergeEnabled = javaFileMergeEnabled;
+            return this;
+        }
+
+        /**
+         * Add a printer configuration that will be used during Java code merging. If specified, the
+         * object must be an instance of {@link com.github.javaparser.printer.configuration.PrinterConfiguration}.
+         * If not specified, then the default printer configuration will be used.
+         *
+         * @param printerConfiguration a printer configuration
+         * @return this builder
+         */
+        public Builder withPrinterConfiguration(Object printerConfiguration) {
+            this.printerConfiguration = printerConfiguration;
             return this;
         }
 

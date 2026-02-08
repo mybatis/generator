@@ -28,11 +28,8 @@ import org.mybatis.generator.exception.ShellException;
 
 public class DefaultShellCallback implements ShellCallback {
 
-    private final boolean overwrite;
-
-    public DefaultShellCallback(boolean overwrite) {
+    public DefaultShellCallback() {
         super();
-        this.overwrite = overwrite;
     }
 
     @Override
@@ -67,10 +64,5 @@ public class DefaultShellCallback implements ShellCallback {
         }
 
         return directory.toFile();
-    }
-
-    @Override
-    public boolean isOverwriteEnabled() {
-        return overwrite;
     }
 }

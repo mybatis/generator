@@ -32,7 +32,6 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
-import org.mybatis.generator.internal.JavaMergingShellCallback;
 import org.mybatis.generator.internal.util.StringUtility;
 
 /**
@@ -87,22 +86,20 @@ public class ShellRunner {
             ConfigurationParser cp = new ConfigurationParser();
             Configuration config = cp.parseConfiguration(configurationFile.toFile());
             warnings.addAll(cp.getWarnings());
-            ShellCallback shellCallback;
-            if (arguments.containsKey(JAVA_MERGE_ENABLED)) {
-                shellCallback = new JavaMergingShellCallback(arguments.containsKey(OVERWRITE));
-            } else {
-                shellCallback = new DefaultShellCallback(arguments.containsKey(OVERWRITE));
-            }
+            boolean overwriteEnabled = arguments.containsKey(OVERWRITE);
+            boolean javaMergeEnabled = arguments.containsKey(JAVA_MERGE_ENABLED);
 
             ProgressCallback progressCallback = arguments.containsKey(VERBOSE) ? new VerboseProgressCallback()
                     : null;
 
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                     .withConfiguration(config)
-                    .withShellCallback(shellCallback)
+                    .withShellCallback(new DefaultShellCallback())
                     .withProgressCallback(progressCallback)
                     .withContextIds(contexts)
                     .withFullyQualifiedTableNames(fullyQualifiedTables)
+                    .withJavaFileMergeEnabled(javaMergeEnabled)
+                    .withOverwriteEnabled(overwriteEnabled)
                     .build();
 
             warnings.addAll(myBatisGenerator.generateAndWrite());

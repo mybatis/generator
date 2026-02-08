@@ -17,9 +17,7 @@ package org.mybatis.generator.api;
 
 import java.io.File;
 
-import com.github.javaparser.printer.configuration.PrinterConfiguration;
 import org.mybatis.generator.exception.ShellException;
-import org.mybatis.generator.merge.java.EclipseOrderedPrinterConfiguration;
 
 /**
  * This interface defines methods that a shell should support to enable
@@ -70,35 +68,4 @@ public interface ShellCallback {
      * @param project the project to be refreshed
      */
     default void refreshProject(String project) {}
-
-    /**
-     * Return true if MyBatis Generator should attempt to merge generated files with existing files when there
-     * is a collision. Currently, the generator supports merging Java and XML files. Other file types are never merged
-     * and the {@link #isOverwriteEnabled()} method is used to determine an action if there is a collision.
-     *
-     * @return a boolean specifying whether Java merge is supported or not
-     */
-    default boolean isMergeSupported() {
-        return false;
-    }
-
-    /**
-     * Return true if the generator should overwrite an existing file if one exists.
-     * This method will be called only if {@link #isMergeSupported()}
-     * returns <code>false</code> and a file exists that would be overwritten by
-     * a generated file. If you return <code>true</code>, then we will log a
-     * warning specifying what file was overwritten.
-     *
-     * @return true if you want to overwrite existing files
-     */
-    boolean isOverwriteEnabled();
-
-    /**
-     * Return a JavaParser printer configuration that will be used to format Java code after a Java merge operation.
-     *
-     * @return the printer configuration
-     */
-    default PrinterConfiguration getMergedJavaFilePrinterConfiguration() {
-        return new EclipseOrderedPrinterConfiguration();
-    }
 }

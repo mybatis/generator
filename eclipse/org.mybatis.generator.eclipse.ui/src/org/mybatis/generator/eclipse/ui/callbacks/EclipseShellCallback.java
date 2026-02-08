@@ -31,16 +31,8 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
 import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.exception.ShellException;
-
-import com.github.javaparser.printer.configuration.DefaultConfigurationOption;
-import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
-import com.github.javaparser.printer.configuration.Indentation;
-import com.github.javaparser.printer.configuration.Indentation.IndentType;
-import com.github.javaparser.printer.configuration.PrinterConfiguration;
-import com.github.javaparser.printer.configuration.imports.EclipseImportOrderingStrategy;
 
 /**
  * @author Jeff Butler
@@ -52,52 +44,15 @@ public class EclipseShellCallback implements ShellCallback {
 
     private Map<String, IPackageFragmentRoot> sourceFolders;
     
-    private final PrinterConfiguration printerConfiguration;
-
     /**
      * 
      */
     public EclipseShellCallback() {
-        printerConfiguration = calculatePrinterConfiguration();
         projects = new HashMap<>();
         folders = new HashMap<>();
         sourceFolders = new HashMap<>();
     }
     
-    private PrinterConfiguration calculatePrinterConfiguration() {
-        // tab, space, mixed
-        String tabCharacter = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_TAB_CHAR);
-        // size of one tabulation
-        String tabSize = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_TAB_SIZE);
-        int iTabSize = Integer.parseInt(tabSize);
-        // only used in "mixed" - number of characters that represent a tab
-        String indentationSize = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_INDENTATION_SIZE);
-        int iIndentationSize = Integer.parseInt(indentationSize);
-
-        PrinterConfiguration printerConfiguration = new DefaultPrinterConfiguration();
-        printerConfiguration.addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.SORT_IMPORTS_STRATEGY, new EclipseImportOrderingStrategy()));
-        printerConfiguration.addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.ORDER_IMPORTS, true));
-        
-        Indentation indentation;
-        if ("tab".equalsIgnoreCase(tabCharacter)) {
-            // JavaParser only supports a tab size of four
-            var ts = iTabSize / 4;
-            ts = ts == 0 ? 1 : ts;
-            indentation = new Indentation(IndentType.TABS, ts);
-        } else if ("mixed".equalsIgnoreCase(tabCharacter)) {
-            indentation = new Indentation(IndentType.SPACES, iIndentationSize);
-        } else {
-            indentation = new Indentation(IndentType.SPACES, iTabSize);
-        }
-        printerConfiguration.addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.INDENTATION, indentation));
-        
-        return printerConfiguration;
-        
-    }
-
     @Override
     public File getDirectory(String targetProject, String targetPackage) throws ShellException {
         if (targetProject.startsWith("/") || targetProject.startsWith("\\")) {
@@ -271,15 +226,6 @@ public class EclipseShellCallback implements ShellCallback {
         return fragment;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.mybatis.generator.api.ShellCallback#isMergeSupported()
-     */
-    @Override
-    public boolean isMergeSupported() {
-        return true;
-    }
-
     private IPackageFragmentRoot getSourceFolder(String targetProject)
             throws ShellException {
         IPackageFragmentRoot answer = sourceFolders.get(targetProject);
@@ -305,15 +251,5 @@ public class EclipseShellCallback implements ShellCallback {
         }
 
         return answer;
-    }
-
-    @Override
-    public boolean isOverwriteEnabled() {
-        return false;
-    }
-
-    @Override
-    public PrinterConfiguration getMergedJavaFilePrinterConfiguration() {
-        return printerConfiguration;
     }
 }

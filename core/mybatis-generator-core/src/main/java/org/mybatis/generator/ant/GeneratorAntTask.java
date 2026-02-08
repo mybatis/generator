@@ -36,13 +36,11 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.PropertySet;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
-import org.mybatis.generator.internal.JavaMergingShellCallback;
 
 /**
  * This is an Ant task that will run the generator. The following is a sample
@@ -111,19 +109,14 @@ public class GeneratorAntTask extends Task {
             Configuration config = cp.parseConfiguration(configurationFile);
             warnings.addAll(cp.getWarnings());
 
-            ShellCallback callback;
-            if (javaMergeEnabled) {
-                callback = new JavaMergingShellCallback(overwrite);
-            } else {
-                callback = new DefaultShellCallback(overwrite);
-            }
-
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                     .withConfiguration(config)
-                    .withShellCallback(callback)
+                    .withShellCallback(new DefaultShellCallback())
                     .withProgressCallback(new AntProgressCallback(this, verbose))
                     .withContextIds(contexts)
                     .withFullyQualifiedTableNames(fullyQualifiedTables)
+                    .withJavaFileMergeEnabled(javaMergeEnabled)
+                    .withOverwriteEnabled(overwrite)
                     .build();
 
             warnings.addAll(myBatisGenerator.generateAndWrite());

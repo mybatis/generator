@@ -151,7 +151,7 @@ familiar with git and the Eclipse plug-in development environment (PDE).</p>
     <code>org.mybatis.generator.core</code> project.  There are two ways to solve this:
       <ol type="a">
         <li>If you are comfortable with Maven, then you can run the Maven build by
-          executing "./mvnw clean integration-test" on the <code>pom.xml</code> in the
+          executing "./mvnw clean verify" on the <code>pom.xml</code> in the
           parent directory of all Eclipse projects (../eclipse)
           A slight warning: this will download many 
           dependent JARs from Maven central and eclipse.org the first time you run it.
@@ -255,7 +255,7 @@ not need to do this.
 <p>If you want to build an updated version of the feature and distribute it locally, then
 follow these steps:</p>
 <ol>
-  <li>Run the Maven build by running "./mvnw clean integration-test" in the parent directory of
+  <li>Run the Maven build by running "./mvnw clean verify" in the parent directory of
       all projects (".../eclipse")</li>
   <li>Once the build completes the feature will be available in the <code>target/repository</code>
   directory of the <code>org.mybatis.generator.eclipse.site</code> project.</li>

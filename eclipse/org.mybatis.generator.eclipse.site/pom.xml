@@ -31,6 +31,7 @@
   <properties>
     <!-- skip sonar - no code here -->
     <sonar.skip>true</sonar.skip>
+    <update.site>https://jeffgbutler.github.io/mybatis-generator-update-site/</update.site>
   </properties>
 
   <build>
@@ -61,11 +62,38 @@
           <plugin>
             <groupId>org.eclipse.tycho</groupId>
             <artifactId>tycho-gpg-plugin</artifactId>
+            <configuration>
+              <bestPractices>true</bestPractices>
+            </configuration>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
                 <goals>
                   <goal>sign-p2-artifacts</goal>
+                </goals>
+                <phase>prepare-package</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-p2-repository-plugin</artifactId>
+            <configuration>
+              <repository>
+                <url>${update.site}</url>
+              </repository>
+              <outputLocation>${p2.repo.base.directory}</outputLocation>
+              <childrenToAdd>
+                <url>drops/${qualifiedVersion}</url>
+              </childrenToAdd>
+              <validateChildren>false</validateChildren>
+              <compress>false</compress>
+            </configuration>
+            <executions>
+              <execution>
+                <id>update composite repository</id>
+                <goals>
+                  <goal>modify-composite-repository</goal>
                 </goals>
                 <phase>package</phase>
               </execution>
@@ -76,77 +104,20 @@
             <artifactId>maven-antrun-plugin</artifactId>
             <executions>
               <execution>
-                <id>download-composite-metadata</id>
+                <id>copy repo into composite repo</id>
                 <goals>
                   <goal>run</goal>
                 </goals>
-                <phase>prepare-package</phase>
+                <phase>package</phase>
                 <configuration>
                   <target>
-                    <ant antfile="downloadMetadata.ant" target="download"/>
+                    <copy todir="${p2.repo.base.directory}/drops/${qualifiedVersion}">
+                      <fileset dir="${project.build.directory}/repository" />
+                    </copy>
+                    <copy file="${project.build.directory}/${project.artifactId}-${qualifiedVersion}.zip"
+                     todir="${p2.repo.base.directory}/zipped"/>
                   </target>
                 </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>tycho-eclipse-plugin</artifactId>
-            <version>${tycho-version}</version>
-            <configuration>
-              <repositories>
-                <repository>
-                  <id>Eclipse Latest</id>
-                  <layout>p2</layout>
-                  <url>https://download.eclipse.org/releases/latest/</url>
-                </repository>
-              </repositories>
-              <dependencies>
-                <dependency>
-                  <artifactId>org.eclipse.ant.core</artifactId>
-                  <type>eclipse-plugin</type>
-                </dependency>
-                <dependency>
-                  <artifactId>org.apache.ant</artifactId>
-                  <type>eclipse-plugin</type>
-                </dependency>
-                <dependency>
-                  <artifactId>org.eclipse.equinox.p2.repository.tools</artifactId>
-                  <type>eclipse-plugin</type>
-                </dependency>
-                <dependency>
-                  <artifactId>org.eclipse.equinox.p2.core.feature</artifactId>
-                  <type>eclipse-feature</type>
-                </dependency>
-                <dependency>
-                  <artifactId>org.eclipse.equinox.p2.extras.feature</artifactId>
-                  <type>eclipse-feature</type>
-                </dependency>
-                <dependency>
-                  <artifactId>org.eclipse.equinox.p2.discovery.feature</artifactId>
-                  <type>eclipse-feature</type>
-                </dependency>
-              </dependencies>
-              <applicationArgs>
-                <arg>-application</arg>
-                <arg>org.eclipse.ant.core.antRunner</arg>
-                <arg>-buildfile</arg>
-                <arg>updateP2CompositeRepo.ant</arg>
-              </applicationArgs>
-              <jvmArgs>
-                <arg>-Dproject.artifactId=${project.artifactId}</arg>
-                <arg>-DqualifiedVersion=${qualifiedVersion}</arg>
-                <arg>-Dproject.build.directory=${project.build.directory}</arg>
-                <arg>-Dp2.repo.base.directory=${p2.repo.base.directory}</arg>
-              </jvmArgs>
-            </configuration>
-            <executions>
-              <execution>
-                <id>update composite repo</id>
-                <goals>
-                  <goal>eclipse-run</goal>
-                </goals>
-                <phase>package</phase>
               </execution>
             </executions>
           </plugin>

@@ -36,11 +36,17 @@ access when running this build.</p>
   <li>Follow the instructions in <a href="buildingFromSource.html">Building from Source</a> to
       checkout the source and setup the projects in Eclipse.  You can use the steps
       on that page to debug any changes and ensure that the build works properly.</li>
-   <li>Once you are ready to publish, run "<code>./mvnw -Prelease-composite clean integration-test</code>"
+   <li>Once you are ready to publish, run "<code>./mvnw clean verify -Prelease-composite</code>"
        on the <code>pom.xml</code> in the parent directory of all eclipse projects ("../eclipse"). This turns on
        the "release-composite"
        profile which adds build steps to retrieve the current P2 metadata from GitHub and prepare
        the release artifacts for uploading.
+   </li>
+   <li>The "release-composite" profile also includes artifact signing with GPG
+	   so make sure you have your key setup and know your password.
+       If you are running the release on a Mac or Linux, you might get an error during the signing phase
+	   related to "Inappropriate ioctl for device".
+	   You can usually resolve this by entering <code>export GPG_TTY=$(tty)</code> in your terminal.
    </li>
    <li>After the build runs, you should see a new subdirectory "<code>target/p2-composite-repo</code>" in the
        <code>org.mybatis.generator.eclipse.site</code> project.  That directory will contain all

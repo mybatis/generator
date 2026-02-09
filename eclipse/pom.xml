@@ -37,7 +37,6 @@
   </modules>
 
   <properties>
-    <tycho-version>5.0.2</tycho-version>
     <license.version>5.0.0</license.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -110,6 +109,11 @@
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-gpg-plugin</artifactId>
+          <version>${tycho-version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-p2-repository-plugin</artifactId>
           <version>${tycho-version}</version>
         </plugin>
       </plugins>

@@ -37,7 +37,6 @@
   </modules>
 
   <properties>
-    <tycho-version>5.0.2</tycho-version>
     <license.version>5.0.0</license.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 

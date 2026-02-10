@@ -28,7 +28,7 @@
 
   <modules>
     <module>org.mybatis.generator</module>
-    <module>org.mybatis.generator.source.feature</module>
+    <module>org.mybatis.generator.source</module>
     <module>org.mybatis.generator.core</module>
     <module>org.mybatis.generator.eclipse.doc</module>
     <module>org.mybatis.generator.eclipse.ui</module>

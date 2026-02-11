@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2025 the original author or authors.
+       Copyright 2006-2026 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -142,6 +142,8 @@
 
     <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.miscellaneous.mapper"  targetProject="MAVEN">
       <property name="dynamicSqlSupportPackage" value="mbg.test.mb3.generated.dsql.miscellaneous.support"/>
+      <property name="rootInterface" value="mbg.test.common.BaseGenericInterface&lt;T extends mbg.test.common.Entity&gt;" />
+      <property name="injectModelIntoRootInterface" value="true" />
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >

@@ -69,7 +69,8 @@ public class RootInterfaceUtility {
         }
     }
 
-    private static @Nullable String findProperty(String property, IntrospectedTable introspectedTable, Context context) {
+    private static @Nullable String findProperty(String property, IntrospectedTable introspectedTable,
+                                                 Context context) {
         String value = introspectedTable.getTableConfigurationProperty(property);
         if (!stringHasValue(value)) {
             value = context.getJavaClientGeneratorConfiguration()

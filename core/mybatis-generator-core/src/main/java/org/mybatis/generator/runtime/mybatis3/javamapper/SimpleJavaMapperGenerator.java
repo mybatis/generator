@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
@@ -27,8 +26,8 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
-import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.runtime.CodeGenUtils;
+import org.mybatis.generator.runtime.RootInterfaceUtility;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.InsertMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectAllMethodGenerator;
@@ -51,18 +50,7 @@ public class SimpleJavaMapperGenerator extends AbstractJavaGenerator {
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
 
-        String rootInterface = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
-        if (!stringHasValue(rootInterface)) {
-            rootInterface = context.getJavaClientGeneratorConfiguration()
-                    .map(c -> c.getProperty(PropertyRegistry.ANY_ROOT_INTERFACE))
-                    .orElse(null);
-        }
-
-        if (stringHasValue(rootInterface)) {
-            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(rootInterface);
-            interfaze.addSuperInterface(fqjt);
-            interfaze.addImportedType(fqjt);
-        }
+        RootInterfaceUtility.addRootInterfaceIsNecessary(interfaze, introspectedTable, context);
 
         addDeleteByPrimaryKeyMethod(interfaze);
         addInsertMethod(interfaze);

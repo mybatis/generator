@@ -47,7 +47,7 @@ recommended practice with JSpecify.</p>
 </p>
 
 <p>The Java file merger in the core library is based on <a href="https://javaparser.org/">https://javaparser.org/</a>.
-    This is different than the merger in the Eclipse plugin, which is based on Eclipse JDT. For this reason
+    This is different from the merger in the Eclipse plugin, which was based on Eclipse JDT. For this reason
     we are calling this new feature experimental for now. We encourage you to try it and provide any feedback
     you might have.
 </p>
@@ -71,6 +71,9 @@ recommended practice with JSpecify.</p>
   <li>Added a missing plugin method for the Dynamic SQL runtime</li>
   <li>Internally the generator now uses commons logging. You can configure commons logging to use any logging
       framework you desire.
+  </li>
+  <li>Support a new property "injectModelIntoRootInterface" on Table and Java Client configurations that supports
+    generation of mappers that extend a generic mapper.
   </li>
 </ul>
 

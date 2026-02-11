@@ -223,6 +223,10 @@ public class IntrospectedTable extends CodeGenerationAttributes {
 
     @Override
     protected Rules calculateRules() {
+        if (knownRuntime.isDynamicSqlBased() || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {
+            return new FlatModelRules(this);
+        }
+
         return switch (getTableConfiguration().getModelType().orElseGet(context::getDefaultModelType)) {
         case HIERARCHICAL -> new HierarchicalModelRules(this);
         case FLAT -> new FlatModelRules(this);

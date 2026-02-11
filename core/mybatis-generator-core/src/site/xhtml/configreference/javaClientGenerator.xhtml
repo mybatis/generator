@@ -171,6 +171,21 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       <p>If specified, the value of this property should be a fully qualified
        interface name (like com.mycompany.MyRootInterface).</p></td>
   </tr>
+  <tr>
+    <td valign="top">injectModelIntoRootInterface</td>
+    <td><i>This property is ignored if the target runtime is "MyBatis3Kotlin"</i><br/>
+      If "true", then the generated model type will be added as a type parameter
+      to a specified "rootInterface".
+      This property can be used to generate mappers based on a generic super interface.
+      The model will be added as a type parameter if, and only if, the related
+      "rootInterface" is generic and has exactly one type parameter.
+      If specified here, then the setting applies to all mappers generated in this context.
+      This value may be overridden by specifying
+      the <code>injectModelIntoRootInterface</code> property on a Table configuration.
+      <p>If "true", then the related rootInterface should include the generic specification
+        (like com.mycompany.MyRootInterface&lt;T extends Entity&gt;). If there is no type parameter
+        in the related rootInterface, then this property has no effect.</p></td>
+  </tr>
 </table>
 
 <h2>Example</h2>

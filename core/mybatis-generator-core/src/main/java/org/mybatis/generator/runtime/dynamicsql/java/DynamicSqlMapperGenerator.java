@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.java;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
@@ -28,10 +27,10 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
-import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaFieldAndImports;
+import org.mybatis.generator.runtime.RootInterfaceUtility;
 import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicMultipleInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicSelectManyMethodGenerator;
@@ -137,18 +136,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper")); //$NON-NLS-1$
         interfaze.addAnnotation("@Mapper"); //$NON-NLS-1$
 
-        String rootInterface = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
-        if (!stringHasValue(rootInterface)) {
-            rootInterface = context.getJavaClientGeneratorConfiguration()
-                    .map(c -> c.getProperty(PropertyRegistry.ANY_ROOT_INTERFACE))
-                    .orElse(null);
-        }
-
-        if (stringHasValue(rootInterface)) {
-            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(rootInterface);
-            interfaze.addSuperInterface(fqjt);
-            interfaze.addImportedType(fqjt);
-        }
+        RootInterfaceUtility.addRootInterfaceIsNecessary(interfaze, introspectedTable, context);
         return interfaze;
     }
 

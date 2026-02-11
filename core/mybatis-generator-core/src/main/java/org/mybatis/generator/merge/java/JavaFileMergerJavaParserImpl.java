@@ -74,7 +74,7 @@ import org.mybatis.generator.exception.ShellException;
  * @author Freeman (original)
  * @author Jeff Butler (refactoring and enhancements)
  */
-public class JavaFileMergerJavaParserImpl implements JavaFileMerger{
+public class JavaFileMergerJavaParserImpl implements JavaFileMerger {
     private final PrinterConfiguration printerConfiguration;
 
     public JavaFileMergerJavaParserImpl(PrinterConfiguration printerConfiguration) {

@@ -75,6 +75,10 @@ recommended practice with JSpecify.</p>
   <li>Support a new property "injectModelIntoRootInterface" on Table and Java Client configurations that supports
     generation of mappers that extend a generic mapper.
   </li>
+  <li>Inspired by a pull request from @dparo, the annotations related to generated keys now include the column name
+    (this is now the same as the generated XML elements). This might have caused issues if an insert produced more than
+    one generated value.
+  </li>
 </ul>
 
 <h3>Potentially Breaking Changes</h3>

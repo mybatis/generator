@@ -19,14 +19,10 @@ import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectAllMethodGenerator;
 
 public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator {
@@ -36,48 +32,51 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
     }
 
     @Override
-    protected List<String> extraMethodAnnotations() {
+    protected JavaMethodParts extraMethodParts() {
+        var builder = new JavaMethodParts.Builder();
+        addAnnotations(builder);
+        addImports(builder);
+        return builder.build();
+    }
+
+    private void addAnnotations(JavaMethodParts.Builder builder) {
+        builder.withAnnotations(buildInitialSelectAnnotationStrings());
+
         StringBuilder sb = new StringBuilder();
-        javaIndent(sb, 1);
+        sb.append(javaIndent(1));
         sb.append("\"from "); //$NON-NLS-1$
         sb.append(escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName()));
         sb.append('\"');
 
-        String orderByClause = introspectedTable.getTableConfigurationProperty(
-                PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
+        String orderByClause =
+                introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
         boolean hasOrderBy = stringHasValue(orderByClause);
         if (hasOrderBy) {
             sb.append(',');
         }
-        List<String> annotations = new ArrayList<>(buildInitialSelectAnnotationStrings());
-        annotations.add(sb.toString());
+
+        builder.withAnnotation(sb.toString());
 
         if (hasOrderBy) {
-            sb.setLength(0);
-            javaIndent(sb, 1);
-            sb.append("\"order by "); //$NON-NLS-1$
-            sb.append(orderByClause);
-            sb.append('\"');
-            annotations.add(sb.toString());
+            String orderByPhrase = javaIndent(1)
+                    + "\"order by " //$NON-NLS-1$
+                    + orderByClause
+                    + '\"';
+            builder.withAnnotation(orderByPhrase);
         }
 
-        annotations.add("})"); //$NON-NLS-1$
+        builder.withAnnotation("})"); //$NON-NLS-1$
 
-        annotations.addAll(getAnnotatedResultAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
-
-        return annotations;
+        builder.withAnnotations(getAnnotatedResultAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
     }
 
-    @Override
-    protected Set<FullyQualifiedJavaType> extraImports() {
-        Set<FullyQualifiedJavaType> answer = new HashSet<>(getAnnotatedSelectImports());
-
+    private void addImports(JavaMethodParts.Builder builder) {
+        builder.withImports(getAnnotatedSelectImports());
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
-            answer.addAll(getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
+            builder.withImports(getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
         }
 
-        answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select")); //$NON-NLS-1$
-        return answer;
+        builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select")); //$NON-NLS-1$
     }
 
     public static class Builder extends SelectAllMethodGenerator.Builder {

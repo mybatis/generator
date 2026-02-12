@@ -24,6 +24,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class CountByExampleMethodGenerator extends AbstractJavaMapperMethodGenerator {
@@ -50,13 +51,12 @@ public class CountByExampleMethodGenerator extends AbstractJavaMapperMethodGener
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
-        method.addAnnotations(extraMethodAnnotations());
-        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
-                .withImports(importedTypes)
-                .withImports(extraImports())
-                .build();
+        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes);
 
-        return Optional.of(answer);
+        CodeGenUtils.addPartsToMethod(builder, method, extraMethodParts());
+
+        return Optional.of(builder.build());
     }
 
     @Override

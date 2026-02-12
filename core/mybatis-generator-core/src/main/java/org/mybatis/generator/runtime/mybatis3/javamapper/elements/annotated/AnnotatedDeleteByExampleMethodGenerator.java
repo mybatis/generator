@@ -15,10 +15,8 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
-import java.util.List;
-import java.util.Set;
-
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByExampleMethodGenerator;
 
 public class AnnotatedDeleteByExampleMethodGenerator extends DeleteByExampleMethodGenerator {
@@ -28,7 +26,7 @@ public class AnnotatedDeleteByExampleMethodGenerator extends DeleteByExampleMeth
     }
 
     @Override
-    protected List<String> extraMethodAnnotations() {
+    protected JavaMethodParts extraMethodParts() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
 
         String annotation = "@DeleteProvider(type=" //$NON-NLS-1$
@@ -37,12 +35,10 @@ public class AnnotatedDeleteByExampleMethodGenerator extends DeleteByExampleMeth
                 + introspectedTable.getDeleteByExampleStatementId()
                 + "\")"; //$NON-NLS-1$
 
-        return List.of(annotation);
-    }
-
-    @Override
-    protected Set<FullyQualifiedJavaType> extraImports() {
-        return Set.of(new FullyQualifiedJavaType("org.apache.ibatis.annotations.DeleteProvider")); //$NON-NLS-1$
+        return new JavaMethodParts.Builder()
+                .withAnnotation(annotation)
+                .withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.DeleteProvider")) //$NON-NLS-1$
+                .build();
     }
 
     public static class Builder extends DeleteByExampleMethodGenerator.Builder {

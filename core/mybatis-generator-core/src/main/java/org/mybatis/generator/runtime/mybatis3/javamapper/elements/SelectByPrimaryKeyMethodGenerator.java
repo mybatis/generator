@@ -23,6 +23,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodGenerator {
@@ -52,16 +53,14 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodG
 
         addPrimaryKeyMethodParameters(isSimple, method, importedTypes);
 
-        method.addAnnotations(extraMethodAnnotations());
-
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
-        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
-                .withImports(importedTypes)
-                .withImports(extraImports())
-                .build();
+        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes);
 
-        return Optional.of(answer);
+        CodeGenUtils.addPartsToMethod(builder, method, extraMethodParts());
+
+        return Optional.of(builder.build());
     }
 
     @Override

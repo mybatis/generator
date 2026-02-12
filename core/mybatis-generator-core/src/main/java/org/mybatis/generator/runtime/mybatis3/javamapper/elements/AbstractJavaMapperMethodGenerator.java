@@ -23,7 +23,6 @@ import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getSelectListPhrase;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -35,6 +34,7 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
 public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
@@ -325,13 +325,8 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
         return answer;
     }
 
-    protected List<String> extraMethodAnnotations() {
+    protected JavaMethodParts extraMethodParts() {
         // extension point for annotated method generators
-        return Collections.emptyList();
-    }
-
-    protected Set<FullyQualifiedJavaType> extraImports() {
-        // extension point for annotated method generators
-        return Collections.emptySet();
+        return new JavaMethodParts.Builder().build();
     }
 }

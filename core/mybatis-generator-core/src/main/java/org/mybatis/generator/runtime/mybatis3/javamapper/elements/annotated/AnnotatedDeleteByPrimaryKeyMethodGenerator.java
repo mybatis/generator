@@ -18,11 +18,8 @@ package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
 
 public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends DeleteByPrimaryKeyMethodGenerator {
@@ -32,27 +29,19 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends DeleteByPrimaryK
     }
 
     @Override
-    protected List<String> extraMethodAnnotations() {
-        List<String> annotations = new ArrayList<>();
-        annotations.add("@Delete({"); //$NON-NLS-1$
+    protected JavaMethodParts extraMethodParts() {
+        String deleteStatement = javaIndent(1)
+                + "\"delete from " //$NON-NLS-1$
+                + escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())
+                + "\","; //$NON-NLS-1$
 
-        StringBuilder sb = new StringBuilder();
-        javaIndent(sb, 1);
-        sb.append("\"delete from "); //$NON-NLS-1$
-        sb.append(escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime()));
-        sb.append("\","); //$NON-NLS-1$
-        annotations.add(sb.toString());
-
-        annotations.addAll(buildByPrimaryKeyWhereClause());
-
-        annotations.add("})"); //$NON-NLS-1$
-
-        return annotations;
-    }
-
-    @Override
-    protected Set<FullyQualifiedJavaType> extraImports() {
-        return Set.of(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Delete")); //$NON-NLS-1$
+        return new JavaMethodParts.Builder()
+                .withAnnotation("@Delete({") //$NON-NLS-1$
+                .withAnnotation(deleteStatement)
+                .withAnnotations(buildByPrimaryKeyWhereClause())
+                .withAnnotation("})") //$NON-NLS-1$
+                .withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Delete")) //$NON-NLS-1$
+                .build();
     }
 
     public static class Builder extends DeleteByPrimaryKeyMethodGenerator.Builder {

@@ -18,13 +18,9 @@ package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectByPrimaryKeyMethodGenerator;
 
 public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryKeyMethodGenerator {
@@ -37,26 +33,31 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
     }
 
     @Override
-    protected List<String> extraMethodAnnotations() {
-        StringBuilder sb = new StringBuilder();
-        javaIndent(sb, 1);
-        sb.append("\"from "); //$NON-NLS-1$
-        sb.append(escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName()));
-        sb.append("\","); //$NON-NLS-1$
-        List<String> annotations = new ArrayList<>(buildInitialSelectAnnotationStrings());
-        annotations.add(sb.toString());
+    protected JavaMethodParts extraMethodParts() {
+        var builder = new JavaMethodParts.Builder();
+        addAnnotations(builder);
+        addImports(builder);
+        return builder.build();
+    }
 
-        annotations.addAll(buildByPrimaryKeyWhereClause());
+    private void addAnnotations(JavaMethodParts.Builder builder) {
+        builder.withAnnotations(buildInitialSelectAnnotationStrings());
 
-        annotations.add("})"); //$NON-NLS-1$
+        String annotation = javaIndent(1)
+                + "\"from " //$NON-NLS-1$
+                + escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName())
+                + "\","; //$NON-NLS-1$
+        builder.withAnnotation(annotation);
+
+        builder.withAnnotations(buildByPrimaryKeyWhereClause());
+
+        builder.withAnnotation("})"); //$NON-NLS-1$
 
         if (useResultMapAnnotation()) {
-            annotations.add(getResultMapAnnotation());
+            builder.withAnnotation(getResultMapAnnotation());
         } else {
-            annotations.addAll(getAnnotatedResultAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
+            builder.withAnnotations(getAnnotatedResultAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
         }
-
-        return annotations;
     }
 
     private boolean useResultMapAnnotation() {
@@ -72,21 +73,18 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
                     ? introspectedTable.getResultMapWithBLOBsId() : introspectedTable.getBaseResultMapId());
     }
 
-    @Override
-    protected Set<FullyQualifiedJavaType> extraImports() {
-        Set<FullyQualifiedJavaType> answer = new HashSet<>();
-        answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select")); //$NON-NLS-1$
+    private void addImports(JavaMethodParts.Builder builder) {
+        builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select")); //$NON-NLS-1$
 
         if (useResultMapAnnotation()) {
-            answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
+            builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
         } else {
-            answer.addAll(getAnnotatedSelectImports());
+            builder.withImports(getAnnotatedSelectImports());
             for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
-                answer.addAll(getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
+                builder.withImports(
+                        getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
             }
         }
-
-        return answer;
     }
 
     public static class Builder extends SelectByPrimaryKeyMethodGenerator.AbstractBuilder<Builder> {

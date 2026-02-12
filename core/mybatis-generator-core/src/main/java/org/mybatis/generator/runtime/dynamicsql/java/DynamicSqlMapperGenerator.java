@@ -30,7 +30,7 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaFieldAndImports;
-import org.mybatis.generator.runtime.RootInterfaceUtility;
+import org.mybatis.generator.runtime.common.RootInterfaceUtility;
 import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicMultipleInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicSelectManyMethodGenerator;
@@ -348,7 +348,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
 
     protected void addBasicInsertMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new BasicInsertMethodGenerator.Builder())
-                .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
                 .build();
 

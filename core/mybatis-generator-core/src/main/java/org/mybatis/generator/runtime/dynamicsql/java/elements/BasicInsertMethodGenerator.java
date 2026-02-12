@@ -25,23 +25,26 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
-import org.mybatis.generator.runtime.JavaMethodParts;
+import org.mybatis.generator.runtime.common.GeneratedKeyAnnotationUtility;
 
 public class BasicInsertMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
     private final FullyQualifiedJavaType recordType;
-    private final FragmentGenerator fragmentGenerator;
 
     private BasicInsertMethodGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
-        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
     public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        return introspectedTable.getGeneratedKey().map(this::generateMethodWithGeneratedKeys);
+    }
+
+    private JavaMethodAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType adapter =
@@ -70,12 +73,10 @@ public class BasicInsertMethodGenerator extends AbstractJavaInterfaceMethodGener
         JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
                 .withImports(imports);
 
-        introspectedTable.getGeneratedKey().ifPresent(gk -> {
-            JavaMethodParts javaMethodParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
-            CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
-        });
+        GeneratedKeyAnnotationUtility.getJavaSingleRowGeneratedKeyAnnotation(introspectedTable, gk)
+                .ifPresent(jmp -> CodeGenUtils.addPartsToMethod(builder, method, jmp));
 
-        return Optional.of(builder.build());
+        return builder.build();
     }
 
     @Override
@@ -85,15 +86,9 @@ public class BasicInsertMethodGenerator extends AbstractJavaInterfaceMethodGener
 
     public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
-        private @Nullable FragmentGenerator fragmentGenerator;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
-            return this;
-        }
-
-        public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
-            this.fragmentGenerator = fragmentGenerator;
             return this;
         }
 

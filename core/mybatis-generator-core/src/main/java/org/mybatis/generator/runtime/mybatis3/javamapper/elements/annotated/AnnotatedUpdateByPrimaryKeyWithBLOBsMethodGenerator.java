@@ -15,10 +15,8 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
-import java.util.List;
-import java.util.Set;
-
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator;
 
 public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends UpdateByPrimaryKeyWithBLOBsMethodGenerator {
@@ -28,13 +26,11 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends UpdateB
     }
 
     @Override
-    protected List<String> extraMethodAnnotations() {
-        return buildUpdateByPrimaryKeyAnnotations(introspectedTable.getNonPrimaryKeyColumns());
-    }
-
-    @Override
-    protected Set<FullyQualifiedJavaType> extraImports() {
-        return Set.of(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")); //$NON-NLS-1$
+    protected JavaMethodParts extraMethodParts() {
+        return new JavaMethodParts.Builder()
+                .withAnnotations(buildUpdateByPrimaryKeyAnnotations(introspectedTable.getNonPrimaryKeyColumns()))
+                .withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")) //$NON-NLS-1$
+                .build();
     }
 
     public static class Builder extends UpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder {

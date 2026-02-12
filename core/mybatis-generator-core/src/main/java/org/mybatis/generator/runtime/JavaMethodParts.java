@@ -64,6 +64,11 @@ public class JavaMethodParts {
             return this;
         }
 
+        public Builder withAnnotations(List<String> annotations) {
+            this.annotations.addAll(annotations);
+            return this;
+        }
+
         public Builder withBodyLine(String bodyLine) {
             this.bodyLines.add(bodyLine);
             return this;
@@ -81,6 +86,14 @@ public class JavaMethodParts {
 
         public Builder withParameter(Parameter parameter) {
             parameters.add(parameter);
+            return this;
+        }
+
+        public Builder withJavaMethodParts(JavaMethodParts javaMethodParts) {
+            this.annotations.addAll(javaMethodParts.annotations);
+            this.bodyLines.addAll(javaMethodParts.bodyLines);
+            this.imports.addAll(javaMethodParts.imports);
+            this.parameters.addAll(javaMethodParts.parameters);
             return this;
         }
 

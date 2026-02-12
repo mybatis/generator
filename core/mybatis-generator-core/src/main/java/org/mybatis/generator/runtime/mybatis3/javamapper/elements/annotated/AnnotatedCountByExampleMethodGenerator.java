@@ -15,10 +15,8 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
-import java.util.List;
-import java.util.Set;
-
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.CountByExampleMethodGenerator;
 
 public class AnnotatedCountByExampleMethodGenerator extends CountByExampleMethodGenerator {
@@ -28,7 +26,7 @@ public class AnnotatedCountByExampleMethodGenerator extends CountByExampleMethod
     }
 
     @Override
-    protected List<String> extraMethodAnnotations() {
+    protected JavaMethodParts extraMethodParts() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
 
         String annotation = "@SelectProvider(type=" //$NON-NLS-1$
@@ -37,12 +35,10 @@ public class AnnotatedCountByExampleMethodGenerator extends CountByExampleMethod
                 + introspectedTable.getCountByExampleStatementId()
                 + "\")"; //$NON-NLS-1$
 
-        return List.of(annotation);
-    }
-
-    @Override
-    protected Set<FullyQualifiedJavaType> extraImports() {
-        return Set.of(new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectProvider")); //$NON-NLS-1$
+        return new JavaMethodParts.Builder()
+                .withAnnotation(annotation)
+                .withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectProvider")) //$NON-NLS-1$
+                .build();
     }
 
     public static class Builder extends CountByExampleMethodGenerator.Builder {

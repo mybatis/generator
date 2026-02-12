@@ -15,13 +15,9 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectByExampleWithBLOBsMethodGenerator;
 
 public class AnnotatedSelectByExampleWithBLOBsMethodGenerator extends SelectByExampleWithBLOBsMethodGenerator {
@@ -31,8 +27,14 @@ public class AnnotatedSelectByExampleWithBLOBsMethodGenerator extends SelectByEx
     }
 
     @Override
-    protected List<String> extraMethodAnnotations() {
-        List<String> annotations = new ArrayList<>();
+    protected JavaMethodParts extraMethodParts() {
+        var builder = new JavaMethodParts.Builder();
+        addAnnotations(builder);
+        addImports(builder);
+        return builder.build();
+    }
+
+    private void addAnnotations(JavaMethodParts.Builder builder) {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
 
         String s = "@SelectProvider(type=" //$NON-NLS-1$
@@ -40,24 +42,18 @@ public class AnnotatedSelectByExampleWithBLOBsMethodGenerator extends SelectByEx
                 + ".class, method=\"" //$NON-NLS-1$
                 + introspectedTable.getSelectByExampleWithBLOBsStatementId()
                 + "\")";//$NON-NLS-1$
-        annotations.add(s);
+        builder.withAnnotation(s);
 
-        annotations.addAll(getAnnotatedResultAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
-
-        return annotations;
+        builder.withAnnotations(getAnnotatedResultAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
     }
 
-    @Override
-    protected Set<FullyQualifiedJavaType> extraImports() {
-        Set<FullyQualifiedJavaType> answer = new HashSet<>(getAnnotatedSelectImports());
-
+    private void addImports(JavaMethodParts.Builder builder) {
+        builder.withImports(getAnnotatedSelectImports());
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
-            answer.addAll(getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
+            builder.withImports(getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
         }
 
-        answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectProvider")); //$NON-NLS-1$
-
-        return answer;
+        builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectProvider")); //$NON-NLS-1$
     }
 
     public static class Builder extends SelectByExampleWithBLOBsMethodGenerator.Builder {

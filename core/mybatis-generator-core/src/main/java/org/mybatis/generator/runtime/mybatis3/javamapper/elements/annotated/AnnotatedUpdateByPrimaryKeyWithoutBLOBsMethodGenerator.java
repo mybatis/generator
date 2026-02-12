@@ -15,10 +15,8 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
-import java.util.List;
-import java.util.Set;
-
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 
 public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
@@ -29,17 +27,17 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
     }
 
     @Override
-    protected List<String> extraMethodAnnotations() {
-        if (isSimple) {
-            return buildUpdateByPrimaryKeyAnnotations(introspectedTable.getNonPrimaryKeyColumns());
-        } else {
-            return buildUpdateByPrimaryKeyAnnotations(introspectedTable.getBaseColumns());
-        }
-    }
+    protected JavaMethodParts extraMethodParts() {
+        var builder = new JavaMethodParts.Builder()
+                .withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")); //$NON-NLS-1$
 
-    @Override
-    protected Set<FullyQualifiedJavaType> extraImports() {
-        return Set.of(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")); //$NON-NLS-1$
+        if (isSimple) {
+            builder.withAnnotations(buildUpdateByPrimaryKeyAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
+        } else {
+            builder.withAnnotations(buildUpdateByPrimaryKeyAnnotations(introspectedTable.getBaseColumns()));
+        }
+
+        return builder.build();
     }
 
     public static class Builder extends UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder {

@@ -24,6 +24,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class InsertSelectiveMethodGenerator extends AbstractJavaMapperMethodGenerator {
@@ -52,14 +53,12 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaMapperMethodGene
 
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
-        method.addAnnotations(extraMethodAnnotations());
+        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes);
 
-        JavaMethodAndImports javaMethodAndImports = JavaMethodAndImports.withMethod(method)
-                .withImports(importedTypes)
-                .withImports(extraImports())
-                .build();
+        CodeGenUtils.addPartsToMethod(builder, method, extraMethodParts());
 
-        return Optional.of(javaMethodAndImports);
+        return Optional.of(builder.build());
     }
 
     @Override

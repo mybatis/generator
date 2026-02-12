@@ -28,7 +28,6 @@ public final class Defaults {
         // utility class - no instances
     }
 
-    public static final ModelType DEFAULT_MODEL_TYPE = ModelType.CONDITIONAL;
     public static final String DEFAULT_BEGINNING_DELIMITER = "\"";
     public static final String DEFAULT_ENDING_DELIMITER = "\"";
     public static final String DEFAULT_COMMENT_GENERATOR = DefaultCommentGenerator.class.getName();

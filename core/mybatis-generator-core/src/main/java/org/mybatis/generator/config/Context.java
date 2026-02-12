@@ -50,7 +50,8 @@ public class Context extends PropertyHolder {
     protected Context(Builder builder) {
         super(builder);
         id = Objects.requireNonNull(builder.id, getString("ValidationError.16")); //$NON-NLS-1$
-        defaultModelType = Objects.requireNonNullElse(builder.defaultModelType, Defaults.DEFAULT_MODEL_TYPE);
+        defaultModelType = Objects.requireNonNullElseGet(builder.defaultModelType,
+                () -> calculateDefaultModelType(builder.targetRuntime));
         tableConfigurations = Collections.unmodifiableList(builder.tableConfigurations);
         pluginConfigurations = Collections.unmodifiableList(builder.pluginConfigurations);
         commentGeneratorConfiguration = builder.commentGeneratorConfiguration;
@@ -72,6 +73,19 @@ public class Context extends PropertyHolder {
 
         property = getProperty(PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS);
         autoDelimitKeywords = isTrue(property);
+    }
+
+    private ModelType calculateDefaultModelType(@Nullable String targetRuntime) {
+        if (targetRuntime == null) {
+            return ModelType.FLAT;
+        } else {
+            KnownRuntime knownRuntime = KnownRuntime.getByAlias(targetRuntime);
+            if (knownRuntime.isDynamicSqlBased()) {
+                return ModelType.FLAT;
+            } else {
+                return ModelType.CONDITIONAL;
+            }
+        }
     }
 
     public Optional<JavaClientGeneratorConfiguration> getJavaClientGeneratorConfiguration() {
@@ -126,6 +140,18 @@ public class Context extends PropertyHolder {
                 && javaClientGeneratorConfiguration.requiresXmlMapper()
                 && sqlMapGeneratorConfiguration == null) {
             errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
+        }
+
+        if (knownRuntime.isDynamicSqlBased()) {
+            if (defaultModelType != ModelType.FLAT && defaultModelType != ModelType.RECORD) {
+                // TODO - Externalize
+                errors.add("Dynamic SQL runtimes support flat or record based models only");
+            }
+        }
+
+        if (knownRuntime.isLegacyMyBatis3Based() && defaultModelType == ModelType.RECORD) {
+            // TODO - Externalize
+            errors.add("Legacy runtimes do not support record as a model type");
         }
 
         if (sqlMapGeneratorConfiguration != null) {

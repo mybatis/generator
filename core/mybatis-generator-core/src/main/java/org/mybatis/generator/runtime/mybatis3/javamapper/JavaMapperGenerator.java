@@ -27,7 +27,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.runtime.CodeGenUtils;
-import org.mybatis.generator.runtime.RootInterfaceUtility;
+import org.mybatis.generator.runtime.common.RootInterfaceUtility;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.CountByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;

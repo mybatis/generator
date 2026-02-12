@@ -154,7 +154,6 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
 
     protected void addBasicInsertFunction(KotlinFile kotlinFile, KotlinType kotlinType) {
         var generator = initializeSubBuilder(new BasicInsertFunctionGenerator.Builder())
-                .withFragmentGenerator(fragmentGenerator)
                 .withTableFieldName(supportClassGenerator.getTablePropertyName())
                 .withRecordType(recordType)
                 .build();

@@ -20,13 +20,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.runtime.JavaMethodParts;
+import org.mybatis.generator.runtime.common.GeneratedKeyAnnotationUtility;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.InsertSelectiveMethodGenerator;
 
 public class AnnotatedInsertSelectiveMethodGenerator extends InsertSelectiveMethodGenerator {
+    private final @Nullable JavaMethodParts generatedKeyAnnotation;
 
     protected AnnotatedInsertSelectiveMethodGenerator(Builder builder) {
         super(builder);
+        generatedKeyAnnotation = introspectedTable.getGeneratedKey()
+                .flatMap(gk -> GeneratedKeyAnnotationUtility.getLegacyJavaGeneratedKeyAnnotation(introspectedTable, gk))
+                .orElse(null);
     }
 
     @Override
@@ -42,13 +49,18 @@ public class AnnotatedInsertSelectiveMethodGenerator extends InsertSelectiveMeth
                 + "\")"; //$NON-NLS-1$
         annotations.add(annotation);
 
-        buildGeneratedKeyAnnotation().ifPresent(annotations::add);
+        if (generatedKeyAnnotation != null) {
+            annotations.addAll(generatedKeyAnnotation.getAnnotations());
+        }
         return annotations;
     }
 
     @Override
     protected Set<FullyQualifiedJavaType> extraImports() {
-        Set<FullyQualifiedJavaType> imports = new HashSet<>(buildGeneratedKeyImportsIfRequired());
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
+        if (generatedKeyAnnotation != null) {
+            imports.addAll(generatedKeyAnnotation.getImports());
+        }
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
         return imports;
     }

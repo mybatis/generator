@@ -30,7 +30,6 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
@@ -236,35 +235,6 @@ public class FragmentGenerator {
         }
 
         return sb.toString();
-    }
-
-    public JavaMethodParts getGeneratedKeyAnnotation(GeneratedKey gk) {
-        JavaMethodParts.Builder builder = new JavaMethodParts.Builder();
-
-        StringBuilder sb = new StringBuilder();
-        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
-            if (gk.isJdbcStandard()) {
-                builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options")); //$NON-NLS-1$
-                sb.append("@Options(useGeneratedKeys=true,keyProperty=\"row."); //$NON-NLS-1$
-                sb.append(introspectedColumn.getJavaProperty());
-                sb.append("\")"); //$NON-NLS-1$
-            } else {
-                builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectKey")); //$NON-NLS-1$
-                FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
-                sb.append("@SelectKey(statement=\""); //$NON-NLS-1$
-                sb.append(gk.getRuntimeSqlStatement());
-                sb.append("\", keyProperty=\"row."); //$NON-NLS-1$
-                sb.append(introspectedColumn.getJavaProperty());
-                sb.append("\", before="); //$NON-NLS-1$
-                sb.append(gk.isIdentity() ? "false" : "true"); //$NON-NLS-1$ //$NON-NLS-2$
-                sb.append(", resultType="); //$NON-NLS-1$
-                sb.append(fqjt.getShortName());
-                sb.append(".class)"); //$NON-NLS-1$
-            }
-            builder.withAnnotation(sb.toString());
-        });
-
-        return builder.build();
     }
 
     public List<String> getSetEqualLines(List<IntrospectedColumn> columnList, String firstLinePrefix,

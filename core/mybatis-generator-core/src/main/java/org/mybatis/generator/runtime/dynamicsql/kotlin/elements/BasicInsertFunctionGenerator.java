@@ -23,21 +23,25 @@ import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
+import org.mybatis.generator.runtime.common.GeneratedKeyAnnotationUtility;
 
 public class BasicInsertFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
 
     private final FullyQualifiedKotlinType recordType;
-    private final KotlinFragmentGenerator fragmentGenerator;
 
     private BasicInsertFunctionGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
-        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
+        return introspectedTable.getGeneratedKey().map(this::generateMethodWithGeneratedKeys);
+    }
+
+    private KotlinFunctionAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
         String parameterType = "InsertStatementProvider<" //$NON-NLS-1$
                 + recordType.getShortNameWithTypeArguments()
                 + ">"; //$NON-NLS-1$
@@ -50,22 +54,19 @@ public class BasicInsertFunctionGenerator extends AbstractKotlinMapperFunctionGe
                 .withAnnotation("@InsertProvider(type=SqlProviderAdapter::class, method=\"insert\")") //$NON-NLS-1$
                 .build();
 
-        KotlinFunctionAndImports.Builder functionAndImportsBuilder = KotlinFunctionAndImports.withFunction(function)
+        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(function)
                 .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$
                 .withImport("org.apache.ibatis.annotations.InsertProvider") //$NON-NLS-1$
                 .withImport("org.mybatis.dynamic.sql.insert.render.InsertStatementProvider") //$NON-NLS-1$
-                .withImports(recordType.getImportList());
+                .withImports(recordType.getImportList())
+                .build();
 
-        introspectedTable.getGeneratedKey().ifPresent(gk -> {
-            KotlinFunctionParts functionParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
-            // need to add imports to function and imports
-            acceptParts(function, functionParts);
-            functionAndImportsBuilder.withImports(functionParts.getImports());
-        });
-
-        KotlinFunctionAndImports functionAndImports = functionAndImportsBuilder.build();
         addFunctionComment(functionAndImports);
-        return Optional.of(functionAndImports);
+
+        GeneratedKeyAnnotationUtility.getKotlinSingleRowGeneratedKeyAnnotation(introspectedTable, gk)
+                .ifPresent(functionParts -> acceptParts(functionAndImports, functionParts));
+
+        return functionAndImports;
     }
 
     @Override
@@ -75,15 +76,9 @@ public class BasicInsertFunctionGenerator extends AbstractKotlinMapperFunctionGe
 
     public static class Builder extends BaseBuilder<Builder> {
         private @Nullable FullyQualifiedKotlinType recordType;
-        private @Nullable KotlinFragmentGenerator fragmentGenerator;
 
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
-            return this;
-        }
-
-        public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
-            this.fragmentGenerator = fragmentGenerator;
             return this;
         }
 

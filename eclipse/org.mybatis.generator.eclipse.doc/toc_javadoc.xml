@@ -42,6 +42,7 @@
       <topic href="html/javadoc/org/mybatis/generator/merge/xml/package-summary.html" label="org.mybatis.generator.merge.xml" />
       <topic href="html/javadoc/org/mybatis/generator/plugins/package-summary.html" label="org.mybatis.generator.plugins" />
       <topic href="html/javadoc/org/mybatis/generator/plugins/dsql/package-summary.html" label="org.mybatis.generator.plugins.dsql" />
+      <topic href="html/javadoc/org/mybatis/generator/runtime/common/package-summary.html" label="org.mybatis.generator.runtime.common" />
       <topic href="html/javadoc/org/mybatis/generator/runtime/package-summary.html" label="org.mybatis.generator.runtime" />
       <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql" />
       <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/java/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql.java" />

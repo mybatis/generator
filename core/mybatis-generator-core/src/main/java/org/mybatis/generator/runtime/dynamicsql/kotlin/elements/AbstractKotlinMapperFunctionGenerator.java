@@ -20,7 +20,6 @@ import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
-import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.AbstractKotlinFunctionGenerator;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
 
@@ -30,18 +29,6 @@ public abstract class AbstractKotlinMapperFunctionGenerator extends AbstractKotl
     protected AbstractKotlinMapperFunctionGenerator(BaseBuilder<?> builder) {
         super(builder);
         tableFieldName = Objects.requireNonNull(builder.tableFieldName);
-    }
-
-    protected void acceptParts(KotlinFunction kotlinFunction, KotlinFunctionParts functionParts) {
-        for (KotlinArg argument : functionParts.getArguments()) {
-            kotlinFunction.addArgument(argument);
-        }
-
-        for (String annotation : functionParts.getAnnotations()) {
-            kotlinFunction.addAnnotation(annotation);
-        }
-
-        kotlinFunction.addCodeLines(functionParts.getCodeLines());
     }
 
     protected void acceptParts(KotlinFunctionAndImports functionAndImports, KotlinFunctionParts functionParts) {

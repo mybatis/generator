@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +40,9 @@ class JavaCodeGenerationTest {
     void testJavaParse(GeneratedJavaFile generatedJavaFile) {
         DefaultJavaFormatter formatter = new DefaultJavaFormatter();
 
-        ByteArrayInputStream is = new ByteArrayInputStream(
-                formatter.getFormattedContent(generatedJavaFile.getCompilationUnit()).getBytes());
+        String content = formatter.getFormattedContent(generatedJavaFile.getCompilationUnit());
         try {
-            StaticJavaParser.parse(is);
+            StaticJavaParser.parse(content);
         } catch (ParseProblemException e) {
             fail("Generated Java File " + generatedJavaFile.getFileName() + " will not compile");
         }

@@ -348,7 +348,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
 
     protected void addBasicInsertMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new BasicInsertMethodGenerator.Builder())
-                .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
                 .build();
 

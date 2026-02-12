@@ -25,10 +25,10 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
+import org.mybatis.generator.runtime.common.GeneratedKeyAnnotationUtility;
 import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
 public class BasicMultipleInsertFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
-
     private final FullyQualifiedKotlinType recordType;
 
     private BasicMultipleInsertFunctionGenerator(Builder builder) {
@@ -47,11 +47,8 @@ public class BasicMultipleInsertFunctionGenerator extends AbstractKotlinMapperFu
 
     private KotlinFunctionAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
 
-        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction("insertMultiple") //$NON-NLS-1$
+        KotlinFunction function = KotlinFunction.newOneLineFunction("insertMultiple") //$NON-NLS-1$
                 .withExplicitReturnType("Int") //$NON-NLS-1$
-                .withAnnotation("@InsertProvider(type = SqlProviderAdapter::class," //$NON-NLS-1$
-                        + " method = \"insertMultipleWithGeneratedKeys\")") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("insertStatement") //$NON-NLS-1$
                         .withAnnotation("@Param(\"insertStatement\")") //$NON-NLS-1$
                         .withDataType("String") //$NON-NLS-1$
@@ -62,7 +59,11 @@ public class BasicMultipleInsertFunctionGenerator extends AbstractKotlinMapperFu
                                 + recordType.getShortNameWithTypeArguments()
                                 + ">") //$NON-NLS-1$
                         .build())
-                .build())
+                .withAnnotation("@InsertProvider(type = SqlProviderAdapter::class," //$NON-NLS-1$
+                        + " method = \"insertMultipleWithGeneratedKeys\")") //$NON-NLS-1$
+                .build();
+
+        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(function)
                 .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$
                 .withImport("org.apache.ibatis.annotations.InsertProvider") //$NON-NLS-1$
                 .withImport("org.apache.ibatis.annotations.Param") //$NON-NLS-1$
@@ -71,28 +72,10 @@ public class BasicMultipleInsertFunctionGenerator extends AbstractKotlinMapperFu
 
         addFunctionComment(functionAndImports);
 
-        KotlinFunctionParts functionParts = getGeneratedKeyAnnotation(gk);
-        acceptParts(functionAndImports, functionParts);
+        GeneratedKeyAnnotationUtility.getKotlinMultiRowGeneratedKeyAnnotation(introspectedTable, gk)
+                .ifPresent(functionParts -> acceptParts(functionAndImports, functionParts));
 
         return functionAndImports;
-    }
-
-    private KotlinFunctionParts getGeneratedKeyAnnotation(GeneratedKey gk) {
-        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
-
-        StringBuilder sb = new StringBuilder();
-        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
-            if (gk.isJdbcStandard()) {
-                // only jdbc standard keys are supported for multiple insert
-                builder.withImport("org.apache.ibatis.annotations.Options"); //$NON-NLS-1$
-                sb.append("@Options(useGeneratedKeys=true,keyProperty=\"records."); //$NON-NLS-1$
-                sb.append(introspectedColumn.getJavaProperty());
-                sb.append("\")"); //$NON-NLS-1$
-                builder.withAnnotation(sb.toString());
-            }
-        });
-
-        return builder.build();
     }
 
     @Override

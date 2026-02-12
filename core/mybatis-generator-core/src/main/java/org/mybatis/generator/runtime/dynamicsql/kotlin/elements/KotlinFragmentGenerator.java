@@ -30,7 +30,6 @@ import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
-import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.runtime.dynamicsql.kotlin.KotlinDynamicSqlSupportClassGenerator;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
@@ -175,38 +174,6 @@ public class KotlinFragmentGenerator {
         sb.append(')');
 
         return sb.toString();
-    }
-
-    public KotlinFunctionParts getGeneratedKeyAnnotation(GeneratedKey gk) {
-        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
-
-        StringBuilder sb = new StringBuilder();
-        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
-            if (gk.isJdbcStandard()) {
-                builder.withImport("org.apache.ibatis.annotations.Options"); //$NON-NLS-1$
-                sb.append("@Options(useGeneratedKeys=true,keyProperty=\"row."); //$NON-NLS-1$
-                sb.append(introspectedColumn.getJavaProperty());
-                sb.append("\")"); //$NON-NLS-1$
-                builder.withAnnotation(sb.toString());
-            } else {
-                builder.withImport("org.apache.ibatis.annotations.SelectKey"); //$NON-NLS-1$
-                FullyQualifiedKotlinType kt =
-                        JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());
-
-                sb.append("@SelectKey(statement=[\""); //$NON-NLS-1$
-                sb.append(gk.getRuntimeSqlStatement());
-                sb.append("\"], keyProperty=\"row."); //$NON-NLS-1$
-                sb.append(introspectedColumn.getJavaProperty());
-                sb.append("\", before="); //$NON-NLS-1$
-                sb.append(gk.isIdentity() ? "false" : "true"); //$NON-NLS-1$ //$NON-NLS-2$
-                sb.append(", resultType="); //$NON-NLS-1$
-                sb.append(kt.getShortNameWithoutTypeArguments());
-                sb.append("::class)"); //$NON-NLS-1$
-                builder.withAnnotation(sb.toString());
-            }
-        });
-
-        return builder.build();
     }
 
     public KotlinFunctionParts getSetEqualLines(List<IntrospectedColumn> columnList) {

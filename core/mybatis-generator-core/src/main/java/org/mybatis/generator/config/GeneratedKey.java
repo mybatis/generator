@@ -62,9 +62,9 @@ public class GeneratedKey {
         return isIdentity ? "AFTER" : "BEFORE"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public void validate(List<String> errors, String tableName) {
+    public void validate(List<String> errors, String tableName, String contextId) {
         if (!stringHasValue(runtimeSqlStatement)) {
-            errors.add(getString("ValidationError.7", tableName)); //$NON-NLS-1$
+            errors.add(getString("ValidationError.7", tableName, contextId)); //$NON-NLS-1$
         }
     }
 

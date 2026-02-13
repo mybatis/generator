@@ -671,15 +671,7 @@ public abstract class CodeGenerationAttributes {
     }
 
     public boolean isImmutable() {
-        Properties properties;
-
-        if (getTableConfiguration().getProperties().containsKey(PropertyRegistry.ANY_IMMUTABLE)) {
-            properties = getTableConfiguration().getProperties();
-        } else {
-            properties = context.getJavaModelGeneratorConfiguration().getProperties();
-        }
-
-        return isTrue(properties.getProperty(PropertyRegistry.ANY_IMMUTABLE));
+        return getTableConfiguration().isImmutable(context);
     }
 
     public boolean isConstructorBased() {

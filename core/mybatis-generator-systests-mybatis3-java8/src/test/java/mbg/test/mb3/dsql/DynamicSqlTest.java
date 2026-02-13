@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -3055,32 +3055,31 @@ public class DynamicSqlTest extends AbstractTest {
         try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IdMapper mapper = sqlSession.getMapper(IdMapper.class);
 
-            Id id = new Id();
-            id.setId(1);
-            id.setDescription("Spanish");
-            mapper.insert(id);
+            Id idSpanish = new Id(1, "Spanish");
+            mapper.insert(idSpanish);
 
-            Id id1 = new Id();
-            id1.setId(2);
-            id1.setDescription("French");
-            mapper.insert(id1);
+            Id idFrench = new Id(2, "French");
+            mapper.insert(idFrench);
 
             Optional<Id> returnedRecord = mapper.selectByPrimaryKey(2);
 
             assertThat(returnedRecord).hasValueSatisfying(rr -> {
-                assertEquals(id1.getId(), rr.getId());
-                assertEquals(id1.getDescription(), rr.getDescription());
+                assertEquals(idFrench.id(), rr.id());
+                assertEquals(idFrench.description(), rr.description());
             });
 
-            id1.setDescription("Italian");
-            mapper.updateByPrimaryKey(id1);
+            Id idItalian = new Id(2, "Italian");
+            mapper.updateByPrimaryKey(idItalian);
 
             returnedRecord = mapper.selectByPrimaryKey(2);
 
             assertThat(returnedRecord).hasValueSatisfying(rr -> {
-                assertEquals(id1.getId(), rr.getId());
-                assertEquals(id1.getDescription(), rr.getDescription());
+                assertEquals(idItalian.id(), rr.id());
+                assertEquals(idItalian.description(), rr.description());
             });
+
+            List<Id> allIds = mapper.select(SelectDSLCompleter.allRows());
+            assertThat(allIds).containsExactlyInAnyOrder(idSpanish, idItalian);
         }
     }
 

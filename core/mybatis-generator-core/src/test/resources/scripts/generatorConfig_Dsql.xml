@@ -45,7 +45,7 @@
     <table tableName="PKOnly">
       <property name="immutable" value="true"/>
     </table>
-    <table tableName="PKFields" alias="B" >
+    <table tableName="PKFields" alias="B">
       <property name="selectAllOrderByClause" value="ID1, ID2"/>
       <property name="dynamicSqlTableObjectName" value="Pkfieldstable"/>
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>
@@ -73,7 +73,7 @@
       <columnOverride column="class" property="dbClass" />
     </table>
     <table schema="mbgtest" tableName="Translations" domainObjectName="sub.Translation"/>
-    <table schema="mbgtest" tableName="Ids" domainObjectName="Id">
+    <table schema="mbgtest" tableName="Ids" domainObjectName="Id" modelType="record">
       <property name="dynamicSqlSupportClassName" value="sub.IdDSQLSupport"/>
     </table>
   </context>
@@ -102,7 +102,7 @@
     <table tableName="PKOnly">
       <property name="immutable" value="true"/>
     </table>
-    <table tableName="PKFields" alias="B" >
+    <table tableName="PKFields" alias="B">
       <property name="selectAllOrderByClause" value="ID1, ID2"/>
       <property name="dynamicSqlTableObjectName" value="Pkfieldstable"/>
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>
@@ -130,7 +130,7 @@
       <columnOverride column="class" property="dbClass" />
     </table>
     <table schema="mbgtest" tableName="Translations" domainObjectName="sub.Translation"/>
-    <table schema="mbgtest" tableName="Ids" domainObjectName="Id">
+    <table schema="mbgtest" tableName="Ids" domainObjectName="Id" modelType="flat">
       <property name="dynamicSqlSupportClassName" value="sub.IdDSQLSupport"/>
     </table>
   </context>

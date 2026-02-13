@@ -17,15 +17,19 @@ package org.mybatis.generator.runtime.dynamicsql.java;
 
 import org.mybatis.generator.api.AbstractRuntime;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.config.ModelType;
 
 public class JavaDynamicSqlRuntime extends AbstractRuntime {
+    private final ModelType modelType;
 
     protected JavaDynamicSqlRuntime(Builder builder) {
         super(builder);
+        modelType = introspectedTable.getTableConfiguration().getModelType()
+                .orElseGet(context::getDefaultModelType);
+        calculateGenerators();
     }
 
-    @Override
-    protected void calculateGenerators() {
+    private void calculateGenerators() {
         javaGenerators.add(calculateJavaModelGenerator());
         if (introspectedTable.getRules().generateJavaClient()) {
             getClientProject().map(this::calculateJavaClientGenerator).ifPresent(javaGenerators::add);
@@ -35,13 +39,20 @@ public class JavaDynamicSqlRuntime extends AbstractRuntime {
     protected AbstractJavaGenerator calculateJavaClientGenerator(String clientProject) {
         return initializeSubBuilder(new DynamicSqlMapperGenerator.Builder())
                 .withProject(clientProject)
+                .isRecordBased(modelType == ModelType.RECORD)
                 .build();
     }
 
     protected AbstractJavaGenerator calculateJavaModelGenerator() {
-        return initializeSubBuilder(new DynamicSqlModelGenerator.Builder())
-                .withProject(getModelProject())
-                .build();
+        if (modelType == ModelType.RECORD) {
+            return initializeSubBuilder(new DynamicSqlRecordModelGenerator.Builder())
+                    .withProject(getModelProject())
+                    .build();
+        } else {
+            return initializeSubBuilder(new DynamicSqlModelGenerator.Builder())
+                    .withProject(getModelProject())
+                    .build();
+        }
     }
 
     public static class Builder extends AbstractRuntimeBuilder<Builder> {

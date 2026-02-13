@@ -45,10 +45,10 @@ import org.mybatis.generator.runtime.mybatis3.xmlmapper.XMLMapperGenerator;
 public class LegacyJavaRuntime extends AbstractRuntime {
     protected LegacyJavaRuntime(Builder builder) {
         super(builder);
+        calculateGenerators();
     }
 
-    @Override
-    protected void calculateGenerators() {
+    private void calculateGenerators() {
         calculateJavaModelGenerators();
         calculateClientGenerator();
         calculateXmlMapperGenerator();

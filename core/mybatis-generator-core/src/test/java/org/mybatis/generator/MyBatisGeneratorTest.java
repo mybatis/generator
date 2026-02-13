@@ -161,6 +161,31 @@ class MyBatisGeneratorTest {
     }
 
     @Test
+    void testValidConfigWithGeneratedKeysAndRecords() {
+        Context context = new Context.Builder()
+                .withId("MyContext")
+                .withDefaultModelType(ModelType.RECORD)
+                .withJdbcConnectionConfiguration(new JDBCConnectionConfiguration.Builder()
+                        .withDriverClass("a")
+                        .withConnectionURL("b")
+                        .build())
+                .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
+                        .withTargetPackage("foo.bar")
+                        .withTargetProject("MyProject")
+                        .build())
+                .withTableConfiguration(new TableConfiguration.Builder()
+                        .withTableName("test")
+                        .withModelType("flat")
+                        .withGeneratedKey(new GeneratedKey("id", "JDBC", true))
+                        .build())
+                .build();
+
+        List<String> errors = new ArrayList<>();
+        context.validate(errors);
+        assertThat(errors).isEmpty();
+    }
+
+    @Test
     void testInvalidConfigWithGeneratedKeysAndImmutable() {
         Context context = new Context.Builder()
                 .withId("MyContext")

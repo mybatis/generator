@@ -33,6 +33,7 @@ import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.InnerEnum;
+import org.mybatis.generator.api.dom.java.InnerRecord;
 import org.mybatis.generator.api.dom.java.JavaElement;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
@@ -444,6 +445,14 @@ public class DefaultCommentGenerator implements CommentGenerator {
         imports.add(generatedImport);
         String comment = "Source Table: " + introspectedTable.getFullyQualifiedTable(); //$NON-NLS-1$
         innerClass.addAnnotation(getGeneratedAnnotation(comment));
+    }
+
+    @Override
+    public void addRecordAnnotation(InnerRecord innerRecord, IntrospectedTable introspectedTable,
+                                    Set<FullyQualifiedJavaType> imports) {
+        imports.add(generatedImport);
+        String comment = "Source Table: " + introspectedTable.getFullyQualifiedTable(); //$NON-NLS-1$
+        innerRecord.addAnnotation(getGeneratedAnnotation(comment));
     }
 
     private String getGeneratedAnnotation(String comment) {

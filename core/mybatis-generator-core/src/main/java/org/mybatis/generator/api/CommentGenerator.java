@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.InnerEnum;
+import org.mybatis.generator.api.dom.java.InnerRecord;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
@@ -294,6 +295,21 @@ public interface CommentGenerator {
      */
     default void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable,
             Set<FullyQualifiedJavaType> imports) {}
+
+    /**
+     * Adds a @Generated annotation to a record.
+     *
+     * @param innerRecord
+     *            the record
+     * @param introspectedTable
+     *            the introspected table
+     * @param imports
+     *     the comment generator may add a required imported type to this list
+     *
+     * @since 2.0.0
+     */
+    default void addRecordAnnotation(InnerRecord innerRecord, IntrospectedTable introspectedTable,
+                                     Set<FullyQualifiedJavaType> imports) {}
 
     /**
      * This method is called to add a file level comment to a generated Kotlin file. This method

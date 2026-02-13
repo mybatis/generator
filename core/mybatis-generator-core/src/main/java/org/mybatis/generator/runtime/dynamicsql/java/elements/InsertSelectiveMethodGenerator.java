@@ -36,11 +36,13 @@ import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final String tableFieldName;
+    private final boolean isRecordBased;
 
     private InsertSelectiveMethodGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
         tableFieldName = Objects.requireNonNull(builder.tableFieldName);
+        isRecordBased = builder.isRecordBased;
     }
 
     @Override
@@ -76,9 +78,14 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodG
                             + "\")"); //$NON-NLS-1$
                 }
             } else {
-                String methodName =
-                        JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
-                                column.getFullyQualifiedJavaType());
+                String methodName;
+                if (isRecordBased) {
+                    methodName = column.getJavaProperty();
+                } else {
+                    methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
+                            column.getFullyQualifiedJavaType());
+                }
+
                 if (first) {
                     method.addBodyLine("    c.map(" + fieldName //$NON-NLS-1$
                             + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
@@ -111,6 +118,7 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodG
     public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable String tableFieldName;
+        private boolean isRecordBased;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
@@ -119,6 +127,11 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodG
 
         public Builder withTableFieldName(String tableFieldName) {
             this.tableFieldName = tableFieldName;
+            return this;
+        }
+
+        public Builder isRecordBased(boolean isRecordBased) {
+            this.isRecordBased = isRecordBased;
             return this;
         }
 

@@ -36,6 +36,7 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
     private final String resultMapId;
     private final FragmentGenerator fragmentGenerator;
     private final boolean reuseResultMap;
+    private final boolean isRecordBased;
 
     private BasicSelectOneMethodGenerator(Builder builder) {
         super(builder);
@@ -43,6 +44,7 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
         resultMapId = Objects.requireNonNull(builder.resultMapId);
         fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
         reuseResultMap = builder.reuseResultMap;
+        isRecordBased = builder.isRecordBased;
     }
 
     @Override
@@ -79,19 +81,19 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
         JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
                 .withImports(imports);
 
-        if (introspectedTable.isConstructorBased()) {
-            JavaMethodParts javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();
-            CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
+        if (reuseResultMap) {
+            FullyQualifiedJavaType rmAnnotation =
+                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap"); //$NON-NLS-1$
+            builder.withImport(rmAnnotation);
+            method.addAnnotation("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
         } else {
-            if (reuseResultMap) {
-                FullyQualifiedJavaType rmAnnotation =
-                        new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap"); //$NON-NLS-1$
-                builder.withImport(rmAnnotation);
-                method.addAnnotation("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
+            JavaMethodParts javaMethodParts;
+            if (introspectedTable.isConstructorBased() || isRecordBased) {
+                javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();
             } else {
-                JavaMethodParts javaMethodParts = fragmentGenerator.getAnnotatedResults();
-                CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
+                javaMethodParts = fragmentGenerator.getAnnotatedResults();
             }
+            CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
         }
 
         return Optional.of(builder.build());
@@ -107,6 +109,7 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
         private @Nullable String resultMapId;
         private @Nullable FragmentGenerator fragmentGenerator;
         private boolean reuseResultMap;
+        private boolean isRecordBased;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
@@ -125,6 +128,11 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
 
         public Builder withReuseResultMap(boolean reuseResultMap) {
             this.reuseResultMap = reuseResultMap;
+            return this;
+        }
+
+        public Builder isRecordBased(boolean isRecordBased) {
+            this.isRecordBased = isRecordBased;
             return this;
         }
 

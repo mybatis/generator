@@ -62,7 +62,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
     protected final String tableFieldName;
     protected final FragmentGenerator fragmentGenerator;
     protected final boolean hasGeneratedKeys;
-    protected final boolean isRecordBased;
 
     public DynamicSqlMapperGenerator(Builder builder) {
         super(builder);
@@ -72,13 +71,11 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
         tableFieldName =
                 JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
         hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
-        isRecordBased = builder.isRecordBased;
 
         fragmentGenerator = new FragmentGenerator.Builder()
                 .withIntrospectedTable(introspectedTable)
                 .withResultMapId(resultMapId)
                 .withTableFieldName(tableFieldName)
-                .isRecordBased(isRecordBased)
                 .build();
     }
 
@@ -297,7 +294,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
                 .withRecordType(recordType)
                 .withResultMapId(resultMapId)
                 .withReuseResultMap(reuseResultMap)
-                .isRecordBased(isRecordBased)
                 .build();
 
         CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
@@ -315,7 +311,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
         var generator = initializeSubBuilder(new InsertSelectiveMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
-                .isRecordBased(isRecordBased)
                 .build();
 
         if (CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator) && !hasGeneratedKeys) {
@@ -363,20 +358,12 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
         var generator = initializeSubBuilder(new BasicSelectManyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
-                .isRecordBased(isRecordBased)
                 .build();
 
         return CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
     }
 
     public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {
-        private boolean isRecordBased;
-
-        public Builder isRecordBased(boolean isRecordBased) {
-            this.isRecordBased = isRecordBased;
-            return this;
-        }
-
         @Override
         protected Builder getThis() {
             return this;

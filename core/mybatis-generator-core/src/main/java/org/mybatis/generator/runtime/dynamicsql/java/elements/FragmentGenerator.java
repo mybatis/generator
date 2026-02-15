@@ -30,6 +30,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
@@ -40,13 +41,11 @@ public class FragmentGenerator {
     private final IntrospectedTable introspectedTable;
     private final String resultMapId;
     private final String tableFieldName;
-    private final boolean isRecordBased;
 
     private FragmentGenerator(Builder builder) {
         this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);
         this.resultMapId = Objects.requireNonNull(builder.resultMapId);
         tableFieldName = Objects.requireNonNull(builder.tableFieldName);
-        isRecordBased = builder.isRecordBased;
     }
 
     public String getSelectList() {
@@ -86,8 +85,9 @@ public class FragmentGenerator {
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
             String fieldName = DynamicSqlUtils.calculateFieldName(tableFieldName, column);
+            // TODO - Method Copy 1
             String methodName;
-            if (isRecordBased) {
+            if (introspectedTable.getModelType() == ModelType.RECORD) {
                 methodName = column.getJavaProperty();
             } else {
                 methodName = JavaBeansUtil.getGetterMethodName(
@@ -240,8 +240,9 @@ public class FragmentGenerator {
         while (iter.hasNext()) {
             IntrospectedColumn column = iter.next();
             String fieldName = DynamicSqlUtils.calculateFieldName(tableFieldName, column);
+            // TODO - Method Copy 1
             String methodName;
-            if (isRecordBased) {
+            if (introspectedTable.getModelType() == ModelType.RECORD) {
                 methodName = column.getJavaProperty();
             } else {
                 methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
@@ -279,12 +280,6 @@ public class FragmentGenerator {
         private @Nullable IntrospectedTable introspectedTable;
         private @Nullable String resultMapId;
         private @Nullable String tableFieldName;
-        private boolean isRecordBased = false;
-
-        public Builder isRecordBased(boolean isRecordBased) {
-            this.isRecordBased = isRecordBased;
-            return this;
-        }
 
         public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
             this.introspectedTable = introspectedTable;

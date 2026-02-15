@@ -24,8 +24,7 @@ public class JavaDynamicSqlRuntime extends AbstractRuntime {
 
     protected JavaDynamicSqlRuntime(Builder builder) {
         super(builder);
-        modelType = introspectedTable.getTableConfiguration().getModelType()
-                .orElseGet(context::getDefaultModelType);
+        modelType = introspectedTable.getModelType();
         calculateGenerators();
     }
 
@@ -39,7 +38,6 @@ public class JavaDynamicSqlRuntime extends AbstractRuntime {
     protected AbstractJavaGenerator calculateJavaClientGenerator(String clientProject) {
         return initializeSubBuilder(new DynamicSqlMapperGenerator.Builder())
                 .withProject(clientProject)
-                .isRecordBased(modelType == ModelType.RECORD)
                 .build();
     }
 

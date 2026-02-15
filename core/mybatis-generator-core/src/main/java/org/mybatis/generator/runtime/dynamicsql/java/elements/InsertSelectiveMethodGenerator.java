@@ -27,6 +27,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
@@ -36,13 +37,11 @@ import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final String tableFieldName;
-    private final boolean isRecordBased;
 
     private InsertSelectiveMethodGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
         tableFieldName = Objects.requireNonNull(builder.tableFieldName);
-        isRecordBased = builder.isRecordBased;
     }
 
     @Override
@@ -78,8 +77,9 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodG
                             + "\")"); //$NON-NLS-1$
                 }
             } else {
+                // TODO - Method Copy 1
                 String methodName;
-                if (isRecordBased) {
+                if (introspectedTable.getModelType() == ModelType.RECORD) {
                     methodName = column.getJavaProperty();
                 } else {
                     methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
@@ -118,7 +118,6 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodG
     public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable String tableFieldName;
-        private boolean isRecordBased;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
@@ -127,11 +126,6 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodG
 
         public Builder withTableFieldName(String tableFieldName) {
             this.tableFieldName = tableFieldName;
-            return this;
-        }
-
-        public Builder isRecordBased(boolean isRecordBased) {
-            this.isRecordBased = isRecordBased;
             return this;
         }
 

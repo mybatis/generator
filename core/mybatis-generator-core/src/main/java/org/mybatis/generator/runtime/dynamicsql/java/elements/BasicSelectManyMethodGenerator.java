@@ -25,6 +25,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
@@ -33,13 +34,11 @@ import org.mybatis.generator.runtime.JavaMethodParts;
 public class BasicSelectManyMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final FragmentGenerator fragmentGenerator;
-    private final boolean isRecordBased;
 
     private BasicSelectManyMethodGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
         fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
-        isRecordBased = builder.isRecordBased;
     }
 
     @Override
@@ -74,7 +73,7 @@ public class BasicSelectManyMethodGenerator extends AbstractJavaInterfaceMethodG
                 .withImports(imports);
 
         JavaMethodParts javaMethodParts;
-        if (introspectedTable.isConstructorBased() || isRecordBased) {
+        if (introspectedTable.isConstructorBased() || introspectedTable.getModelType() == ModelType.RECORD) {
             javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();
         } else {
             javaMethodParts = fragmentGenerator.getAnnotatedResults();
@@ -92,7 +91,6 @@ public class BasicSelectManyMethodGenerator extends AbstractJavaInterfaceMethodG
     public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable FragmentGenerator fragmentGenerator;
-        private boolean isRecordBased;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
@@ -101,11 +99,6 @@ public class BasicSelectManyMethodGenerator extends AbstractJavaInterfaceMethodG
 
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
-            return this;
-        }
-
-        public Builder isRecordBased(boolean isRecordBased) {
-            this.isRecordBased = isRecordBased;
             return this;
         }
 

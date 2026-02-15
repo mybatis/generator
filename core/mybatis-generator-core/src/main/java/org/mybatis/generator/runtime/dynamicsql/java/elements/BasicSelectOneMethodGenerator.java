@@ -25,6 +25,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
@@ -36,7 +37,6 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
     private final String resultMapId;
     private final FragmentGenerator fragmentGenerator;
     private final boolean reuseResultMap;
-    private final boolean isRecordBased;
 
     private BasicSelectOneMethodGenerator(Builder builder) {
         super(builder);
@@ -44,7 +44,6 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
         resultMapId = Objects.requireNonNull(builder.resultMapId);
         fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
         reuseResultMap = builder.reuseResultMap;
-        isRecordBased = builder.isRecordBased;
     }
 
     @Override
@@ -88,7 +87,7 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
             method.addAnnotation("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
         } else {
             JavaMethodParts javaMethodParts;
-            if (introspectedTable.isConstructorBased() || isRecordBased) {
+            if (introspectedTable.isConstructorBased() || introspectedTable.getModelType() == ModelType.RECORD) {
                 javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();
             } else {
                 javaMethodParts = fragmentGenerator.getAnnotatedResults();
@@ -109,7 +108,6 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
         private @Nullable String resultMapId;
         private @Nullable FragmentGenerator fragmentGenerator;
         private boolean reuseResultMap;
-        private boolean isRecordBased;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
@@ -128,11 +126,6 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
 
         public Builder withReuseResultMap(boolean reuseResultMap) {
             this.reuseResultMap = reuseResultMap;
-            return this;
-        }
-
-        public Builder isRecordBased(boolean isRecordBased) {
-            this.isRecordBased = isRecordBased;
             return this;
         }
 

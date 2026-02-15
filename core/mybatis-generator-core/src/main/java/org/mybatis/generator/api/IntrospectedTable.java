@@ -24,7 +24,6 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
@@ -228,12 +227,10 @@ public class IntrospectedTable extends CodeGenerationAttributes {
             return new FlatModelRules(this);
         }
 
-        return switch (getTableConfiguration().getModelType().orElseGet(context::getDefaultModelType)) {
+        return switch (getModelType()) {
         case HIERARCHICAL -> new HierarchicalModelRules(this);
-        case FLAT -> new FlatModelRules(this);
+        case FLAT, RECORD -> new FlatModelRules(this);
         case CONDITIONAL -> new ConditionalModelRules(this);
-        // TODO - Externalize
-        case RECORD -> throw new InternalException("record is not a valid model type for legacy runtimes");
         };
     }
 

@@ -40,6 +40,20 @@ public class JavaBeansUtil {
     }
 
     /**
+     * Calculates a getter method name. Java record "getters" have a different naming convention.
+     *
+     * @param introspectedColumn the column
+     * @return the calculated getter method name (no parenthesis)
+     */
+    public static String getCallingGetterMethodName(IntrospectedColumn introspectedColumn) {
+        if (introspectedColumn.getIntrospectedTable().isRecordBased()) {
+            return introspectedColumn.getJavaProperty();
+        } else {
+            return getGetterMethodName(introspectedColumn.getJavaProperty(),
+                    introspectedColumn.getFullyQualifiedJavaType());
+        }
+    }
+    /**
      * Computes a getter method name.  Warning - does not check to see that the property is a valid
      * property.  Call getValidPropertyName first.
      *
@@ -49,8 +63,7 @@ public class JavaBeansUtil {
      *            the fully qualified java type
      * @return the getter method name
      */
-    public static String getGetterMethodName(String property,
-            FullyQualifiedJavaType fullyQualifiedJavaType) {
+    public static String getGetterMethodName(String property, FullyQualifiedJavaType fullyQualifiedJavaType) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(property);

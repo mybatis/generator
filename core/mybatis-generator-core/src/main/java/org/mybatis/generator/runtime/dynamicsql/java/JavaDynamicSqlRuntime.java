@@ -17,14 +17,10 @@ package org.mybatis.generator.runtime.dynamicsql.java;
 
 import org.mybatis.generator.api.AbstractRuntime;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
-import org.mybatis.generator.config.ModelType;
 
 public class JavaDynamicSqlRuntime extends AbstractRuntime {
-    private final ModelType modelType;
-
     protected JavaDynamicSqlRuntime(Builder builder) {
         super(builder);
-        modelType = introspectedTable.getModelType();
         calculateGenerators();
     }
 
@@ -42,7 +38,7 @@ public class JavaDynamicSqlRuntime extends AbstractRuntime {
     }
 
     protected AbstractJavaGenerator calculateJavaModelGenerator() {
-        if (modelType == ModelType.RECORD) {
+        if (introspectedTable.isRecordBased()) {
             return initializeSubBuilder(new DynamicSqlRecordModelGenerator.Builder())
                     .withProject(getModelProject())
                     .build();

@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider;
 
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getCallingGetterMethodName;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
@@ -36,7 +36,6 @@ import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
 public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaClassMethodGenerator {
-
     protected ProviderInsertSelectiveMethodGenerator(Builder builder) {
         super(builder);
     }
@@ -71,8 +70,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaClassMet
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()
                     && !introspectedColumn.isSequenceColumn()) {
                 method.addBodyLine(String.format("if (row.%s() != null) {", //$NON-NLS-1$
-                        getGetterMethodName(introspectedColumn.getJavaProperty(),
-                                introspectedColumn.getFullyQualifiedJavaType())));
+                        getCallingGetterMethodName(introspectedColumn)));
             }
             method.addBodyLine(String.format("sql.VALUES(\"%s\", \"%s\");", //$NON-NLS-1$
                     escapeStringForJava(getEscapedColumnName(introspectedColumn)),

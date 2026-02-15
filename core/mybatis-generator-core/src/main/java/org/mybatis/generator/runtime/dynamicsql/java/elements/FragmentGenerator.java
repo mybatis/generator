@@ -30,7 +30,6 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
@@ -85,15 +84,7 @@ public class FragmentGenerator {
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
             String fieldName = DynamicSqlUtils.calculateFieldName(tableFieldName, column);
-            // TODO - Method Copy 1
-            String methodName;
-            if (introspectedTable.getModelType() == ModelType.RECORD) {
-                methodName = column.getJavaProperty();
-            } else {
-                methodName = JavaBeansUtil.getGetterMethodName(
-                        column.getJavaProperty(), column.getFullyQualifiedJavaType());
-            }
-
+            String methodName = JavaBeansUtil.getCallingGetterMethodName(column);
             if (first) {
                 lines.add(prefix + ".where(" + fieldName //$NON-NLS-1$
                         + ", isEqualTo(row::" + methodName //$NON-NLS-1$
@@ -240,14 +231,7 @@ public class FragmentGenerator {
         while (iter.hasNext()) {
             IntrospectedColumn column = iter.next();
             String fieldName = DynamicSqlUtils.calculateFieldName(tableFieldName, column);
-            // TODO - Method Copy 1
-            String methodName;
-            if (introspectedTable.getModelType() == ModelType.RECORD) {
-                methodName = column.getJavaProperty();
-            } else {
-                methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
-                        column.getFullyQualifiedJavaType());
-            }
+            String methodName = JavaBeansUtil.getCallingGetterMethodName(column);
 
             String start;
             if (first) {

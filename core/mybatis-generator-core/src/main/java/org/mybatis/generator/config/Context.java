@@ -142,16 +142,11 @@ public class Context extends PropertyHolder {
             errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
         }
 
-        if (knownRuntime.isDynamicSqlBased()) {
+        if (knownRuntime == KnownRuntime.MYBATIS3_DYNAMIC_SQL) {
             if (defaultModelType != ModelType.FLAT && defaultModelType != ModelType.RECORD) {
                 // TODO - Externalize
                 errors.add("Dynamic SQL runtimes support flat or record based models only");
             }
-        }
-
-        if (knownRuntime.isLegacyMyBatis3Based() && defaultModelType == ModelType.RECORD) {
-            // TODO - Externalize
-            errors.add("Legacy runtimes do not support record as a model type");
         }
 
         if (sqlMapGeneratorConfiguration != null) {

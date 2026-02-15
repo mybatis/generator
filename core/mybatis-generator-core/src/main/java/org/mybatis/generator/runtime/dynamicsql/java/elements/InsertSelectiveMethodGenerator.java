@@ -27,7 +27,6 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
@@ -77,15 +76,7 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodG
                             + "\")"); //$NON-NLS-1$
                 }
             } else {
-                // TODO - Method Copy 1
-                String methodName;
-                if (introspectedTable.getModelType() == ModelType.RECORD) {
-                    methodName = column.getJavaProperty();
-                } else {
-                    methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
-                            column.getFullyQualifiedJavaType());
-                }
-
+                String methodName = JavaBeansUtil.getCallingGetterMethodName(column);
                 if (first) {
                     method.addBodyLine("    c.map(" + fieldName //$NON-NLS-1$
                             + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$

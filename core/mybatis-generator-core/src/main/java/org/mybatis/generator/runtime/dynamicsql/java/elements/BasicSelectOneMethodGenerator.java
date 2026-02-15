@@ -25,7 +25,6 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
@@ -87,7 +86,7 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
             method.addAnnotation("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
         } else {
             JavaMethodParts javaMethodParts;
-            if (introspectedTable.isConstructorBased() || introspectedTable.getModelType() == ModelType.RECORD) {
+            if (introspectedTable.isConstructorBased() || introspectedTable.isRecordBased()) {
                 javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();
             } else {
                 javaMethodParts = fragmentGenerator.getAnnotatedResults();

@@ -707,6 +707,10 @@ public abstract class CodeGenerationAttributes {
         return tableConfiguration.getModelType().orElseGet(context::getDefaultModelType);
     }
 
+    public boolean isRecordBased() {
+        return getModelType() == ModelType.RECORD;
+    }
+
     public abstract static class AbstractBuilder<T extends AbstractBuilder<T>> {
         private @Nullable KnownRuntime knownRuntime;
         private @Nullable TableConfiguration tableConfiguration;

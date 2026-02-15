@@ -70,13 +70,13 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
         resultMapId = recordType.getShortNameWithoutTypeArguments() + "Result"; //$NON-NLS-1$
         tableFieldName =
                 JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
-        hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
-
         fragmentGenerator = new FragmentGenerator.Builder()
                 .withIntrospectedTable(introspectedTable)
                 .withResultMapId(resultMapId)
                 .withTableFieldName(tableFieldName)
                 .build();
+
+        hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
     }
 
     @Override

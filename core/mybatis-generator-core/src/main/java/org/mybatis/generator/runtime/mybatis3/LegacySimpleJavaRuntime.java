@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.TypedPropertyHolder;
+import org.mybatis.generator.runtime.dynamicsql.java.DynamicSqlRecordModelGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleAnnotatedMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleJavaMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.SimpleModelGenerator;
@@ -61,10 +62,17 @@ public class LegacySimpleJavaRuntime extends LegacyJavaRuntime {
 
     @Override
     protected void calculateJavaModelGenerators() {
-        var javaGenerator = initializeSubBuilder(new SimpleModelGenerator.Builder())
-                .withProject(getModelProject())
-                .build();
-        javaGenerators.add(javaGenerator);
+        if (introspectedTable.isRecordBased()) {
+            var javaGenerator =  initializeSubBuilder(new DynamicSqlRecordModelGenerator.Builder())
+                    .withProject(getModelProject())
+                    .build();
+            javaGenerators.add(javaGenerator);
+        } else {
+            var javaGenerator = initializeSubBuilder(new SimpleModelGenerator.Builder())
+                    .withProject(getModelProject())
+                    .build();
+            javaGenerators.add(javaGenerator);
+        }
     }
 
     public static class Builder extends LegacyJavaRuntime.Builder {

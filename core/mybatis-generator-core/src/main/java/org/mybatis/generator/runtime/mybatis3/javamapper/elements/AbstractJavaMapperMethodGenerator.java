@@ -42,10 +42,9 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
         super(builder);
     }
 
-    protected Set<FullyQualifiedJavaType> getAnnotatedResultImports(IntrospectedColumn introspectedColumn,
-                                                                    boolean isConstructorBased) {
+    protected Set<FullyQualifiedJavaType> getAnnotatedResultImports(IntrospectedColumn introspectedColumn) {
         Set<FullyQualifiedJavaType> answer = new HashSet<>();
-        if (isConstructorBased) {
+        if (introspectedTable.isConstructorBased() || introspectedTable.isRecordBased()) {
             answer.add(introspectedColumn.getFullyQualifiedJavaType());
         }
 

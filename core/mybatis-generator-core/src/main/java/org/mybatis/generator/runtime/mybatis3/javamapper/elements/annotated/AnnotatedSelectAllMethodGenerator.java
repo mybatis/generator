@@ -73,7 +73,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
     private void addImports(JavaMethodParts.Builder builder) {
         builder.withImports(getAnnotatedSelectImports());
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
-            builder.withImports(getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
+            builder.withImports(getAnnotatedResultImports(introspectedColumn));
         }
 
         builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select")); //$NON-NLS-1$

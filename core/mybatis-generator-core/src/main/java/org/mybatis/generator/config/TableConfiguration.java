@@ -282,13 +282,13 @@ public class TableConfiguration extends PropertyHolder {
             // if the model type is immutable or record, then we cannot have generated keys
             ModelType mt = getModelType().orElseGet(context::getDefaultModelType);
             if (mt == ModelType.RECORD) {
-                // TODO - externalize
-                errors.add("Table configuration \"" + fqTableName + "\" in context \"" + context.getId() + "\" specifies a generated key, but the model type is RECORD");
+                errors.add(Messages.getString("ValidationError.30", fqTableName, context.getId(), //$NON-NLS-1$
+                        "record")); //$NON-NLS-1$
             }
 
             if (isImmutable(context)) {
-                // TODO - externalize
-                errors.add("Table configuration \"" + fqTableName + "\" in context \"" + context.getId() + "\" specifies a generated key, but the model is immutable");
+                errors.add(Messages.getString("ValidationError.30", fqTableName, context.getId(), //$NON-NLS-1$
+                        "immutable")); //$NON-NLS-1$
             }
 
             generatedKey.validate(errors, fqTableName, context.getId());

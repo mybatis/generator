@@ -77,10 +77,10 @@ public class Context extends PropertyHolder {
 
     private ModelType calculateDefaultModelType(@Nullable String targetRuntime) {
         if (targetRuntime == null) {
-            return ModelType.FLAT;
+            return ModelType.FLAT; // MyBatis Dynamic SQL is the default runtime
         } else {
             KnownRuntime knownRuntime = KnownRuntime.getByAlias(targetRuntime);
-            if (knownRuntime.isDynamicSqlBased()) {
+            if (knownRuntime.isDynamicSqlBased() || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {
                 return ModelType.FLAT;
             } else {
                 return ModelType.CONDITIONAL;
@@ -142,10 +142,9 @@ public class Context extends PropertyHolder {
             errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
         }
 
-        if (knownRuntime == KnownRuntime.MYBATIS3_DYNAMIC_SQL) {
+        if (knownRuntime == KnownRuntime.MYBATIS3_DYNAMIC_SQL || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {
             if (defaultModelType != ModelType.FLAT && defaultModelType != ModelType.RECORD) {
-                // TODO - Externalize
-                errors.add("Dynamic SQL runtimes support flat or record based models only");
+                errors.add(getString("ValidationError.29", getId())); //$NON-NLS-1$
             }
         }
 

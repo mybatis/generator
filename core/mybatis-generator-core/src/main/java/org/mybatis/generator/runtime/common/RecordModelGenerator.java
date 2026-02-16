@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamicsql.java;
+package org.mybatis.generator.runtime.common;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
@@ -34,9 +34,9 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
  *
  * @author Jeff Butler
  */
-public class DynamicSqlRecordModelGenerator extends AbstractJavaGenerator {
+public class RecordModelGenerator extends AbstractJavaGenerator {
 
-    public DynamicSqlRecordModelGenerator(Builder builder) {
+    public RecordModelGenerator(Builder builder) {
         super(builder);
     }
 
@@ -76,8 +76,8 @@ public class DynamicSqlRecordModelGenerator extends AbstractJavaGenerator {
         }
 
         @Override
-        public DynamicSqlRecordModelGenerator build() {
-            return new DynamicSqlRecordModelGenerator(this);
+        public RecordModelGenerator build() {
+            return new RecordModelGenerator(this);
         }
     }
 }

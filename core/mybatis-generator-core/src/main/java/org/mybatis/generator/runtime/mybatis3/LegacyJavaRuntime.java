@@ -27,7 +27,7 @@ import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.runtime.dynamicsql.java.DynamicSqlRecordModelGenerator;
+import org.mybatis.generator.runtime.common.RecordModelGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.AnnotatedMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.JavaMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.MixedMapperGenerator;
@@ -114,7 +114,7 @@ public class LegacyJavaRuntime extends AbstractRuntime {
         }
 
         if (introspectedTable.isRecordBased()) {
-            var javaGenerator =  initializeSubBuilder(new DynamicSqlRecordModelGenerator.Builder())
+            var javaGenerator =  initializeSubBuilder(new RecordModelGenerator.Builder())
                     .withProject(getModelProject())
                     .build();
             javaGenerators.add(javaGenerator);

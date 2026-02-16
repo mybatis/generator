@@ -53,6 +53,7 @@ public class JavaBeansUtil {
                     introspectedColumn.getFullyQualifiedJavaType());
         }
     }
+
     /**
      * Computes a getter method name.  Warning - does not check to see that the property is a valid
      * property.  Call getValidPropertyName first.

@@ -64,7 +64,7 @@ class MyBatisGeneratorTest {
         Configuration config = new Configuration();
         Context context = new Context.Builder()
                 .withId("MyContext")
-                .withDefaultModelType(ModelType.HIERARCHICAL)
+                .withDefaultModelType(ModelType.FLAT)
                 .withTargetRuntime("MyBatis3Simple")
                 .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
                         .withTargetPackage("foo.bar")
@@ -89,7 +89,7 @@ class MyBatisGeneratorTest {
         Configuration config = new Configuration();
         Context context = new Context.Builder()
                 .withId("MyContext")
-                .withDefaultModelType(ModelType.HIERARCHICAL)
+                .withDefaultModelType(ModelType.FLAT)
                 .withTargetRuntime("MyBatis3Simple")
                 .withConnectionFactoryConfiguration(new ConnectionFactoryConfiguration.Builder().build())
                 .withJdbcConnectionConfiguration(new JDBCConnectionConfiguration.Builder().withDriverClass("a").withConnectionURL("b").build())

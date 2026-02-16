@@ -945,4 +945,106 @@
     <table tableName="NameView" />
     <table tableName="PKFields" />
   </context>
+
+  <context id="miscellaneousTests_Annotated_record" targetRuntime="MyBatis3" defaultModelType="record">
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+                    connectionURL="jdbc:hsqldb:mem:aname"
+                    userId="sa" />
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.record.annotated.model" targetProject="MAVEN"/>
+
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.record.annotated.mapper"  targetProject="MAVEN"/>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="PKOnly" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
+    <table tableName="PKFieldsBlobs" alias="A" />
+  </context>
+
+  <context id="miscellaneousTests_Mixed_record" targetRuntime="MyBatis3" defaultModelType="record">
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+                    connectionURL="jdbc:hsqldb:mem:aname"
+                    userId="sa" />
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.record.mixed.model" targetProject="MAVEN"/>
+
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.record.mixed.xml"  targetProject="MAVEN"/>
+
+    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.record.mixed.mapper"  targetProject="MAVEN"/>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="PKOnly" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
+    <table tableName="PKFieldsBlobs" alias="A" />
+  </context>
+
+  <context id="miscellaneousTests_Xml_record" targetRuntime="MyBatis3" defaultModelType="record">
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+                    connectionURL="jdbc:hsqldb:mem:aname"
+                    userId="sa" />
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.record.xml.model" targetProject="MAVEN"/>
+
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.record.xml.xml"  targetProject="MAVEN"/>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.record.xml.mapper"  targetProject="MAVEN"/>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="PKOnly" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
+    <table tableName="PKFieldsBlobs" alias="A" />
+  </context>
+
+  <context id="miscellaneousTests_Simple_Xml_record" targetRuntime="MyBatis3Simple" defaultModelType="record">
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+                    connectionURL="jdbc:hsqldb:mem:aname"
+                    userId="sa" />
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.record.simple.model" targetProject="MAVEN"/>
+
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.record.simple.xml"  targetProject="MAVEN"/>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.record.simple.mapper"  targetProject="MAVEN"/>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="PKOnly" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
+    <table tableName="PKFieldsBlobs" alias="A" />
+  </context>
+
+  <context id="miscellaneousTests_Simple_Annotated_record" targetRuntime="MyBatis3Simple" defaultModelType="record">
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+                    connectionURL="jdbc:hsqldb:mem:aname"
+                    userId="sa" />
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.record.simpleannotated.model" targetProject="MAVEN"/>
+
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.record.simpleannotated.mapper"  targetProject="MAVEN"/>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="PKOnly" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
+    <table tableName="PKFieldsBlobs" alias="A" />
+  </context>
+
 </generatorConfiguration>

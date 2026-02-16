@@ -115,6 +115,7 @@ public class LegacyJavaRuntime extends AbstractRuntime {
 
         if (introspectedTable.isRecordBased()) {
             var javaGenerator =  initializeSubBuilder(new RecordModelGenerator.Builder())
+                    .includeNonBlobsConstructor(introspectedTable.getRules().generateSelectByExampleWithoutBLOBs())
                     .withProject(getModelProject())
                     .build();
             javaGenerators.add(javaGenerator);

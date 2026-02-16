@@ -21,7 +21,7 @@
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-  <context id="dsql">
+  <context id="dsql" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
@@ -45,7 +45,7 @@
     <table tableName="PKOnly">
       <property name="immutable" value="true"/>
     </table>
-    <table tableName="PKFields" alias="B" >
+    <table tableName="PKFields" alias="B">
       <property name="selectAllOrderByClause" value="ID1, ID2"/>
       <property name="dynamicSqlTableObjectName" value="Pkfieldstable"/>
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>
@@ -73,7 +73,64 @@
       <columnOverride column="class" property="dbClass" />
     </table>
     <table schema="mbgtest" tableName="Translations" domainObjectName="sub.Translation"/>
-    <table schema="mbgtest" tableName="Ids" domainObjectName="Id">
+    <table schema="mbgtest" tableName="Ids" domainObjectName="Id" modelType="record">
+      <property name="dynamicSqlSupportClassName" value="sub.IdDSQLSupport"/>
+    </table>
+  </context>
+
+  <context id="dsql-records" defaultModelType="record">
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+                    connectionURL="jdbc:hsqldb:mem:aname"
+                    userId="sa" />
+
+    <javaTypeResolver>
+      <property name="useJSR310Types" value="true"/>
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.record.model" targetProject="MAVEN">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.record.mapper"  targetProject="MAVEN">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+    <table tableName="FieldsOnly" enableSelectByExample="false"/>
+    <table tableName="PKOnly">
+      <property name="immutable" value="true"/>
+    </table>
+    <table tableName="PKFields" alias="B">
+      <property name="selectAllOrderByClause" value="ID1, ID2"/>
+      <property name="dynamicSqlTableObjectName" value="Pkfieldstable"/>
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+      <columnOverride column="stringBoolean" javaType="boolean" typeHandler="mbg.test.mb3.common.StringBooleanTypeHandler"/>
+    </table>
+    <table tableName="PKBlobs">
+      <property name="constructorBased" value="true"/>
+    </table>
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A" modelType="flat">
+      <generatedKey column="CuStOmEr iD" sqlStatement="JDBC" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="first_name" property="secondFirstName" />
+      <columnOverride column="firstName" property="thirdFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" >
+        <property name="fredswife" value="wilma"/>
+      </columnOverride>
+      <columnOverride column="active" javaType="boolean" />
+      <columnOverride column="_id1" delimitedColumnName="true" />
+      <columnOverride column="$id2" delimitedColumnName="true" />
+      <columnOverride column="id5_" delimitedColumnName="true" />
+      <columnOverride column="id6$" delimitedColumnName="true" />
+      <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
+    </table>
+    <table schema="mbgtest" tableName="Translations" domainObjectName="sub.Translation"/>
+    <table schema="mbgtest" tableName="Ids" domainObjectName="Id" modelType="flat">
       <property name="dynamicSqlSupportClassName" value="sub.IdDSQLSupport"/>
     </table>
   </context>

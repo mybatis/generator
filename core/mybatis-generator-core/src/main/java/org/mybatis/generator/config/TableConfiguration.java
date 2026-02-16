@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Properties;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.internal.util.messages.Messages;
@@ -268,7 +269,7 @@ public class TableConfiguration extends PropertyHolder {
         return updateByExampleStatementEnabled;
     }
 
-    public void validate(List<String> errors, int listPosition) {
+    public void validate(List<String> errors, int listPosition, Context context) {
         if (!stringHasValue(tableName)) {
             errors.add(Messages.getString(
                     "ValidationError.6", Integer.toString(listPosition))); //$NON-NLS-1$
@@ -278,7 +279,19 @@ public class TableConfiguration extends PropertyHolder {
                 catalog, schema, tableName, '.');
 
         if (generatedKey != null) {
-            generatedKey.validate(errors, fqTableName);
+            // if the model type is immutable or record, then we cannot have generated keys
+            ModelType mt = getModelType().orElseGet(context::getDefaultModelType);
+            if (mt == ModelType.RECORD) {
+                errors.add(Messages.getString("ValidationError.30", fqTableName, context.getId(), //$NON-NLS-1$
+                        "record")); //$NON-NLS-1$
+            }
+
+            if (isImmutable(context)) {
+                errors.add(Messages.getString("ValidationError.30", fqTableName, context.getId(), //$NON-NLS-1$
+                        "immutable")); //$NON-NLS-1$
+            }
+
+            generatedKey.validate(errors, fqTableName, context.getId());
         }
 
         // when using column indexes, either both or neither query ids
@@ -315,6 +328,19 @@ public class TableConfiguration extends PropertyHolder {
             ignoredColumnPattern.validate(errors, fqTableName);
         }
     }
+
+    public boolean isImmutable(Context context) {
+        Properties properties;
+
+        if (getProperties().containsKey(PropertyRegistry.ANY_IMMUTABLE)) {
+            properties = getProperties();
+        } else {
+            properties = context.getJavaModelGeneratorConfiguration().getProperties();
+        }
+
+        return isTrue(properties.getProperty(PropertyRegistry.ANY_IMMUTABLE));
+    }
+
 
     public @Nullable DomainObjectRenamingRule getDomainObjectRenamingRule() {
         return domainObjectRenamingRule;

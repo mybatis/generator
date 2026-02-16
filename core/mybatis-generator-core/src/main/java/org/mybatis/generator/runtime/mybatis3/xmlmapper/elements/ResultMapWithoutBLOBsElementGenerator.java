@@ -23,7 +23,6 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlMapperElementGenerator {
-
     private final boolean isSimple;
 
     protected ResultMapWithoutBLOBsElementGenerator(Builder builder) {
@@ -55,7 +54,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlMapperElem
 
         commentGenerator.addComment(answer);
 
-        if (introspectedTable.isConstructorBased()) {
+        if (introspectedTable.isConstructorBased() || introspectedTable.isRecordBased()) {
             addResultMapConstructorElements(answer);
         } else {
             addResultMapElements(answer);

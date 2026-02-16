@@ -72,7 +72,7 @@ public class BasicSelectManyMethodGenerator extends AbstractJavaInterfaceMethodG
                 .withImports(imports);
 
         JavaMethodParts javaMethodParts;
-        if (introspectedTable.isConstructorBased()) {
+        if (introspectedTable.isConstructorBased() || introspectedTable.isRecordBased()) {
             javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();
         } else {
             javaMethodParts = fragmentGenerator.getAnnotatedResults();

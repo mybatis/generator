@@ -23,6 +23,7 @@ import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.java.TopLevelRecord;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
@@ -798,6 +799,17 @@ public abstract class CompositePlugin implements Plugin {
     public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
             if (!plugin.modelExampleClassGenerated(topLevelClass, introspectedTable)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean modelRecordGenerated(TopLevelRecord topLevelRecord, IntrospectedTable introspectedTable) {
+        for (Plugin plugin : plugins) {
+            if (!plugin.modelRecordGenerated(topLevelRecord, introspectedTable)) {
                 return false;
             }
         }

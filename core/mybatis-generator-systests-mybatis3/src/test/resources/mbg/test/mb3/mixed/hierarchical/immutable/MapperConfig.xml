@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
 
-       Copyright 2006-2025 the original author or authors.
+       Copyright 2006-2026 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -44,12 +44,12 @@
   </environments>
 
   <mappers>
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/FieldsblobsMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/FieldsonlyMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/PkblobsMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/PkfieldsMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/PkfieldsblobsMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/PkonlyMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/FieldsblobsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/FieldsonlyMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/PkblobsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/PkfieldsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/PkfieldsblobsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/PkonlyMapper.xml" />
   </mappers>
 
 </configuration>

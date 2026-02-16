@@ -27,6 +27,7 @@ import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.runtime.common.RecordModelGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.AnnotatedMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.JavaMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.MixedMapperGenerator;
@@ -45,10 +46,10 @@ import org.mybatis.generator.runtime.mybatis3.xmlmapper.XMLMapperGenerator;
 public class LegacyJavaRuntime extends AbstractRuntime {
     protected LegacyJavaRuntime(Builder builder) {
         super(builder);
+        calculateGenerators();
     }
 
-    @Override
-    protected void calculateGenerators() {
+    private void calculateGenerators() {
         calculateJavaModelGenerators();
         calculateClientGenerator();
         calculateXmlMapperGenerator();
@@ -110,6 +111,15 @@ public class LegacyJavaRuntime extends AbstractRuntime {
                     .withProject(getExampleProject())
                     .build();
             javaGenerators.add(javaGenerator);
+        }
+
+        if (introspectedTable.isRecordBased()) {
+            var javaGenerator =  initializeSubBuilder(new RecordModelGenerator.Builder())
+                    .includeNonBlobsConstructor(introspectedTable.getRules().generateSelectByExampleWithoutBLOBs())
+                    .withProject(getModelProject())
+                    .build();
+            javaGenerators.add(javaGenerator);
+            return;
         }
 
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {

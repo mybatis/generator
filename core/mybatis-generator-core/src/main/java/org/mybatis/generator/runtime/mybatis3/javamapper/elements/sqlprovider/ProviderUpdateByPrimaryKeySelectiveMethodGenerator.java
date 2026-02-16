@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider;
 
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getCallingGetterMethodName;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
@@ -36,7 +36,6 @@ import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
 public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends AbstractJavaClassMethodGenerator {
-
     protected ProviderUpdateByPrimaryKeySelectiveMethodGenerator(Builder builder) {
         super(builder);
     }
@@ -69,8 +68,7 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
                 ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns())) {
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
                 method.addBodyLine(String.format("if (row.%s() != null) {", //$NON-NLS-1$
-                        getGetterMethodName(introspectedColumn.getJavaProperty(),
-                                introspectedColumn.getFullyQualifiedJavaType())));
+                        getCallingGetterMethodName(introspectedColumn)));
             }
 
             method.addBodyLine(String.format("sql.SET(\"%s = %s\");", //$NON-NLS-1$

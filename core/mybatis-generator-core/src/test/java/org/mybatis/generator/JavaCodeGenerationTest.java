@@ -17,8 +17,9 @@ package org.mybatis.generator;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseProblemException;
-import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ParserConfiguration;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -42,7 +43,10 @@ class JavaCodeGenerationTest {
 
         String content = formatter.getFormattedContent(generatedJavaFile.getCompilationUnit());
         try {
-            StaticJavaParser.parse(content);
+            ParserConfiguration parserConfiguration = new ParserConfiguration();
+            parserConfiguration.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_25);
+            JavaParser javaParser = new JavaParser(parserConfiguration);
+            javaParser.parse(content);
         } catch (ParseProblemException e) {
             fail("Generated Java File " + generatedJavaFile.getFileName() + " will not compile");
         }

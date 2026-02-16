@@ -50,7 +50,8 @@ public class Context extends PropertyHolder {
     protected Context(Builder builder) {
         super(builder);
         id = Objects.requireNonNull(builder.id, getString("ValidationError.16")); //$NON-NLS-1$
-        defaultModelType = Objects.requireNonNullElse(builder.defaultModelType, Defaults.DEFAULT_MODEL_TYPE);
+        defaultModelType = Objects.requireNonNullElseGet(builder.defaultModelType,
+                () -> calculateDefaultModelType(builder.targetRuntime));
         tableConfigurations = Collections.unmodifiableList(builder.tableConfigurations);
         pluginConfigurations = Collections.unmodifiableList(builder.pluginConfigurations);
         commentGeneratorConfiguration = builder.commentGeneratorConfiguration;
@@ -72,6 +73,19 @@ public class Context extends PropertyHolder {
 
         property = getProperty(PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS);
         autoDelimitKeywords = isTrue(property);
+    }
+
+    private ModelType calculateDefaultModelType(@Nullable String targetRuntime) {
+        if (targetRuntime == null) {
+            return ModelType.FLAT; // MyBatis Dynamic SQL is the default runtime
+        } else {
+            KnownRuntime knownRuntime = KnownRuntime.getByAlias(targetRuntime);
+            if (knownRuntime.isDynamicSqlBased() || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {
+                return ModelType.FLAT;
+            } else {
+                return ModelType.CONDITIONAL;
+            }
+        }
     }
 
     public Optional<JavaClientGeneratorConfiguration> getJavaClientGeneratorConfiguration() {
@@ -128,6 +142,12 @@ public class Context extends PropertyHolder {
             errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
         }
 
+        if (knownRuntime == KnownRuntime.MYBATIS3_DYNAMIC_SQL || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {
+            if (defaultModelType != ModelType.FLAT && defaultModelType != ModelType.RECORD) {
+                errors.add(getString("ValidationError.29", getId())); //$NON-NLS-1$
+            }
+        }
+
         if (sqlMapGeneratorConfiguration != null) {
             sqlMapGeneratorConfiguration.validate(errors, id);
         }
@@ -138,7 +158,7 @@ public class Context extends PropertyHolder {
             for (int i = 0; i < tableConfigurations.size(); i++) {
                 TableConfiguration tc = tableConfigurations.get(i);
 
-                tc.validate(errors, i);
+                tc.validate(errors, i, this);
             }
         }
 

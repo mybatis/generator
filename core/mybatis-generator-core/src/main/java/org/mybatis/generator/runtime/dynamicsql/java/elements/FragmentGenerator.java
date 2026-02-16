@@ -84,8 +84,7 @@ public class FragmentGenerator {
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
             String fieldName = DynamicSqlUtils.calculateFieldName(tableFieldName, column);
-            String methodName = JavaBeansUtil.getGetterMethodName(
-                    column.getJavaProperty(), column.getFullyQualifiedJavaType());
+            String methodName = JavaBeansUtil.getCallingGetterMethodName(column);
             if (first) {
                 lines.add(prefix + ".where(" + fieldName //$NON-NLS-1$
                         + ", isEqualTo(row::" + methodName //$NON-NLS-1$
@@ -105,46 +104,21 @@ public class FragmentGenerator {
         JavaMethodParts.Builder builder = new JavaMethodParts.Builder();
 
         builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.type.JdbcType")); //$NON-NLS-1$
-        builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ConstructorArgs")); //$NON-NLS-1$
         builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Arg")); //$NON-NLS-1$
+        builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Results")); //$NON-NLS-1$
 
-        builder.withAnnotation("@ConstructorArgs({"); //$NON-NLS-1$
-
-        StringBuilder sb = new StringBuilder();
+        builder.withAnnotation("@Results(id=\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
 
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
-        Iterator<IntrospectedColumn> iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();
-        while (iterPk.hasNext()) {
-            IntrospectedColumn introspectedColumn = iterPk.next();
-            sb.setLength(0);
-            javaIndent(sb, 1);
-            sb.append(getArgAnnotation(imports, introspectedColumn, true));
-
-            if (iterPk.hasNext() || iterNonPk.hasNext()) {
-                sb.append(',');
-            }
-
-            builder.withAnnotation(sb.toString());
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
+            builder.withAnnotation(getArgAnnotation(imports, introspectedColumn, true));
         }
 
-        while (iterNonPk.hasNext()) {
-            IntrospectedColumn introspectedColumn = iterNonPk.next();
-            sb.setLength(0);
-            javaIndent(sb, 1);
-            sb.append(getArgAnnotation(imports, introspectedColumn, false));
-
-            if (iterNonPk.hasNext()) {
-                sb.append(',');
-            }
-
-            builder.withAnnotation(sb.toString());
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
+            builder.withAnnotation(getArgAnnotation(imports, introspectedColumn, false));
         }
 
-        builder.withAnnotation("})") //$NON-NLS-1$
-                .withImports(imports);
-
-        return builder.build();
+        return builder.withImports(imports).build();
     }
 
     public JavaMethodParts getAnnotatedResults() {
@@ -239,8 +213,7 @@ public class FragmentGenerator {
 
     public List<String> getSetEqualLines(List<IntrospectedColumn> columnList, String firstLinePrefix,
             String subsequentLinePrefix, boolean terminate) {
-        return getSetLines(columnList, firstLinePrefix, subsequentLinePrefix, terminate,
-                "equalTo"); //$NON-NLS-1$
+        return getSetLines(columnList, firstLinePrefix, subsequentLinePrefix, terminate, "equalTo"); //$NON-NLS-1$
     }
 
     public List<String> getSetEqualWhenPresentLines(List<IntrospectedColumn> columnList, String firstLinePrefix,
@@ -250,7 +223,7 @@ public class FragmentGenerator {
     }
 
     private List<String> getSetLines(List<IntrospectedColumn> columnList, String firstLinePrefix,
-                                 String subsequentLinePrefix, boolean terminate, String fragment) {
+                                     String subsequentLinePrefix, boolean terminate, String fragment) {
         List<String> lines = new ArrayList<>();
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
         Iterator<IntrospectedColumn> iter = columns.iterator();
@@ -258,8 +231,7 @@ public class FragmentGenerator {
         while (iter.hasNext()) {
             IntrospectedColumn column = iter.next();
             String fieldName = DynamicSqlUtils.calculateFieldName(tableFieldName, column);
-            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
-                    column.getFullyQualifiedJavaType());
+            String methodName = JavaBeansUtil.getCallingGetterMethodName(column);
 
             String start;
             if (first) {

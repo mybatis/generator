@@ -317,10 +317,10 @@ class CodeGenerationAttributesTest {
     @Test
     void testRules() {
         IntrospectedTable attributes = generateMinimalTestObject();
-        assertThat(attributes.getRules()).isNotNull().isInstanceOf(ConditionalModelRules.class);
-
-        attributes.setRules(new FlatModelRules(attributes));
         assertThat(attributes.getRules()).isNotNull().isInstanceOf(FlatModelRules.class);
+
+        attributes.setRules(new ConditionalModelRules(attributes));
+        assertThat(attributes.getRules()).isNotNull().isInstanceOf(ConditionalModelRules.class);
     }
 
     @Test

@@ -79,19 +79,19 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
         JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
                 .withImports(imports);
 
-        if (introspectedTable.isConstructorBased()) {
-            JavaMethodParts javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();
-            CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
+        if (reuseResultMap) {
+            FullyQualifiedJavaType rmAnnotation =
+                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap"); //$NON-NLS-1$
+            builder.withImport(rmAnnotation);
+            method.addAnnotation("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
         } else {
-            if (reuseResultMap) {
-                FullyQualifiedJavaType rmAnnotation =
-                        new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap"); //$NON-NLS-1$
-                builder.withImport(rmAnnotation);
-                method.addAnnotation("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
+            JavaMethodParts javaMethodParts;
+            if (introspectedTable.isConstructorBased() || introspectedTable.isRecordBased()) {
+                javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();
             } else {
-                JavaMethodParts javaMethodParts = fragmentGenerator.getAnnotatedResults();
-                CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
+                javaMethodParts = fragmentGenerator.getAnnotatedResults();
             }
+            CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
         }
 
         return Optional.of(builder.build());

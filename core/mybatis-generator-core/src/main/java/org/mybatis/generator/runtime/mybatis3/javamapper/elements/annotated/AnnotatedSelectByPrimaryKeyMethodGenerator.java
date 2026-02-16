@@ -82,7 +82,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
             builder.withImports(getAnnotatedSelectImports());
             for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
                 builder.withImports(
-                        getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
+                        getAnnotatedResultImports(introspectedColumn));
             }
         }
     }

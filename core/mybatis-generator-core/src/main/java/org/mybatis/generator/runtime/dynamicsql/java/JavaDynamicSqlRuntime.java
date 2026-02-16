@@ -17,15 +17,16 @@ package org.mybatis.generator.runtime.dynamicsql.java;
 
 import org.mybatis.generator.api.AbstractRuntime;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.runtime.common.RecordModelGenerator;
+import org.mybatis.generator.runtime.common.SimpleModelGenerator;
 
 public class JavaDynamicSqlRuntime extends AbstractRuntime {
-
     protected JavaDynamicSqlRuntime(Builder builder) {
         super(builder);
+        calculateGenerators();
     }
 
-    @Override
-    protected void calculateGenerators() {
+    private void calculateGenerators() {
         javaGenerators.add(calculateJavaModelGenerator());
         if (introspectedTable.getRules().generateJavaClient()) {
             getClientProject().map(this::calculateJavaClientGenerator).ifPresent(javaGenerators::add);
@@ -39,9 +40,15 @@ public class JavaDynamicSqlRuntime extends AbstractRuntime {
     }
 
     protected AbstractJavaGenerator calculateJavaModelGenerator() {
-        return initializeSubBuilder(new DynamicSqlModelGenerator.Builder())
-                .withProject(getModelProject())
-                .build();
+        if (introspectedTable.isRecordBased()) {
+            return initializeSubBuilder(new RecordModelGenerator.Builder())
+                    .withProject(getModelProject())
+                    .build();
+        } else {
+            return initializeSubBuilder(new SimpleModelGenerator.Builder())
+                    .withProject(getModelProject())
+                    .build();
+        }
     }
 
     public static class Builder extends AbstractRuntimeBuilder<Builder> {

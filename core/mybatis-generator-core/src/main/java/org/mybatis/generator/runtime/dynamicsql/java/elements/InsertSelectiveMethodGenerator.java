@@ -76,9 +76,7 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodG
                             + "\")"); //$NON-NLS-1$
                 }
             } else {
-                String methodName =
-                        JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
-                                column.getFullyQualifiedJavaType());
+                String methodName = JavaBeansUtil.getCallingGetterMethodName(column);
                 if (first) {
                     method.addBodyLine("    c.map(" + fieldName //$NON-NLS-1$
                             + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$

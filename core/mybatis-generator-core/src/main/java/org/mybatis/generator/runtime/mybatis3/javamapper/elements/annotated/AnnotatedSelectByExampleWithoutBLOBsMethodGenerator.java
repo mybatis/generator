@@ -50,7 +50,7 @@ public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends SelectB
     private void addImports(JavaMethodParts.Builder builder) {
         builder.withImports(getAnnotatedSelectImports());
         for (IntrospectedColumn introspectedColumn : introspectedTable.getBaseColumns()) {
-            builder.withImports(getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
+            builder.withImports(getAnnotatedResultImports(introspectedColumn));
         }
 
         builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectProvider")); //$NON-NLS-1$

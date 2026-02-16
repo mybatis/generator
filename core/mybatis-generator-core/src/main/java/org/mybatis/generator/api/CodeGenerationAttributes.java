@@ -30,6 +30,7 @@ import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
+import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.PropertyHolder;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
@@ -671,15 +672,7 @@ public abstract class CodeGenerationAttributes {
     }
 
     public boolean isImmutable() {
-        Properties properties;
-
-        if (getTableConfiguration().getProperties().containsKey(PropertyRegistry.ANY_IMMUTABLE)) {
-            properties = getTableConfiguration().getProperties();
-        } else {
-            properties = context.getJavaModelGeneratorConfiguration().getProperties();
-        }
-
-        return isTrue(properties.getProperty(PropertyRegistry.ANY_IMMUTABLE));
+        return getTableConfiguration().isImmutable(context);
     }
 
     public boolean isConstructorBased() {
@@ -708,6 +701,14 @@ public abstract class CodeGenerationAttributes {
 
     public Context getContext() {
         return context;
+    }
+
+    public ModelType getModelType() {
+        return tableConfiguration.getModelType().orElseGet(context::getDefaultModelType);
+    }
+
+    public boolean isRecordBased() {
+        return getModelType() == ModelType.RECORD;
     }
 
     public abstract static class AbstractBuilder<T extends AbstractBuilder<T>> {

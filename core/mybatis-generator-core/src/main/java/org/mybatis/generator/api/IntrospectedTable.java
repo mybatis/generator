@@ -227,9 +227,9 @@ public class IntrospectedTable extends CodeGenerationAttributes {
             return new FlatModelRules(this);
         }
 
-        return switch (getTableConfiguration().getModelType().orElseGet(context::getDefaultModelType)) {
+        return switch (getModelType()) {
         case HIERARCHICAL -> new HierarchicalModelRules(this);
-        case FLAT -> new FlatModelRules(this);
+        case FLAT, RECORD -> new FlatModelRules(this);
         case CONDITIONAL -> new ConditionalModelRules(this);
         };
     }

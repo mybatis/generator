@@ -27,7 +27,8 @@ import org.mybatis.generator.exception.InternalException;
 public enum ModelType {
     HIERARCHICAL("hierarchical"), //$NON-NLS-1$
     FLAT("flat"), //$NON-NLS-1$
-    CONDITIONAL("conditional"); //$NON-NLS-1$
+    CONDITIONAL("conditional"), //$NON-NLS-1$
+    RECORD("record"); //$NON-NLS-1$
 
     private final String type;
 
@@ -42,6 +43,8 @@ public enum ModelType {
             return FLAT;
         } else if (CONDITIONAL.type.equalsIgnoreCase(type)) {
             return CONDITIONAL;
+        } else if (RECORD.type.equalsIgnoreCase(type)) {
+            return RECORD;
         } else {
             throw new InternalException(getString("RuntimeError.13", type)); //$NON-NLS-1$
         }

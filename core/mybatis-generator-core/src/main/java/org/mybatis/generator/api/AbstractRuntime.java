@@ -37,7 +37,6 @@ public abstract class AbstractRuntime extends AbstractGenerator {
 
     protected AbstractRuntime(AbstractRuntimeBuilder<?> builder) {
         super(builder);
-        calculateGenerators();
     }
 
     protected Optional<String> getClientProject() {
@@ -130,12 +129,6 @@ public abstract class AbstractRuntime extends AbstractGenerator {
     public IntrospectedTable getIntrospectedTable() {
         return introspectedTable;
     }
-
-    /**
-     * This method will be called in constructor. Subclasses should calculate generators for their runtimes and add
-     * them to the various lists contained in this class.
-     */
-    protected abstract void calculateGenerators();
 
     public abstract static class AbstractRuntimeBuilder<T extends AbstractRuntimeBuilder<T>>
             extends AbstractGeneratorBuilder<T> {

@@ -21,10 +21,10 @@ import org.mybatis.generator.codegen.AbstractKotlinGenerator;
 public class KotlinDynamicSqlRuntime extends AbstractRuntime {
     public KotlinDynamicSqlRuntime(Builder builder) {
         super(builder);
+        calculateGenerators();
     }
 
-    @Override
-    protected void calculateGenerators() {
+    private void calculateGenerators() {
         kotlinGenerators.add(calculateKotlinDataClassGenerator());
         if (introspectedTable.getRules().generateJavaClient()) {
             getClientProject().map(this::calculateKotlinMapperAndExtensionsGenerator).ifPresent(kotlinGenerators::add);

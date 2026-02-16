@@ -15,18 +15,25 @@
  */
 package org.mybatis.generator;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.ModelType;
+import org.mybatis.generator.config.Property;
+import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -57,7 +64,7 @@ class MyBatisGeneratorTest {
         Configuration config = new Configuration();
         Context context = new Context.Builder()
                 .withId("MyContext")
-                .withDefaultModelType(ModelType.HIERARCHICAL)
+                .withDefaultModelType(ModelType.FLAT)
                 .withTargetRuntime("MyBatis3Simple")
                 .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
                         .withTargetPackage("foo.bar")
@@ -82,9 +89,10 @@ class MyBatisGeneratorTest {
         Configuration config = new Configuration();
         Context context = new Context.Builder()
                 .withId("MyContext")
-                .withDefaultModelType(ModelType.HIERARCHICAL)
+                .withDefaultModelType(ModelType.FLAT)
                 .withTargetRuntime("MyBatis3Simple")
                 .withConnectionFactoryConfiguration(new ConnectionFactoryConfiguration.Builder().build())
+                .withJdbcConnectionConfiguration(new JDBCConnectionConfiguration.Builder().withDriverClass("a").withConnectionURL("b").build())
                 .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
                         .withTargetPackage("foo.bar")
                         .withTargetProject("MyProject")
@@ -100,6 +108,105 @@ class MyBatisGeneratorTest {
 
         InvalidConfigurationException e =
                 assertThrows(InvalidConfigurationException.class, myBatisGenerator::generateOnly);
-        assertEquals(3, e.getErrors().size());
+        assertEquals(2, e.getErrors().size());
+    }
+
+    @Test
+    void testInvalidConfigWithGeneratedKeysAndRecords() {
+        Context context = new Context.Builder()
+                .withId("MyContext")
+                .withDefaultModelType(ModelType.RECORD)
+                .withJdbcConnectionConfiguration(new JDBCConnectionConfiguration.Builder()
+                        .withDriverClass("a")
+                        .withConnectionURL("b")
+                        .build())
+                .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
+                        .withTargetPackage("foo.bar")
+                        .withTargetProject("MyProject")
+                        .build())
+                .withTableConfiguration(new TableConfiguration.Builder()
+                        .withTableName("test")
+                        .withGeneratedKey(new GeneratedKey("id", "JDBC", true))
+                        .build())
+                .build();
+
+        List<String> errors = new ArrayList<>();
+        context.validate(errors);
+        assertThat(errors).hasSize(1);
+    }
+
+    @Test
+    void testInvalidConfigWithGeneratedKeysAndRecords2() {
+        Context context = new Context.Builder()
+                .withId("MyContext")
+                .withDefaultModelType(ModelType.FLAT)
+                .withJdbcConnectionConfiguration(new JDBCConnectionConfiguration.Builder()
+                        .withDriverClass("a")
+                        .withConnectionURL("b")
+                        .build())
+                .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
+                        .withTargetPackage("foo.bar")
+                        .withTargetProject("MyProject")
+                        .build())
+                .withTableConfiguration(new TableConfiguration.Builder()
+                        .withTableName("test")
+                        .withModelType("record")
+                        .withGeneratedKey(new GeneratedKey("id", "JDBC", true))
+                        .build())
+                .build();
+
+        List<String> errors = new ArrayList<>();
+        context.validate(errors);
+        assertThat(errors).hasSize(1);
+    }
+
+    @Test
+    void testValidConfigWithGeneratedKeysAndRecords() {
+        Context context = new Context.Builder()
+                .withId("MyContext")
+                .withDefaultModelType(ModelType.RECORD)
+                .withJdbcConnectionConfiguration(new JDBCConnectionConfiguration.Builder()
+                        .withDriverClass("a")
+                        .withConnectionURL("b")
+                        .build())
+                .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
+                        .withTargetPackage("foo.bar")
+                        .withTargetProject("MyProject")
+                        .build())
+                .withTableConfiguration(new TableConfiguration.Builder()
+                        .withTableName("test")
+                        .withModelType("flat")
+                        .withGeneratedKey(new GeneratedKey("id", "JDBC", true))
+                        .build())
+                .build();
+
+        List<String> errors = new ArrayList<>();
+        context.validate(errors);
+        assertThat(errors).isEmpty();
+    }
+
+    @Test
+    void testInvalidConfigWithGeneratedKeysAndImmutable() {
+        Context context = new Context.Builder()
+                .withId("MyContext")
+                .withDefaultModelType(ModelType.FLAT)
+                .withJdbcConnectionConfiguration(new JDBCConnectionConfiguration.Builder()
+                        .withDriverClass("a")
+                        .withConnectionURL("b")
+                        .build())
+                .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
+                        .withTargetPackage("foo.bar")
+                        .withTargetProject("MyProject")
+                        .build())
+                .withTableConfiguration(new TableConfiguration.Builder()
+                        .withTableName("test")
+                        .withProperty(new Property("immutable", "true"))
+                        .withGeneratedKey(new GeneratedKey("id", "JDBC", true))
+                        .build())
+                .build();
+
+        List<String> errors = new ArrayList<>();
+        context.validate(errors);
+        assertThat(errors).hasSize(1);
     }
 }

@@ -48,16 +48,13 @@ public class ResultMapWithBLOBsElementGenerator extends AbstractXmlMapperElement
 
         answer.addAttribute(new Attribute("type", returnType)); //$NON-NLS-1$
 
-        if (!introspectedTable.isConstructorBased()) {
-            answer.addAttribute(new Attribute("extends", //$NON-NLS-1$
-                    introspectedTable.getBaseResultMapId()));
-        }
-
         commentGenerator.addComment(answer);
 
-        if (introspectedTable.isConstructorBased()) {
+        if (introspectedTable.isConstructorBased() || introspectedTable.isRecordBased()) {
             addResultMapConstructorElements(answer);
         } else {
+            answer.addAttribute(new Attribute("extends", //$NON-NLS-1$
+                    introspectedTable.getBaseResultMapId()));
             addResultMapElements(answer);
         }
 

@@ -20,9 +20,9 @@ import java.util.Optional;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.runtime.common.RecordModelGenerator;
+import org.mybatis.generator.runtime.common.SimpleModelGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleAnnotatedMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleJavaMapperGenerator;
-import org.mybatis.generator.runtime.mybatis3.model.SimpleModelGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
 
 /**

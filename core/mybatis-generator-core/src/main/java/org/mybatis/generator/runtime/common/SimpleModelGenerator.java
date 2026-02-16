@@ -13,11 +13,11 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.mybatis3.model;
+package org.mybatis.generator.runtime.common;
 
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansField;
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansGetter;
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansSetter;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansFieldWithGeneratedAnnotation;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansGetterWithGeneratedAnnotation;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansSetterWithGeneratedAnnotation;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
@@ -37,6 +37,12 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.runtime.CodeGenUtils;
 
+/**
+ * This model generator builds a flat model. It will build an immutable or constructor-based model depending
+ * on configuration settings.
+ *
+ * @author Jeff Butler
+ */
 public class SimpleModelGenerator extends AbstractJavaGenerator {
 
     public SimpleModelGenerator(Builder builder) {
@@ -63,7 +69,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
             addParameterizedConstructor(topLevelClass);
 
             if (!introspectedTable.isImmutable()) {
-                addDefaultConstructor(topLevelClass);
+                addDefaultConstructorWithGeneratedAnnotation(topLevelClass);
             }
         }
 
@@ -73,21 +79,24 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
                 continue;
             }
 
-            Field field = getJavaBeansField(introspectedColumn, commentGenerator, introspectedTable);
+            Field field = getJavaBeansFieldWithGeneratedAnnotation(introspectedColumn, commentGenerator,
+                    introspectedTable, topLevelClass);
             if (pluginAggregator.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable,
                     Plugin.ModelClassType.BASE_RECORD)) {
                 topLevelClass.addField(field);
                 topLevelClass.addImportedType(field.getType());
             }
 
-            Method method = getJavaBeansGetter(introspectedColumn, commentGenerator, introspectedTable);
+            Method method = getJavaBeansGetterWithGeneratedAnnotation(introspectedColumn, commentGenerator,
+                    introspectedTable, topLevelClass);
             if (pluginAggregator.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn,
                     introspectedTable, Plugin.ModelClassType.BASE_RECORD)) {
                 topLevelClass.addMethod(method);
             }
 
             if (!introspectedTable.isImmutable()) {
-                method = getJavaBeansSetter(introspectedColumn, commentGenerator, introspectedTable);
+                method = getJavaBeansSetterWithGeneratedAnnotation(introspectedColumn, commentGenerator,
+                        introspectedTable, topLevelClass);
                 if (pluginAggregator.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn,
                         introspectedTable, Plugin.ModelClassType.BASE_RECORD)) {
                     topLevelClass.addMethod(method);
@@ -110,7 +119,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
         Method method = new Method(topLevelClass.getType().getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
             method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),

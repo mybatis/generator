@@ -241,14 +241,15 @@ identifiers in upper case.  In this instance, you should specify the attribute
   <tr>
     <td valign="top">modelType</td>
     <td>
-      <i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+      <i>This attribute is ignored is the target runtime is "MyBatis3Kotlin"</i><br/>
       This attribute is used to override the default model type if you desire
       to do so for this table.  If not specified, MBG will generate domain
       objects based on the context default model type.
       The model type defines how MBG will generate domain classes.  With some
       model types MBG will generate a single domain class for each table,
       with others MBG may generate different classes depending on the structure
-      of the table.  The property supports these values:
+      of the table.
+      <p>If the target runtime is "MyBatis3", then the property supports these values:</p>
       <table>
         <tr>
           <th valign="top">conditional</th>
@@ -268,6 +269,22 @@ identifiers in upper case.  In this instance, you should specify the attribute
               a primary key, another class that holds any BLOB columns in the table, and
               another class that holds the remaining fields.  There is an appropriate
               inheritance relationship between the classes.</td>
+        </tr>
+        <tr>
+          <th valign="top">record</th>
+          <td>This model will generate a Java 16 record class containing all fields (similar to the flat model)</td>
+        </tr>
+      </table>
+      <p>If the target runtime is "MyBatis3DynamicSQL" or "MyBatis3Simple", then the property supports these values:</p>
+      <table>
+        <tr>
+          <th valign="top">flat</th>
+          <td>This model generates only one domain class for any table.  The class
+            will hold all fields in the table.</td>
+        </tr>
+        <tr>
+          <th valign="top">record</th>
+          <td>This model will generate a Java 16 record class containing all fields (similar to the flat model)</td>
         </tr>
       </table>
     </td>

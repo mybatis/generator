@@ -21,6 +21,7 @@ import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
@@ -67,7 +68,8 @@ public class InsertExtensionFunctionGenerator extends AbstractKotlinMapperFuncti
                             supportObjectImport, column);
             functionAndImports.getImports().add(fieldNameAndImport.importString());
 
-            function.addCodeLine("    map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+            function.addCodeLine(OutputUtilities.kotlinIndent(1) + "map("
+                    + fieldNameAndImport.fieldName() //$NON-NLS-1$
                     + ") toProperty \"" + column.getJavaProperty() //$NON-NLS-1$
                     + "\""); //$NON-NLS-1$
         }

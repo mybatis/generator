@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.InnerEnum;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;
@@ -73,9 +74,9 @@ public class InnerEnumRenderer {
             String enumConstant = iter.next();
 
             if (iter.hasNext()) {
-                answer.add(RenderingUtilities.JAVA_INDENT + enumConstant + ","); //$NON-NLS-1$
+                answer.add(OutputUtilities.javaIndent(1) + enumConstant + ","); //$NON-NLS-1$
             } else {
-                answer.add(RenderingUtilities.JAVA_INDENT + enumConstant + ";"); //$NON-NLS-1$
+                answer.add(OutputUtilities.javaIndent(1) + enumConstant + ";"); //$NON-NLS-1$
             }
         }
 

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package org.mybatis.generator.api.dom.kotlin.render;
 
 import java.util.List;
 
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.kotlin.KotlinModifier;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
@@ -24,8 +25,6 @@ public class KotlinRenderingUtilities {
 
     private KotlinRenderingUtilities() {
     }
-
-    public static final String KOTLIN_INDENT = "    "; //$NON-NLS-1$
 
     public static String renderModifiers(List<KotlinModifier> modifiers) {
         return modifiers.stream().map(KotlinModifier::getValue)
@@ -37,6 +36,6 @@ public class KotlinRenderingUtilities {
             return in; // don't indent empty lines
         }
 
-        return KOTLIN_INDENT + in;
+        return OutputUtilities.kotlinIndent(1) + in;
     }
 }

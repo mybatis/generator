@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package org.mybatis.generator.api.dom.kotlin.render
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mybatis.generator.api.dom.OutputUtilities
 import org.mybatis.generator.api.dom.kotlin.KotlinArg
 import org.mybatis.generator.api.dom.kotlin.KotlinFile
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction
@@ -216,8 +217,8 @@ class KotlinTypeTest {
                         .withDataType("PersonRecord")
                         .build())
                 .withCodeLine("insert(this::insert, record, Person) {")
-                .withCodeLine("    map(id).toProperty(\"id\")")
-                .withCodeLine("    map(firstName).toProperty(\"firstName\")")
+                .withCodeLine(OutputUtilities.kotlinIndent(1) + "map(id).toProperty(\"id\")")
+                .withCodeLine(OutputUtilities.kotlinIndent(1) + "map(firstName).toProperty(\"firstName\")")
                 .withCodeLine("}")
                 .build())
 

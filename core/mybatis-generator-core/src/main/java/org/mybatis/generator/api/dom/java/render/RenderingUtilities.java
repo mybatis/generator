@@ -26,6 +26,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -42,7 +43,6 @@ public class RenderingUtilities {
     private RenderingUtilities() {
     }
 
-    public static final String JAVA_INDENT = "    "; //$NON-NLS-1$
     private static final TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();
     private static final FieldRenderer fieldRenderer = new FieldRenderer();
     private static final InitializationBlockRenderer initializationBlockRenderer = new InitializationBlockRenderer();
@@ -214,7 +214,7 @@ public class RenderingUtilities {
             return in; // don't indent empty lines
         }
 
-        return JAVA_INDENT + in;
+        return OutputUtilities.javaIndent(1) + in;
     }
 
     public static List<String> removeLastEmptyLine(List<String> lines) {

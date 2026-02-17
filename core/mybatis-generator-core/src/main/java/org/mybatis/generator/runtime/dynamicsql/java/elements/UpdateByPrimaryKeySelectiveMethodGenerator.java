@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -60,8 +61,8 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractJavaInte
 
         method.addBodyLines(
                 fragmentGenerator.getSetEqualWhenPresentLines(introspectedTable.getNonPrimaryKeyColumns(),
-                        "    c", "    ", false)); //$NON-NLS-1$ //$NON-NLS-2$
-        method.addBodyLines(fragmentGenerator.getPrimaryKeyWhereClauseForUpdate("    ")); //$NON-NLS-1$
+                        OutputUtilities.javaIndent(1) + "c", OutputUtilities.javaIndent(1), false)); //$NON-NLS-1$
+        method.addBodyLines(fragmentGenerator.getPrimaryKeyWhereClauseForUpdate(OutputUtilities.javaIndent(1)));
 
         method.addBodyLine(");"); //$NON-NLS-1$
         JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)

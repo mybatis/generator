@@ -38,7 +38,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -135,7 +135,7 @@
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper" targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >

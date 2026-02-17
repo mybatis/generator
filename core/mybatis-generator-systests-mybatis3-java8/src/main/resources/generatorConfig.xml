@@ -37,7 +37,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -94,7 +94,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.record.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.record.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -197,7 +197,7 @@
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.miscellaneous.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.miscellaneous.mapper" targetProject="MAVEN">
       <property name="dynamicSqlSupportPackage" value="mbg.test.mb3.generated.dsql.miscellaneous.support"/>
       <property name="rootInterface" value="mbg.test.common.BaseGenericInterface&lt;T extends mbg.test.common.Entity&gt;" />
       <property name="injectModelIntoRootInterface" value="true" />

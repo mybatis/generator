@@ -40,11 +40,11 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.flat.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.flat.xml" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.flat.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.flat.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -95,11 +95,11 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.hierarchical.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.hierarchical.xml" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.hierarchical.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.hierarchical.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -146,11 +146,11 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.conditional.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.conditional.xml" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.conditional.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.conditional.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -202,10 +202,10 @@
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.xml" targetProject="MAVEN">
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.miscellaneous.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.miscellaneous.mapper" targetProject="MAVEN">
       <property name="rootInterface" value="mbg.test.common.BaseInterface" />
     </javaClientGenerator>
 
@@ -323,10 +323,10 @@
       <property name="immutable" value="true"/>
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.hierarchical.immutable.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.hierarchical.immutable.xml" targetProject="MAVEN">
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.hierarchical.immutable.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.hierarchical.immutable.mapper" targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
@@ -354,10 +354,10 @@
       <property name="immutable" value="true"/>
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.conditional.immutable.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.conditional.immutable.xml" targetProject="MAVEN">
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.conditional.immutable.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.conditional.immutable.mapper" targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
@@ -388,7 +388,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.flat.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.flat.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -431,7 +431,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.hierarchical.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.hierarchical.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -474,7 +474,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.conditional.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.conditional.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -525,7 +525,7 @@
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.miscellaneous.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.miscellaneous.mapper" targetProject="MAVEN">
       <property name="rootInterface" value="mbg.test.common.BaseGenericInterface&lt;T extends mbg.test.common.Entity&gt;" />
       <property name="injectModelIntoRootInterface" value="true" />
     </javaClientGenerator>
@@ -575,7 +575,7 @@
       <property name="immutable" value="true"/>
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper" targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
@@ -600,7 +600,7 @@
       <property name="immutable" value="true"/>
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.flat.immutable.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.flat.immutable.mapper" targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
@@ -628,11 +628,11 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.flat.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.flat.xml" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.flat.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.flat.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -674,11 +674,11 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.hierarchical.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.hierarchical.xml" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.hierarchical.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.hierarchical.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -721,11 +721,11 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.conditional.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.conditional.xml" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.conditional.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.conditional.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -777,11 +777,11 @@
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.miscellaneous.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.miscellaneous.xml" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.miscellaneous.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.miscellaneous.mapper" targetProject="MAVEN">
       <property name="rootInterface" value="mbg.test.common.BaseInterface" />
     </javaClientGenerator>
 
@@ -818,11 +818,11 @@
       <property name="immutable" value="true"/>
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.hierarchical.immutable.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.hierarchical.immutable.xml" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.hierarchical.immutable.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.hierarchical.immutable.mapper" targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
@@ -851,11 +851,11 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.simple.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.simple.xml" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.simple.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.simple.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -901,7 +901,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.simpleannotated.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.simpleannotated.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -940,7 +940,7 @@
 
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.simpleannotated.nothing" targetProject="MAVEN"/>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.simpleannotated.nothing"  targetProject="MAVEN"/>
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.simpleannotated.nothing" targetProject="MAVEN"/>
 
     <table tableName="NameView" />
     <table tableName="PKFields" />
@@ -953,7 +953,7 @@
 
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.record.annotated.model" targetProject="MAVEN"/>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.record.annotated.mapper"  targetProject="MAVEN"/>
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.record.annotated.mapper" targetProject="MAVEN"/>
 
     <table tableName="FieldsOnly" />
     <table tableName="FieldsBlobs" />
@@ -972,9 +972,9 @@
 
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.record.mixed.model" targetProject="MAVEN"/>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.record.mixed.xml"  targetProject="MAVEN"/>
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.record.mixed.xml" targetProject="MAVEN"/>
 
-    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.record.mixed.mapper"  targetProject="MAVEN"/>
+    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.record.mixed.mapper" targetProject="MAVEN"/>
 
     <table tableName="FieldsOnly" />
     <table tableName="FieldsBlobs" />
@@ -993,9 +993,9 @@
 
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.record.xml.model" targetProject="MAVEN"/>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.record.xml.xml"  targetProject="MAVEN"/>
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.record.xml.xml" targetProject="MAVEN"/>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.record.xml.mapper"  targetProject="MAVEN"/>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.record.xml.mapper" targetProject="MAVEN"/>
 
     <table tableName="FieldsOnly" />
     <table tableName="FieldsBlobs" />
@@ -1014,9 +1014,9 @@
 
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.record.simple.model" targetProject="MAVEN"/>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.record.simple.xml"  targetProject="MAVEN"/>
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.record.simple.xml" targetProject="MAVEN"/>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.record.simple.mapper"  targetProject="MAVEN"/>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.record.simple.mapper" targetProject="MAVEN"/>
 
     <table tableName="FieldsOnly" />
     <table tableName="FieldsBlobs" />
@@ -1035,7 +1035,7 @@
 
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.record.simpleannotated.model" targetProject="MAVEN"/>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.record.simpleannotated.mapper"  targetProject="MAVEN"/>
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.record.simpleannotated.mapper" targetProject="MAVEN"/>
 
     <table tableName="FieldsOnly" />
     <table tableName="FieldsBlobs" />

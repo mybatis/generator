@@ -67,8 +67,14 @@ import org.mybatis.generator.exception.ShellException;
  *     <li>This implementation supports merging when the existing file is a class or interface, and the newly generated
  *         file is a record.
  *     </li>
- *     <li>This implementation does not support merging the super class from the existing file to the newly generated
+ *     <li>This implementation does not support merging the super class from an existing file to the newly generated
  *         file. This was always a little dangerous.</li>
+ *     <li>This implementation does not attempt to preserve custom annotations added to generated elements. With the
+ *         generator now generating code with many annotations, it is challenging to distinguish between annotations
+ *         created by MBG, and custom annotations added after code generation by a user. If you need to add
+ *         annotations to generated elements, consider implementing a plugin that will create the annotations whenever
+ *         the generator runs.
+ *     </li>
  * </ol>
  *
  * @author Freeman (original)

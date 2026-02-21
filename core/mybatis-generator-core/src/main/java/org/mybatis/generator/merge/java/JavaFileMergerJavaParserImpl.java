@@ -26,6 +26,7 @@ import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.printer.DefaultPrettyPrinter;
 import com.github.javaparser.printer.configuration.PrinterConfiguration;
+import com.github.javaparser.printer.lexicalpreservation.DefaultLexicalPreservingPrinter;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.exception.MultiMessageException;
 import org.mybatis.generator.exception.ShellException;
@@ -99,6 +100,7 @@ public class JavaFileMergerJavaParserImpl implements JavaFileMerger {
     public String getMergedSource(String newFileContent, String existingFileContent) throws ShellException {
         ParserConfiguration parserConfiguration = new ParserConfiguration();
         parserConfiguration.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_25);
+        parserConfiguration.setLexicalPreservationEnabled(true);
         JavaParser javaParser = new JavaParser(parserConfiguration);
 
         ParseResults existingFileParseResults = parseAndFindMainTypeDeclaration(javaParser, existingFileContent,
@@ -139,7 +141,8 @@ public class JavaFileMergerJavaParserImpl implements JavaFileMerger {
                 .forEach(t -> JavaMergeUtilities.addSuperInterface(newFileParseResults.typeDeclaration, t));
 
         // Return the new (merged) file
-        DefaultPrettyPrinter printer = new DefaultPrettyPrinter(printerConfiguration);
+        DefaultLexicalPreservingPrinter printer = new DefaultLexicalPreservingPrinter();
+//        DefaultPrettyPrinter printer = new DefaultPrettyPrinter(printerConfiguration);
         return printer.print(newFileParseResults.compilationUnit);
     }
 

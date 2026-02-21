@@ -87,7 +87,7 @@ public class MyBatisGenerator {
 
         if (builder.isJavaFileMergeEnabled) {
             isJavaFileMergeEnabled = true;
-            javaFileMerger = JavaMergerFactory.defaultMerger(builder.printerConfiguration);
+            javaFileMerger = JavaMergerFactory.defaultMerger();
         } else {
             isJavaFileMergeEnabled = false;
             javaFileMerger = (newContent, existingContent) -> newContent;
@@ -517,7 +517,6 @@ public class MyBatisGenerator {
         private final Set<String> fullyQualifiedTableNames = new HashSet<>();
         private boolean isOverwriteEnabled = false;
         private boolean isJavaFileMergeEnabled = false;
-        private @Nullable Object printerConfiguration;
 
         public Builder withConfiguration(Configuration configuration) {
             this.configuration = configuration;
@@ -589,19 +588,6 @@ public class MyBatisGenerator {
          */
         public Builder withJavaFileMergeEnabled(boolean javaFileMergeEnabled) {
             this.isJavaFileMergeEnabled = javaFileMergeEnabled;
-            return this;
-        }
-
-        /**
-         * Add a printer configuration that will be used during Java code merging. If specified, the
-         * object must be an instance of {@link com.github.javaparser.printer.configuration.PrinterConfiguration}.
-         * If not specified, then the default printer configuration will be used.
-         *
-         * @param printerConfiguration a printer configuration
-         * @return this builder
-         */
-        public Builder withPrinterConfiguration(Object printerConfiguration) {
-            this.printerConfiguration = printerConfiguration;
             return this;
         }
 

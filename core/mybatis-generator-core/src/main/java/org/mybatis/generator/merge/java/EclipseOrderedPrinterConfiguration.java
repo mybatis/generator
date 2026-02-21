@@ -17,6 +17,7 @@ package org.mybatis.generator.merge.java;
 
 import com.github.javaparser.printer.configuration.DefaultConfigurationOption;
 import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration;
+import com.github.javaparser.printer.configuration.Indentation;
 import com.github.javaparser.printer.configuration.imports.EclipseImportOrderingStrategy;
 
 /**
@@ -27,5 +28,10 @@ public class EclipseOrderedPrinterConfiguration extends DefaultPrinterConfigurat
         addOption(new DefaultConfigurationOption(DefaultPrinterConfiguration.ConfigOption.SORT_IMPORTS_STRATEGY,
                         new EclipseImportOrderingStrategy()));
         addOption(new DefaultConfigurationOption(DefaultPrinterConfiguration.ConfigOption.ORDER_IMPORTS, true));
+        addOption(new DefaultConfigurationOption(ConfigOption.INDENT_PRINT_ARRAYS_OF_ANNOTATIONS, true));
+        addOption(new DefaultConfigurationOption(ConfigOption.INDENTATION,
+                new Indentation(Indentation.IndentType.SPACES, 4)));
+        addOption(new DefaultConfigurationOption(ConfigOption.MAX_ENUM_CONSTANTS_TO_ALIGN_HORIZONTALLY, 999));
+        addOption(new DefaultConfigurationOption(ConfigOption.INDENT_CASE_IN_SWITCH, false));
     }
 }

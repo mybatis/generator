@@ -32,7 +32,7 @@ class JavaFileMergerTest {
     @ParameterizedTest
     @MethodSource("mergeTestCases")
     void mergeTestCases(MergeTestCase testCase, String parameter) throws Exception {
-        JavaFileMerger javaFileMerger = JavaMergerFactory.defaultMerger(new EclipseOrderedPrinterConfiguration());
+        JavaFileMerger javaFileMerger = JavaMergerFactory.defaultMerger();
         var actual = javaFileMerger.getMergedSource(testCase.newContent(parameter),
                 testCase.existingContent(parameter));
         assertThat(actual).isEqualToNormalizingNewlines(testCase.expectedContentAfterMerge(parameter));
@@ -44,7 +44,7 @@ class JavaFileMergerTest {
 
     @Test
     void testBadExistingFile() {
-        JavaFileMerger javaFileMerger = JavaMergerFactory.defaultMerger(new EclipseOrderedPrinterConfiguration());
+        JavaFileMerger javaFileMerger = JavaMergerFactory.defaultMerger();
         String badExistingFile = "some random text";
 
         assertThatExceptionOfType(ShellException.class).isThrownBy(() ->
@@ -55,7 +55,7 @@ class JavaFileMergerTest {
 
     @Test
     void testBadNewFile() {
-        JavaFileMerger javaFileMerger = JavaMergerFactory.defaultMerger(new EclipseOrderedPrinterConfiguration());
+        JavaFileMerger javaFileMerger = JavaMergerFactory.defaultMerger();
         String existingFile = "public class Foo { public int i; }";
         String badNewFile = "some random text";
 
@@ -67,7 +67,7 @@ class JavaFileMergerTest {
 
     @Test
     void testNoTypeInExistingFile() {
-        JavaFileMerger javaFileMerger = JavaMergerFactory.defaultMerger(new EclipseOrderedPrinterConfiguration());
+        JavaFileMerger javaFileMerger = JavaMergerFactory.defaultMerger();
         String existingFileNoTypes = "package foo.bar;";
 
         assertThatExceptionOfType(ShellException.class).isThrownBy(() ->

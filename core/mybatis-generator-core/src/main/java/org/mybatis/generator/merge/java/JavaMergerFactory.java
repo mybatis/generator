@@ -15,18 +15,8 @@
  */
 package org.mybatis.generator.merge.java;
 
-import com.github.javaparser.printer.configuration.PrinterConfiguration;
-import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.internal.util.messages.Messages;
-
 public class JavaMergerFactory {
-    public static JavaFileMerger defaultMerger(@Nullable Object printerConfiguration) {
-        if (printerConfiguration == null) {
-            return new JavaFileMergerJavaParserImpl(new EclipseOrderedPrinterConfiguration());
-        } else if (printerConfiguration instanceof PrinterConfiguration pc) {
-            return new JavaFileMergerJavaParserImpl(pc);
-        } else {
-            throw new IllegalArgumentException(Messages.getString("RuntimeError.30")); //$NON-NLS-1$
-        }
+    public static JavaFileMerger defaultMerger() {
+        return new JavaFileMergerJavaParserImpl(new EclipseOrderedPrinterConfiguration());
     }
 }

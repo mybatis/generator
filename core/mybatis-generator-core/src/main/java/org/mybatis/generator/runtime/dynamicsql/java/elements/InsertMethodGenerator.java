@@ -30,17 +30,18 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
-import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
 public class InsertMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final String tableFieldName;
+    private final FragmentGenerator fragmentGenerator;
 
     private InsertMethodGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
         tableFieldName = Objects.requireNonNull(builder.tableFieldName);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class InsertMethodGenerator extends AbstractJavaInterfaceMethodGenerator 
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         boolean first = true;
         for (IntrospectedColumn column : columns) {
-            String fieldName = DynamicSqlUtils.calculateFieldName(tableFieldName, column);
+            String fieldName = fragmentGenerator.calculateFieldName(tableFieldName, column);
 
             if (first) {
                 method.addBodyLine(OutputUtilities.javaIndent(1) + "c.map(" + fieldName //$NON-NLS-1$
@@ -94,6 +95,7 @@ public class InsertMethodGenerator extends AbstractJavaInterfaceMethodGenerator 
     public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable String tableFieldName;
+        private @Nullable FragmentGenerator fragmentGenerator;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
@@ -102,6 +104,11 @@ public class InsertMethodGenerator extends AbstractJavaInterfaceMethodGenerator 
 
         public Builder withTableFieldName(String tableFieldName) {
             this.tableFieldName = tableFieldName;
+            return this;
+        }
+
+        public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
+            this.fragmentGenerator = fragmentGenerator;
             return this;
         }
 

@@ -186,6 +186,18 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         (like com.mycompany.MyRootInterface&lt;T extends Entity&gt;). If there is no type parameter
         in the related rootInterface, then this property has no effect.</p></td>
   </tr>
+  <tr>
+    <td valign="top">useSnakeCaseIdentifiers</td>
+    <td><i>This property is ignored if the target runtime is "MyBatis3" or "MyBatis3Simple"</i><br/>
+      If true, then generated MyBatis Dynamic SQL support classes that model
+      database tables and columns will use snake case names (e.g., ORDER_MASTER) rather than camel case names
+      (e.g., orderMaster). This helps avoid awkward parameter naming for some methods where we appended an underscore
+      to generated parameters in some cases.
+      If specified here, then the setting will apply to all objects generated in this context.
+      This value may be overridden by specifying
+      the <code>useSnakeCaseIdentifiers</code> property on a Table configuration.
+    </td>
+  </tr>
 </table>
 
 <h2>Example</h2>

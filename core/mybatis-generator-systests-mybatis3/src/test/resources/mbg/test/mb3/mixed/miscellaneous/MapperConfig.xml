@@ -46,7 +46,7 @@
   <mappers>
     <mapper resource="mbg/test/mb3/generated/mixed/miscellaneous/xml/MyObjectMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/mixed/miscellaneous/xml/RegexrenameMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/miscellaneous/xml/EnumtestMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/miscellaneous/xml/EnumTestMapper.xml" />
   </mappers>
 
 </configuration>

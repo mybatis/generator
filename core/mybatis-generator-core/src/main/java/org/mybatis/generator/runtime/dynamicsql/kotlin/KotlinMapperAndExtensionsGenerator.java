@@ -198,6 +198,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withRecordType(recordType)
                 .withMapperName(mapperName)
                 .withSupportObjectImport(supportClassGenerator.getSupportObjectImport())
+                .withFragmentGenerator(fragmentGenerator)
                 .build();
 
         if (CodeGenUtils.executeKotlinExtensionFunctionGenerator(mapperFile, generator) && !hasGeneratedKeys) {
@@ -218,6 +219,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withRecordType(recordType)
                 .withMapperName(mapperName)
                 .withSupportObjectImport(supportClassGenerator.getSupportObjectImport())
+                .withFragmentGenerator(fragmentGenerator)
                 .build();
 
         if (CodeGenUtils.executeKotlinExtensionFunctionGenerator(mapperFile, generator) && !hasGeneratedKeys) {
@@ -266,6 +268,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         ColumnListGenerator generator = initializeSubBuilder(new ColumnListGenerator.Builder())
                 .withSupportObjectImport(supportClassGenerator.getSupportObjectImport())
                 .withTableFieldName(supportClassGenerator.getTablePropertyName())
+                .withFragmentGenerator(fragmentGenerator)
                 .build();
 
         KotlinPropertyAndImports propertyAndImports = generator.generatePropertyAndImports();
@@ -352,6 +355,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withRecordType(recordType)
                 .withMapperName(mapperName)
                 .withSupportObjectImport(supportClassGenerator.getSupportObjectImport())
+                .withFragmentGenerator(fragmentGenerator)
                 .build();
 
         if (CodeGenUtils.executeKotlinExtensionFunctionGenerator(mapperFile, generator) && !hasGeneratedKeys) {

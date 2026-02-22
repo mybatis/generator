@@ -73,7 +73,7 @@
       <columnOverride column="id7$$" delimitedColumnName="true" />
       <columnOverride column="class" property="dbClass" />
     </table>
-    <table tableName="EnumTest">
+    <table tableName="Enum_Test">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
   </context>
@@ -128,7 +128,7 @@
       <columnOverride column="id7$$" delimitedColumnName="true" />
       <columnOverride column="class" property="dbClass" />
     </table>
-    <table tableName="EnumTest">
+    <table tableName="Enum_Test">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
   </context>
@@ -227,10 +227,10 @@
       <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" />
       <columnRenamingRule searchString="^CUST" />
     </table>
-    <table tableName="EnumTest">
+    <table tableName="Enum_Test">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
-    <table tableName="EnumOrdinalTest">
+    <table tableName="Enum_Ordinal_Test">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum" jdbcType="INTEGER"
                       typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
     </table>
@@ -548,10 +548,10 @@
       <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" />
       <columnRenamingRule searchString="^CUST" />
     </table>
-    <table tableName="EnumTest">
+    <table tableName="Enum_Test">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
-    <table tableName="EnumOrdinalTest">
+    <table tableName="Enum_Ordinal_Test">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum" jdbcType="INTEGER"
                       typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
     </table>
@@ -803,7 +803,7 @@
       <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" />
       <columnRenamingRule searchString="^CUST" />
     </table>
-    <table tableName="EnumTest">
+    <table tableName="Enum_Test">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
   </context>

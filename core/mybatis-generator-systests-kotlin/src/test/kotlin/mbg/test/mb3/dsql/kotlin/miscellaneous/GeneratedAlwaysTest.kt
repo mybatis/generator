@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.*
 import org.junit.jupiter.api.Test
 
 import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.model.Generatedalwaystest
-import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.GeneratedalwaystestDynamicSqlSupport.generatedalwaystest
+import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.GeneratedalwaystestDynamicSqlSupport.GENERATEDALWAYSTEST
 import org.junit.jupiter.api.Assertions.*
 
 class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
@@ -99,16 +99,16 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
             rows = mapper.update {
                 updateAllColumns(gaTest)
                 where {
-                    generatedalwaystest.idPlus1 isEqualTo 2
-                    and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                    GENERATEDALWAYSTEST.ID_PLUS1 isEqualTo 2
+                    and { GENERATEDALWAYSTEST.ID_PLUS2 isEqualTo 3 }
                 }
             }
             assertEquals(1, rows)
 
             val returnedRecords = mapper.select {
                 where {
-                    generatedalwaystest.idPlus1 isEqualTo 2
-                    and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                    GENERATEDALWAYSTEST.ID_PLUS1 isEqualTo 2
+                    and { GENERATEDALWAYSTEST.ID_PLUS2 isEqualTo 3 }
                 }
             }
             assertEquals(1, returnedRecords.size)
@@ -118,7 +118,7 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
             assertEquals(2, returnedRecord.idPlus1)
             assertEquals(3, returnedRecord.idPlus2)
             assertEquals("barney", returnedRecord.name)
-            // should not have update the BLOB in regular update by primary key
+            // should not have updated the BLOB in a regular update by primary key
             assertTrue(blobsAreEqual(gaTest.blob1, returnedRecord.blob1))
         }
     }
@@ -145,16 +145,16 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
             rows = mapper.update {
                 updateSelectiveColumns(gaTest)
                 where {
-                    generatedalwaystest.idPlus1 isEqualTo 2
-                    and { generatedalwaystest.idPlus2  isEqualTo 3 }
+                    GENERATEDALWAYSTEST.ID_PLUS1 isEqualTo 2
+                    and { GENERATEDALWAYSTEST.ID_PLUS2  isEqualTo 3 }
                 }
             }
             assertEquals(1, rows)
 
             val returnedRecords = mapper.select {
                 where {
-                    generatedalwaystest.idPlus1 isEqualTo 2
-                    and { generatedalwaystest.idPlus2  isEqualTo 3 }
+                    GENERATEDALWAYSTEST.ID_PLUS1 isEqualTo 2
+                    and { GENERATEDALWAYSTEST.ID_PLUS2  isEqualTo 3 }
                 }
             }
             assertEquals(1, returnedRecords.size)
@@ -190,16 +190,16 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
             rows = mapper.update {
                 updateAllColumns(gaTest)
                 where {
-                    generatedalwaystest.idPlus1 isEqualTo 2
-                    and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                    GENERATEDALWAYSTEST.ID_PLUS1 isEqualTo 2
+                    and { GENERATEDALWAYSTEST.ID_PLUS2 isEqualTo 3 }
                 }
             }
             assertEquals(1, rows)
 
             val returnedRecords = mapper.select {
                 where {
-                    generatedalwaystest.idPlus1 isEqualTo 2
-                    and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                    GENERATEDALWAYSTEST.ID_PLUS1 isEqualTo 2
+                    and { GENERATEDALWAYSTEST.ID_PLUS2 isEqualTo 3 }
                 }
             }
             assertEquals(1, returnedRecords.size)

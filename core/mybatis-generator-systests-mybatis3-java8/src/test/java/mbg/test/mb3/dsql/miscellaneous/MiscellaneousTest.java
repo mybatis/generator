@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,12 +37,12 @@ import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import mbg.test.common.FirstName;
 import mbg.test.common.MyTime;
 import mbg.test.mb3.common.TestEnum;
-import mbg.test.mb3.generated.dsql.miscellaneous.mapper.EnumordinaltestMapper;
-import mbg.test.mb3.generated.dsql.miscellaneous.mapper.EnumtestMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.EnumOrdinalTestMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.EnumTestMapper;
 import mbg.test.mb3.generated.dsql.miscellaneous.mapper.MyObjectMapper;
 import mbg.test.mb3.generated.dsql.miscellaneous.mapper.RegexrenameMapper;
-import mbg.test.mb3.generated.dsql.miscellaneous.model.Enumordinaltest;
-import mbg.test.mb3.generated.dsql.miscellaneous.model.Enumtest;
+import mbg.test.mb3.generated.dsql.miscellaneous.model.EnumOrdinalTest;
+import mbg.test.mb3.generated.dsql.miscellaneous.model.EnumTest;
 import mbg.test.mb3.generated.dsql.miscellaneous.model.MyObject;
 import mbg.test.mb3.generated.dsql.miscellaneous.model.Regexrename;
 
@@ -955,18 +955,18 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
     @Test
     public void testEnum() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            EnumtestMapper mapper = sqlSession.getMapper(EnumtestMapper.class);
+            EnumTestMapper mapper = sqlSession.getMapper(EnumTestMapper.class);
 
-            Enumtest enumTest = new Enumtest();
+            EnumTest enumTest = new EnumTest();
             enumTest.setId(1);
             enumTest.setName(TestEnum.FRED);
             int rows = mapper.insert(enumTest);
             assertEquals(1, rows);
 
-            List<Enumtest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
+            List<EnumTest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(1, returnedRecords.size());
 
-            Enumtest returnedRecord = returnedRecords.get(0);
+            EnumTest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(TestEnum.FRED, returnedRecord.getName());
         }
@@ -975,15 +975,15 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
     @Test
     public void testEnumInsertMultiple() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            EnumtestMapper mapper = sqlSession.getMapper(EnumtestMapper.class);
-            List<Enumtest> records = new ArrayList<>();
+            EnumTestMapper mapper = sqlSession.getMapper(EnumTestMapper.class);
+            List<EnumTest> records = new ArrayList<>();
 
-            Enumtest enumTest = new Enumtest();
+            EnumTest enumTest = new EnumTest();
             enumTest.setId(1);
             enumTest.setName(TestEnum.FRED);
             records.add(enumTest);
 
-            enumTest = new Enumtest();
+            enumTest = new EnumTest();
             enumTest.setId(2);
             enumTest.setName(TestEnum.BARNEY);
             records.add(enumTest);
@@ -991,10 +991,10 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             int rows = mapper.insertMultiple(records);
             assertEquals(2, rows);
 
-            List<Enumtest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
+            List<EnumTest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(2, returnedRecords.size());
 
-            Enumtest returnedRecord = returnedRecords.get(0);
+            EnumTest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(TestEnum.FRED, returnedRecord.getName());
         }
@@ -1003,18 +1003,18 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
     @Test
     public void testEnumOrdinal() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            EnumordinaltestMapper mapper = sqlSession.getMapper(EnumordinaltestMapper.class);
+            EnumOrdinalTestMapper mapper = sqlSession.getMapper(EnumOrdinalTestMapper.class);
 
-            Enumordinaltest enumTest = new Enumordinaltest();
+            EnumOrdinalTest enumTest = new EnumOrdinalTest();
             enumTest.setId(1);
             enumTest.setName(TestEnum.FRED);
             int rows = mapper.insert(enumTest);
             assertEquals(1, rows);
 
-            List<Enumordinaltest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
+            List<EnumOrdinalTest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(1, returnedRecords.size());
 
-            Enumordinaltest returnedRecord = returnedRecords.get(0);
+            EnumOrdinalTest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(TestEnum.FRED, returnedRecord.getName());
         }
@@ -1023,15 +1023,15 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
     @Test
     public void testEnumOrdinalInsertMultiple() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            EnumordinaltestMapper mapper = sqlSession.getMapper(EnumordinaltestMapper.class);
-            List<Enumordinaltest> records = new ArrayList<>();
+            EnumOrdinalTestMapper mapper = sqlSession.getMapper(EnumOrdinalTestMapper.class);
+            List<EnumOrdinalTest> records = new ArrayList<>();
 
-            Enumordinaltest enumTest = new Enumordinaltest();
+            EnumOrdinalTest enumTest = new EnumOrdinalTest();
             enumTest.setId(1);
             enumTest.setName(TestEnum.FRED);
             records.add(enumTest);
 
-            enumTest = new Enumordinaltest();
+            enumTest = new EnumOrdinalTest();
             enumTest.setId(2);
             enumTest.setName(TestEnum.BARNEY);
             records.add(enumTest);
@@ -1039,10 +1039,10 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             int rows = mapper.insertMultiple(records);
             assertEquals(2, rows);
 
-            List<Enumordinaltest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
+            List<EnumOrdinalTest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(2, returnedRecords.size());
 
-            Enumordinaltest returnedRecord = returnedRecords.get(0);
+            EnumOrdinalTest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(TestEnum.FRED, returnedRecord.getName());
         }

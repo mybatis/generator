@@ -26,17 +26,19 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinModifier;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 import org.mybatis.generator.codegen.AbstractGenerator;
-import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.AbstractKotlinMapperFunctionGenerator.FieldNameAndImport;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.KotlinFragmentGenerator.FieldNameAndImport;
 
 public class ColumnListGenerator extends AbstractGenerator {
 
     private final String supportObjectImport;
     private final String tableFieldName;
+    private final KotlinFragmentGenerator fragmentGenerator;
 
     private ColumnListGenerator(Builder builder) {
         super(builder);
-        this.supportObjectImport = Objects.requireNonNull(builder.supportObjectImport);
-        this.tableFieldName = Objects.requireNonNull(builder.tableFieldName);
+        supportObjectImport = Objects.requireNonNull(builder.supportObjectImport);
+        tableFieldName = Objects.requireNonNull(builder.tableFieldName);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     public KotlinPropertyAndImports generatePropertyAndImports() {
@@ -58,8 +60,7 @@ public class ColumnListGenerator extends AbstractGenerator {
     }
 
     private FieldNameAndImport calculateFieldAndImport(IntrospectedColumn column) {
-        return AbstractKotlinMapperFunctionGenerator
-                .calculateFieldNameAndImport(tableFieldName, supportObjectImport, column);
+        return fragmentGenerator.calculateFieldNameAndImport(tableFieldName, supportObjectImport, column);
     }
 
     private String getInitializationString(List<FieldNameAndImport> fieldsAndImports) {
@@ -81,6 +82,7 @@ public class ColumnListGenerator extends AbstractGenerator {
     public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable String supportObjectImport;
         private @Nullable String tableFieldName;
+        private @Nullable KotlinFragmentGenerator fragmentGenerator;
 
         public Builder withSupportObjectImport(String supportObjectImport) {
             this.supportObjectImport = supportObjectImport;
@@ -89,6 +91,11 @@ public class ColumnListGenerator extends AbstractGenerator {
 
         public Builder withTableFieldName(String tableFieldName) {
             this.tableFieldName = tableFieldName;
+            return this;
+        }
+
+        public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
+            this.fragmentGenerator = fragmentGenerator;
             return this;
         }
 

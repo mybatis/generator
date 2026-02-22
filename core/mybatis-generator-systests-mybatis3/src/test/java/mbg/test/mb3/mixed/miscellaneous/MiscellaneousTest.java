@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ import org.junit.jupiter.api.Test;
 import mbg.test.common.FirstName;
 import mbg.test.common.MyTime;
 import mbg.test.mb3.common.TestEnum;
-import mbg.test.mb3.generated.mixed.miscellaneous.mapper.EnumtestMapper;
+import mbg.test.mb3.generated.mixed.miscellaneous.mapper.EnumTestMapper;
 import mbg.test.mb3.generated.mixed.miscellaneous.mapper.MyObjectMapper;
 import mbg.test.mb3.generated.mixed.miscellaneous.mapper.RegexrenameMapper;
-import mbg.test.mb3.generated.mixed.miscellaneous.model.Enumtest;
+import mbg.test.mb3.generated.mixed.miscellaneous.model.EnumTest;
 import mbg.test.mb3.generated.mixed.miscellaneous.model.MyObject;
 import mbg.test.mb3.generated.mixed.miscellaneous.model.MyObjectCriteria;
 import mbg.test.mb3.generated.mixed.miscellaneous.model.MyObjectKey;
@@ -959,18 +959,18 @@ public class MiscellaneousTest extends AbstractMixedMiscellaneousTest {
     public void testEnum() {
 
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            EnumtestMapper mapper = sqlSession.getMapper(EnumtestMapper.class);
+            EnumTestMapper mapper = sqlSession.getMapper(EnumTestMapper.class);
 
-            Enumtest enumTest = new Enumtest();
+            EnumTest enumTest = new EnumTest();
             enumTest.setId(1);
             enumTest.setName(TestEnum.FRED);
             int rows = mapper.insert(enumTest);
             assertEquals(1, rows);
 
-            List<Enumtest> returnedRecords = mapper.selectByExample(null);
+            List<EnumTest> returnedRecords = mapper.selectByExample(null);
             assertEquals(1, returnedRecords.size());
 
-            Enumtest returnedRecord = returnedRecords.get(0);
+            EnumTest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(TestEnum.FRED, returnedRecord.getName());
         }

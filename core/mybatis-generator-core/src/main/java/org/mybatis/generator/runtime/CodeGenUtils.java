@@ -15,7 +15,11 @@
  */
 package org.mybatis.generator.runtime;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
@@ -150,5 +154,20 @@ public class CodeGenUtils {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    public static @Nullable String findTableOrClientProperty(String property, IntrospectedTable introspectedTable) {
+        String value = introspectedTable.getTableConfigurationProperty(property);
+        if (!stringHasValue(value)) {
+            value = introspectedTable.getContext().getJavaClientGeneratorConfiguration()
+                    .map(c -> c.getProperty(property))
+                    .orElse(null);
+        }
+
+        return value;
+    }
+
+    public static boolean findTableOrClientPropertyAsBoolean(String property, IntrospectedTable introspectedTable) {
+        return Boolean.parseBoolean(findTableOrClientProperty(property, introspectedTable));
     }
 }

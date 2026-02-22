@@ -18,7 +18,6 @@ package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.runtime.AbstractKotlinFunctionGenerator;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
@@ -48,22 +47,6 @@ public abstract class AbstractKotlinMapperFunctionGenerator extends AbstractKotl
         commentGenerator.addGeneralFunctionComment(functionAndImports.getFunction(), introspectedTable,
                 functionAndImports.getImports());
     }
-
-    public static FieldNameAndImport calculateFieldNameAndImport(String tableFieldName, String supportObjectImport,
-                                                                 IntrospectedColumn column) {
-        String fieldName = column.getJavaProperty();
-        String importString;
-        if (fieldName.equals(tableFieldName)) {
-            // name collision, no shortcut generated
-            fieldName = tableFieldName + "." + fieldName; //$NON-NLS-1$
-            importString = supportObjectImport + "." + tableFieldName; //$NON-NLS-1$
-        } else {
-            importString = supportObjectImport + "." + fieldName; //$NON-NLS-1$
-        }
-        return new FieldNameAndImport(fieldName, importString);
-    }
-
-    public record FieldNameAndImport(String fieldName, String importString) { }
 
     public abstract static class BaseBuilder<T extends BaseBuilder<T>> extends AbstractGeneratorBuilder<T> {
         private @Nullable String tableFieldName;

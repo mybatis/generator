@@ -47,8 +47,8 @@
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/AnotherawfultableMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/MyMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/RegexrenameMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/EnumtestMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/EnumordinaltestMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/EnumTestMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/EnumOrdinalTestMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/GeneratedalwaystestMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/GeneratedalwaystestnoupdatesMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/IgnoremanycolumnsMapper.xml" />

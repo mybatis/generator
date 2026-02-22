@@ -25,9 +25,7 @@
   <context id="kotlin" targetRuntime="MyBatis3Kotlin">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver" connectionURL="jdbc:hsqldb:mem:aname" userId="sa" />
 
     <javaTypeResolver>
       <property name="useJSR310Types" value="true"/>
@@ -38,7 +36,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.mapper" targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.mapper"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -74,7 +72,9 @@
       <columnOverride column="class" property="dbClass" />
     </table>
     <table schema="mbgtest" tableName="Translations" domainObjectName="Translation"/>
-    <table schema="mbgtest" tableName="Ids" domainObjectName="Id"/>
+    <table schema="mbgtest" tableName="Ids" domainObjectName="Id">
+      <property name="useSnakeCaseIdentifiers" value="true"/>
+    </table>
   </context>
 
   <context id="kotlin-readonly" targetRuntime="MyBatis3Kotlin">
@@ -135,7 +135,8 @@
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper" targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper"  targetProject="MAVEN">
+      <property name="useSnakeCaseIdentifiers" value="true"/>
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >
@@ -155,10 +156,10 @@
       <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" />
       <columnRenamingRule searchString="^CUST" />
     </table>
-    <table tableName="EnumTest">
+    <table tableName="Enum_Test">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
-    <table tableName="EnumOrdinalTest">
+    <table tableName="Enum_Ordinal_Test">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum" jdbcType="INTEGER"
                       typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" >
         <property name="forceJavaTypeIntoMapping" value="true" />

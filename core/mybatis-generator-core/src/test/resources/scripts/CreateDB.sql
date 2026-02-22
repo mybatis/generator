@@ -1,5 +1,5 @@
 --
---    Copyright 2006-2025 the original author or authors.
+--    Copyright 2006-2026 the original author or authors.
 --
 --    Licensed under the Apache License, Version 2.0 (the "License");
 --    you may not use this file except in compliance with the License.
@@ -29,8 +29,8 @@ drop table mbgtest.Ids if exists;
 drop table mbgtest.Translations if exists;
 drop table CompoundKey if exists;
 drop schema mbgtest if exists;
-drop table EnumTest if exists;
-drop table EnumOrdinalTest if exists;
+drop table Enum_Test if exists;
+drop table Enum_Ordinal_Test if exists;
 drop table GeneratedAlwaysTest if exists;
 drop table GeneratedAlwaysTestNoUpdates if exists;
 drop table IgnoreManyColumns if exists;
@@ -150,13 +150,13 @@ create table CompoundKey (
   primary key(id, updateDate)
 );
 
-create table EnumTest (
+create table Enum_Test (
   id int not null,
   name varchar(20) not null,
   primary key(id)
 );
 
-create table EnumOrdinalTest (
+create table Enum_Ordinal_Test (
   id int not null,
   name int not null,
   primary key(id)
@@ -198,8 +198,8 @@ create table IgnoreManyColumns (
   primary key(col01)
 );
 
-comment on table EnumTest is 'This is a comment for the EnumTest table';
-comment on column EnumTest.name is 'This is a comment for the EnumTest.name column';
+comment on table Enum_Test is 'This is a comment for the EnumTest table';
+comment on column Enum_Test.name is 'This is a comment for the EnumTest.name column';
 
 create table suffix_rename (
   ID integer not null,

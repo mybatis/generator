@@ -34,12 +34,14 @@ public class InsertMultipleExtensionFunctionGenerator extends AbstractKotlinMapp
     private final FullyQualifiedKotlinType recordType;
     private final String mapperName;
     private final String supportObjectImport;
+    private final KotlinFragmentGenerator fragmentGenerator;
 
     private InsertMultipleExtensionFunctionGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
         mapperName = Objects.requireNonNull(builder.mapperName);
         supportObjectImport = Objects.requireNonNull(builder.supportObjectImport);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
@@ -84,9 +86,8 @@ public class InsertMultipleExtensionFunctionGenerator extends AbstractKotlinMapp
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (IntrospectedColumn column : columns) {
-            AbstractKotlinMapperFunctionGenerator.FieldNameAndImport fieldNameAndImport =
-                    AbstractKotlinMapperFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
-                            supportObjectImport, column);
+            KotlinFragmentGenerator.FieldNameAndImport fieldNameAndImport =
+                    fragmentGenerator.calculateFieldNameAndImport(tableFieldName, supportObjectImport, column);
             functionAndImports.getImports().add(fieldNameAndImport.importString());
 
             function.addCodeLine(OutputUtilities.kotlinIndent(1)
@@ -109,6 +110,7 @@ public class InsertMultipleExtensionFunctionGenerator extends AbstractKotlinMapp
         private @Nullable FullyQualifiedKotlinType recordType;
         private @Nullable String mapperName;
         private @Nullable String supportObjectImport;
+        private @Nullable KotlinFragmentGenerator fragmentGenerator;
 
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
@@ -122,6 +124,11 @@ public class InsertMultipleExtensionFunctionGenerator extends AbstractKotlinMapp
 
         public Builder withSupportObjectImport(String supportObjectImport) {
             this.supportObjectImport = supportObjectImport;
+            return this;
+        }
+
+        public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
+            this.fragmentGenerator = fragmentGenerator;
             return this;
         }
 

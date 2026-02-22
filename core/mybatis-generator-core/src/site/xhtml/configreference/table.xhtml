@@ -443,11 +443,22 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       This property can be used to generate mappers based on a generic super interface.
       The model will be added as a type parameter if, and only if, the related
       "rootInterface" is generic and has exactly one type parameter.
-      The vaue specified here will override the <code>injectModelIntoRootInterface</code> property set on a Java
+      The value specified here will override the <code>injectModelIntoRootInterface</code> property set on a Java
       Client Generator configuration if any is set.
       <p>If "true", then the related rootInterface should include the generic specification
         (like com.mycompany.MyRootInterface&lt;T extends Entity&gt;). If there is no type parameter
         in the related rootInterface, then this property has no effect.</p></td>
+  </tr>
+  <tr>
+    <td valign="top">useSnakeCaseIdentifiers</td>
+    <td><i>This property is ignored if the target runtime is "MyBatis3" or "MyBatis3Simple"</i><br/>
+      If true, then generated MyBatis Dynamic SQL support classes that model
+      database tables and columns will use snake case names (e.g., ORDER_MASTER) rather than camel case names
+      (e.g., orderMaster). This helps avoid awkward parameter naming for some methods where we appended an underscore
+      to generated parameters in some cases.
+      The value specified here will override the <code>useSnakeCaseIdentifiers</code> property set on a Java
+      Client Generator configuration if any is set.
+    </td>
   </tr>
   <tr>
     <td valign="top">runtimeCatalog</td>

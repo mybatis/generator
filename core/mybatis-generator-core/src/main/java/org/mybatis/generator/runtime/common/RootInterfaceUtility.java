@@ -19,22 +19,21 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.stream.Collectors;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.runtime.CodeGenUtils;
 
 public class RootInterfaceUtility {
-    public static void addRootInterfaceIsNecessary(Interface mapper,
-                                                   IntrospectedTable introspectedTable, Context context) {
-        String rootInterface = findProperty(PropertyRegistry.ANY_ROOT_INTERFACE, introspectedTable, context);
+    public static void addRootInterfaceIsNecessary(Interface mapper, IntrospectedTable introspectedTable) {
+        String rootInterface = CodeGenUtils.findTableOrClientProperty(PropertyRegistry.ANY_ROOT_INTERFACE,
+                introspectedTable);
 
         if (stringHasValue(rootInterface)) {
             FullyQualifiedJavaType baseInterface = new FullyQualifiedJavaType(rootInterface);
-            String inject =
-                    findProperty(PropertyRegistry.ANY_INJECT_MODEL_INTO_ROOT_INTERFACE, introspectedTable, context);
+            String inject = CodeGenUtils.findTableOrClientProperty(
+                    PropertyRegistry.ANY_INJECT_MODEL_INTO_ROOT_INTERFACE, introspectedTable);
 
             FullyQualifiedJavaType rootInterfaceType;
             if (Boolean.parseBoolean(inject)) {
@@ -69,15 +68,4 @@ public class RootInterfaceUtility {
         }
     }
 
-    private static @Nullable String findProperty(String property, IntrospectedTable introspectedTable,
-                                                 Context context) {
-        String value = introspectedTable.getTableConfigurationProperty(property);
-        if (!stringHasValue(value)) {
-            value = context.getJavaClientGeneratorConfiguration()
-                    .map(c -> c.getProperty(property))
-                    .orElse(null);
-        }
-
-        return value;
-    }
 }

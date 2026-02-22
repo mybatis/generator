@@ -101,6 +101,12 @@ recommended practice with JSpecify.</p>
     be used to represent tables that have generated keys. This is a limitation in MyBatis' approach to returning
     generated key values.
   </li>
+  <li>Support a new property "useSnakeCaseIdentifiers" on Table and Java Client configurations that supports
+    changes the generation of MyBatis Dynamic SQL support objects. If true, then generated members that model
+    database tables and columns will use snake case names (e.g., ORDER_MASTER) rather than camel case names
+    (e.g., orderMaster). This helps avoid awkward parameter naming for some methods where we appended an underscore
+    to generated parameters in some cases.
+  </li>
 </ul>
 
 <h3>Potentially Breaking Changes</h3>

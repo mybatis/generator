@@ -41,7 +41,7 @@ import org.mybatis.generator.internal.rules.Rules;
 /**
  * This class holds calculated attributes for all code generator implementations. The class
  * is intended to be a super class of IntrospectedTable and is matched one-to-one with that
- * class (for purposes of preserving compatibility with the exissting plugin methods). It is a separate class
+ * class (for purposes of preserving compatibility with the existing plugin methods). It is a separate class
  * because there are different responsibilities between IntrospectedTable and this class.
  *
  * @author Jeff Butler

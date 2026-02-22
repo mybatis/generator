@@ -59,7 +59,7 @@ public class JavaMapperGenerator extends AbstractJavaGenerator {
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
 
-        RootInterfaceUtility.addRootInterfaceIsNecessary(interfaze, introspectedTable, context);
+        RootInterfaceUtility.addRootInterfaceIsNecessary(interfaze, introspectedTable);
 
         addCountByExampleMethod(interfaze);
         addDeleteByExampleMethod(interfaze);

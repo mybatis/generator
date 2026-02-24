@@ -92,12 +92,12 @@ public class FragmentGenerator {
             if (first) {
                 builder.withBodyLine(OutputUtilities.javaIndent(1) + "c.where(" + fieldName //$NON-NLS-1$
                         + ", isEqualTo(" + parameterName //$NON-NLS-1$
-                        + "_))"); //$NON-NLS-1$
+                        + "))"); //$NON-NLS-1$
                 first = false;
             } else {
                 builder.withBodyLine(OutputUtilities.javaIndent(1) + ".and(" + fieldName //$NON-NLS-1$
                         + ", isEqualTo(" + parameterName //$NON-NLS-1$
-                        + "_))"); //$NON-NLS-1$
+                        + "))"); //$NON-NLS-1$
             }
         }
         builder.withBodyLine(");"); //$NON-NLS-1$

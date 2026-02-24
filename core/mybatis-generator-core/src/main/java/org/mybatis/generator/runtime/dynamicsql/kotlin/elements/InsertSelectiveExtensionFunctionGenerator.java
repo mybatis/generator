@@ -83,11 +83,11 @@ public class InsertSelectiveExtensionFunctionGenerator extends AbstractKotlinMap
             builder.withImport(fieldNameAndImport.importString());
 
             if (column.isSequenceColumn()) {
-                function.addCodeLine(OutputUtilities.kotlinIndent(1) + "map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                         + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
                         + "\")"); //$NON-NLS-1$
             } else {
-                function.addCodeLine(OutputUtilities.kotlinIndent(1) + "map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                         + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
                         + "\", row::" //$NON-NLS-1$
                         + column.getJavaProperty() + ")"); //$NON-NLS-1$

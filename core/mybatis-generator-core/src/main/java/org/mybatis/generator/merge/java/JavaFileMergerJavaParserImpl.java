@@ -141,8 +141,8 @@ public class JavaFileMergerJavaParserImpl implements JavaFileMerger {
                 .forEach(t -> JavaMergeUtilities.addSuperInterface(newFileParseResults.typeDeclaration, t));
 
         // Return the new (merged) file
-        DefaultLexicalPreservingPrinter printer = new DefaultLexicalPreservingPrinter();
-//        DefaultPrettyPrinter printer = new DefaultPrettyPrinter(printerConfiguration);
+//        DefaultLexicalPreservingPrinter printer = new DefaultLexicalPreservingPrinter();
+        DefaultPrettyPrinter printer = new DefaultPrettyPrinter(printerConfiguration);
         return printer.print(newFileParseResults.compilationUnit);
     }
 

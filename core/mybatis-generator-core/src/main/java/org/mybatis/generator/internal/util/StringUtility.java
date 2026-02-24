@@ -107,7 +107,7 @@ public class StringUtility {
     }
 
     public static boolean isTrue(@Nullable String s) {
-        return "true".equalsIgnoreCase(s); //$NON-NLS-1$
+        return Boolean.parseBoolean(s);
     }
 
     public static boolean stringContainsSQLWildcard(@Nullable String s) {

@@ -25,10 +25,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
-import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
-import org.mybatis.generator.runtime.JavaMethodParts;
-import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
 public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
     private final FullyQualifiedJavaType recordType;
@@ -42,7 +39,7 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMeth
 
     @Override
     public Optional<JavaMethodAndImports> generateMethodAndImports() {
-        if (!DynamicSqlUtils.generateSelectByPrimaryKey(introspectedTable)) {
+        if (!introspectedTable.getRules().generateSelectByPrimaryKeyForDSQL()) {
             return Optional.empty();
         }
 
@@ -59,14 +56,11 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMeth
 
         method.addBodyLine("return selectOne(c ->"); //$NON-NLS-1$
 
-        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
+        return JavaMethodAndImports.withMethod(method)
                 .withStaticImport("org.mybatis.dynamic.sql.SqlBuilder.isEqualTo") //$NON-NLS-1$
-                .withImports(imports);
-
-        JavaMethodParts javaMethodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
-        CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
-
-        return Optional.of(builder.build());
+                .withImports(imports)
+                .withExtraMethodParts(fragmentGenerator.getPrimaryKeyWhereClauseAndParameters())
+                .buildOptional();
     }
 
     @Override

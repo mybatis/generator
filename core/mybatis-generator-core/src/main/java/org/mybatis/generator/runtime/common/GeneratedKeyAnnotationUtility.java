@@ -27,7 +27,7 @@ import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.runtime.JavaMethodParts;
-import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.KotlinFunctionParts;
+import org.mybatis.generator.runtime.KotlinFunctionParts;
 
 public class GeneratedKeyAnnotationUtility {
     private static final String OPTIONS_IMPORT = "org.apache.ibatis.annotations.Options"; //$NON-NLS-1$

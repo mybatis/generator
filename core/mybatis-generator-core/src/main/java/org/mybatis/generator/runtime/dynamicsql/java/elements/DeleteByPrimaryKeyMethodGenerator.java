@@ -28,7 +28,6 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.JavaMethodParts;
-import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
 public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
 
@@ -41,7 +40,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMeth
 
     @Override
     public Optional<JavaMethodAndImports> generateMethodAndImports() {
-        if (!DynamicSqlUtils.generateDeleteByPrimaryKey(introspectedTable)) {
+        if (!introspectedTable.getRules().generateDeleteByPrimaryKeyForDSQL()) {
             return Optional.empty();
         }
 

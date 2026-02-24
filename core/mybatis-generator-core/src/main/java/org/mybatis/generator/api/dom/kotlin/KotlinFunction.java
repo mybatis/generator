@@ -43,10 +43,6 @@ public class KotlinFunction extends KotlinNamedItem {
         return arguments;
     }
 
-    public void addCodeLine(String codeLine) {
-        this.codeLines.add(codeLine);
-    }
-
     public void addCodeLines(List<String> codeLines) {
         this.codeLines.addAll(codeLines);
     }
@@ -94,6 +90,11 @@ public class KotlinFunction extends KotlinNamedItem {
 
         public Builder withCodeLine(String codeLine) {
             codeLines.add(codeLine);
+            return this;
+        }
+
+        public Builder withCodeLines(List<String> codeLines) {
+            this.codeLines.addAll(codeLines);
             return this;
         }
 

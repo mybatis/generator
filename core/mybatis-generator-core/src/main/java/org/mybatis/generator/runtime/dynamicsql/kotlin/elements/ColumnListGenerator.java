@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -46,17 +47,19 @@ public class ColumnListGenerator extends AbstractGenerator {
                 .map(this::calculateFieldAndImport)
                 .toList();
 
-        KotlinPropertyAndImports propertyAndImports = KotlinPropertyAndImports.withProperty(
-                KotlinProperty.newVal("columnList") //$NON-NLS-1$
+        KotlinProperty property = KotlinProperty.newVal("columnList") //$NON-NLS-1$
                 .withModifier(KotlinModifier.PRIVATE)
                 .withInitializationString(getInitializationString(fieldsAndImports))
-                .build())
-                .withImports(getImports(fieldsAndImports))
                 .build();
 
-        commentGenerator.addGeneralPropertyComment(propertyAndImports.getProperty(), introspectedTable,
-                propertyAndImports.getImports());
-        return propertyAndImports;
+        Set<String> imports = new HashSet<>();
+
+        commentGenerator.addGeneralPropertyComment(property, introspectedTable, imports);
+
+        return KotlinPropertyAndImports.withProperty(property)
+                .withImports(imports)
+                .withImports(getImports(fieldsAndImports))
+                .build();
     }
 
     private FieldNameAndImport calculateFieldAndImport(IntrospectedColumn column) {

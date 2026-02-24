@@ -23,7 +23,6 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 /**
@@ -56,12 +55,10 @@ public class SelectAllMethodGenerator extends AbstractJavaMapperMethodGenerator 
 
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
-        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
-                .withImports(importedTypes);
-
-        CodeGenUtils.addPartsToMethod(builder, method, extraMethodParts());
-
-        return Optional.of(builder.build());
+        return JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .withExtraMethodParts(extraMethodParts())
+                .buildOptional();
     }
 
     @Override

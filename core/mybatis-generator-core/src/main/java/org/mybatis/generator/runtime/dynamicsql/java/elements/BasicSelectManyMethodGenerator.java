@@ -26,7 +26,6 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
-import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.JavaMethodParts;
 
@@ -77,9 +76,9 @@ public class BasicSelectManyMethodGenerator extends AbstractJavaInterfaceMethodG
         } else {
             javaMethodParts = fragmentGenerator.getAnnotatedResults();
         }
-        CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
 
-        return Optional.of(builder.build());
+        return builder.withExtraMethodParts(javaMethodParts)
+                        .buildOptional();
     }
 
     @Override

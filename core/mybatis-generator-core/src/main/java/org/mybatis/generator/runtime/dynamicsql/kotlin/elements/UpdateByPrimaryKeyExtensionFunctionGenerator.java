@@ -15,18 +15,17 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
-import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
 public class UpdateByPrimaryKeyExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final FullyQualifiedKotlinType recordType;
@@ -42,31 +41,28 @@ public class UpdateByPrimaryKeyExtensionFunctionGenerator extends AbstractKotlin
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
-        if (!DynamicSqlUtils.generateUpdateByPrimaryKey(introspectedTable)) {
+        if (!introspectedTable.getRules().generateUpdateByPrimaryKeyForDSQL()) {
             return Optional.empty();
         }
 
-        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".updateByPrimaryKey") //$NON-NLS-1$
+        Set<String> imports = new HashSet<>();
+
+        KotlinFunction function = KotlinFunction.newOneLineFunction(mapperName + ".updateByPrimaryKey") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("row") //$NON-NLS-1$
                         .withDataType(recordType.getShortNameWithTypeArguments())
                         .build())
                 .withCodeLine("update {") //$NON-NLS-1$
-                .build())
-                .withImports(recordType.getImportList())
                 .build();
 
-        addFunctionComment(functionAndImports);
+        commentGenerator.addGeneralFunctionComment(function, introspectedTable, imports);
 
-        List<IntrospectedColumn> columns = introspectedTable.getNonPrimaryKeyColumns();
-        KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualLines(columns);
-        acceptParts(functionAndImports, functionParts);
-
-        functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters(true);
-        acceptParts(functionAndImports, functionParts);
-        functionAndImports.getFunction().getCodeLines().add("}"); //$NON-NLS-1$
-
-        return Optional.of(functionAndImports);
+        return KotlinFunctionAndImports.withFunction(function)
+                .withImports(imports)
+                .withImports(recordType.getImportList())
+                .withExtraFunctionParts(fragmentGenerator.getSetEqualLines(introspectedTable.getNonPrimaryKeyColumns(),
+                        false))
+                .withExtraFunctionParts(fragmentGenerator.getPrimaryKeyWhereClauseAndParameters(true))
+                .buildOptional();
     }
 
     @Override

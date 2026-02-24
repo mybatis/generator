@@ -26,13 +26,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
@@ -42,12 +45,16 @@ public class FragmentGenerator {
     private final String resultMapId;
     private final String tableFieldName;
     protected final boolean useSnakeCase;
+    private final FullyQualifiedJavaType recordType;
+    private final CommentGenerator commentGenerator;
 
     private FragmentGenerator(Builder builder) {
         this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);
         this.resultMapId = Objects.requireNonNull(builder.resultMapId);
         tableFieldName = Objects.requireNonNull(builder.tableFieldName);
         useSnakeCase = builder.useSnakeCase;
+        recordType = Objects.requireNonNull(builder.recordType);
+        commentGenerator = Objects.requireNonNull(builder.commentGenerator);
     }
 
     public String calculateFieldName(String tableFieldName, IntrospectedColumn column) {
@@ -280,11 +287,54 @@ public class FragmentGenerator {
         return lines;
     }
 
+    public JavaMethodAndImports generateGeneralSelectMethod(boolean isDistinct) {
+        String methodName;
+        String utilMethodName;
+        if (isDistinct) {
+            methodName = "selectDistinct"; //$NON-NLS-1$
+            utilMethodName = "selectDistinct"; //$NON-NLS-1$
+        } else {
+            methodName = "select"; //$NON-NLS-1$
+            utilMethodName = "selectList"; //$NON-NLS-1$
+        }
+
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
+
+        FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.select.SelectDSLCompleter"); //$NON-NLS-1$
+
+        imports.add(parameterType);
+        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
+
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
+        returnType.addTypeArgument(recordType);
+
+        imports.add(returnType);
+
+        Method method = new Method(methodName);
+        method.setDefault(true);
+        method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
+
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
+
+        method.setReturnType(returnType);
+        String line = String.format(
+                "return MyBatis3Utils.%s(this::selectMany, selectList, %s, completer);", //$NON-NLS-1$
+                utilMethodName, tableFieldName);
+        method.addBodyLine(line);
+
+        return JavaMethodAndImports.withMethod(method)
+                .withImports(imports)
+                .build();
+    }
+
     public static class Builder {
         private @Nullable IntrospectedTable introspectedTable;
         private @Nullable String resultMapId;
         private @Nullable String tableFieldName;
         private boolean useSnakeCase;
+        private @Nullable FullyQualifiedJavaType recordType;
+        private @Nullable CommentGenerator commentGenerator;
 
         public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
             this.introspectedTable = introspectedTable;
@@ -303,6 +353,16 @@ public class FragmentGenerator {
 
         public Builder useSnakeCase(boolean useSnakeCase) {
             this.useSnakeCase = useSnakeCase;
+            return this;
+        }
+
+        public Builder withRecordType(FullyQualifiedJavaType recordType) {
+            this.recordType = recordType;
+            return this;
+        }
+
+        public Builder withCommentGenerator(CommentGenerator commentGenerator) {
+            this.commentGenerator = commentGenerator;
             return this;
         }
 

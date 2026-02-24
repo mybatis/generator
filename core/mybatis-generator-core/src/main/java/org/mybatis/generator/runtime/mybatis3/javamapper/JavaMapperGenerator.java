@@ -26,8 +26,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
-import org.mybatis.generator.runtime.CodeGenUtils;
-import org.mybatis.generator.runtime.common.RootInterfaceUtility;
+import org.mybatis.generator.runtime.common.RootClassAndInterfaceUtility;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.CountByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
@@ -59,7 +58,7 @@ public class JavaMapperGenerator extends AbstractJavaGenerator {
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
 
-        RootInterfaceUtility.addRootInterfaceIsNecessary(interfaze, introspectedTable);
+        RootClassAndInterfaceUtility.addRootInterfaceIfNecessary(interfaze, introspectedTable);
 
         addCountByExampleMethod(interfaze);
         addDeleteByExampleMethod(interfaze);
@@ -87,102 +86,90 @@ public class JavaMapperGenerator extends AbstractJavaGenerator {
     }
 
     protected void addCountByExampleMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new CountByExampleMethodGenerator.Builder()).build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new CountByExampleMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addDeleteByExampleMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new DeleteByExampleMethodGenerator.Builder()).build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new DeleteByExampleMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new DeleteByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new DeleteByPrimaryKeyMethodGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addInsertMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new InsertMethodGenerator.Builder())
+        initializeSubBuilder(new InsertMethodGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addInsertSelectiveMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new InsertSelectiveMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new InsertSelectiveMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addSelectByExampleWithBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new SelectByExampleWithBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new SelectByExampleWithBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addSelectByExampleWithoutBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new SelectByExampleWithoutBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new SelectByExampleWithoutBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new SelectByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new SelectByPrimaryKeyMethodGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addUpdateByExampleSelectiveMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateByExampleSelectiveMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new UpdateByExampleSelectiveMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addUpdateByExampleWithBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateByExampleWithBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new UpdateByExampleWithBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addUpdateByExampleWithoutBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateByExampleWithoutBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new UpdateByExampleWithoutBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateByPrimaryKeySelectiveMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new UpdateByPrimaryKeySelectiveMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addUpdateByPrimaryKeyWithBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new UpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     public List<CompilationUnit> getExtraCompilationUnits() {

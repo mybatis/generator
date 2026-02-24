@@ -30,7 +30,6 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
-import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
 public class InsertMultipleMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
@@ -47,7 +46,7 @@ public class InsertMultipleMethodGenerator extends AbstractJavaInterfaceMethodGe
 
     @Override
     public Optional<JavaMethodAndImports> generateMethodAndImports() {
-        if (!DynamicSqlUtils.generateMultipleRowInsert(introspectedTable)) {
+        if (!introspectedTable.getRules().generateMultipleRowInsertForDSQL()) {
             return Optional.empty();
         }
 
@@ -67,12 +66,9 @@ public class InsertMultipleMethodGenerator extends AbstractJavaInterfaceMethodGe
 
         method.addParameter(new Parameter(parameterType, "records")); //$NON-NLS-1$
 
-        String methodName;
-        if (DynamicSqlUtils.canRetrieveMultiRowGeneratedKeys(introspectedTable)) {
-            methodName = "MyBatis3Utils.insertMultipleWithGeneratedKeys";
-        } else {
-            methodName = "MyBatis3Utils.insertMultiple";
-        }
+        String methodName = introspectedTable.getGeneratedKey()
+                .map(gk -> "MyBatis3Utils.insertMultipleWithGeneratedKeys")
+                .orElse("MyBatis3Utils.insertMultiple");
 
         method.addBodyLine("return " + methodName + "(this::insertMultiple, records, " //$NON-NLS-1$ //$NON-NLS-2$
                 + tableFieldName // $NON-NLS-1$

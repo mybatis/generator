@@ -22,7 +22,6 @@ import java.util.TreeSet;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends AbstractJavaMapperMethodGenerator {
@@ -46,12 +45,10 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends AbstractJavaM
 
         Method method = buildBasicUpdateByPrimaryKeyMethod(statementId, parameterType);
 
-        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
-                .withImports(importedTypes);
-
-        CodeGenUtils.addPartsToMethod(builder, method, extraMethodParts());
-
-        return Optional.of(builder.build());
+        return JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .withExtraMethodParts(extraMethodParts())
+                .buildOptional();
     }
 
     @Override

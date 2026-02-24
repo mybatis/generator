@@ -28,7 +28,6 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
-import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
 public class UpdateByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
     private final FullyQualifiedJavaType recordType;
@@ -42,7 +41,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMeth
 
     @Override
     public Optional<JavaMethodAndImports> generateMethodAndImports() {
-        if (!DynamicSqlUtils.generateUpdateByPrimaryKey(introspectedTable)) {
+        if (!introspectedTable.getRules().generateUpdateByPrimaryKeyForDSQL()) {
             return Optional.empty();
         }
 

@@ -15,59 +15,26 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.java.elements;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class GeneralSelectDistinctMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
-    private final FullyQualifiedJavaType recordType;
-    private final String tableFieldName;
+    private final FragmentGenerator fragmentGenerator;
 
     private GeneralSelectDistinctMethodGenerator(Builder builder) {
         super(builder);
-        recordType = Objects.requireNonNull(builder.recordType);
-        tableFieldName = Objects.requireNonNull(builder.tableFieldName);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
     public Optional<JavaMethodAndImports> generateMethodAndImports() {
-        Set<FullyQualifiedJavaType> imports = new HashSet<>();
-
-        FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
-                "org.mybatis.dynamic.sql.select.SelectDSLCompleter"); //$NON-NLS-1$
-
-        imports.add(parameterType);
-        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
-
-        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
-        returnType.addTypeArgument(recordType);
-
-        imports.add(returnType);
-
-        Method method = new Method("selectDistinct"); //$NON-NLS-1$
-        method.setDefault(true);
-        method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
-
-        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
-
-        method.setReturnType(returnType);
-        method.addBodyLine("return MyBatis3Utils.selectDistinct(this::selectMany, selectList, " //$NON-NLS-1$
-                + tableFieldName + ", completer);"); //$NON-NLS-1$
-
-        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
-                .withImports(imports)
-                .build();
-
-        return Optional.of(answer);
+        return Optional.of(fragmentGenerator.generateGeneralSelectMethod(true));
     }
 
     @Override
@@ -76,16 +43,10 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractJavaInterfaceM
     }
 
     public static class Builder extends AbstractGeneratorBuilder<Builder> {
-        private @Nullable FullyQualifiedJavaType recordType;
-        private @Nullable String tableFieldName;
+        private @Nullable FragmentGenerator fragmentGenerator;
 
-        public Builder withRecordType(FullyQualifiedJavaType recordType) {
-            this.recordType = recordType;
-            return this;
-        }
-
-        public Builder withTableFieldName(String tableFieldName) {
-            this.tableFieldName = tableFieldName;
+        public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
+            this.fragmentGenerator = fragmentGenerator;
             return this;
         }
 

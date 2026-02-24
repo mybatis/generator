@@ -26,8 +26,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
-import org.mybatis.generator.runtime.CodeGenUtils;
-import org.mybatis.generator.runtime.common.RootInterfaceUtility;
+import org.mybatis.generator.runtime.common.RootClassAndInterfaceUtility;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.InsertMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectAllMethodGenerator;
@@ -50,7 +49,7 @@ public class SimpleJavaMapperGenerator extends AbstractJavaGenerator {
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
 
-        RootInterfaceUtility.addRootInterfaceIsNecessary(interfaze, introspectedTable);
+        RootClassAndInterfaceUtility.addRootInterfaceIfNecessary(interfaze, introspectedTable);
 
         addDeleteByPrimaryKeyMethod(interfaze);
         addInsertMethod(interfaze);
@@ -69,42 +68,37 @@ public class SimpleJavaMapperGenerator extends AbstractJavaGenerator {
     }
 
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new DeleteByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new DeleteByPrimaryKeyMethodGenerator.Builder())
                 .isSimple(true)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addInsertMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new InsertMethodGenerator.Builder())
+        initializeSubBuilder(new InsertMethodGenerator.Builder())
                 .isSimple(true)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new SelectByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new SelectByPrimaryKeyMethodGenerator.Builder())
                 .isSimple(true)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addSelectAllMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new SelectAllMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new SelectAllMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder())
+        initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder())
                 .isSimple(true)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     public List<CompilationUnit> getExtraCompilationUnits() {

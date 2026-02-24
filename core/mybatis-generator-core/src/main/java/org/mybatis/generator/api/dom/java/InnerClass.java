@@ -89,4 +89,12 @@ public class InnerClass extends AbstractJavaType {
     public void setFinal(boolean isFinal) {
         this.isFinal = isFinal;
     }
+
+    public Method generateBasicConstructor() {
+        Method method = new Method(getType().getShortName());
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setConstructor(true);
+        method.addBodyLine("super();"); //$NON-NLS-1$
+        return method;
+    }
 }

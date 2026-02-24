@@ -270,6 +270,16 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         return answer;
     }
 
+    private Method getGetter(Field field) {
+        Method method = new Method(getGetterMethodName(field.getName(), field.getType()));
+        method.setReturnType(field.getType());
+        method.setVisibility(JavaVisibility.PUBLIC);
+        String s = "return " + field.getName() + ';'; //$NON-NLS-1$
+
+        method.addBodyLine(s);
+        return method;
+    }
+
     private Method createCriterionConstructor() {
         Method method = new Method("Criterion"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PROTECTED);

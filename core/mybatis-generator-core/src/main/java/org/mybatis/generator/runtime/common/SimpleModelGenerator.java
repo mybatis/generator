@@ -35,7 +35,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
-import org.mybatis.generator.runtime.CodeGenUtils;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 /**
  * This model generator builds a flat model. It will build an immutable or constructor-based model depending
@@ -69,11 +69,12 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
             addParameterizedConstructor(topLevelClass);
 
             if (!introspectedTable.isImmutable()) {
-                addDefaultConstructorWithGeneratedAnnotation(topLevelClass);
+                topLevelClass.addMethod(getDefaultConstructorWithGeneratedAnnotation(topLevelClass));
             }
         }
 
-        Optional<RootClassInfo> rootClassInfo = getRootClass().map(rc -> RootClassInfo.getInstance(rc, warnings));
+        Optional<RootClassInfo> rootClassInfo = RootClassAndInterfaceUtility.getRootClass(introspectedTable)
+                .map(rc -> RootClassInfo.getInstance(rc, warnings));
         for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
             if (rootClassInfo.map(rci -> rci.containsProperty(introspectedColumn)).orElse(false)) {
                 continue;
@@ -112,7 +113,14 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
     }
 
     private Optional<FullyQualifiedJavaType> getSuperClass() {
-        return getRootClass().map(FullyQualifiedJavaType::new);
+        return RootClassAndInterfaceUtility.getRootClass(introspectedTable).map(FullyQualifiedJavaType::new);
+    }
+
+    private Method getDefaultConstructorWithGeneratedAnnotation(TopLevelClass topLevelClass) {
+        Method method = topLevelClass.generateBasicConstructor();
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable,
+                topLevelClass.getImportedTypes());
+        return method;
     }
 
     private void addParameterizedConstructor(TopLevelClass topLevelClass) {
@@ -124,7 +132,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
         for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
             method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
                     introspectedColumn.getJavaProperty()));
-            method.addBodyLine(CodeGenUtils.generateFieldSetterForConstructor(introspectedColumn));
+            method.addBodyLine(JavaBeansUtil.generateFieldSetterForConstructor(introspectedColumn));
         }
 
         topLevelClass.addMethod(method);

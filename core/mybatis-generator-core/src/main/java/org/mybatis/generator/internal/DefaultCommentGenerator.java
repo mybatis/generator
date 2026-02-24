@@ -126,9 +126,9 @@ public class DefaultCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * This method adds the custom javadoc tag for. You may do nothing if you do not
+     * This method adds the custom javadoc tag for a generated element. You may do nothing if you do not
      * wish to include the Javadoc tag - however, if you do not include the Javadoc
-     * tag then the Java merge capability of the eclipse plugin will break.
+     * tag then the Java merge capability will break.
      *
      * @param javaElement       the java element
      * @param markAsDoNotDelete the mark as do not delete

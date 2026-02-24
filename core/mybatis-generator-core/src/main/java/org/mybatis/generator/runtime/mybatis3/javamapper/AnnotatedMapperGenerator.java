@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedCountByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByPrimaryKeyMethodGenerator;
@@ -43,117 +42,105 @@ public class AnnotatedMapperGenerator extends JavaMapperGenerator {
 
     @Override
     protected void addCountByExampleMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedCountByExampleMethodGenerator.Builder()).build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedCountByExampleMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addDeleteByExampleMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedDeleteByExampleMethodGenerator.Builder()).build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedDeleteByExampleMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addInsertMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedInsertMethodGenerator.Builder())
+        initializeSubBuilder(new AnnotatedInsertMethodGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addInsertSelectiveMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedInsertSelectiveMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedInsertSelectiveMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addSelectByExampleWithBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedSelectByExampleWithBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedSelectByExampleWithBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addSelectByExampleWithoutBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedSelectByExampleWithoutBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedSelectByExampleWithoutBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder())
                 .isSimple(false)
                 .useResultMapIfAvailable(false)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addUpdateByExampleSelectiveMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedUpdateByExampleSelectiveMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedUpdateByExampleSelectiveMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addUpdateByExampleWithBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedUpdateByExampleWithBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedUpdateByExampleWithBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addUpdateByExampleWithoutBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedUpdateByExampleWithoutBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedUpdateByExampleWithoutBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedUpdateByPrimaryKeySelectiveMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedUpdateByPrimaryKeySelectiveMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addUpdateByPrimaryKeyWithBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder())
+        initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     @Override

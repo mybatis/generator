@@ -25,6 +25,17 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         super(builder);
     }
 
+    /**
+     * Executes this generator, calls plugins, and applies the generated element to the parent element.
+     *
+     * @param parentElement The parent element to which the generated element will be added.
+     */
+    public void execute(XmlElement parentElement) {
+        generateElement()
+                .filter(this::callPlugins)
+                .ifPresent(parentElement::addElement);
+    }
+
     public abstract Optional<XmlElement> generateElement();
 
     public abstract boolean callPlugins(XmlElement element);

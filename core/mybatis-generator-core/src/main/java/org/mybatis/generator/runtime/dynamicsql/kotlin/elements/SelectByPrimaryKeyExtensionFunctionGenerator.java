@@ -15,14 +15,15 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
-import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
 
 public class SelectByPrimaryKeyExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final String mapperName;
@@ -36,23 +37,22 @@ public class SelectByPrimaryKeyExtensionFunctionGenerator extends AbstractKotlin
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
-        if (!DynamicSqlUtils.generateSelectByPrimaryKey(introspectedTable)) {
+        if (!introspectedTable.getRules().generateSelectByPrimaryKeyForDSQL()) {
             return Optional.empty();
         }
 
-        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".selectByPrimaryKey") //$NON-NLS-1$
+        Set<String> imports = new HashSet<>();
+
+        KotlinFunction function = KotlinFunction.newOneLineFunction(mapperName + ".selectByPrimaryKey") //$NON-NLS-1$
                 .withCodeLine("selectOne {") //$NON-NLS-1$
-                .build())
                 .build();
 
-        addFunctionComment(functionAndImports);
+        commentGenerator.addGeneralFunctionComment(function, introspectedTable, imports);
 
-        KotlinFunctionParts functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters(false);
-        acceptParts(functionAndImports, functionParts);
-        functionAndImports.getFunction().getCodeLines().add("}"); //$NON-NLS-1$
-
-        return Optional.of(functionAndImports);
+        return KotlinFunctionAndImports.withFunction(function)
+                .withExtraFunctionParts(fragmentGenerator.getPrimaryKeyWhereClauseAndParameters(false))
+                .withImports(imports)
+                .buildOptional();
     }
 
     @Override

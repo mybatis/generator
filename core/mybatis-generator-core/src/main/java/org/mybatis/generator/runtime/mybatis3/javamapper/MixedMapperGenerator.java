@@ -16,7 +16,6 @@
 package org.mybatis.generator.runtime.mybatis3.javamapper;
 
 import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedInsertMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator;
@@ -37,47 +36,42 @@ public class MixedMapperGenerator extends JavaMapperGenerator {
 
     @Override
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addInsertMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedInsertMethodGenerator.Builder())
+        initializeSubBuilder(new AnnotatedInsertMethodGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder())
                 .isSimple(false)
                 .useResultMapIfAvailable(true)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addUpdateByPrimaryKeyWithBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder())
+                .build()
+                .execute(interfaze);
     }
 
     @Override
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder())
+        initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     public static class Builder extends JavaMapperGenerator.Builder {

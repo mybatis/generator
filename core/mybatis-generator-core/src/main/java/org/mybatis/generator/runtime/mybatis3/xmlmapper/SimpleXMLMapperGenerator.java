@@ -24,7 +24,6 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.XmlConstants;
-import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.DeleteByPrimaryKeyElementGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.InsertElementGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.ResultMapWithoutBLOBsElementGenerator;
@@ -56,49 +55,43 @@ public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
     }
 
     protected void addResultMapElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new ResultMapWithoutBLOBsElementGenerator.Builder())
+        initializeSubBuilder(new ResultMapWithoutBLOBsElementGenerator.Builder())
                 .isSimple(true)
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+                .build()
+                .execute(parentElement);
     }
 
     protected void addSelectByPrimaryKeyElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new SimpleSelectByPrimaryKeyElementGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new SimpleSelectByPrimaryKeyElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addSelectAllElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new SimpleSelectAllElementGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new SimpleSelectAllElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new DeleteByPrimaryKeyElementGenerator.Builder())
+        initializeSubBuilder(new DeleteByPrimaryKeyElementGenerator.Builder())
                 .isSimple(true)
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+                .build()
+                .execute(parentElement);
     }
 
     protected void addInsertElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new InsertElementGenerator.Builder())
+        initializeSubBuilder(new InsertElementGenerator.Builder())
                 .isSimple(true)
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+                .build()
+                .execute(parentElement);
     }
 
     protected void addUpdateByPrimaryKeyElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder())
+        initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder())
                 .isSimple(true)
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+                .build()
+                .execute(parentElement);
     }
 
     @Override

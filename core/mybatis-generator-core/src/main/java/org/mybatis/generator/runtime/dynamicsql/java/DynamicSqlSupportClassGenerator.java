@@ -32,15 +32,14 @@ import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
-import org.mybatis.generator.runtime.CodeGenUtils;
 
 public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
     private final boolean useSnakeCase;
 
     private DynamicSqlSupportClassGenerator(Builder builder) {
         super(builder);
-        useSnakeCase = CodeGenUtils.findTableOrClientPropertyAsBoolean(
-                PropertyRegistry.ANY_USE_SNAKE_CASE_IDENTIFIERS, introspectedTable);
+        useSnakeCase = introspectedTable
+                .findTableOrClientGeneratorPropertyAsBoolean(PropertyRegistry.ANY_USE_SNAKE_CASE_IDENTIFIERS);
     }
 
     public TopLevelClass generate() {

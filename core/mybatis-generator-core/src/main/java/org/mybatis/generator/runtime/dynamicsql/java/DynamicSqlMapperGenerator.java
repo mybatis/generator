@@ -30,9 +30,8 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaFieldAndImports;
-import org.mybatis.generator.runtime.common.RootInterfaceUtility;
+import org.mybatis.generator.runtime.common.RootClassAndInterfaceUtility;
 import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicMultipleInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicSelectManyMethodGenerator;
@@ -70,8 +69,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
 
         recordType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         resultMapId = recordType.getShortNameWithoutTypeArguments() + "Result"; //$NON-NLS-1$
-        boolean useSnakeCase = CodeGenUtils.findTableOrClientPropertyAsBoolean(
-                PropertyRegistry.ANY_USE_SNAKE_CASE_IDENTIFIERS, introspectedTable);
+        boolean useSnakeCase = introspectedTable
+                .findTableOrClientGeneratorPropertyAsBoolean(PropertyRegistry.ANY_USE_SNAKE_CASE_IDENTIFIERS);
 
         tableFieldName = calculateTableFieldName(useSnakeCase);
         fragmentGenerator = new FragmentGenerator.Builder()
@@ -79,6 +78,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
                 .withResultMapId(resultMapId)
                 .withTableFieldName(tableFieldName)
                 .useSnakeCase(useSnakeCase)
+                .withRecordType(recordType)
+                .withCommentGenerator(commentGenerator)
                 .build();
 
         hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
@@ -151,7 +152,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper")); //$NON-NLS-1$
         interfaze.addAnnotation("@Mapper"); //$NON-NLS-1$
 
-        RootInterfaceUtility.addRootInterfaceIsNecessary(interfaze, introspectedTable);
+        RootClassAndInterfaceUtility.addRootInterfaceIfNecessary(interfaze, introspectedTable);
         return interfaze;
     }
 
@@ -162,13 +163,14 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
     }
 
     protected void addInsertOneMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new InsertMethodGenerator.Builder())
+        var generated = initializeSubBuilder(new InsertMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .withFragmentGenerator(fragmentGenerator)
-                .build();
+                .build()
+                .execute(interfaze);
 
-        if (CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator) && !hasGeneratedKeys) {
+        if (generated && !hasGeneratedKeys) {
             // add common interface
             addCommonInsertInterface(interfaze);
         }
@@ -185,32 +187,33 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
     }
 
     protected void addBasicInsertMultipleMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new BasicMultipleInsertMethodGenerator.Builder())
+        initializeSubBuilder(new BasicMultipleInsertMethodGenerator.Builder())
                 .withRecordType(recordType)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addInsertMultipleMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new InsertMultipleMethodGenerator.Builder())
+        var generated = initializeSubBuilder(new InsertMultipleMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .withFragmentGenerator(fragmentGenerator)
-                .build();
+                .build()
+                .execute(interfaze);
 
-        if (CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator) && !hasGeneratedKeys) {
+        if (generated && !hasGeneratedKeys) {
             // add common interface
             addCommonInsertInterface(interfaze);
         }
     }
 
     protected void addGeneralCountMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new GeneralCountMethodGenerator.Builder())
+        var generated = initializeSubBuilder(new GeneralCountMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
-                .build();
+                .build()
+                .execute(interfaze);
 
-        if (CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator)) {
+        if (generated) {
             // add common interface
             FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(
                     "org.mybatis.dynamic.sql.util.mybatis3.CommonCountMapper"); //$NON-NLS-1$
@@ -220,11 +223,12 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
     }
 
     protected void addGeneralDeleteMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new GeneralDeleteMethodGenerator.Builder())
+        var generated = initializeSubBuilder(new GeneralDeleteMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
-                .build();
+                .build()
+                .execute(interfaze);
 
-        if (CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator)) {
+        if (generated) {
             // add common interface
             FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(
                     "org.mybatis.dynamic.sql.util.mybatis3.CommonDeleteMapper"); //$NON-NLS-1$
@@ -247,38 +251,34 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
     }
 
     protected void addGeneralSelectMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new GeneralSelectMethodGenerator.Builder())
-                .withTableFieldName(tableFieldName)
-                .withRecordType(recordType)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new GeneralSelectMethodGenerator.Builder())
+                .withFragmentGenerator(fragmentGenerator)
+                .build()
+                .execute(interfaze);
     }
 
     protected void addSelectDistinctMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new GeneralSelectDistinctMethodGenerator.Builder())
-                .withTableFieldName(tableFieldName)
-                .withRecordType(recordType)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+        initializeSubBuilder(new GeneralSelectDistinctMethodGenerator.Builder())
+                .withFragmentGenerator(fragmentGenerator)
+                .build()
+                .execute(interfaze);
     }
 
     protected void addGeneralSelectOneMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new GeneralSelectOneMethodGenerator.Builder())
+        initializeSubBuilder(new GeneralSelectOneMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addGeneralUpdateMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new GeneralUpdateMethodGenerator.Builder())
+        var generated = initializeSubBuilder(new GeneralUpdateMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
-                .build();
+                .build()
+                .execute(interfaze);
 
-        if (CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator)) {
+        if (generated) {
             // add common interface
             FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(
                     "org.mybatis.dynamic.sql.util.mybatis3.CommonUpdateMapper"); //$NON-NLS-1$
@@ -288,97 +288,89 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
     }
 
     protected void addUpdateAllMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateAllColumnsMethodGenerator.Builder())
+        initializeSubBuilder(new UpdateAllColumnsMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addUpdateSelectiveMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateSelectiveColumnsMethodGenerator.Builder())
+        initializeSubBuilder(new UpdateSelectiveColumnsMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addBasicSelectOneMethod(Interface interfaze, boolean reuseResultMap) {
-        var generator = initializeSubBuilder(new BasicSelectOneMethodGenerator.Builder())
+        initializeSubBuilder(new BasicSelectOneMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
                 .withResultMapId(resultMapId)
                 .withReuseResultMap(reuseResultMap)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new DeleteByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new DeleteByPrimaryKeyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addInsertSelectiveMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new InsertSelectiveMethodGenerator.Builder())
+        var generated = initializeSubBuilder(new InsertSelectiveMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .withFragmentGenerator(fragmentGenerator)
-                .build();
+                .build()
+                .execute(interfaze);
 
-        if (CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator) && !hasGeneratedKeys) {
+        if (generated && !hasGeneratedKeys) {
             // add common interface
             addCommonInsertInterface(interfaze);
         }
     }
 
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new SelectByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new SelectByPrimaryKeyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateByPrimaryKeyMethodGenerator.Builder())
+        initializeSubBuilder(new UpdateByPrimaryKeyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new UpdateByPrimaryKeySelectiveMethodGenerator.Builder())
+        initializeSubBuilder(new UpdateByPrimaryKeySelectiveMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected void addBasicInsertMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new BasicInsertMethodGenerator.Builder())
+        initializeSubBuilder(new BasicInsertMethodGenerator.Builder())
                 .withRecordType(recordType)
-                .build();
-
-        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     protected boolean addBasicSelectManyMethod(Interface interfaze) {
-        var generator = initializeSubBuilder(new BasicSelectManyMethodGenerator.Builder())
+        return initializeSubBuilder(new BasicSelectManyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
-                .build();
-
-        return CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
+                .build()
+                .execute(interfaze);
     }
 
     public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {

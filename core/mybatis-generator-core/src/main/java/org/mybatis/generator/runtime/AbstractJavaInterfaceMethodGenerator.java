@@ -26,6 +26,24 @@ public abstract class AbstractJavaInterfaceMethodGenerator extends AbstractGener
         super(builder);
     }
 
+    /**
+     * Executes this generator, calls plugins, and applies the generated method to the interface.
+     *
+     * @param interfaze The interface to which the method will be added.
+     * @return true if the method was successfully generated and added to the interface, false otherwise.
+     */
+    public boolean execute(Interface interfaze) {
+        return generateMethodAndImports()
+                .filter(mi -> callPlugins(mi.getMethod(), interfaze))
+                .map(mi -> {
+                    interfaze.addMethod(mi.getMethod());
+                    interfaze.addImportedTypes(mi.getImports());
+                    interfaze.addStaticImports(mi.getStaticImports());
+                    return true;
+                })
+                .orElse(false);
+    }
+
     public abstract Optional<JavaMethodAndImports> generateMethodAndImports();
 
     public abstract boolean callPlugins(Method method, Interface interfaze);

@@ -18,6 +18,7 @@ package org.mybatis.generator.internal.rules;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.util.StringUtility;
@@ -424,5 +425,36 @@ public abstract class BaseRules implements Rules {
     @Override
     public boolean generateJavaClient() {
         return !isModelOnly;
+    }
+
+    @Override
+    public boolean generateDeleteByPrimaryKeyForDSQL() {
+        return introspectedTable.hasPrimaryKeyColumns();
+    }
+
+    @Override
+    public boolean generateMultipleRowInsertForDSQL() {
+        // multi row inserts work if we don't expect generated keys, or of the generated keys are
+        // JDBC standard.
+        return introspectedTable.getGeneratedKey().map(GeneratedKey::isJdbcStandard)
+                .orElse(true);
+    }
+
+    @Override
+    public boolean generateSelectByPrimaryKeyForDSQL() {
+        return introspectedTable.hasPrimaryKeyColumns()
+                && (introspectedTable.hasBaseColumns() || introspectedTable
+                        .hasBLOBColumns());
+    }
+
+    @Override
+    public boolean generateUpdateByPrimaryKeyForDSQL() {
+        if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).isEmpty()) {
+            return false;
+        }
+
+        return introspectedTable.hasPrimaryKeyColumns()
+                && (introspectedTable.hasBLOBColumns() || introspectedTable
+                        .hasBaseColumns());
     }
 }

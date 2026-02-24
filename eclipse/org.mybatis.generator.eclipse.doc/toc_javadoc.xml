@@ -42,13 +42,12 @@
       <topic href="html/javadoc/org/mybatis/generator/merge/xml/package-summary.html" label="org.mybatis.generator.merge.xml" />
       <topic href="html/javadoc/org/mybatis/generator/plugins/package-summary.html" label="org.mybatis.generator.plugins" />
       <topic href="html/javadoc/org/mybatis/generator/plugins/dsql/package-summary.html" label="org.mybatis.generator.plugins.dsql" />
-      <topic href="html/javadoc/org/mybatis/generator/runtime/common/package-summary.html" label="org.mybatis.generator.runtime.common" />
       <topic href="html/javadoc/org/mybatis/generator/runtime/package-summary.html" label="org.mybatis.generator.runtime" />
-      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql" />
-      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/java/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql.java" />
-      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/java/elements/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql.java.elements" />
-      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/kotlin/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql.kotlin" />
-      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/kotlin/elements/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql.kotlin.elements" />
+      <topic href="html/javadoc/org/mybatis/generator/runtime/common/package-summary.html" label="org.mybatis.generator.runtime.common" />
+      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamicsql/java/package-summary.html" label="org.mybatis.generator.runtime.dynamicsql.java" />
+      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamicsql/java/elements/package-summary.html" label="org.mybatis.generator.runtime.dynamicsql.java.elements" />
+      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamicsql/kotlin/package-summary.html" label="org.mybatis.generator.runtime.dynamicsql.kotlin" />
+      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamicsql/kotlin/elements/package-summary.html" label="org.mybatis.generator.runtime.dynamicsql.kotlin.elements" />
       <topic href="html/javadoc/org/mybatis/generator/runtime/mybatis3/package-summary.html" label="org.mybatis.generator.runtime.mybatis3" />
       <topic href="html/javadoc/org/mybatis/generator/runtime/mybatis3/javamapper/package-summary.html" label="org.mybatis.generator.runtime.mybatis3.javamapper" />
       <topic href="html/javadoc/org/mybatis/generator/runtime/mybatis3/javamapper/elements/package-summary.html" label="org.mybatis.generator.runtime.mybatis3.javamapper.elements" />

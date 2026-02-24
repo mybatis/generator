@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.codegen;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,10 +33,6 @@ public abstract class AbstractKotlinGenerator extends AbstractGenerator {
 
     public String getProject() {
         return project;
-    }
-
-    public List<KotlinFile> listOf(KotlinFile... kotlinFiles) {
-        return Arrays.asList(kotlinFiles);
     }
 
     public abstract static class AbstractKotlinGeneratorBuilder<T extends AbstractKotlinGeneratorBuilder<T>>

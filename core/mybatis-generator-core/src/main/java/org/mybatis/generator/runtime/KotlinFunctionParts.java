@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
+package org.mybatis.generator.runtime;
 
 import java.util.ArrayList;
 import java.util.HashSet;

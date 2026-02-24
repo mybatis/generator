@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -240,6 +240,38 @@ public interface Rules {
      * @return true if the Java client should be generated
      */
     boolean generateJavaClient();
+
+    /**
+     * In the DSQL runtimes, we only generate delete by primary key if the table has primary key columns.
+     *
+     * @return true if delete by primary key should be generated in DSQL runtimes
+     */
+    boolean generateDeleteByPrimaryKeyForDSQL();
+
+    /**
+     * In the DSQL runtimes, we only generate multiple row inserts if we don't expect generated
+     * keys, or the generated keys are JDBC standard.
+     *
+     * @return true if multiple row inserts should be generated in DSQL runtimes
+     */
+    boolean generateMultipleRowInsertForDSQL();
+
+    /**
+     * In the DSQL runtimes, we only generate select by primary key if the table has primary key columns
+     * and either base or BLOB columns. We don't generate select by primary key if there are only
+     * primary ky columns.
+     *
+     * @return true if select by primary key should be generated in DSQL runtimes
+     */
+    boolean generateSelectByPrimaryKeyForDSQL();
+
+    /**
+     * In the DSQL runtimes, we only generate update by primary key if the table has primary key columns
+     * and non-primary key columns that are not generated always.
+     *
+     * @return true if update by primary key should be generated in DSQL runtimes
+     */
+    boolean generateUpdateByPrimaryKeyForDSQL();
 
     IntrospectedTable getIntrospectedTable();
 }

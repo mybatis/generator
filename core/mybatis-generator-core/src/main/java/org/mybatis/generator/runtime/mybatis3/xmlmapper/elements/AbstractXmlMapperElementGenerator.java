@@ -347,4 +347,56 @@ public abstract class AbstractXmlMapperElementGenerator extends AbstractXmlEleme
 
         return answer;
     }
+
+    protected XmlElement generateSelectByExample(boolean forBlobs) {
+        String statementId;
+        String resultMapId;
+        if (forBlobs) {
+            statementId = introspectedTable.getSelectByExampleWithBLOBsStatementId();
+            resultMapId = introspectedTable.getResultMapWithBLOBsId();
+        } else {
+            statementId = introspectedTable.getSelectByExampleStatementId();
+            resultMapId = introspectedTable.getBaseResultMapId();
+        }
+
+        XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", statementId)); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("resultMap", resultMapId)); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("parameterType", introspectedTable.getExampleType())); //$NON-NLS-1$
+
+        commentGenerator.addComment(answer);
+
+        answer.addElement(new TextElement("select")); //$NON-NLS-1$
+        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+        ifElement.addAttribute(new Attribute("test", "distinct")); //$NON-NLS-1$ //$NON-NLS-2$
+        ifElement.addElement(new TextElement("distinct")); //$NON-NLS-1$
+        answer.addElement(ifElement);
+
+        StringBuilder sb = new StringBuilder();
+        introspectedTable.getSelectByExampleQueryId().ifPresent(s -> {
+            sb.append('\'');
+            sb.append(s);
+            sb.append("' as QUERYID,"); //$NON-NLS-1$
+            answer.addElement(new TextElement(sb.toString()));
+        });
+
+        answer.addElement(getBaseColumnListElement());
+        if (forBlobs) {
+            answer.addElement(new TextElement(",")); //$NON-NLS-1$
+            answer.addElement(getBlobColumnListElement());
+        }
+
+        sb.setLength(0);
+        sb.append("from "); //$NON-NLS-1$
+        sb.append(introspectedTable.getAliasedFullyQualifiedRuntimeTableName());
+        answer.addElement(new TextElement(sb.toString()));
+        answer.addElement(getExampleIncludeElement());
+
+        ifElement = new XmlElement("if"); //$NON-NLS-1$
+        ifElement.addAttribute(new Attribute("test", "orderByClause != null")); //$NON-NLS-1$ //$NON-NLS-2$
+        ifElement.addElement(new TextElement("order by ${orderByClause}")); //$NON-NLS-1$
+        answer.addElement(ifElement);
+
+        return answer;
+    }
 }

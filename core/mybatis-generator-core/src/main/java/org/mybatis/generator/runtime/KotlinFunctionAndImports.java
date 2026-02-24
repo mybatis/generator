@@ -15,12 +15,17 @@
  */
 package org.mybatis.generator.runtime;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.exception.InternalException;
 
 public class KotlinFunctionAndImports {
 
@@ -63,8 +68,30 @@ public class KotlinFunctionAndImports {
             return this;
         }
 
+        public Builder withExtraFunctionParts(KotlinFunctionParts kotlinFunctionParts) {
+            if (function == null) {
+                throw new InternalException(getString("RuntimeError.31")); //$NON-NLS-1$
+            }
+
+            for (KotlinArg argument : kotlinFunctionParts.getArguments()) {
+                function.addArgument(argument);
+            }
+
+            for (String annotation : kotlinFunctionParts.getAnnotations()) {
+                function.addAnnotation(annotation);
+            }
+
+            function.addCodeLines(kotlinFunctionParts.getCodeLines());
+            imports.addAll(kotlinFunctionParts.getImports());
+            return this;
+        }
+
         public KotlinFunctionAndImports build() {
             return new KotlinFunctionAndImports(this);
+        }
+
+        public Optional<KotlinFunctionAndImports> buildOptional() {
+            return Optional.of(build());
         }
     }
 }

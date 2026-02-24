@@ -15,91 +15,70 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.KotlinFunctionAndImports;
-import org.mybatis.generator.runtime.dynamicsql.DynamicSqlUtils;
-import org.mybatis.generator.runtime.mybatis3.ListUtilities;
+import org.mybatis.generator.runtime.KotlinFunctionParts;
 
 public class InsertMultipleExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
     private final FullyQualifiedKotlinType recordType;
     private final String mapperName;
-    private final String supportObjectImport;
     private final KotlinFragmentGenerator fragmentGenerator;
 
     private InsertMultipleExtensionFunctionGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
         mapperName = Objects.requireNonNull(builder.mapperName);
-        supportObjectImport = Objects.requireNonNull(builder.supportObjectImport);
         fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
-        if (!DynamicSqlUtils.generateMultipleRowInsert(introspectedTable)) {
+        if (!introspectedTable.getRules().generateMultipleRowInsertForDSQL()) {
             return Optional.empty();
         }
 
+        Set<String> imports = new HashSet<>();
+
         // Kotlin type inference gets lost if we don't name the helper method something different from the
         // regular mapper method
-        String functionImport;
         String functionShortName;
-        if (DynamicSqlUtils.canRetrieveMultiRowGeneratedKeys(introspectedTable)) {
-            functionImport =
-                    "org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultipleWithGeneratedKeys"; //$NON-NLS-1$
+        if (introspectedTable.getGeneratedKey().isPresent()) {
+            imports.add("org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultipleWithGeneratedKeys"); //$NON-NLS-1$
             functionShortName = "insertMultipleWithGeneratedKeys"; //$NON-NLS-1$
         } else {
-            functionImport = "org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultiple"; //$NON-NLS-1$
+            imports.add("org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultiple"); //$NON-NLS-1$
             functionShortName = "insertMultiple"; //$NON-NLS-1$
         }
 
-        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple") //$NON-NLS-1$
+        KotlinFunctionParts functionBody = fragmentGenerator.generateInsertMultipleBody(functionShortName);
+
+        KotlinFunction function = KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("records") //$NON-NLS-1$
                         .withDataType("Collection<" //$NON-NLS-1$
                                 + recordType.getShortNameWithTypeArguments()
                                 + ">") //$NON-NLS-1$
                         .build())
-                .build())
-                .withImport(functionImport)
-                .withImports(recordType.getImportList())
+                .withCodeLines(functionBody.getCodeLines())
                 .build();
 
-        addFunctionComment(functionAndImports);
+        commentGenerator.addGeneralFunctionComment(function, introspectedTable, imports);
 
-        KotlinFunction function = functionAndImports.getFunction();
-
-        function.addCodeLine(functionShortName + "(this::insertMultiple" //$NON-NLS-1$
-                + ", records, " + tableFieldName //$NON-NLS-1$
-                + ") {"); //$NON-NLS-1$
-
-        List<IntrospectedColumn> columns =
-                ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
-        for (IntrospectedColumn column : columns) {
-            KotlinFragmentGenerator.FieldNameAndImport fieldNameAndImport =
-                    fragmentGenerator.calculateFieldNameAndImport(tableFieldName, supportObjectImport, column);
-            functionAndImports.getImports().add(fieldNameAndImport.importString());
-
-            function.addCodeLine(OutputUtilities.kotlinIndent(1)
-                    + "map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                    + ") toProperty \"" + column.getJavaProperty() //$NON-NLS-1$
-                    + "\""); //$NON-NLS-1$
-        }
-
-        function.addCodeLine("}"); //$NON-NLS-1$
-
-        return Optional.of(functionAndImports);
+        return KotlinFunctionAndImports.withFunction(function)
+                .withImports(imports)
+                .withImports(functionBody.getImports())
+                .withImports(recordType.getImportList())
+                .buildOptional();
     }
+
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
@@ -109,7 +88,6 @@ public class InsertMultipleExtensionFunctionGenerator extends AbstractKotlinMapp
     public static class Builder extends BaseBuilder<Builder> {
         private @Nullable FullyQualifiedKotlinType recordType;
         private @Nullable String mapperName;
-        private @Nullable String supportObjectImport;
         private @Nullable KotlinFragmentGenerator fragmentGenerator;
 
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
@@ -119,11 +97,6 @@ public class InsertMultipleExtensionFunctionGenerator extends AbstractKotlinMapp
 
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
-            return this;
-        }
-
-        public Builder withSupportObjectImport(String supportObjectImport) {
-            this.supportObjectImport = supportObjectImport;
             return this;
         }
 

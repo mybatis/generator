@@ -24,7 +24,6 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.XmlConstants;
-import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.BaseColumnListElementGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.BlobColumnListElementGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.CountByExampleElementGenerator;
@@ -83,143 +82,129 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     }
 
     protected void addResultMapWithoutBLOBsElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new ResultMapWithoutBLOBsElementGenerator.Builder())
+        initializeSubBuilder(new ResultMapWithoutBLOBsElementGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+                .build()
+                .execute(parentElement);
     }
 
     protected void addResultMapWithBLOBsElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new ResultMapWithBLOBsElementGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new ResultMapWithBLOBsElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addExampleWhereClauseElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new ExampleWhereClauseElementGenerator.Builder())
+        initializeSubBuilder(new ExampleWhereClauseElementGenerator.Builder())
                 .isForUpdateByExample(false)
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+                .build()
+                .execute(parentElement);
     }
 
     protected void addMyBatis3UpdateByExampleWhereClauseElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new ExampleWhereClauseElementGenerator.Builder())
+        initializeSubBuilder(new ExampleWhereClauseElementGenerator.Builder())
                 .isForUpdateByExample(true)
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+                .build()
+                .execute(parentElement);
     }
 
     protected void addBaseColumnListElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new BaseColumnListElementGenerator.Builder()).build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new BaseColumnListElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addBlobColumnListElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new BlobColumnListElementGenerator.Builder()).build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new BlobColumnListElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addSelectByExampleWithoutBLOBsElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new SelectByExampleWithoutBLOBsElementGenerator.Builder()).build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new SelectByExampleWithoutBLOBsElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addSelectByExampleWithBLOBsElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new SelectByExampleWithBLOBsElementGenerator.Builder()).build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new SelectByExampleWithBLOBsElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addSelectByPrimaryKeyElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new SelectByPrimaryKeyElementGenerator.Builder()).build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new SelectByPrimaryKeyElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addDeleteByExampleElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new DeleteByExampleElementGenerator.Builder()).build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new DeleteByExampleElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new DeleteByPrimaryKeyElementGenerator.Builder())
+        initializeSubBuilder(new DeleteByPrimaryKeyElementGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+                .build()
+                .execute(parentElement);
     }
 
     protected void addInsertElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new InsertElementGenerator.Builder())
+        initializeSubBuilder(new InsertElementGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+                .build()
+                .execute(parentElement);
     }
 
     protected void addInsertSelectiveElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new InsertSelectiveElementGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new InsertSelectiveElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addCountByExampleElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new CountByExampleElementGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new CountByExampleElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addUpdateByExampleSelectiveElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new UpdateByExampleSelectiveElementGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new UpdateByExampleSelectiveElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addUpdateByExampleWithBLOBsElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new UpdateByExampleWithBLOBsElementGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new UpdateByExampleWithBLOBsElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addUpdateByExampleWithoutBLOBsElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new UpdateByExampleWithoutBLOBsElementGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new UpdateByExampleWithoutBLOBsElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addUpdateByPrimaryKeySelectiveElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new UpdateByPrimaryKeySelectiveElementGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new UpdateByPrimaryKeySelectiveElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addUpdateByPrimaryKeyWithBLOBsElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new UpdateByPrimaryKeyWithBLOBsElementGenerator.Builder())
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+        initializeSubBuilder(new UpdateByPrimaryKeyWithBLOBsElementGenerator.Builder())
+                .build()
+                .execute(parentElement);
     }
 
     protected void addUpdateByPrimaryKeyWithoutBLOBsElement(XmlElement parentElement) {
-        var generator = initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder())
+        initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder())
                 .isSimple(false)
-                .build();
-
-        CodeGenUtils.executeXmlElementGenerator(parentElement, generator);
+                .build()
+                .execute(parentElement);
     }
 
     @Override

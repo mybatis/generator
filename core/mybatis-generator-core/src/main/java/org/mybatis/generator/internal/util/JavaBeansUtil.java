@@ -15,10 +15,7 @@
  */
 package org.mybatis.generator.internal.util;
 
-import static org.mybatis.generator.internal.util.StringUtility.isTrue;
-
 import java.util.Locale;
-import java.util.Properties;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -29,9 +26,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.config.TableConfiguration;
 
 public class JavaBeansUtil {
 
@@ -193,7 +188,7 @@ public class JavaBeansUtil {
     public static Method getJavaBeansGetter(IntrospectedColumn introspectedColumn, CommentGenerator commentGenerator,
                                             IntrospectedTable introspectedTable) {
         Method method = getBasicJavaBeansGetter(introspectedColumn);
-        addGeneratedGetterJavaDoc(method, introspectedColumn, commentGenerator, introspectedTable);
+        commentGenerator.addGetterComment(method, introspectedTable, introspectedColumn);
         return method;
     }
 
@@ -202,7 +197,8 @@ public class JavaBeansUtil {
                                                                    IntrospectedTable introspectedTable,
                                                                    CompilationUnit compilationUnit) {
         Method method = getBasicJavaBeansGetter(introspectedColumn);
-        addGeneratedGetterAnnotation(method, introspectedColumn, commentGenerator, introspectedTable, compilationUnit);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, introspectedColumn,
+                compilationUnit.getImportedTypes());
         return method;
     }
 
@@ -221,24 +217,10 @@ public class JavaBeansUtil {
         return method;
     }
 
-    private static void addGeneratedGetterJavaDoc(Method method, IntrospectedColumn introspectedColumn,
-                                                  CommentGenerator commentGenerator,
-                                                  IntrospectedTable introspectedTable) {
-        commentGenerator.addGetterComment(method, introspectedTable, introspectedColumn);
-    }
-
-    private static void addGeneratedGetterAnnotation(Method method, IntrospectedColumn introspectedColumn,
-                                                     CommentGenerator commentGenerator,
-                                                     IntrospectedTable introspectedTable,
-                                                     CompilationUnit compilationUnit) {
-        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, introspectedColumn,
-                compilationUnit.getImportedTypes());
-    }
-
     public static Field getJavaBeansField(IntrospectedColumn introspectedColumn, CommentGenerator commentGenerator,
                                           IntrospectedTable introspectedTable) {
         Field field = getBasicJavaBeansField(introspectedColumn);
-        addGeneratedJavaDoc(field, commentGenerator, introspectedColumn, introspectedTable);
+        commentGenerator.addFieldComment(field, introspectedTable, introspectedColumn);
         return field;
     }
 
@@ -247,7 +229,8 @@ public class JavaBeansUtil {
                                                                  IntrospectedTable introspectedTable,
                                                                  CompilationUnit compilationUnit) {
         Field field = getBasicJavaBeansField(introspectedColumn);
-        addGeneratedAnnotation(field, commentGenerator, introspectedColumn, introspectedTable, compilationUnit);
+        commentGenerator.addFieldAnnotation(field, introspectedTable, introspectedColumn,
+                compilationUnit.getImportedTypes());
         return field;
     }
 
@@ -262,24 +245,10 @@ public class JavaBeansUtil {
         return field;
     }
 
-    private static void addGeneratedJavaDoc(Field field, CommentGenerator commentGenerator,
-                                            IntrospectedColumn introspectedColumn,
-                                            IntrospectedTable introspectedTable) {
-        commentGenerator.addFieldComment(field, introspectedTable, introspectedColumn);
-    }
-
-    private static void addGeneratedAnnotation(Field field, CommentGenerator commentGenerator,
-                                               IntrospectedColumn introspectedColumn,
-                                               IntrospectedTable introspectedTable,
-                                               CompilationUnit compilationUnit) {
-        commentGenerator.addFieldAnnotation(field, introspectedTable, introspectedColumn,
-                compilationUnit.getImportedTypes());
-    }
-
     public static Method getJavaBeansSetter(IntrospectedColumn introspectedColumn,
                                             CommentGenerator commentGenerator, IntrospectedTable introspectedTable) {
         Method method = getBasicJavaBeansSetter(introspectedColumn);
-        addGeneratedSetterJavaDoc(method, introspectedColumn, commentGenerator, introspectedTable);
+        commentGenerator.addSetterComment(method, introspectedTable, introspectedColumn);
         return method;
     }
 
@@ -288,8 +257,17 @@ public class JavaBeansUtil {
                                                                    IntrospectedTable introspectedTable,
                                                                    CompilationUnit compilationUnit) {
         Method method = getBasicJavaBeansSetter(introspectedColumn);
-        addGeneratedSetterAnnotation(method, introspectedColumn, commentGenerator, introspectedTable, compilationUnit);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, introspectedColumn,
+                compilationUnit.getImportedTypes());
         return method;
+    }
+
+    public static String generateFieldSetterForConstructor(IntrospectedColumn introspectedColumn) {
+        return "this." //$NON-NLS-1$
+                + introspectedColumn.getJavaProperty()
+                + " = " //$NON-NLS-1$
+                + introspectedColumn.getJavaProperty()
+                + ';';
     }
 
     private static Method getBasicJavaBeansSetter(IntrospectedColumn introspectedColumn) {
@@ -323,41 +301,16 @@ public class JavaBeansUtil {
         return method;
     }
 
-    private static void addGeneratedSetterJavaDoc(Method method, IntrospectedColumn introspectedColumn,
-                                                  CommentGenerator commentGenerator,
-                                                  IntrospectedTable introspectedTable) {
-        commentGenerator.addSetterComment(method, introspectedTable, introspectedColumn);
-    }
-
-    private static void addGeneratedSetterAnnotation(Method method, IntrospectedColumn introspectedColumn,
-                                                     CommentGenerator commentGenerator,
-                                                     IntrospectedTable introspectedTable,
-                                                     CompilationUnit compilationUnit) {
-        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, introspectedColumn,
-                compilationUnit.getImportedTypes());
-    }
-
-    private static boolean isTrimStringsEnabled(Context context) {
-        Properties properties = context
-                .getJavaModelGeneratorConfiguration().getProperties();
-        return isTrue(properties
-                .getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS));
-    }
-
     private static boolean isTrimStringsEnabled(IntrospectedTable table) {
-        TableConfiguration tableConfiguration = table.getTableConfiguration();
-        String trimSpaces = tableConfiguration.getProperties().getProperty(
-                PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS);
-        if (trimSpaces != null) {
-            return isTrue(trimSpaces);
-        }
-        return isTrimStringsEnabled(table.getContext());
+        return table.findTableOrModelGeneratorProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS)
+                .map(Boolean::parseBoolean)
+                .orElse(false);
     }
 
     private static boolean isTrimStringsEnabled(IntrospectedColumn column) {
         String trimSpaces = column.getProperties().getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS);
         if (trimSpaces != null) {
-            return isTrue(trimSpaces);
+            return Boolean.parseBoolean(trimSpaces);
         }
         return isTrimStringsEnabled(column.getIntrospectedTable());
     }

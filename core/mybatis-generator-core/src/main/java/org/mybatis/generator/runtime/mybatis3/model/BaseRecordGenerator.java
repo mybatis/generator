@@ -36,7 +36,8 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
-import org.mybatis.generator.runtime.CodeGenUtils;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.runtime.common.RootClassAndInterfaceUtility;
 
 public class BaseRecordGenerator extends AbstractJavaGenerator {
 
@@ -68,11 +69,14 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
             }
 
             if (!introspectedTable.isImmutable()) {
-                addDefaultConstructor(topLevelClass);
+                Method method = topLevelClass.generateBasicConstructor();
+                commentGenerator.addGeneralMethodComment(method, introspectedTable);
+                topLevelClass.addMethod(method);
             }
         }
 
-        Optional<RootClassInfo> rootClassInfo = getRootClass().map(rc -> RootClassInfo.getInstance(rc, warnings));
+        Optional<RootClassInfo> rootClassInfo = RootClassAndInterfaceUtility.getRootClass(introspectedTable)
+                .map(rc -> RootClassInfo.getInstance(rc, warnings));
         for (IntrospectedColumn introspectedColumn : getColumnsInThisClass()) {
             if (rootClassInfo.map(rci -> rci.containsProperty(introspectedColumn)).orElse(false)) {
                 continue;
@@ -112,7 +116,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
             superClass = Optional.of(new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType()));
         } else {
-            superClass = getRootClass().map(FullyQualifiedJavaType::new);
+            superClass = RootClassAndInterfaceUtility.getRootClass(introspectedTable).map(FullyQualifiedJavaType::new);
         }
 
         return superClass;
@@ -158,7 +162,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
 
         for (IntrospectedColumn introspectedColumn : constructorColumns) {
             if (!superColumns.contains(introspectedColumn.getActualColumnName())) {
-                method.addBodyLine(CodeGenUtils.generateFieldSetterForConstructor(introspectedColumn));
+                method.addBodyLine(JavaBeansUtil.generateFieldSetterForConstructor(introspectedColumn));
             }
         }
 

@@ -35,7 +35,8 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
-import org.mybatis.generator.runtime.CodeGenUtils;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.runtime.common.RootClassAndInterfaceUtility;
 
 public class PrimaryKeyGenerator extends AbstractJavaGenerator {
 
@@ -52,7 +53,7 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
-        getRootClass().ifPresent(rc -> {
+        RootClassAndInterfaceUtility.getRootClass(introspectedTable).ifPresent(rc -> {
             topLevelClass.setSuperClass(rc);
             topLevelClass.addImportedType(rc);
         });
@@ -61,13 +62,16 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
             addParameterizedConstructor(topLevelClass);
 
             if (!introspectedTable.isImmutable()) {
-                addDefaultConstructor(topLevelClass);
+                Method method = topLevelClass.generateBasicConstructor();
+                commentGenerator.addGeneralMethodComment(method, introspectedTable);
+                topLevelClass.addMethod(method);
             }
         }
 
         commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
 
-        Optional<RootClassInfo> rootClassInfo = getRootClass().map(rc -> RootClassInfo.getInstance(rc, warnings));
+        Optional<RootClassInfo> rootClassInfo = RootClassAndInterfaceUtility.getRootClass(introspectedTable)
+                .map(rc -> RootClassInfo.getInstance(rc, warnings));
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
             if (rootClassInfo.map(rci -> rci.containsProperty(introspectedColumn)).orElse(false)) {
                 continue;
@@ -112,7 +116,7 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
             method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
                     introspectedColumn.getJavaProperty()));
-            method.addBodyLine(CodeGenUtils.generateFieldSetterForConstructor(introspectedColumn));
+            method.addBodyLine(JavaBeansUtil.generateFieldSetterForConstructor(introspectedColumn));
         }
 
         topLevelClass.addMethod(method);

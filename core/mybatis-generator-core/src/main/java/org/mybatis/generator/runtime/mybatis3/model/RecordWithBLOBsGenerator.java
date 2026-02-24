@@ -35,7 +35,8 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
-import org.mybatis.generator.runtime.CodeGenUtils;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.runtime.common.RootClassAndInterfaceUtility;
 
 public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
 
@@ -63,11 +64,14 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
             addParameterizedConstructor(topLevelClass);
 
             if (!introspectedTable.isImmutable()) {
-                addDefaultConstructor(topLevelClass);
+                Method method = topLevelClass.generateBasicConstructor();
+                commentGenerator.addGeneralMethodComment(method, introspectedTable);
+                topLevelClass.addMethod(method);
             }
         }
 
-        Optional<RootClassInfo> rootClassInfo = getRootClass().map(rc -> RootClassInfo.getInstance(rc, warnings));
+        Optional<RootClassInfo> rootClassInfo = RootClassAndInterfaceUtility.getRootClass(introspectedTable)
+                .map(rc -> RootClassInfo.getInstance(rc, warnings));
         for (IntrospectedColumn introspectedColumn : introspectedTable.getBLOBColumns()) {
             if (rootClassInfo.map(rci -> rci.containsProperty(introspectedColumn)).orElse(false)) {
                 continue;
@@ -129,7 +133,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
         method.addBodyLine(sb.toString());
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getBLOBColumns()) {
-            method.addBodyLine(CodeGenUtils.generateFieldSetterForConstructor(introspectedColumn));
+            method.addBodyLine(JavaBeansUtil.generateFieldSetterForConstructor(introspectedColumn));
         }
 
         topLevelClass.addMethod(method);

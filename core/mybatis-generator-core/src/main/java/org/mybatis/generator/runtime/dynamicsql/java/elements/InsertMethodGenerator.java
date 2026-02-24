@@ -80,11 +80,9 @@ public class InsertMethodGenerator extends AbstractJavaInterfaceMethodGenerator 
 
         method.addBodyLine(");"); //$NON-NLS-1$
 
-        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+        return JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
-                .build();
-
-        return Optional.of(answer);
+                .buildOptional();
     }
 
     @Override

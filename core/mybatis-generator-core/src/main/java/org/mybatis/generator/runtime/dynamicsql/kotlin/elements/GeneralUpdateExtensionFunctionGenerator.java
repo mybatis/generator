@@ -15,8 +15,10 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
@@ -34,18 +36,23 @@ public class GeneralUpdateExtensionFunctionGenerator extends AbstractKotlinMappe
 
     @Override
     public Optional<KotlinFunctionAndImports> generateFunctionAndImports() {
-        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".update") //$NON-NLS-1$
+        Set<String> imports = new HashSet<>();
+        imports.add("org.mybatis.dynamic.sql.util.kotlin.UpdateCompleter"); //$NON-NLS-1$
+        imports.add("org.mybatis.dynamic.sql.util.kotlin.mybatis3.update"); //$NON-NLS-1$
+
+        KotlinFunction function = KotlinFunction.newOneLineFunction(mapperName + ".update") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("completer") //$NON-NLS-1$
                         .withDataType("UpdateCompleter") //$NON-NLS-1$
                         .build())
                 .withCodeLine("update(this::update, " + tableFieldName + ", completer)") //$NON-NLS-1$ //$NON-NLS-2$
-                .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.UpdateCompleter") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.update") //$NON-NLS-1$
                 .build();
 
-        addFunctionComment(functionAndImports);
+        commentGenerator.addGeneralFunctionComment(function, introspectedTable, imports);
+
+        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(function)
+                .withImports(imports)
+                .build();
+
         return Optional.of(functionAndImports);
     }
 

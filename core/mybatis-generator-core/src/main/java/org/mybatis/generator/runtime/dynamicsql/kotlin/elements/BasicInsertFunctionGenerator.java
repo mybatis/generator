@@ -15,8 +15,10 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
@@ -42,6 +44,11 @@ public class BasicInsertFunctionGenerator extends AbstractKotlinMapperFunctionGe
     }
 
     private KotlinFunctionAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
+        Set<String> imports = new HashSet<>();
+        imports.add("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
+        imports.add("org.apache.ibatis.annotations.InsertProvider"); //$NON-NLS-1$
+        imports.add("org.mybatis.dynamic.sql.insert.render.InsertStatementProvider"); //$NON-NLS-1$
+
         String parameterType = "InsertStatementProvider<" //$NON-NLS-1$
                 + recordType.getShortNameWithTypeArguments()
                 + ">"; //$NON-NLS-1$
@@ -54,19 +61,16 @@ public class BasicInsertFunctionGenerator extends AbstractKotlinMapperFunctionGe
                 .withAnnotation("@InsertProvider(type=SqlProviderAdapter::class, method=\"insert\")") //$NON-NLS-1$
                 .build();
 
-        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(function)
-                .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$
-                .withImport("org.apache.ibatis.annotations.InsertProvider") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.insert.render.InsertStatementProvider") //$NON-NLS-1$
-                .withImports(recordType.getImportList())
-                .build();
+        commentGenerator.addGeneralFunctionComment(function, introspectedTable, imports);
 
-        addFunctionComment(functionAndImports);
+        KotlinFunctionAndImports.Builder builder = KotlinFunctionAndImports.withFunction(function)
+                .withImports(imports)
+                .withImports(recordType.getImportList());
 
         GeneratedKeyAnnotationUtility.getKotlinSingleRowGeneratedKeyAnnotation(introspectedTable, gk)
-                .ifPresent(functionParts -> acceptParts(functionAndImports, functionParts));
+                .ifPresent(builder::withExtraFunctionParts);
 
-        return functionAndImports;
+        return builder.build();
     }
 
     @Override

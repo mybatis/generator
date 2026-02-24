@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.codegen.AbstractGenerator;
 
 public abstract class AbstractKotlinFunctionGenerator extends AbstractGenerator {
@@ -26,7 +27,47 @@ public abstract class AbstractKotlinFunctionGenerator extends AbstractGenerator 
         super(builder);
     }
 
+    /**
+     * Executes this generator, calls plugins, and applies the generated function and imports to
+     * the Kotlin file. This variant expects the generated function to be a function in a type.
+     *
+     * @param kotlinFile The Kotlin file to which the generated imports will be added.
+     * @param kotlinType The Kotlin type to which the generated function will be added.
+     * @return true if the function and imports were successfully generated and added to the Kotlin file, false
+     *     otherwise.
+     */
+    public boolean execute(KotlinFile kotlinFile, KotlinType kotlinType) {
+        return generateFunctionAndImports()
+                .filter(fi -> callPlugins(fi.getFunction(), kotlinFile))
+                .map(mi -> {
+                    kotlinType.addNamedItem(mi.getFunction());
+                    kotlinFile.addImports(mi.getImports());
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    /**
+     * Executes this generator, calls plugins, and applies the generated function and imports to
+     * the Kotlin file. This variant expects the generated function to be a top-level function.
+     *
+     * @param kotlinFile The Kotlin file to which the generated function and imports will be added.
+     * @return true if the function and imports were successfully generated and added to the Kotlin file, false
+     *     otherwise.
+     */
+    public boolean execute(KotlinFile kotlinFile) {
+        return generateFunctionAndImports()
+                .filter(fi -> callPlugins(fi.getFunction(), kotlinFile))
+                .map(mi -> {
+                    kotlinFile.addNamedItem(mi.getFunction());
+                    kotlinFile.addImports(mi.getImports());
+                    return true;
+                })
+                .orElse(false);
+    }
+
     public abstract Optional<KotlinFunctionAndImports> generateFunctionAndImports();
 
     public abstract boolean callPlugins(KotlinFunction function, KotlinFile kotlinFile);
+
 }

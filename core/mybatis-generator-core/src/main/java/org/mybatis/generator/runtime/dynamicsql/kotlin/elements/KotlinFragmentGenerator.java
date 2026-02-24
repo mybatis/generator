@@ -33,7 +33,7 @@ import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.runtime.CodeGenUtils;
+import org.mybatis.generator.runtime.KotlinFunctionParts;
 import org.mybatis.generator.runtime.dynamicsql.kotlin.KotlinDynamicSqlSupportClassGenerator;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
@@ -50,8 +50,8 @@ public class KotlinFragmentGenerator {
         resultMapId = Objects.requireNonNull(builder.resultMapId);
         supportObjectImport = Objects.requireNonNull(builder.supportObjectImport);
         tableFieldName = Objects.requireNonNull(builder.tableFieldName);
-        useSnakeCase = CodeGenUtils.findTableOrClientPropertyAsBoolean(PropertyRegistry.ANY_USE_SNAKE_CASE_IDENTIFIERS,
-                introspectedTable);
+        useSnakeCase = introspectedTable
+                .findTableOrClientGeneratorPropertyAsBoolean(PropertyRegistry.ANY_USE_SNAKE_CASE_IDENTIFIERS);
     }
 
     public KotlinFunctionParts getPrimaryKeyWhereClauseAndParameters(boolean forUpdate) {
@@ -94,6 +94,8 @@ public class KotlinFragmentGenerator {
         if (columnCount > 1) {
             builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "}"); //$NON-NLS-1$
         }
+
+        builder.withCodeLine("}"); //$NON-NLS-1$
 
         return builder.build();
     }
@@ -188,7 +190,7 @@ public class KotlinFragmentGenerator {
         return sb.toString();
     }
 
-    public KotlinFunctionParts getSetEqualLines(List<IntrospectedColumn> columnList) {
+    public KotlinFunctionParts getSetEqualLines(List<IntrospectedColumn> columnList, boolean terminate) {
 
         KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
 
@@ -202,10 +204,14 @@ public class KotlinFragmentGenerator {
                     + ") equalToOrNull row::" + column.getJavaProperty()); //$NON-NLS-1$
         }
 
+        if (terminate) {
+            builder.withCodeLine("}"); //$NON-NLS-1$
+        }
+
         return builder.build();
     }
 
-    public KotlinFunctionParts getSetEqualWhenPresentLines(List<IntrospectedColumn> columnList) {
+    public KotlinFunctionParts getSetEqualWhenPresentLines(List<IntrospectedColumn> columnList, boolean terminate) {
 
         KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
 
@@ -217,6 +223,10 @@ public class KotlinFragmentGenerator {
 
             builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                     + ") equalToWhenPresent row::" + column.getJavaProperty()); //$NON-NLS-1$
+        }
+
+        if (terminate) {
+            builder.withCodeLine("}"); //$NON-NLS-1$
         }
 
         return builder.build();
@@ -240,6 +250,42 @@ public class KotlinFragmentGenerator {
     }
 
     public record FieldNameAndImport(String fieldName, String importString) { }
+
+    public KotlinFunctionParts generateInsertMultipleBody(String functionShortName) {
+        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
+
+        builder.withCodeLine(functionShortName + "(this::insertMultiple" //$NON-NLS-1$
+                + ", records, " + tableFieldName //$NON-NLS-1$
+                + ") {"); //$NON-NLS-1$
+
+        return completeInsertBody(builder);
+    }
+
+    public KotlinFunctionParts generateInsertBody() {
+        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
+
+        builder.withCodeLine("insert(this::insert, row, " + tableFieldName //$NON-NLS-1$
+                + ") {"); //$NON-NLS-1$
+
+        return completeInsertBody(builder);
+    }
+
+    private KotlinFunctionParts completeInsertBody(KotlinFunctionParts.Builder builder) {
+        List<IntrospectedColumn> columns =
+                ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
+        for (IntrospectedColumn column : columns) {
+            FieldNameAndImport fieldNameAndImport =
+                    calculateFieldNameAndImport(tableFieldName, supportObjectImport, column);
+            builder.withImport(fieldNameAndImport.importString());
+
+            builder.withCodeLine("    map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                    + ") toProperty \"" + column.getJavaProperty() //$NON-NLS-1$
+                    + "\""); //$NON-NLS-1$
+        }
+
+        builder.withCodeLine("}"); //$NON-NLS-1$
+        return builder.build();
+    }
 
     public static class Builder {
         private @Nullable IntrospectedTable introspectedTable;

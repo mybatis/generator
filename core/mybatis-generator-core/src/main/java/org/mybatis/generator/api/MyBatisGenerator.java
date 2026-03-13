@@ -87,7 +87,7 @@ public class MyBatisGenerator {
 
         if (builder.isJavaFileMergeEnabled) {
             isJavaFileMergeEnabled = true;
-            javaFileMerger = JavaMergerFactory.defaultMerger();
+            javaFileMerger = JavaMergerFactory.getMerger(JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
         } else {
             isJavaFileMergeEnabled = false;
             javaFileMerger = (newContent, existingContent) -> newContent;

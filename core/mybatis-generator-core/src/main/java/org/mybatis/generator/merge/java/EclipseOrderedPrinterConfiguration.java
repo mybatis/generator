@@ -25,13 +25,17 @@ import com.github.javaparser.printer.configuration.imports.EclipseImportOrdering
  */
 public class EclipseOrderedPrinterConfiguration extends DefaultPrinterConfiguration {
     public EclipseOrderedPrinterConfiguration() {
+        addOption(new DefaultConfigurationOption(DefaultPrinterConfiguration.ConfigOption.ORDER_IMPORTS, true));
         addOption(new DefaultConfigurationOption(DefaultPrinterConfiguration.ConfigOption.SORT_IMPORTS_STRATEGY,
                         new EclipseImportOrderingStrategy()));
-        addOption(new DefaultConfigurationOption(DefaultPrinterConfiguration.ConfigOption.ORDER_IMPORTS, true));
-        addOption(new DefaultConfigurationOption(ConfigOption.INDENT_PRINT_ARRAYS_OF_ANNOTATIONS, true));
+        addOption(new DefaultConfigurationOption(ConfigOption.PRINT_COMMENTS, Boolean.TRUE));
+        addOption(new DefaultConfigurationOption(ConfigOption.PRINT_JAVADOC, Boolean.TRUE));
+        addOption(new DefaultConfigurationOption(ConfigOption.SPACE_AROUND_OPERATORS, Boolean.TRUE));
+
+        addOption(new DefaultConfigurationOption(ConfigOption.INDENT_CASE_IN_SWITCH, false));
+        addOption(new DefaultConfigurationOption(ConfigOption.MAX_ENUM_CONSTANTS_TO_ALIGN_HORIZONTALLY, 999));
         addOption(new DefaultConfigurationOption(ConfigOption.INDENTATION,
                 new Indentation(Indentation.IndentType.SPACES, 4)));
-        addOption(new DefaultConfigurationOption(ConfigOption.MAX_ENUM_CONSTANTS_TO_ALIGN_HORIZONTALLY, 999));
-        addOption(new DefaultConfigurationOption(ConfigOption.INDENT_CASE_IN_SWITCH, false));
+        addOption(new DefaultConfigurationOption(ConfigOption.INDENT_PRINT_ARRAYS_OF_ANNOTATIONS, true));
     }
 }

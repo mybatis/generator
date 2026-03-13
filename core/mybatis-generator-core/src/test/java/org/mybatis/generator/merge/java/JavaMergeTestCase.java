@@ -15,13 +15,8 @@
  */
 package org.mybatis.generator.merge.java;
 
-public class JavaMergerFactory {
-    public static JavaFileMerger getMerger(PrinterConfiguration printerConfiguration) {
-        return new JavaFileMergerJavaParserImpl(printerConfiguration);
-    }
+import org.mybatis.generator.merge.MergeTestCase;
 
-    public enum PrinterConfiguration {
-        ECLIPSE,
-        LEXICAL_PRESERVING;
-    }
+public abstract class JavaMergeTestCase extends MergeTestCase {
+    public abstract JavaMergerFactory.PrinterConfiguration printerConfiguration();
 }

@@ -15,9 +15,7 @@
  */
 package org.mybatis.generator.merge.java;
 
-import org.mybatis.generator.merge.MergeTestCase;
-
-public class ShouldMergeInputsCorrectly extends MergeTestCase {
+public class ShouldMergeInputsCorrectly extends JavaMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return """
@@ -79,5 +77,10 @@ public class ShouldMergeInputsCorrectly extends MergeTestCase {
                     }
                 }
                 """;
+    }
+
+    @Override
+    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
+        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
     }
 }

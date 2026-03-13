@@ -19,9 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.mybatis.generator.config.MergeConstants;
-import org.mybatis.generator.merge.MergeTestCase;
 
-public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends MergeTestCase {
+public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends JavaMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return String.format("""
@@ -84,5 +83,10 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Merg
     @Override
     public List<String> parameterVariants() {
         return Arrays.stream(MergeConstants.getOldElementTags()).toList();
+    }
+
+    @Override
+    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
+        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
     }
 }

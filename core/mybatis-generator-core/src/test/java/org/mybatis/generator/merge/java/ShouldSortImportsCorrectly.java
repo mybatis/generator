@@ -15,9 +15,7 @@
  */
 package org.mybatis.generator.merge.java;
 
-import org.mybatis.generator.merge.MergeTestCase;
-
-public class ShouldSortImportsCorrectly extends MergeTestCase {
+public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return """
@@ -90,5 +88,10 @@ public class ShouldSortImportsCorrectly extends MergeTestCase {
                     }
                 }
                 """;
+    }
+
+    @Override
+    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
+        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
     }
 }

@@ -15,14 +15,12 @@
  */
 package org.mybatis.generator.merge.java;
 
-import org.mybatis.generator.merge.MergeTestCase;
-
 /**
  * This test case verifies that generated items with the special text
  * "do_not_delete_during_merge" survive the merge. This is something that is
  * supported in the legacy model classes.
  */
-public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
+public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return """
@@ -199,5 +197,10 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends MergeTestCase {
                   }
               }
               """;
+    }
+
+    @Override
+    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
+        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
     }
 }

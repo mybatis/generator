@@ -15,9 +15,7 @@
  */
 package org.mybatis.generator.merge.java;
 
-import org.mybatis.generator.merge.MergeTestCase;
-
-public class ShouldHandleClassToRecordConversions extends MergeTestCase {
+public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return
@@ -107,5 +105,10 @@ public class ShouldHandleClassToRecordConversions extends MergeTestCase {
                     }
                 }
                 """;
+    }
+
+    @Override
+    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
+        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
     }
 }

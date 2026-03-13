@@ -15,17 +15,16 @@
  */
 package org.mybatis.generator.api.dom.java;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
-import org.mybatis.generator.api.dom.java.render.MethodRenderer;
+import org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer;
 
 class MethodTest {
-
-    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     @Test
     void testConstructor() {
@@ -128,7 +127,7 @@ class MethodTest {
     }
 
     @Test
-    void testAddTypeParamaters() {
+    void testAddTypeParameters() {
 
         Method method = new Method("bar");
         assertEquals(0, method.getTypeParameters().size());
@@ -144,7 +143,7 @@ class MethodTest {
     }
 
     @Test
-    void testAddParamaters() {
+    void testAddParameters() {
 
         Method method = new Method("bar");
         assertEquals(0, method.getParameters().size());
@@ -214,7 +213,7 @@ class MethodTest {
         method.addTypeParameter(new TypeParameter("T", Collections.singletonList(listType)));
         method.addTypeParameter(new TypeParameter("R", Arrays.asList(listType, comparatorType)));
 
-        FullyQualifiedJavaType functionType = new FullyQualifiedJavaType("java.util.Function");
+        FullyQualifiedJavaType functionType = new FullyQualifiedJavaType("java.util.function.Function");
         functionType.addTypeArgument(typeT);
         functionType.addTypeArgument(typeR);
         method.addParameter(new Parameter(typeT, "t"));
@@ -223,17 +222,28 @@ class MethodTest {
 
         method.addBodyLine("return func.apply(t);");
 
-        String excepted = "public static final synchronized <T extends List<String>, R extends List<String> & Comparator<String>> R foo(T t, Function<T, R> func) {" + LINE_SEPARATOR
-                        + "    return func.apply(t);" + LINE_SEPARATOR
-                        + "}";
-
-        MethodRenderer renderer = new MethodRenderer();
         TopLevelClass topLevelClass = new TopLevelClass("foo.Bar");
         topLevelClass.addImportedType(comparatorType);
         topLevelClass.addImportedType(functionType);
         topLevelClass.addImportedType(listType);
+        topLevelClass.addMethod(method);
 
-        String rendered = String.join(LINE_SEPARATOR, renderer.render(method, false, topLevelClass));
-        assertEquals(excepted, rendered);
+        String expected =
+                """
+                package foo;
+
+                import java.util.Comparator;
+                import java.util.List;
+                import java.util.function.Function;
+
+                class Bar {
+                    public static final synchronized <T extends List<String>, R extends List<String> & Comparator<String>> R foo(T t, Function<T, R> func) {
+                        return func.apply(t);
+                    }
+                }""";
+
+        TopLevelClassRenderer renderer = new TopLevelClassRenderer();
+        String rendered = renderer.render(topLevelClass);
+        assertThat(rendered).isEqualToNormalizingNewlines(expected);
     }
 }

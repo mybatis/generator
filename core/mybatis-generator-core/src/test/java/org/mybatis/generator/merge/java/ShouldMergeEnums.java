@@ -15,9 +15,7 @@
  */
 package org.mybatis.generator.merge.java;
 
-import org.mybatis.generator.merge.MergeTestCase;
-
-public class ShouldMergeEnums extends MergeTestCase {
+public class ShouldMergeEnums extends JavaMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return
@@ -126,5 +124,10 @@ public class ShouldMergeEnums extends MergeTestCase {
                     }
                 }
                 """;
+    }
+
+    @Override
+    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
+        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
     }
 }

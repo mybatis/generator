@@ -15,14 +15,13 @@
  */
 package org.mybatis.generator.api.dom.java;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.mybatis.generator.api.dom.java.render.InnerClassRenderer;
+import org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer;
 
 class InnerClassTest {
-
-    private static final String LF = System.lineSeparator();
 
     @Test
     void testConstructor() {
@@ -175,23 +174,30 @@ class InnerClassTest {
         topLevelClass.addImportedType("com.hoge.UserInterface");
         topLevelClass.addImportedType("com.hoge.SuperClass");
 
-        String expected = "abstract class UserClass<T, U>  extends SuperClass implements UserInterface {" + LF
-                + "    String test;" + LF
-                + LF
-                + "    {" + LF
-                + "    }" + LF
-                + LF
-                + "    abstract void method1();" + LF
-                + LF
-                + "    class InnerUserClass {" + LF
-                + "    }" + LF
-                + LF
-                + "    enum TestEnum {" + LF
-                + "    }" + LF
-                + "}";
+        String expected =
+                """
+                package com.foo;
 
-        InnerClassRenderer renderer = new InnerClassRenderer();
-        String rendered = String.join(LF, renderer.render(topLevelClass, topLevelClass));
-        assertEquals(expected, rendered);
+                import com.hoge.SuperClass;
+                import com.hoge.UserInterface;
+
+                abstract class UserClass<T, U>  extends SuperClass implements UserInterface {
+                    String test;
+
+                    {
+                    }
+
+                    abstract void method1();
+
+                    class InnerUserClass {
+                    }
+
+                    enum TestEnum {
+                    }
+                }""";
+
+        TopLevelClassRenderer formatter = new TopLevelClassRenderer();
+        String rendered = formatter.render(topLevelClass);
+        assertThat(rendered).isEqualToNormalizingNewlines(expected);
     }
 }

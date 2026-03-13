@@ -46,18 +46,41 @@ recommended practice with JSpecify.</p>
     This is the most requested feature in MyBatis Generator. Thanks to @DanielLiu1123 for the initial contribution!
 </p>
 
-<p>The Java file merger in the core library is based on <a href="https://javaparser.org/">https://javaparser.org/</a>.
-    This is different from the merger in the Eclipse plugin, which was based on Eclipse JDT. For this reason
-    we are calling this new feature experimental for now. We encourage you to try it and provide any feedback
-    you might have.
+<p>The Java file merger is based on <a href="https://javaparser.org/">https://javaparser.org/</a>.
+    This is different from the merger in the Eclipse plugin, which was based on Eclipse JDT. We encourage you to try
+    it and provide any feedback you might have.
 </p>
+
+<p>This implementation differs from the original Eclipse-based implementation in the following ways:</p>
+<ol>
+  <li>Any merged file will be formatted for output using JavaParser's LexicalPreservingPrinter. This means that the
+    results of a Java merge will be slightly different from the results from the old Eclipse-based merger. The
+    differences should not impact compiling and running the results – they should be limited to import ordering,
+    method ordering, spacing, etc. If you experience any difficulties with this, please let us know by opening an
+    issue at GitHub.
+  </li>
+  <li>This implementation supports merging enums and records</li>
+  <li>This implementation supports merging when the existing file is a class or interface, and the newly generated
+      file is a record.
+  </li>
+  <li>This implementation does not support merging the super class from an existing file to the newly generated
+      file. This was always a little dangerous.
+  </li>
+  <li>This implementation does not attempt to preserve custom annotations added to generated elements. With the
+      generator now generating code with many annotations, it is challenging to distinguish between annotations
+      created by MBG, and custom annotations added after code generation by a user. If you need to add
+      annotations to generated elements, consider implementing a plugin that will create the annotations whenever
+      the genertor runs.
+  </li>
+</ol>
 
 <p>To enable the feature, two things are required:</p>
 <ol>
     <li>You must explicitely enable this feature with a new flag if you are using the command line runner, or by
         setting a property in the Ant or Maven runners.
     </li>
-    <li>You must add JavaParser to the runtime classpath of whatever runner you are using.
+    <li>You must add JavaParser to the runtime classpath of whatever runner you are using. The Eclipse runner
+      adds JavaParser to the classpath automatically.
     </li>
 </ol>
 

@@ -17,9 +17,7 @@ package org.mybatis.generator.merge.java;
 
 import java.util.List;
 
-import org.mybatis.generator.merge.MergeTestCase;
-
-public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation extends MergeTestCase {
+public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation extends JavaMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return String.format("""
@@ -106,5 +104,10 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
     @Override
     public List<String> parameterVariants() {
         return List.of("javax.annotation.Generated", "jakarta.annotation.Generated");
+    }
+
+    @Override
+    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
+        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
     }
 }

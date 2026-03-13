@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
@@ -82,11 +83,11 @@ public class InsertSelectiveExtensionFunctionGenerator extends AbstractKotlinMap
             builder.withImport(fieldNameAndImport.importString());
 
             if (column.isSequenceColumn()) {
-                builder.withCodeLine("    map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                         + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
                         + "\")"); //$NON-NLS-1$
             } else {
-                builder.withCodeLine("    map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                         + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
                         + "\", row::" //$NON-NLS-1$
                         + column.getJavaProperty() + ")"); //$NON-NLS-1$

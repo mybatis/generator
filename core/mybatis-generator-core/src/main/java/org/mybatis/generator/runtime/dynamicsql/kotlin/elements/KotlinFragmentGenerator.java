@@ -27,6 +27,7 @@ import java.util.Set;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
@@ -83,7 +84,7 @@ public class KotlinFragmentGenerator {
                 builder.withCodeLine(singleColumnWhere(fieldNameAndImport.fieldName(), argName));
                 first = false;
             } else if (first) {
-                builder.withCodeLine("    where {"); //$NON-NLS-1$
+                builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "where {"); //$NON-NLS-1$
                 builder.withCodeLine(multiColumnWhere(fieldNameAndImport.fieldName(), argName));
                 first = false;
             } else {
@@ -91,7 +92,7 @@ public class KotlinFragmentGenerator {
             }
         }
         if (columnCount > 1) {
-            builder.withCodeLine("    }"); //$NON-NLS-1$
+            builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "}"); //$NON-NLS-1$
         }
 
         builder.withCodeLine("}"); //$NON-NLS-1$
@@ -100,15 +101,17 @@ public class KotlinFragmentGenerator {
     }
 
     private String singleColumnWhere(String columName, String property) {
-        return "    where { " + composeIsEqualTo(columName, property)  + " }"; //$NON-NLS-1$ //$NON-NLS-2$
+        return OutputUtilities.kotlinIndent(1) + "where { " //$NON-NLS-1$
+                + composeIsEqualTo(columName, property)  + " }"; //$NON-NLS-1$
     }
 
     private String multiColumnWhere(String columName, String property) {
-        return "        " + composeIsEqualTo(columName, property); //$NON-NLS-1$
+        return OutputUtilities.kotlinIndent(2) + composeIsEqualTo(columName, property); //$NON-NLS-1$
     }
 
     private String multiColumnAnd(String columName, String property) {
-        return "        and { " + composeIsEqualTo(columName, property)  + " }"; //$NON-NLS-1$ //$NON-NLS-2$
+        return OutputUtilities.kotlinIndent(2) + "and { " //$NON-NLS-1$
+                + composeIsEqualTo(columName, property)  + " }"; //$NON-NLS-1$
     }
 
     private String composeIsEqualTo(String columName, String property) {
@@ -197,7 +200,7 @@ public class KotlinFragmentGenerator {
                     column);
             builder.withImport(fieldNameAndImport.importString());
 
-            builder.withCodeLine("    set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+            builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                     + ") equalToOrNull row::" + column.getJavaProperty()); //$NON-NLS-1$
         }
 
@@ -218,7 +221,7 @@ public class KotlinFragmentGenerator {
                     column);
             builder.withImport(fieldNameAndImport.importString());
 
-            builder.withCodeLine("    set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+            builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                     + ") equalToWhenPresent row::" + column.getJavaProperty()); //$NON-NLS-1$
         }
 

@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.merge.java;
 
-public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
+public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return
@@ -25,12 +25,18 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
                 import java.io.Serializable;
                 import javax.annotation.Generated;
 
-                public class Foo implements Serializable {
+                public record Name(int id, String firstName, String lastName) implements Serializable {
                     private static final long serialVersionUID = 1L;
 
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    public String hello() {
-                        return "hello";
+                    public static class SomeClass {
+                        public int method1() {
+                            return 3;
+                        }
                     }
                 }
                 """;
@@ -42,12 +48,19 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
                 """
                 package foo;
 
+                import java.util.stream.IntStream;
                 import javax.annotation.Generated;
 
-                public class Foo {
+                public record Name(int id, String firstName, String lastName) {
+
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    public String hello() {
-                        return "hello";
+                    public static class SomeClass {
+                        public int method2() {
+                            return IntStream.range(0, 10)
+                                .filter(i -> i % 2 == 0)
+                                .map(i -> i * 2)
+                                .reduce(Integer::sum);
+                        }
                     }
                 }
                 """;
@@ -59,24 +72,33 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
                 """
                 package foo;
 
+                import java.util.stream.IntStream;
+                import javax.annotation.Generated;
                 import java.io.Serializable;
 
-                import javax.annotation.Generated;
-
-                public class Foo implements Serializable {
+                public record Name(int id, String firstName, String lastName) implements Serializable {
 
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    public String hello() {
-                        return "hello";
+                    public static class SomeClass {
+                        public int method2() {
+                            return IntStream.range(0, 10)
+                                .filter(i -> i % 2 == 0)
+                                .map(i -> i * 2)
+                                .reduce(Integer::sum);
+                        }
                     }
-
+                   \s
                     private static final long serialVersionUID = 1L;
+                   \s
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
                 }
                 """;
     }
 
     @Override
     public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+        return JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING;
     }
 }

@@ -60,8 +60,14 @@ public abstract class MergeTestCase {
                 .forPackages(searchedPackage)
                 .filterInputsBy(n -> n.startsWith(searchedPackage))
                 .addScanners(Scanners.SubTypes))
-                .getSubTypesOf(MergeTestCase.class).stream()
+                .getSubTypesOf(MergeTestCase.class)
+                .stream()
+                .filter(MergeTestCase::isClassConcrete)
                 .flatMap(MergeTestCase::testCaseVariants);
+    }
+
+    private static boolean isClassConcrete(Class<?> clazz) {
+        return !clazz.isInterface() && (clazz.getModifiers() & java.lang.reflect.Modifier.ABSTRACT) == 0;
     }
 
     private static Stream<Arguments> testCaseVariants(Class<? extends MergeTestCase> clazz) {

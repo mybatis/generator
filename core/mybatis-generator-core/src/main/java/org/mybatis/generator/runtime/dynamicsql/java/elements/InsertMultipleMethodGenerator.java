@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -80,12 +81,12 @@ public class InsertMultipleMethodGenerator extends AbstractJavaInterfaceMethodGe
             String fieldName = fragmentGenerator.calculateFieldName(tableFieldName, column);
 
             if (first) {
-                method.addBodyLine("    c.map(" + fieldName //$NON-NLS-1$
+                method.addBodyLine(OutputUtilities.javaIndent(1) + "c.map(" + fieldName //$NON-NLS-1$
                         + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
                         + "\")"); //$NON-NLS-1$
                 first = false;
             } else {
-                method.addBodyLine("    .map(" + fieldName //$NON-NLS-1$
+                method.addBodyLine(OutputUtilities.javaIndent(1) + ".map(" + fieldName //$NON-NLS-1$
                         + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
                         + "\")"); //$NON-NLS-1$
             }

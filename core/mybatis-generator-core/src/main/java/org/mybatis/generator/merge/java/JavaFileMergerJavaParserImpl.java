@@ -25,7 +25,8 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.printer.DefaultPrettyPrinter;
-import com.github.javaparser.printer.configuration.PrinterConfiguration;
+import com.github.javaparser.printer.Printer;
+import com.github.javaparser.printer.lexicalpreservation.DefaultLexicalPreservingPrinter;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.exception.MultiMessageException;
 import org.mybatis.generator.exception.ShellException;
@@ -65,20 +66,29 @@ import org.mybatis.generator.exception.ShellException;
  * <ol>
  *     <li>This implementation supports merging enums and records</li>
  *     <li>This implementation supports merging when the existing file is a class or interface, and the newly generated
- *         file is a record.
+ *         file is a record (the result will be a record).
  *     </li>
- *     <li>This implementation does not support merging the super class from the existing file to the newly generated
- *         file. This was always a little dangerous.</li>
+ *     <li>This implementation does not support merging the super class from an existing file to the newly generated
+ *         file.</li>
+ *     <li>This implementation does not attempt to preserve custom annotations added to generated elements. With the
+ *         generator now generating code with many annotations, it is challenging to distinguish between annotations
+ *         created by MBG, and custom annotations added after code generation by a user. If you need to add
+ *         annotations to generated elements, consider implementing a plugin that will create the annotations whenever
+ *         the generator runs.
+ *     </li>
  * </ol>
  *
  * @author Freeman (original)
  * @author Jeff Butler (refactoring and enhancements)
  */
 public class JavaFileMergerJavaParserImpl implements JavaFileMerger {
-    private final PrinterConfiguration printerConfiguration;
+    private final Printer printer;
 
-    public JavaFileMergerJavaParserImpl(PrinterConfiguration printerConfiguration) {
-        this.printerConfiguration = printerConfiguration;
+    public JavaFileMergerJavaParserImpl(JavaMergerFactory.PrinterConfiguration printerConfiguration) {
+        printer = switch (printerConfiguration) {
+            case ECLIPSE -> new DefaultPrettyPrinter(new EclipseOrderedPrinterConfiguration());
+            case LEXICAL_PRESERVING -> new DefaultLexicalPreservingPrinter();
+        };
     }
 
     /**
@@ -93,6 +103,7 @@ public class JavaFileMergerJavaParserImpl implements JavaFileMerger {
     public String getMergedSource(String newFileContent, String existingFileContent) throws ShellException {
         ParserConfiguration parserConfiguration = new ParserConfiguration();
         parserConfiguration.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_25);
+        parserConfiguration.setLexicalPreservationEnabled(true);
         JavaParser javaParser = new JavaParser(parserConfiguration);
 
         ParseResults existingFileParseResults = parseAndFindMainTypeDeclaration(javaParser, existingFileContent,
@@ -133,7 +144,6 @@ public class JavaFileMergerJavaParserImpl implements JavaFileMerger {
                 .forEach(t -> JavaMergeUtilities.addSuperInterface(newFileParseResults.typeDeclaration, t));
 
         // Return the new (merged) file
-        DefaultPrettyPrinter printer = new DefaultPrettyPrinter(printerConfiguration);
         return printer.print(newFileParseResults.compilationUnit);
     }
 

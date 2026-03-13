@@ -51,7 +51,11 @@ public class OutputUtilities {
      *            the required indent level
      */
     public static void kotlinIndent(StringBuilder sb, int indentLevel) {
-        javaIndent(sb, indentLevel);
+        sb.append(kotlinIndent(indentLevel));
+    }
+
+    public static String kotlinIndent(int indentLevel) {
+        return "    ".repeat(indentLevel); //$NON-NLS-1$
     }
 
     /**
@@ -64,6 +68,10 @@ public class OutputUtilities {
      *            the required indent level
      */
     public static void xmlIndent(StringBuilder sb, int indentLevel) {
-        sb.append("  ".repeat(indentLevel)); //$NON-NLS-1$
+        sb.append(xmlIndent(indentLevel));
+    }
+
+    public static String xmlIndent(int indentLevel) {
+        return "  ".repeat(indentLevel); //$NON-NLS-1$
     }
 }

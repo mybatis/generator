@@ -28,11 +28,11 @@ import org.mybatis.generator.exception.MultiMessageException;
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.merge.MergeTestCase;
 
-class JavaFileMergerJavaParserImplTest {
+class JavaFileMergerTest {
     @ParameterizedTest
     @MethodSource("mergeTestCases")
-    void mergeTestCases(MergeTestCase testCase, String parameter) throws Exception {
-        JavaFileMergerJavaParserImpl javaFileMerger = new JavaFileMergerJavaParserImpl(new EclipseOrderedPrinterConfiguration());
+    void mergeTestCases(JavaMergeTestCase testCase, String parameter) throws Exception {
+        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(testCase.printerConfiguration());
         var actual = javaFileMerger.getMergedSource(testCase.newContent(parameter),
                 testCase.existingContent(parameter));
         assertThat(actual).isEqualToNormalizingNewlines(testCase.expectedContentAfterMerge(parameter));
@@ -44,7 +44,7 @@ class JavaFileMergerJavaParserImplTest {
 
     @Test
     void testBadExistingFile() {
-        JavaFileMergerJavaParserImpl javaFileMerger = new JavaFileMergerJavaParserImpl(new EclipseOrderedPrinterConfiguration());
+        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
         String badExistingFile = "some random text";
 
         assertThatExceptionOfType(ShellException.class).isThrownBy(() ->
@@ -55,7 +55,7 @@ class JavaFileMergerJavaParserImplTest {
 
     @Test
     void testBadNewFile() {
-        JavaFileMergerJavaParserImpl javaFileMerger = new JavaFileMergerJavaParserImpl(new EclipseOrderedPrinterConfiguration());
+        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
         String existingFile = "public class Foo { public int i; }";
         String badNewFile = "some random text";
 
@@ -67,7 +67,7 @@ class JavaFileMergerJavaParserImplTest {
 
     @Test
     void testNoTypeInExistingFile() {
-        JavaFileMergerJavaParserImpl javaFileMerger = new JavaFileMergerJavaParserImpl(new EclipseOrderedPrinterConfiguration());
+        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
         String existingFileNoTypes = "package foo.bar;";
 
         assertThatExceptionOfType(ShellException.class).isThrownBy(() ->

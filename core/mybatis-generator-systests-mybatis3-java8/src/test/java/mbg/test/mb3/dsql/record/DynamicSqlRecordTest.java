@@ -468,10 +468,15 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(2, 1, "Jeff", "Smith", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder()
+                    .id2(2)
+                    .id1(1)
+                    .firstname("Jeff")
+                    .lastname("Smith")
+                    .build();
             mapper.insert(record);
 
-            Pkfields updateRecord = new Pkfields(2, 1, "Scott", "Junes", null, null, null, null, null, null, null, null, null, false);
+            Pkfields updateRecord = record.withFirstname("Scott").withLastname("Jones");
             int rows = mapper.updateByPrimaryKey(updateRecord);
             assertEquals(1, rows);
 

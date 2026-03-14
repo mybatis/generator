@@ -80,7 +80,9 @@
   </context>
 
   <context id="dsql-records" defaultModelType="record">
-    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" /> <!-- should be ignored -->
+    <plugin type="org.mybatis.generator.plugins.RecordBuilderPlugin" />
+    <plugin type="org.mybatis.generator.plugins.RecordWitherPlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver" connectionURL="jdbc:hsqldb:mem:aname" userId="sa" />
 

@@ -60,19 +60,22 @@ public class JavaBeansUtil {
      * @return the getter method name
      */
     public static String getGetterMethodName(String property, FullyQualifiedJavaType fullyQualifiedJavaType) {
-        StringBuilder sb = new StringBuilder();
+        String prefix;
+        if (fullyQualifiedJavaType.equals(FullyQualifiedJavaType
+                .getBooleanPrimitiveInstance())) {
+            prefix = "is"; //$NON-NLS-1$
+        } else {
+            prefix = "get"; //$NON-NLS-1$
+        }
 
-        sb.append(property);
+        return prefix + uppercaseFirstLetterIfNecessary(property);
+    }
+
+    public static String uppercaseFirstLetterIfNecessary(String property) {
+        StringBuilder sb = new StringBuilder(property);
         if (Character.isLowerCase(sb.charAt(0))
                 && (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1)))) {
             sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-        }
-
-        if (fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getBooleanPrimitiveInstance())) {
-            sb.insert(0, "is"); //$NON-NLS-1$
-        } else {
-            sb.insert(0, "get"); //$NON-NLS-1$
         }
 
         return sb.toString();
@@ -88,17 +91,7 @@ public class JavaBeansUtil {
      * @return the setter method name
      */
     public static String getSetterMethodName(String property) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(property);
-        if (Character.isLowerCase(sb.charAt(0))
-                && (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1)))) {
-            sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-        }
-
-        sb.insert(0, "set"); //$NON-NLS-1$
-
-        return sb.toString();
+        return "set" + uppercaseFirstLetterIfNecessary(property); //$NON-NLS-1$
     }
 
     public static String getFirstCharacterUppercase(String inputString) {

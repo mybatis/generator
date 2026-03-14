@@ -141,6 +141,10 @@ public class IntrospectedTable extends CodeGenerationAttributes {
                 .toList();
     }
 
+    public int getColumnCount() {
+        return primaryKeyColumns.size() + baseColumns.size() + blobColumns.size();
+    }
+
     public int getNonBLOBColumnCount() {
         return primaryKeyColumns.size() + baseColumns.size();
     }

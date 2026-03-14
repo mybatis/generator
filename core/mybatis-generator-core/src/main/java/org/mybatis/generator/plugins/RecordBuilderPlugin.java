@@ -16,11 +16,9 @@
 package org.mybatis.generator.plugins;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
@@ -29,27 +27,16 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelRecord;
 
-public class RecordBuilderPlugin extends PluginAdapter {
+public class RecordBuilderPlugin extends BaseRecordPlugin {
     private static final FullyQualifiedJavaType BUILDER_TYPE = new FullyQualifiedJavaType("Builder"); //$NON-NLS-1$
 
-    @Override
-    public boolean validate(List<String> warnings) {
-        return true;
+    public RecordBuilderPlugin() {
+        super("skipRecordBuilderPlugin"); //$NON-NLS-1$
     }
 
     @Override
-    public boolean modelRecordGenerated(TopLevelRecord topLevelRecord, IntrospectedTable introspectedTable) {
-        if (Boolean.parseBoolean(introspectedTable.getTableConfigurationProperty("skipRecordBuilder"))) { //$NON-NLS-1$
-            // TODO - document this property - good name?
-            return true;
-        }
-
+    protected void execute(TopLevelRecord topLevelRecord, IntrospectedTable introspectedTable) {
         List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
-        if (allColumns.size() < 4) {
-            // TODO - make this configurable
-            return true;
-        }
-
         Method newBuilder = generateNewBuilderMethod();
         commentGenerator.addGeneralMethodAnnotation(newBuilder, introspectedTable, topLevelRecord.getImportedTypes());
         topLevelRecord.addMethod(newBuilder);
@@ -57,7 +44,6 @@ public class RecordBuilderPlugin extends PluginAdapter {
         InnerClass innerClass = generateBuilderClass(introspectedTable, allColumns);
         commentGenerator.addClassAnnotation(innerClass, introspectedTable, topLevelRecord.getImportedTypes());
         topLevelRecord.addInnerClass(innerClass);
-        return true;
     }
 
     private Method generateNewBuilderMethod() {
@@ -105,11 +91,7 @@ public class RecordBuilderPlugin extends PluginAdapter {
         Method method = new Method("build"); //$NON-NLS-1$
         method.setReturnType(returnType);
         method.setVisibility(JavaVisibility.PUBLIC);
-
-        String line = columns.stream()
-                .map(IntrospectedColumn::getJavaProperty)
-                .collect(Collectors.joining(", ", "return new " + returnType.getShortName() + "(", ");"));
-        method.addBodyLine(line);
+        method.addBodyLine(calculateReturnNewLine(columns, returnType));
         return method;
     }
 }

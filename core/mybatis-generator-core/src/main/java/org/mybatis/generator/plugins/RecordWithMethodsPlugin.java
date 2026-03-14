@@ -16,11 +16,9 @@
 package org.mybatis.generator.plugins;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -28,47 +26,33 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelRecord;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 
-public class RecordWitherPlugin extends PluginAdapter {
-    @Override
-    public boolean validate(List<String> warnings) {
-        return true;
+public class RecordWithMethodsPlugin extends BaseRecordPlugin {
+
+    public RecordWithMethodsPlugin() {
+        super("skipRecordWithMethodsPlugin"); //$NON-NLS-1$
     }
 
     @Override
-    public boolean modelRecordGenerated(TopLevelRecord topLevelRecord, IntrospectedTable introspectedTable) {
-        if (Boolean.parseBoolean(introspectedTable.getTableConfigurationProperty("skipRecordWither"))) { //$NON-NLS-1$
-            // TODO - document this property - good name?
-            return true;
-        }
-
+    protected void execute(TopLevelRecord topLevelRecord, IntrospectedTable introspectedTable) {
         List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
-        if (allColumns.size() < 4) {
-            // TODO - make this configurable
-            return true;
-        }
-
         for (IntrospectedColumn column : allColumns) {
-            Method method = generateWithMethod(introspectedTable, column, allColumns);
-            commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelRecord.getImportedTypes());
-            topLevelRecord.addMethod(method);
+            Method withMethod = generateWithMethod(introspectedTable, column, allColumns);
+            commentGenerator.addGeneralMethodAnnotation(withMethod, introspectedTable,
+                    topLevelRecord.getImportedTypes());
+            topLevelRecord.addMethod(withMethod);
         }
-
-        return true;
     }
 
     private Method generateWithMethod(IntrospectedTable table, IntrospectedColumn currentColumn,
                                       List<IntrospectedColumn> columns) {
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(table.getBaseRecordType());
-        String methodName = "with" + JavaBeansUtil.uppercaseFirstLetterIfNecessary(currentColumn.getJavaProperty()); //$NON-NLS-1$
+        String methodName = "with" + //$NON-NLS-1$
+                JavaBeansUtil.uppercaseFirstLetterIfNecessary(currentColumn.getJavaProperty());
         Method method = new Method(methodName);
         method.setReturnType(returnType);
         method.setVisibility(JavaVisibility.PUBLIC);
         method.addParameter(new Parameter(currentColumn.getFullyQualifiedJavaType(), currentColumn.getJavaProperty()));
-
-        String line = columns.stream()
-                .map(IntrospectedColumn::getJavaProperty)
-                .collect(Collectors.joining(", ", "return new " + returnType.getShortName() + "(", ");"));
-        method.addBodyLine(line);
+        method.addBodyLine(calculateReturnNewLine(columns, returnType));
         return method;
     }
 }

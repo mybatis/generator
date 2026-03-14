@@ -23,6 +23,9 @@
 <generatorConfiguration>
   <context id="dsql" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+    <plugin type="org.mybatis.generator.plugins.RecordWithMethodsPlugin" >
+        <property name="fieldCountTrigger" value="2"/>
+    </plugin>
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
@@ -82,7 +85,7 @@
   <context id="dsql-records" defaultModelType="record">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" /> <!-- should be ignored -->
     <plugin type="org.mybatis.generator.plugins.RecordBuilderPlugin" />
-    <plugin type="org.mybatis.generator.plugins.RecordWitherPlugin" />
+    <plugin type="org.mybatis.generator.plugins.RecordWithMethodsPlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver" connectionURL="jdbc:hsqldb:mem:aname" userId="sa" />
 
@@ -112,6 +115,8 @@
     </table>
     <table tableName="PKBlobs">
       <property name="constructorBased" value="true"/>
+      <property name="skipRecordWithMethodsPlugin" value="true"/>
+      <property name="skipRecordBuilderPlugin" value="true"/>
     </table>
     <table tableName="PKFieldsBlobs" />
     <table tableName="FieldsBlobs" />

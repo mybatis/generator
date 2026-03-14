@@ -1029,6 +1029,10 @@
   </context>
 
   <context id="miscellaneousTests_Simple_Annotated_record" targetRuntime="MyBatis3Simple" defaultModelType="record">
+    <plugin type="org.mybatis.generator.plugins.RecordWithMethodsPlugin">
+      <property name="fieldCountTrigger" value="foo"/> <!-- Should generate a warning and default to 4 -->
+    </plugin>
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
                     connectionURL="jdbc:hsqldb:mem:aname"
                     userId="sa" />

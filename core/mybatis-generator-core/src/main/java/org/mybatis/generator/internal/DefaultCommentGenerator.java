@@ -83,9 +83,9 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
         xmlElement.addElement(new TextElement("<!--")); //$NON-NLS-1$
 
-        String sb = OutputUtilities.xmlIndent(1) +
-                "WARNING - " + //$NON-NLS-1$
-                MergeConstants.NEW_ELEMENT_TAG;
+        String sb = OutputUtilities.xmlIndent(1)
+                + "WARNING - " //$NON-NLS-1$
+                + MergeConstants.NEW_ELEMENT_TAG;
         xmlElement.addElement(new TextElement(sb));
 
         xmlElement.addElement(
@@ -96,9 +96,9 @@ public class DefaultCommentGenerator implements CommentGenerator {
         String s = getDateString();
         if (s != null) {
             String text = OutputUtilities.xmlIndent(1)
-                    + "This element was generated on " + //$NON-NLS-1$
-                    s +
-                    '.';
+                    + "This element was generated on " //$NON-NLS-1$
+                    + s
+                    + '.';
             xmlElement.addElement(new TextElement(text));
         }
 

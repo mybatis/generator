@@ -147,6 +147,37 @@ This file can be used to configure MyBatis 3.x environments.</p>
    the same rules as the <code>targetPackage</code> and <code>targetProject</code>
    values on the sqlMapGenerator configuration element.</p>
 
+<h2>org.mybatis.generator.plugins.RecordBuilderPlugin</h2>
+<p>This plugin adds a "Builder" inner class to generated records. If records have a large number of fields,
+  using a Builder can be more expressive than calling a constructor with a large number of parameters.
+</p>
+<p>The plugin is configured with two properties:</p>
+<ul>
+  <li><code>fieldCountTrigger</code> (property of &lt;plugin&gt;) - an integer. The plugin will add a Builder
+    for any generated record that contains this number of fields or more. The default is 4 - which means that by
+    default the plugin will not generate a Builder if the record has three or fewer fields.
+  </li>
+  <li><code>skipRecordBuilderPlugin</code> (property of &lt;table&gt;) - boolean value. The plugin will not add a
+    Builder for any table with this property set to "true".
+  </li>
+</ul>
+
+<h2>org.mybatis.generator.plugins.RecordWithMethodsPlugin</h2>
+<p>This plugin adds "with" methods to generated records. The "with" methods will build a new instance of a record with
+  one value changed. This can simulate mutability with records – which are immutable by nature. This plugin will become
+  obsolete if and when JEP-468 is adopted.
+</p>
+<p>The plugin is configured with two properties:</p>
+<ul>
+  <li><code>fieldCountTrigger</code> (property of &lt;plugin&gt;) - an integer. The plugin will add "with" methods
+    for any generated record that contains this number of fields or more. The default is 4 - which means that by
+    default the plugin will not generate "with" methods if the record has three or fewer fields.
+  </li>
+  <li><code>skipRecordWithMethodsPlugin</code> (property of &lt;table&gt;) - boolean value. The plugin will not add
+    "with" methods for any table with this property set to "true".
+  </li>
+</ul>
+
 <h2>org.mybatis.generator.plugins.RenameExampleClassPlugin</h2>
 <p>This plugin has no impact and is not needed when the target runtime in use is based on MyBatis Dynamic SQL.</p>
 <p>This plugin demonstrates usage of the <code>initialized</code> method

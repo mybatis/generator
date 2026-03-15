@@ -195,13 +195,23 @@ public class UpdateByExampleRecordTest extends AbstractRecordTest {
     public void testPKFieldsUpdateByExampleSelective() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(2, 1, "Jeff", "Smith", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder()
+                    .id2(2)
+                    .id1(1)
+                    .firstname("Jeff")
+                    .lastname("Smith")
+                    .build();
             mapper.insert(record);
 
-            record = new Pkfields(4, 3, "Bob", "Jones", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder()
+                    .id2(4)
+                    .id1(3)
+                    .firstname("Bob")
+                    .lastname("Jones")
+                    .build();
             mapper.insert(record);
 
-            Pkfields updateRecord = new Pkfields(null, null, "Fred", null, null, null, null, null, null, null, null, null, null, false);
+            Pkfields updateRecord = Pkfields.newBuilder().firstname("Fred").build();
 
             int rows = mapper.update(dsl ->
                 PkfieldsMapper.updateSelectiveColumns(updateRecord, dsl)
@@ -221,13 +231,23 @@ public class UpdateByExampleRecordTest extends AbstractRecordTest {
     public void testPKFieldsUpdateByExample() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(2, 1, "Jeff", "Smith", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder()
+                    .id2(2)
+                    .id1(1)
+                    .firstname("Jeff")
+                    .lastname("Smith")
+                    .build();
             mapper.insert(record);
 
-            record = new Pkfields(4, 3, "Bob", "Jones", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder()
+                    .id2(4)
+                    .id1(3)
+                    .firstname("Bob")
+                    .lastname("Jones")
+                    .build();
             mapper.insert(record);
 
-            Pkfields updateRecord = new Pkfields(4, 3, "Fred", null, null, null, null, null, null, null, null, null, null, false);
+            Pkfields updateRecord = record.withFirstname("Fred");
 
             int rows = mapper.update(dsl ->
                 PkfieldsMapper.updateAllColumns(updateRecord, dsl)

@@ -496,10 +496,11 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(2, 1, "Jeff", "Smith", null, null, null, null, 5, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder()
+                    .id2(2).id1(1).firstname("Jeff").lastname("Smith").decimal60field(5).build();
             mapper.insert(record);
 
-            Pkfields newRecord = new Pkfields(2, 1, "Scott", null, null, null, null, null, 4, null, null, null, null, false);
+            Pkfields newRecord = Pkfields.newBuilder().id2(2).id1(1).firstname("Scott").decimal60field(4).build();
             int rows = mapper.updateByPrimaryKeySelective(newRecord);
             assertEquals(1, rows);
 
@@ -526,7 +527,7 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(2, 1, "Jeff", "Smith", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(2).id1(1).firstname("Jeff").lastname("Smith").build();
             mapper.insert(record);
 
             int rows = mapper.deleteByPrimaryKey(2, 1);
@@ -542,10 +543,10 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(2, 1, "Jeff", "Smith", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(2).id1(1).firstname("Jeff").lastname("Smith").build();
             mapper.insert(record);
 
-            record = new Pkfields(4, 3, "Bob", "Jones", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(4).id1(3).firstname("Bob").lastname("Jones").build();
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(SelectDSLCompleter.allRows());
@@ -565,10 +566,10 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(2, 1, "Jeff", "Smith", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(2).id1(1).firstname("Jeff").lastname("Smith").build();
             mapper.insert(record);
 
-            Pkfields record1 = new Pkfields(4, 3, "Bob", "Jones", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record1 = Pkfields.newBuilder().id2(4).id1(3).firstname("Bob").lastname("Jones").build();
             mapper.insert(record1);
 
             Optional<Pkfields> newRecord = mapper.selectByPrimaryKey(4, 3);
@@ -587,22 +588,22 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(1, 1, "Fred", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(1).id1(1).firstname("Fred").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 1, "Wilma", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(1).firstname("Wilma").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 1, "Pebbles", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(1).firstname("Pebbles").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(1, 2, "Barney", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(1).id1(2).firstname("Barney").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 2, "Betty", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(2).firstname("Betty").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 2, "Bamm Bamm", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(2).firstname("Bamm Bamm").lastname("Rubble").build();
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(dsl ->
@@ -626,22 +627,22 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(1, 1, "Fred", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(1).id1(1).firstname("Fred").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 1, "Wilma", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(1).firstname("Wilma").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 1, "Pebbles", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(1).firstname("Pebbles").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(1, 2, "Barney", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(1).id1(2).firstname("Barney").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 2, "Betty", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(2).firstname("Betty").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 2, "Bamm Bamm", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(2).firstname("Bamm Bamm").lastname("Rubble").build();
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(dsl ->
@@ -665,22 +666,22 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(1, 1, "Fred", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(1).id1(1).firstname("Fred").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 1, "Wilma", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(1).firstname("Wilma").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 1, "Pebbles", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(1).firstname("Pebbles").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(1, 2, "Barney", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(1).id1(2).firstname("Barney").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 2, "Betty", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(2).firstname("Betty").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 2, "Bamm Bamm", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(2).firstname("Bamm Bamm").lastname("Rubble").build();
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(dsl ->
@@ -703,22 +704,22 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(1, 1, "Fred", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(1).id1(1).firstname("Fred").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 1, "Wilma", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(1).firstname("Wilma").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 1, "Pebbles", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(1).firstname("Pebbles").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(1, 2, "Barney", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(1).id1(2).firstname("Barney").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 2, "Betty", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(2).firstname("Betty").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 2, "Bamm Bamm", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(2).firstname("Bamm Bamm").lastname("Rubble").build();
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(dsl ->
@@ -745,22 +746,22 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(1, 1, "Fred", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(1).id1(1).firstname("Fred").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 1, "Wilma", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(1).firstname("Wilma").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 1, "Pebbles", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(1).firstname("Pebbles").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(1, 2, "Barney", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(1).id1(2).firstname("Barney").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 2, "Betty", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(2).firstname("Betty").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 2, "Bamm Bamm", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(2).firstname("Bamm Bamm").lastname("Rubble").build();
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(dsl ->
@@ -775,22 +776,22 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(1, 1, "Fred", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(1).id1(1).firstname("Fred").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 1, "Wilma", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(1).firstname("Wilma").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 1, "Pebbles", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(1).firstname("Pebbles").lastname("Flintstone").build();
             mapper.insert(record);
 
-            record = new Pkfields(1, 2, "Barney", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(1).id1(2).firstname("Barney").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 2, "Betty", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(2).firstname("Betty").lastname("Rubble").build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 2, "Bamm Bamm", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(2).firstname("Bamm Bamm").lastname("Rubble").build();
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(
@@ -808,22 +809,22 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
 
             Collection<Pkfields> records = new ArrayList<>();
 
-            Pkfields record = new Pkfields(1, 1, "Fred", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(1).id1(1).firstname("Fred").lastname("Flintstone").build();
             records.add(record);
 
-            record = new Pkfields(2, 1, "Wilma", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(1).firstname("Wilma").lastname("Flintstone").build();
             records.add(record);
 
-            record = new Pkfields(3, 1, "Pebbles", "Flintstone", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(1).firstname("Pebbles").lastname("Flintstone").build();
             records.add(record);
 
-            record = new Pkfields(1, 2, "Barney", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(1).id1(2).firstname("Barney").lastname("Rubble").build();
             records.add(record);
 
-            record = new Pkfields(2, 2, "Betty", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(2).firstname("Betty").lastname("Rubble").build();
             records.add(record);
 
-            record = new Pkfields(3, 2, "Bamm Bamm", "Rubble", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(2).firstname("Bamm Bamm").lastname("Rubble").build();
             records.add(record);
 
             int rowsInserted = mapper.insertMultiple(records);
@@ -842,22 +843,28 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(1, 1, "Fred", "Flintstone", null, null, null, null, null, null, null, 11, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(1).id1(1).firstname("Fred").lastname("Flintstone")
+                    .wierdField(11).build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 1, "Wilma", "Flintstone", null, null, null, null, null, null, null, 22, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(1).firstname("Wilma").lastname("Flintstone")
+                    .wierdField(22).build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 1, "Pebbles", "Flintstone", null, null, null, null, null, null, null, 33, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(1).firstname("Pebbles").lastname("Flintstone")
+                    .wierdField(33).build();
             mapper.insert(record);
 
-            record = new Pkfields(1, 2, "Barney", "Rubble", null, null, null, null, null, null, null, 44, null, false);
+            record = Pkfields.newBuilder().id2(1).id1(2).firstname("Barney").lastname("Rubble")
+                    .wierdField(44).build();
             mapper.insert(record);
 
-            record = new Pkfields(2, 2, "Betty", "Rubble", null, null, null, null, null, null, null, 55, null, false);
+            record = Pkfields.newBuilder().id2(2).id1(2).firstname("Betty").lastname("Rubble")
+                    .wierdField(55).build();
             mapper.insert(record);
 
-            record = new Pkfields(3, 2, "Bamm Bamm", "Rubble", null, null, null, null, null, null, null, 66, null, false);
+            record = Pkfields.newBuilder().id2(3).id1(2).firstname("Bamm Bamm").lastname("Rubble")
+                    .wierdField(66).build();
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(DSL ->
@@ -874,10 +881,10 @@ public class DynamicSqlRecordTest extends AbstractRecordTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields(2, 1, "Jeff", "Smith", null, null, null, null, null, null, null, null, null, false);
+            Pkfields record = Pkfields.newBuilder().id2(2).id1(1).firstname("Jeff").lastname("Smith").build();
             mapper.insert(record);
 
-            record = new Pkfields(4, 3, "Bob", "Jones", null, null, null, null, null, null, null, null, null, false);
+            record = Pkfields.newBuilder().id2(4).id1(3).firstname("Bob").lastname("Jones").build();
             mapper.insert(record);
 
             long rows = mapper.count(dsl ->

@@ -26,7 +26,7 @@ import org.mybatis.generator.api.dom.java.TopLevelRecord;
 
 public abstract class BaseRecordPlugin extends PluginAdapter {
     private static final String messageTemplate =
-            "Invalid fieldCountTrigger property value for plugin %s in context %s. "
+            "Invalid fieldCountTrigger property value for plugin %s in context %s. " //$NON-NLS-1$
                     + "Using default value of 4."; //$NON-NLS-1$
 
     private final String skipProperty;

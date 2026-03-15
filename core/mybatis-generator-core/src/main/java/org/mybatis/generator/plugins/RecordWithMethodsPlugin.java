@@ -46,8 +46,8 @@ public class RecordWithMethodsPlugin extends BaseRecordPlugin {
     private Method generateWithMethod(IntrospectedTable table, IntrospectedColumn currentColumn,
                                       List<IntrospectedColumn> columns) {
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(table.getBaseRecordType());
-        String methodName = "with" + //$NON-NLS-1$
-                JavaBeansUtil.uppercaseFirstLetterIfNecessary(currentColumn.getJavaProperty());
+        String methodName = "with" //$NON-NLS-1$
+                + JavaBeansUtil.uppercaseFirstLetterIfNecessary(currentColumn.getJavaProperty());
         Method method = new Method(methodName);
         method.setReturnType(returnType);
         method.setVisibility(JavaVisibility.PUBLIC);

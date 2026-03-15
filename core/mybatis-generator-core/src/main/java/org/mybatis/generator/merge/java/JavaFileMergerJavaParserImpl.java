@@ -86,8 +86,8 @@ public class JavaFileMergerJavaParserImpl implements JavaFileMerger {
 
     public JavaFileMergerJavaParserImpl(JavaMergerFactory.PrinterConfiguration printerConfiguration) {
         printer = switch (printerConfiguration) {
-            case ECLIPSE -> new DefaultPrettyPrinter(new EclipseOrderedPrinterConfiguration());
-            case LEXICAL_PRESERVING -> new DefaultLexicalPreservingPrinter();
+        case ECLIPSE -> new DefaultPrettyPrinter(new EclipseOrderedPrinterConfiguration());
+        case LEXICAL_PRESERVING -> new DefaultLexicalPreservingPrinter();
         };
     }
 

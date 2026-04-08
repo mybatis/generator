@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../apidocs/org/mybatis/generator/plugins/CaseInsensitiveLikePlugin.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2025 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2026 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
@@ -34,7 +34,7 @@
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.api.dom.java.Method;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.api.dom.java.Parameter;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.api.dom.java.TopLevelClass;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> * This plugin demonstrates adding methods to the example class to enable</em>
@@ -101,7 +101,7 @@
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          sb.setLength(0);
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          sb.append(<span class="jxr_string">"addCriterion(\&quot;upper("</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>          sb.append(<a name="MyBatis3FormattingUtilities" href="../../../../org/mybatis/generator/codegen/mybatis3/MyBatis3FormattingUtilities.html#MyBatis3FormattingUtilities">MyBatis3FormattingUtilities</a>
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>          sb.append(<a name="MyBatis3FormattingUtilities" href="../../../../org/mybatis/generator/runtime/mybatis3/MyBatis3FormattingUtilities.html#MyBatis3FormattingUtilities">MyBatis3FormattingUtilities</a>
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>                  .getAliasedActualColumnName(introspectedColumn));
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>          sb.append(<span class="jxr_string">") like\&quot;, value.toUpperCase(), \&quot;"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>          sb.append(introspectedColumn.getJavaProperty());
@@ -113,6 +113,6 @@
 <a class="jxr_linenumber" name="L105" href="#L105">105</a> }
 </pre>
 <hr/>
-<div id="footer">© 2006–2025 <a href="https://www.mybatis.org/">MyBatis.org</a></div>
+<div id="footer">© 2006–2026 <a href="https://www.mybatis.org/">MyBatis.org</a></div>
 </body>
 </html>

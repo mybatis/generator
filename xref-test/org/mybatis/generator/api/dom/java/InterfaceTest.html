@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../../testapidocs/org/mybatis/generator/api/dom/java/InterfaceTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2025 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2026 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
@@ -116,19 +116,22 @@
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>         field.setInitializationString(<span class="jxr_string">"\&quot;one\&quot;"</span>);
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>         interfaze.addField(field);
 <a class="jxr_linenumber" name="L110" href="#L110">110</a> 
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>         String expected = <span class="jxr_string">"package foo;"</span> + System.lineSeparator()
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>             + System.lineSeparator()
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>             + <span class="jxr_string">"public interface Bar {"</span> + System.lineSeparator()
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>             + <span class="jxr_string">"    String EMPTY_STRING = \&quot;\&quot;;"</span> + System.lineSeparator() + System.lineSeparator()
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>             + <span class="jxr_string">"    String ONE = \&quot;one\&quot;;"</span> + System.lineSeparator()
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>             + <span class="jxr_string">"}"</span>;
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         String expected =
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>                 <span class="jxr_string">""</span><span class="jxr_string">"
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 <strong class="jxr_keyword">package</strong> foo;
+<a class="jxr_linenumber" name="L114" href="#L114">114</a> 
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> Bar {
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>                     String EMPTY_STRING = <span class="jxr_string">""</span>;
 <a class="jxr_linenumber" name="L117" href="#L117">117</a> 
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>         TopLevelInterfaceRenderer renderer = <strong class="jxr_keyword">new</strong> TopLevelInterfaceRenderer();
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>         assertThat(renderer.render(interfaze)).isEqualTo(expected);
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>     }
-<a class="jxr_linenumber" name="L121" href="#L121">121</a> }
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>                     String ONE = <span class="jxr_string">"one"</span>;
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>                 }<span class="jxr_string">""</span><span class="jxr_string">";
+<a class="jxr_linenumber" name="L120" href="#L120">120</a> 
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>         TopLevelInterfaceRenderer renderer = <strong class="jxr_keyword">new</strong> TopLevelInterfaceRenderer();
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>         assertThat(renderer.render(interfaze)).isEqualToNormalizingNewlines(expected);
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>     }
+<a class="jxr_linenumber" name="L124" href="#L124">124</a> }
 </pre>
 <hr/>
-<div id="footer">© 2006–2025 <a href="https://www.mybatis.org/">MyBatis.org</a></div>
+<div id="footer">© 2006–2026 <a href="https://www.mybatis.org/">MyBatis.org</a></div>
 </body>
 </html>

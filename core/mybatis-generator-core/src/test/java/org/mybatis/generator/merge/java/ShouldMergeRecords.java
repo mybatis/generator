@@ -48,8 +48,8 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return
-                """
+        return switch (printerConfiguration) {
+            case ECLIPSE -> """
                 package foo;
 
                 import java.io.Serializable;
@@ -63,10 +63,25 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
                     }
                 }
                 """;
+            case LEXICAL_PRESERVING -> """
+                package foo;
+                import java.io.Serializable;
+
+
+                public record Name(int id, String firstName, String lastName) implements Serializable {
+                    private static final long serialVersionUID = 1L;
+                   \s
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
+        };
     }
 
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

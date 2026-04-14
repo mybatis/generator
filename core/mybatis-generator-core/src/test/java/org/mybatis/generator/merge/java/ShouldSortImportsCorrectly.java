@@ -61,7 +61,8 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return """
+        return switch(printerConfiguration) {
+        case ECLIPSE -> """
                 package com.example;
 
                 import static java.util.Collections.emptySet;
@@ -90,10 +91,37 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                     }
                 }
                 """;
+            case LEXICAL_PRESERVING -> """
+                package com.example;
+
+                import java.util.List;
+                import java.util.Map;
+                import static java.util.Collections.sort;
+                import java.util.Date;
+                import java.sql.PreparedStatement;
+                import foo.Bar;
+                import java.util.Set;
+                import bar.Foo;
+                import java.sql.Connection;
+                import static java.util.Collections.emptySet;
+
+                public class TestMapper {
+                    /**
+                     * @mbg.generated
+                     */
+                    public Map<String, Object> getMap() {
+                        return null;
+                    }
+                   \s
+                    public void customMethod() {}
+                }
+                """;
+        };
     }
 
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

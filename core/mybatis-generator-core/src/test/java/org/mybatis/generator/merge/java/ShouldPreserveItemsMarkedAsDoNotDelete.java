@@ -149,6 +149,13 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
+        return switch (printerConfiguration) {
+            case ECLIPSE -> expectedEclipseContent();
+            case LEXICAL_PRESERVING -> expectedLexicalPreservingContent();
+        };
+    }
+
+    private String expectedEclipseContent() {
         return """
               package mbg.test.mb3.generated.flat.model;
 
@@ -201,8 +208,57 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
               """;
     }
 
+    private String expectedLexicalPreservingContent() {
+        // TODO - this is completely wrong. The javadoc should be preserved, but is lost or relocated
+        return """
+              package mbg.test.mb3.generated.flat.model;
+
+              import java.util.List;
+
+              public class PkfieldsExample {
+                  /**
+                   * @mbg.generated do_not_delete_during_merge
+                   */
+                  /**
+                   * @mbg.generated
+                   */
+                  public void reset() {
+                  }
+
+                  /**
+                   * @mbg.generated
+                   */
+                  protected abstract static class GeneratedCriteria {
+                  }
+                 \s
+                  public void customMethod() {
+                  }
+                 \s
+                  protected int id;
+                 \s
+                  public int getId() {
+                      // existing
+                      return id;
+                  }
+                 \s
+                  public static class Criteria extends GeneratedCriteria {
+                      protected Criteria() {
+                          super();
+                      }
+
+                      public boolean isValid() {
+                          return true;
+                      }
+                  }
+
+
+              }
+              """;
+    }
+
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

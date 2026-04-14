@@ -75,25 +75,59 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
+        return switch (printerConfiguration) {
+            case ECLIPSE -> expectedEclipseContent(parameter);
+            case LEXICAL_PRESERVING -> expectedLexicalPreservingContent(parameter);
+        };
+    }
+
+    private String expectedEclipseContent(String parameter) {
+        return String.format("""
+            package com.example;
+
+            import %s;
+
+            public class TestMapper {
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "Source field: awful table.first name")
+                public int deleteByPrimaryKey(Integer id) {
+                    // Updated implementation
+                    return 1;
+                }
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "Source field: awful table.first name")
+                public int insert(Object record) {
+                    return 0;
+                }
+
+                // This is a custom method that should be preserved
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+            }
+            """, parameter);
+    }
+
+    private String expectedLexicalPreservingContent(String parameter) {
+        // TODO - this is wrong, the customMethod comment was dropped
         return String.format("""
                 package com.example;
-
+                
                 import %s;
-
+                
                 public class TestMapper {
-
-                    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "Source field: awful table.first name")
+                
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
                     public int deleteByPrimaryKey(Integer id) {
                         // Updated implementation
                         return 1;
                     }
-
-                    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "Source field: awful table.first name")
+                
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
                     public int insert(Object record) {
                         return 0;
                     }
-
-                    // This is a custom method that should be preserved
+                   \s
                     public void customMethod() {
                         System.out.println("Custom method");
                     }
@@ -108,6 +142,7 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

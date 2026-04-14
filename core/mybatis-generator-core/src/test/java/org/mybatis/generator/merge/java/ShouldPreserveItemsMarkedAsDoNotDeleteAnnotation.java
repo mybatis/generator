@@ -123,6 +123,13 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
+        return switch (printerConfiguration) {
+            case ECLIPSE -> expectedEclipseContent();
+            case LEXICAL_PRESERVING -> expectedLexicalPreservingContent();
+        };
+    }
+
+    private String expectedEclipseContent() {
         return """
               package mbg.test.mb3.generated.flat.model;
 
@@ -167,8 +174,51 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
               """;
     }
 
+    private String expectedLexicalPreservingContent() {
+        return """
+              package mbg.test.mb3.generated.flat.model;
+
+              import jakarta.annotation.Generated;
+              import java.util.List;
+
+              public class PkfieldsExample {
+                  @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                  public void reset() {
+                  }
+
+                  @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                  protected abstract static class GeneratedCriteria {
+                  }
+                 \s
+                  public void customMethod() {
+                  }
+                 \s
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="do_not_delete_during_merge (existing)")
+                  protected int id;
+                 \s
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="do_not_delete_during_merge")
+                  public int getId() {
+                      // existing
+                      return id;
+                  }
+                 \s
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="do_not_delete_during_merge")
+                  public static class Criteria extends GeneratedCriteria {
+                      protected Criteria() {
+                          super();
+                      }
+
+                      public boolean isValid() {
+                          return true;
+                      }
+                  }
+              }
+              """;
+    }
+
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

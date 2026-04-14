@@ -140,6 +140,13 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
+        return switch (printerConfiguration) {
+            case ECLIPSE -> expectedEclipseContent();
+            case LEXICAL_PRESERVING -> expectedLexicalPreservingContent();
+        };
+    }
+
+    private String expectedEclipseContent() {
         return """
               package mbg.test.mb3.generated.flat.model;
 
@@ -190,8 +197,49 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
               """;
     }
 
+    private String expectedLexicalPreservingContent() {
+        // TODO - completely wrong. Javadoc droppeed on merge
+        return """
+              package mbg.test.mb3.generated.flat.model;
+
+              import jakarta.annotation.Generated;
+              import java.util.List;
+
+              public class PkfieldsExample {
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator")
+                  public void reset() {
+                  }
+
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator")
+                  protected abstract static class GeneratedCriteria {
+                  }
+                 \s
+                  public void customMethod() {
+                  }
+                 \s
+                  protected int id;
+                 \s
+                  public int getId() {
+                      // existing
+                      return id;
+                  }
+                 \s
+                  public static class Criteria extends GeneratedCriteria {
+                      protected Criteria() {
+                          super();
+                      }
+
+                      public boolean isValid() {
+                          return true;
+                      }
+                  }
+              }
+              """;
+    }
+
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

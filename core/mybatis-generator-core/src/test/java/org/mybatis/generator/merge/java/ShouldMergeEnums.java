@@ -91,8 +91,8 @@ public class ShouldMergeEnums extends JavaMergeTestCase {
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return
-                """
+        return switch (printerConfiguration) {
+        case ECLIPSE -> """
                 package foo;
 
                 import java.io.Serializable;
@@ -126,10 +126,46 @@ public class ShouldMergeEnums extends JavaMergeTestCase {
                     }
                 }
                 """;
+        case LEXICAL_PRESERVING -> """
+                package foo;
+
+                import java.io.Serializable;
+                import javax.annotation.Generated;
+
+                public enum NameType implements Serializable {
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    FIRST_NAME("first name"),
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    LAST_NAME("last name"),
+                    MIDDLE_NAME("middle name");
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    private String displayText;
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    NameType(String displayText) {
+                        this.displayText = displayText;
+                    }
+
+                    @Override
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String toString() {
+                        return displayText;
+                    }
+                   \s
+                    private static final long serialVersionUID = 1L;
+                   \s
+                    public boolean isFirstName() {
+                        return this == FIRST_NAME;
+                    }
+                }
+                """;
+        };
     }
 
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

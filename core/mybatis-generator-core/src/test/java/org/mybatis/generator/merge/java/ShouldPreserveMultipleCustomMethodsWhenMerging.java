@@ -69,6 +69,13 @@ public class ShouldPreserveMultipleCustomMethodsWhenMerging extends JavaMergeTes
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
+        return switch (printerConfiguration) {
+            case ECLIPSE -> expectedEclipseContent();
+            case LEXICAL_PRESERVING -> expectedLexicalPreservingContent();
+        };
+    }
+
+    private String expectedEclipseContent() {
         return """
                 package com.example;
 
@@ -100,8 +107,41 @@ public class ShouldPreserveMultipleCustomMethodsWhenMerging extends JavaMergeTes
                 """;
     }
 
+    private String expectedLexicalPreservingContent() {
+        // TODO - this is wrong. The comment in generatedMethod was moved
+        return """
+                package com.example;
+
+                public class TestMapper {
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public int generatedMethod() {
+                        return 1; // Updated
+                    }
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public int newGeneratedMethod() {
+                        return 0;
+                    }
+                   \s
+                    public void customMethod1() {
+                        System.out.println("Custom method 1");
+                    }
+                   \s
+                    public void customMethod2() {
+                        System.out.println("Custom method 2");
+                    }
+                }
+                """;
+    }
+
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

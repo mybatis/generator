@@ -49,27 +49,46 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return """
-                package com.example;
+        return switch (printerConfiguration) {
+        case ECLIPSE -> """
+            package com.example;
 
-                public class TestMapper {
+            public class TestMapper {
 
-                    /**
-                     * @mbg.generated
-                     */
-                    public int insert(Object record) {
-                        return 0;
-                    }
-
-                    public void customMethod() {
-                        System.out.println("Custom method");
-                    }
+                /**
+                 * @mbg.generated
+                 */
+                public int insert(Object record) {
+                    return 0;
                 }
-                """;
+
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+            }
+            """;
+        case LEXICAL_PRESERVING -> """
+            package com.example;
+
+            public class TestMapper {
+                /**
+                 * @mbg.generated
+                 */
+                public int insert(Object record) {
+                    return 0;
+                }
+               \s
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+            }
+            """;
+        };
     }
 
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

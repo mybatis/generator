@@ -57,8 +57,8 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return
-                """
+        return switch (printerConfiguration) {
+            case ECLIPSE -> """
                 package foo;
 
                 import java.io.Serializable;
@@ -75,10 +75,27 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
                     private static final long serialVersionUID = 1L;
                 }
                 """;
+            case LEXICAL_PRESERVING -> """
+                package foo;
+
+                import javax.annotation.Generated;
+                import java.io.Serializable;
+
+                public class Foo implements Serializable {
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String hello() {
+                        return "hello";
+                    }
+                   \s
+                    private static final long serialVersionUID = 1L;
+                }
+                """;
+        };
     }
 
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

@@ -75,7 +75,8 @@ public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTes
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return String.format("""
+        return switch (printerConfiguration) {
+            case ECLIPSE -> String.format("""
                 package com.example;
 
                 import %s;
@@ -104,6 +105,38 @@ public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTes
                     }
                 }
                 """, parameter);
+            case LEXICAL_PRESERVING -> String.format("""
+                package com.example;
+
+                import %s;
+
+                public class TestMapper {
+
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
+                    public int deleteByPrimaryKey(Integer id) {
+                        // Updated implementation
+                        return 1;
+                    }
+
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
+                    public int insert(Object record) {
+                        return 0;
+                    }
+                   \s
+                    @Generated(value="foo.bar.Generator")
+                    public int annotationVariant1() {
+                        return 0;
+                    }
+                   \s
+                    public void customMethod() {
+                        System.out.println("Custom method");
+                    }
+                }
+                """, parameter);
+
+        };
+
+        // TODO - the lexical printer dropped a comment
     }
 
     @Override
@@ -113,6 +146,7 @@ public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTes
 
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

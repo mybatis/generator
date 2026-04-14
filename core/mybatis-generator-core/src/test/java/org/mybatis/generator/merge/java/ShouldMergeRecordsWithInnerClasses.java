@@ -70,16 +70,41 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return
-                """
+        return switch (printerConfiguration) {
+            case ECLIPSE -> """
                 package foo;
+                
+                import java.io.Serializable;
+                import java.util.stream.IntStream;
 
+                import javax.annotation.Generated;
+                
+                public record Name(int id, String firstName, String lastName) implements Serializable {
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public static class SomeClass {
+
+                        public int method2() {
+                            return IntStream.range(0, 10).filter(i -> i % 2 == 0).map(i -> i * 2).reduce(Integer::sum);
+                        }
+                    }
+
+                    private static final long serialVersionUID = 1L;
+
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
+        case LEXICAL_PRESERVING -> """
+                package foo;
+                
                 import java.util.stream.IntStream;
                 import javax.annotation.Generated;
                 import java.io.Serializable;
-
+                
                 public record Name(int id, String firstName, String lastName) implements Serializable {
-
+                
                   @Generated("org.mybatis.generator.api.MyBatisGenerator")
                   public static class SomeClass {
                     public int method2() {
@@ -97,10 +122,12 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                   }
                 }
                 """;
+        };
     }
 
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

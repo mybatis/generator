@@ -61,7 +61,8 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
 
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return """
+        return switch (printerConfiguration) {
+            case ECLIPSE -> """
                 package com.example;
 
                 public class TestMapper {
@@ -78,6 +79,25 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
                     }
                 }
                 """;
+            case LEXICAL_PRESERVING -> """
+                package com.example;
+
+                public class TestMapper {
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public int newGeneratedMethod() {
+                        return 1;
+                    }
+                   \s
+                    public void customMethod() {
+                        System.out.println("Custom method");
+                    }
+                }
+                """;
+
+        };
     }
 
     @Override
@@ -87,6 +107,7 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
 
     @Override
     public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
+                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

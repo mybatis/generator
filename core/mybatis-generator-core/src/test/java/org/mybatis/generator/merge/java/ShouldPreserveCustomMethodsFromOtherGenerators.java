@@ -76,7 +76,13 @@ public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTes
     @Override
     public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
         return switch (printerConfiguration) {
-            case ECLIPSE -> String.format("""
+            case ECLIPSE -> expectedEclipseContent(parameter);
+            case LEXICAL_PRESERVING -> expectedLexicalPreservingContent(parameter);
+        };
+    }
+
+    private String expectedEclipseContent(String parameter) {
+        return String.format("""
                 package com.example;
 
                 import %s;
@@ -105,7 +111,11 @@ public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTes
                     }
                 }
                 """, parameter);
-            case LEXICAL_PRESERVING -> String.format("""
+    }
+
+    private String expectedLexicalPreservingContent(String parameter) {
+        // TODO - this is wrong. The customMethod comment was dropped
+        return  String.format("""
                 package com.example;
 
                 import %s;
@@ -133,10 +143,6 @@ public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTes
                     }
                 }
                 """, parameter);
-
-        };
-
-        // TODO - the lexical printer dropped a comment
     }
 
     @Override

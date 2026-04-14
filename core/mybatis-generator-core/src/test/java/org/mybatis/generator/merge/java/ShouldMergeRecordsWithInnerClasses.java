@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.merge.java;
 
+import java.util.List;
+
 public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
     @Override
     public String existingContent(String parameter) {
@@ -26,18 +28,18 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                 import javax.annotation.Generated;
 
                 public record Name(int id, String firstName, String lastName) implements Serializable {
-                    private static final long serialVersionUID = 1L;
+                  private static final long serialVersionUID = 1L;
 
-                    public String fullName() {
-                        return firstName + " " + lastName;
-                    }
+                  public String fullName() {
+                    return firstName + " " + lastName;
+                  }
 
-                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    public static class SomeClass {
-                        public int method1() {
-                            return 3;
-                        }
+                  @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                  public static class SomeClass {
+                    public int method1() {
+                      return 3;
                     }
+                  }
                 }
                 """;
     }
@@ -53,21 +55,21 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
 
                 public record Name(int id, String firstName, String lastName) {
 
-                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    public static class SomeClass {
-                        public int method2() {
-                            return IntStream.range(0, 10)
-                                .filter(i -> i % 2 == 0)
-                                .map(i -> i * 2)
-                                .reduce(Integer::sum);
-                        }
+                  @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                  public static class SomeClass {
+                    public int method2() {
+                      return IntStream.range(0, 10)
+                          .filter(i -> i % 2 == 0)
+                          .map(i -> i * 2)
+                          .reduce(Integer::sum);
                     }
+                  }
                 }
                 """;
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
+    public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
         return
                 """
                 package foo;
@@ -78,27 +80,27 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
 
                 public record Name(int id, String firstName, String lastName) implements Serializable {
 
-                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    public static class SomeClass {
-                        public int method2() {
-                            return IntStream.range(0, 10)
-                                .filter(i -> i % 2 == 0)
-                                .map(i -> i * 2)
-                                .reduce(Integer::sum);
-                        }
+                  @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                  public static class SomeClass {
+                    public int method2() {
+                      return IntStream.range(0, 10)
+                          .filter(i -> i % 2 == 0)
+                          .map(i -> i * 2)
+                          .reduce(Integer::sum);
                     }
-                   \s
-                    private static final long serialVersionUID = 1L;
-                   \s
-                    public String fullName() {
-                        return firstName + " " + lastName;
-                    }
+                  }
+                 \s
+                  private static final long serialVersionUID = 1L;
+                 \s
+                  public String fullName() {
+                    return firstName + " " + lastName;
+                  }
                 }
                 """;
     }
 
     @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING;
+    public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
+        return List.of(JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
     }
 }

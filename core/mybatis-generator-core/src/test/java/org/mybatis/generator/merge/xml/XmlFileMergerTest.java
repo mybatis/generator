@@ -29,7 +29,7 @@ import org.xml.sax.InputSource;
 class XmlFileMergerTest {
     @ParameterizedTest
     @MethodSource("testCases")
-    void allTestCases(MergeTestCase testCase, String parameter) throws Exception {
+    void allTestCases(XmlMergeTestCase testCase, String parameter) throws Exception {
         InputSource existingFile = new InputSource(new StringReader(testCase.existingContent(parameter)));
         InputSource newFile = new InputSource(new StringReader(testCase.newContent(parameter)));
         var actual = XmlFileMergerJaxp.getMergedSource(newFile, existingFile, "Test.xml");

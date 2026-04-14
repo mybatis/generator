@@ -74,7 +74,7 @@ public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTes
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
+    public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
         return String.format("""
                 package com.example;
 
@@ -112,7 +112,7 @@ public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTes
     }
 
     @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+    public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
     }
 }

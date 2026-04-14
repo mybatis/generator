@@ -15,9 +15,7 @@
  */
 package org.mybatis.generator.merge.xml;
 
-import org.mybatis.generator.merge.MergeTestCase;
-
-public class OldElementsShouldBeDeleted extends MergeTestCase {
+public class OldElementsShouldBeDeleted extends XmlMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return """

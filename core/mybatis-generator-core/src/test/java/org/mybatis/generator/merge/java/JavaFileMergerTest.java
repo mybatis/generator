@@ -27,20 +27,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.exception.MergeException;
-import org.mybatis.generator.merge.MergeTestCase;
 
 class JavaFileMergerTest {
     @ParameterizedTest
     @MethodSource("mergeTestCases")
-    void mergeTestCases(JavaMergeTestCase testCase, String parameter) throws Exception {
-        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(testCase.printerConfiguration());
+    void mergeTestCases(JavaMergeTestCase testCase, String parameter,
+                        JavaMergerFactory.PrinterConfiguration printerConfiguration) throws Exception {
+        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(printerConfiguration);
         var actual = javaFileMerger.getMergedSource(testCase.newContent(parameter),
                 testCase.existingContent(parameter));
-        assertThat(actual).isEqualToNormalizingNewlines(testCase.expectedContentAfterMerge(parameter));
+        assertThat(actual).isEqualToNormalizingNewlines(testCase.expectedContentAfterMerge(parameter, printerConfiguration));
     }
 
     static Stream<Arguments> mergeTestCases() {
-        return MergeTestCase.findTestCases("org.mybatis.generator.merge.java");
+        return JavaMergeTestCase.javaMergeTestCases("org.mybatis.generator.merge.java");
     }
 
     @Test

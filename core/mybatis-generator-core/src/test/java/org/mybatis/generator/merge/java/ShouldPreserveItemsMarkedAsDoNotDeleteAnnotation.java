@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.merge.java;
 
+import java.util.List;
+
 /**
  * This test case verifies that generated items with the special text
  * "do_not_delete_during_merge" survive the merge. This is something
@@ -120,7 +122,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
+    public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
         return """
               package mbg.test.mb3.generated.flat.model;
 
@@ -166,7 +168,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
     }
 
     @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+    public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
+        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE);
     }
 }

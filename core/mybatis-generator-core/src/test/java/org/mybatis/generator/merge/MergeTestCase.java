@@ -31,7 +31,6 @@ public abstract class MergeTestCase {
 
     public abstract String existingContent(String parameter);
     public abstract String newContent(String parameter);
-    public abstract String expectedContentAfterMerge(String parameter);
 
     /**
      * Provide a list of parameter variants. If empty, then the test case will run one time with null passed as a

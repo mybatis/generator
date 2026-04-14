@@ -22,7 +22,7 @@ import java.util.List;
  * "do_not_delete_during_merge" survive the merge. This is something
  * supported in the legacy example classes.
  */
-public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
+public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation extends JavaMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return """
@@ -108,36 +108,27 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
         return """
               package mbg.test.mb3.generated.flat.model;
 
+              import jakarta.annotation.Generated;
               import java.util.List;
 
               public class PkfieldsExample {
-                  /**
-                   * @mbg.generated do_not_delete_during_merge
-                   */
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="do_not_delete_during_merge")
                   protected int id;
 
-                  /**
-                   * @mbg.generated
-                   */
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator")
                   public void reset() {
                   }
 
-                  /**
-                   * @mbg.generated
-                   */
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator")
                   protected abstract static class GeneratedCriteria {
                   }
 
-                  /**
-                   * @mbg.generated do_not_delete_during_merge
-                   */
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="do_not_delete_during_merge")
                   public int getId() {
                       return id;
                   }
 
-                  /**
-                   * @mbg.generated do_not_delete_during_merge
-                   */
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="do_not_delete_during_merge")
                   public static class Criteria extends GeneratedCriteria {
                       protected Criteria() {
                           super();
@@ -154,17 +145,15 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
 
               import java.util.List;
 
+              import jakarta.annotation.Generated;
+
               public class PkfieldsExample {
 
-                  /**
-                   * @mbg.generated
-                   */
+                  @Generated(value = "org.mybatis.generator.api.MyBatisGenerator")
                   public void reset() {
                   }
 
-                  /**
-                   * @mbg.generated
-                   */
+                  @Generated(value = "org.mybatis.generator.api.MyBatisGenerator")
                   protected abstract static class GeneratedCriteria {
                   }
 

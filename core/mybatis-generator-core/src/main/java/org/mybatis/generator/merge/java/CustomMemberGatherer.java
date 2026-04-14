@@ -23,13 +23,6 @@ import java.util.stream.Stream;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.EnumConstantDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.comments.Comment;
-import com.github.javaparser.ast.expr.AnnotationExpr;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MemberValuePair;
-import com.github.javaparser.ast.expr.StringLiteralExpr;
-import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.config.MergeConstants;
 
 /**
  * Inspect a TypeDeclaration looking for members that should be merged. We only look for immediate children of the
@@ -84,7 +77,7 @@ public class CustomMemberGatherer {
         //  - Generated remove - return
         //  - Not Generated - check for old Javadoc comments
 
-        GeneratedType generatedType = checkForGeneratedAnnotation(member);
+        GeneratedType generatedType = JavaMergeUtilities.checkForGeneratedAnnotation(member);
         if (generatedType == GeneratedType.GENERATED_KEEP) {
             doNotDeleteBodyMembers.add(member);
             return;
@@ -92,7 +85,7 @@ public class CustomMemberGatherer {
             return;
         }
 
-        generatedType = checkForGeneratedJavadocTag(member);
+        generatedType = JavaMergeUtilities.checkForGeneratedJavadocTag(member);
         if (generatedType == GeneratedType.NOT_GENERATED) {
             customBodyMembers.add(member);
         } else if (generatedType == GeneratedType.GENERATED_KEEP) {
@@ -101,7 +94,7 @@ public class CustomMemberGatherer {
     }
 
     private void gatherCustomEnumConstantIfNeeded(EnumConstantDeclaration member) {
-        GeneratedType generatedType = checkForGeneratedAnnotation(member);
+        GeneratedType generatedType = JavaMergeUtilities.checkForGeneratedAnnotation(member);
         if (generatedType == GeneratedType.GENERATED_KEEP) {
             customEnumConstants.add(member);
             return;
@@ -109,114 +102,9 @@ public class CustomMemberGatherer {
             return;
         }
 
-        generatedType = checkForGeneratedJavadocTag(member);
+        generatedType = JavaMergeUtilities.checkForGeneratedJavadocTag(member);
         if (generatedType == GeneratedType.NOT_GENERATED || generatedType == GeneratedType.GENERATED_KEEP) {
             customEnumConstants.add(member);
         }
-    }
-
-    private GeneratedType checkForGeneratedAnnotation(BodyDeclaration<?> member) {
-        return member.getAnnotations().stream()
-                .filter(this::isOurGeneratedAnnotation)
-                .findFirst()
-                .map(a -> {
-                    if (hasDoNotDeleteComment(a)) {
-                        return GeneratedType.GENERATED_KEEP;
-                    } else {
-                        return GeneratedType.GENERATED_REMOVE;
-                    }
-                })
-                .orElse(GeneratedType.NOT_GENERATED);
-    }
-
-    private boolean isOurGeneratedAnnotation(AnnotationExpr annotationExpr) {
-        if (!isGeneratedAnnotation(annotationExpr)) {
-            return false;
-        }
-
-        if (annotationExpr.isSingleMemberAnnotationExpr()) {
-            Expression value = annotationExpr.asSingleMemberAnnotationExpr().getMemberValue();
-            if (value.isStringLiteralExpr()) {
-                return annotationValueMatchesMyBatisGenerator(value.asStringLiteralExpr());
-            }
-        } else if (annotationExpr.isNormalAnnotationExpr()) {
-            return annotationExpr.asNormalAnnotationExpr().getPairs().stream()
-                    .filter(this::isValuePair)
-                    .map(MemberValuePair::getValue)
-                    .filter(Expression::isStringLiteralExpr)
-                    .map(Expression::asStringLiteralExpr)
-                    .findFirst()
-                    .map(this::annotationValueMatchesMyBatisGenerator)
-                    .orElse(false);
-        }
-
-        return false;
-    }
-
-    private boolean hasDoNotDeleteComment(AnnotationExpr annotationExpr) {
-        // check the comments value for the do_not_delete marker string
-        if (annotationExpr.isSingleMemberAnnotationExpr()) {
-            // no comments in a single member annotation - only the single "value" member"
-            return false;
-        } else if (annotationExpr.isNormalAnnotationExpr()) {
-            return annotationExpr.asNormalAnnotationExpr().getPairs().stream()
-                    .filter(this::isCommentsPair)
-                    .map(MemberValuePair::getValue)
-                    .filter(Expression::isStringLiteralExpr)
-                    .map(Expression::asStringLiteralExpr)
-                    .findFirst()
-                    .map(StringLiteralExpr::asString)
-                    .map(s -> s.contains(MergeConstants.DO_NOT_DELETE_DURING_MERGE))
-                    .orElse(false);
-        }
-
-        return false;
-    }
-
-    private boolean isGeneratedAnnotation(AnnotationExpr annotationExpr) {
-        String annotationName = annotationExpr.getNameAsString();
-        // Check for @Generated annotation (both javax and jakarta packages)
-        return "Generated".equals(annotationName) //$NON-NLS-1$
-                || "javax.annotation.Generated".equals(annotationName) //$NON-NLS-1$
-                || "jakarta.annotation.Generated".equals(annotationName); //$NON-NLS-1$
-    }
-
-    private boolean isValuePair(MemberValuePair pair) {
-        return pair.getName().asString().equals("value"); //$NON-NLS-1$
-    }
-
-    private boolean isCommentsPair(MemberValuePair pair) {
-        return pair.getName().asString().equals("comments"); //$NON-NLS-1$
-    }
-
-    private boolean annotationValueMatchesMyBatisGenerator(StringLiteralExpr expr) {
-        return expr.asString().equals(MyBatisGenerator.class.getName());
-    }
-
-    private GeneratedType checkForGeneratedJavadocTag(BodyDeclaration<?> member) {
-        return member.getComment()
-                .map(Comment::getContent)
-                .map(this::checkJavadocTag)
-                .orElse(GeneratedType.NOT_GENERATED);
-    }
-
-    // Check if the comment contains any of the javadoc tags
-    private GeneratedType checkJavadocTag(String comment) {
-        for (String tag : MergeConstants.getOldElementTags()) {
-            if (comment.contains(tag)) {
-                if (comment.contains(MergeConstants.DO_NOT_DELETE_DURING_MERGE)) {
-                    return GeneratedType.GENERATED_KEEP;
-                } else {
-                    return GeneratedType.GENERATED_REMOVE;
-                }
-            }
-        }
-        return GeneratedType.NOT_GENERATED;
-    }
-
-    private enum GeneratedType {
-        NOT_GENERATED,
-        GENERATED_REMOVE,
-        GENERATED_KEEP
     }
 }

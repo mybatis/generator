@@ -15,21 +15,11 @@
  */
 package org.mybatis.generator.merge.java;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
-import java.util.List;
-
 import com.github.javaparser.JavaParser;
-import com.github.javaparser.ParseResult;
 import com.github.javaparser.ParserConfiguration;
-import com.github.javaparser.Problem;
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.BodyDeclaration;
-import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.printer.DefaultPrettyPrinter;
 import com.github.javaparser.printer.Printer;
 import com.github.javaparser.printer.lexicalpreservation.DefaultLexicalPreservingPrinter;
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.exception.MergeException;
 
 /**
@@ -84,12 +74,15 @@ import org.mybatis.generator.exception.MergeException;
  */
 public class JavaFileMergerJavaParserImpl implements JavaFileMerger {
     private final Printer printer;
+    private final boolean isLexicalPreserving;
 
     public JavaFileMergerJavaParserImpl(JavaMergerFactory.PrinterConfiguration printerConfiguration) {
         printer = switch (printerConfiguration) {
         case ECLIPSE -> new DefaultPrettyPrinter(new EclipseOrderedPrinterConfiguration());
         case LEXICAL_PRESERVING -> new DefaultLexicalPreservingPrinter();
         };
+
+        isLexicalPreserving = printerConfiguration == JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING;
     }
 
     /**
@@ -104,109 +97,49 @@ public class JavaFileMergerJavaParserImpl implements JavaFileMerger {
     public String getMergedSource(String newFileContent, String existingFileContent) throws MergeException {
         ParserConfiguration parserConfiguration = new ParserConfiguration();
         parserConfiguration.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_25);
-        parserConfiguration.setLexicalPreservationEnabled(true);
+        if (isLexicalPreserving) {
+            parserConfiguration.setLexicalPreservationEnabled(true);
+        }
         JavaParser javaParser = new JavaParser(parserConfiguration);
 
-        ParseResults existingFileParseResults = parseAndFindMainTypeDeclaration(javaParser, existingFileContent,
-                FileType.EXISTING_FILE);
+        ParseResults existingFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser, existingFileContent,
+                MergeFileType.EXISTING_FILE);
 
         // Gather custom members from the existing file. If none, just return the new file as is
-        CustomMemberGatherer customMemberGatherer = new CustomMemberGatherer(existingFileParseResults.typeDeclaration);
+        CustomMemberGatherer customMemberGatherer = new CustomMemberGatherer(existingFileParseResults.typeDeclaration());
         if (!customMemberGatherer.hasAnyMembersToMerge()) {
             return newFileContent;
         }
 
         // Custom members exist, need to merge...
-        ParseResults newFileParseResults = parseAndFindMainTypeDeclaration(javaParser, newFileContent,
-                FileType.NEW_FILE);
+        ParseResults newFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser, newFileContent,
+                MergeFileType.NEW_FILE);
 
         // Delete elements in the new file that match doNotDeleteMembers from the existing file
         customMemberGatherer.doNotDeleteBodyMembers()
-                .forEach(m -> deleteDuplicateMemberIfExists(newFileParseResults.typeDeclaration, m));
+                .forEach(m -> JavaMergeUtilities.deleteDuplicateMemberIfExists(newFileParseResults.typeDeclaration(), m));
 
         // Look for custom imports in the existing file and merge into the new file
         JavaMergeUtilities
-                .findCustomImports(existingFileParseResults.compilationUnit, newFileParseResults.compilationUnit)
-                .forEach(newFileParseResults.compilationUnit::addImport);
+                .findCustomImports(existingFileParseResults.compilationUnit(), newFileParseResults.compilationUnit())
+                .forEach(newFileParseResults.compilationUnit()::addImport);
 
         // Add custom body members from the existing file to the new file
-        customMemberGatherer.allCustomBodyMembers().forEach(newFileParseResults.typeDeclaration::addMember);
+        customMemberGatherer.allCustomBodyMembers().forEach(newFileParseResults.typeDeclaration()::addMember);
 
         // Add custom enum constants from the existing file to the new file
-        if (newFileParseResults.typeDeclaration.isEnumDeclaration()) {
+        if (newFileParseResults.typeDeclaration().isEnumDeclaration()) {
             customMemberGatherer.customEnumConstants()
-                    .forEach(newFileParseResults.typeDeclaration.asEnumDeclaration()::addEntry);
+                    .forEach(newFileParseResults.typeDeclaration().asEnumDeclaration()::addEntry);
         }
 
         // Look for custom super interfaces in the existing file and merge into the new file
         JavaMergeUtilities
-                .findCustomSuperInterfaces(existingFileParseResults.typeDeclaration,
-                        newFileParseResults.typeDeclaration)
-                .forEach(t -> JavaMergeUtilities.addSuperInterface(newFileParseResults.typeDeclaration, t));
+                .findCustomSuperInterfaces(existingFileParseResults.typeDeclaration(),
+                        newFileParseResults.typeDeclaration())
+                .forEach(t -> JavaMergeUtilities.addSuperInterface(newFileParseResults.typeDeclaration(), t));
 
         // Return the new (merged) file
-        return printer.print(newFileParseResults.compilationUnit);
-    }
-
-    private ParseResults parseAndFindMainTypeDeclaration(JavaParser javaParser, String source, FileType fileType)
-            throws MergeException {
-        ParseResult<CompilationUnit> parseResult = javaParser.parse(source);
-
-        // little hack to pull the result out of the lambda. This allows us to avoid "orElseThrow()" later on
-        @Nullable CompilationUnit[] compilationUnits = new CompilationUnit [1];
-        parseResult.ifSuccessful(cu -> compilationUnits[0] = cu);
-
-        if (compilationUnits[0] == null) {
-            List<String> details = parseResult.getProblems().stream()
-                    .map(Problem::toString)
-                    .toList();
-            throw new MergeException(getString("RuntimeError.28", fileType.toString()), details); //$NON-NLS-1$
-        }
-
-        return new ParseResults(compilationUnits[0], findMainTypeDeclaration(compilationUnits[0], fileType));
-    }
-
-    private void deleteDuplicateMemberIfExists(TypeDeclaration<?> newTypeDeclaration,
-                                                      BodyDeclaration<?> member) {
-        newTypeDeclaration.getMembers().stream()
-                .filter(td -> JavaMergeUtilities.membersMatch(td, member))
-                .findFirst()
-                .ifPresent(newTypeDeclaration::remove);
-    }
-
-    private TypeDeclaration<?> findMainTypeDeclaration(CompilationUnit compilationUnit, FileType fileType)
-            throws MergeException {
-        // Return the first public type declaration, or the first type declaration if no public one exists
-        TypeDeclaration<?> firstType = null;
-        for (TypeDeclaration<?> typeDeclaration : compilationUnit.getTypes()) {
-            if (firstType == null) {
-                firstType = typeDeclaration;
-            }
-            if (typeDeclaration.isPublic()) {
-                return typeDeclaration;
-            }
-        }
-        if (firstType == null) {
-            throw new MergeException(getString("RuntimeError.29", fileType.toString())); //$NON-NLS-1$
-        }
-        return firstType;
-    }
-
-    private record ParseResults(CompilationUnit compilationUnit, TypeDeclaration<?> typeDeclaration) {}
-
-    private enum FileType {
-        NEW_FILE("new Java file"), //$NON-NLS-1$
-        EXISTING_FILE("existing Java file"); //$NON-NLS-1$
-
-        private final String displayText;
-
-        FileType(String displayText) {
-            this.displayText = displayText;
-        }
-
-        @Override
-        public String toString() {
-            return displayText;
-        }
+        return printer.print(newFileParseResults.compilationUnit());
     }
 }

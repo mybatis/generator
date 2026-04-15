@@ -74,10 +74,11 @@ public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTes
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return switch (printerConfiguration) {
-            case ECLIPSE -> expectedEclipseContent(parameter);
-            case LEXICAL_PRESERVING -> expectedLexicalPreservingContent(parameter);
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "Eclipse" -> expectedEclipseContent(parameter);
+            case "LexicalPreserving" -> expectedLexicalPreservingContent(parameter);
+            default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
@@ -151,8 +152,16 @@ public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTes
     }
 
     @Override
-    public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
-                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
+    public List<MergeConfigurationAndId> mergeConfigurations() {
+        MergeConfiguration eclipse = new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+                .build();
+
+        MergeConfiguration lexicalPreserving = new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .build();
+
+        return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
     }
 }

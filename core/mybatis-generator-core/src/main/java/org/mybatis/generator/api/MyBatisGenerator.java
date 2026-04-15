@@ -52,6 +52,7 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.merge.java.JavaFileMerger;
 import org.mybatis.generator.merge.java.JavaMergerFactory;
+import org.mybatis.generator.merge.java.MergeConfiguration;
 import org.mybatis.generator.merge.xml.XmlFileMergerJaxp;
 
 /**
@@ -88,7 +89,8 @@ public class MyBatisGenerator {
 
         if (builder.isJavaFileMergeEnabled) {
             isJavaFileMergeEnabled = true;
-            javaFileMerger = JavaMergerFactory.getMerger(JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
+            // TODO - make this configurable
+            javaFileMerger = JavaMergerFactory.getMerger(MergeConfiguration.defaultMergeConfiguration());
         } else {
             isJavaFileMergeEnabled = false;
             javaFileMerger = (newContent, existingContent) -> newContent;

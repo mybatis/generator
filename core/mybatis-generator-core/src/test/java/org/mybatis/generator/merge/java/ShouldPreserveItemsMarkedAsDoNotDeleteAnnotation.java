@@ -122,10 +122,11 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return switch (printerConfiguration) {
-            case ECLIPSE -> expectedEclipseContent();
-            case LEXICAL_PRESERVING -> expectedLexicalPreservingContent();
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "Eclipse" -> expectedEclipseContent();
+            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
@@ -217,8 +218,16 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
     }
 
     @Override
-    public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
-                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
+    public List<MergeConfigurationAndId> mergeConfigurations() {
+        MergeConfiguration eclipse = new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+                .build();
+
+        MergeConfiguration lexicalPreserving = new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .build();
+
+        return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
     }
 }

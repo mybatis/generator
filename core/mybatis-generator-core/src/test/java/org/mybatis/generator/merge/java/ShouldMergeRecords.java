@@ -47,9 +47,9 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return switch (printerConfiguration) {
-            case ECLIPSE -> """
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "Eclipse" -> """
                 package foo;
 
                 import java.io.Serializable;
@@ -63,7 +63,7 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
                     }
                 }
                 """;
-            case LEXICAL_PRESERVING -> """
+            case "LexicalPreserving" -> """
                 package foo;
                 import java.io.Serializable;
 
@@ -76,12 +76,21 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
                     }
                 }
                 """;
+            default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
     @Override
-    public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
-                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
+    public List<MergeConfigurationAndId> mergeConfigurations() {
+        MergeConfiguration eclipse = new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+                .build();
+
+        MergeConfiguration lexicalPreserving = new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .build();
+
+        return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
     }
 }

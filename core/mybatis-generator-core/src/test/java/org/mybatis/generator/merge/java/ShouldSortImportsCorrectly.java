@@ -60,9 +60,9 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return switch(printerConfiguration) {
-        case ECLIPSE -> """
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "Eclipse" -> """
                 package com.example;
 
                 import static java.util.Collections.emptySet;
@@ -91,7 +91,7 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                     }
                 }
                 """;
-            case LEXICAL_PRESERVING -> """
+            case "LexicalPreserving" -> """
                 package com.example;
 
                 import java.util.List;
@@ -116,12 +116,21 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                     public void customMethod() {}
                 }
                 """;
+            default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
     @Override
-    public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
-                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
+    public List<MergeConfigurationAndId> mergeConfigurations() {
+        MergeConfiguration eclipse = new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+                .build();
+
+        MergeConfiguration lexicalPreserving = new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .build();
+
+        return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
     }
 }

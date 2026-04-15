@@ -29,8 +29,14 @@ import org.reflections.util.ConfigurationBuilder;
 public abstract class JavaMergeTestCase extends MergeTestCase {
     private static final Log LOG = LogFactory.getLog(JavaMergeTestCase.class);
 
-    public abstract List<JavaMergerFactory.PrinterConfiguration> printerConfigurations();
-    public abstract String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration);
+    public boolean disabled() {
+        return false;
+    }
+
+    public record MergeConfigurationAndId(String id, MergeConfiguration mergeConfiguration) {}
+
+    public abstract List<MergeConfigurationAndId> mergeConfigurations();
+    public abstract String expectedContentAfterMerge(String parameter, String mergeConfigurationId);
 
     public static Stream<Arguments> javaMergeTestCases(String searchedPackage) {
         // need to add the name filter as well as the search package
@@ -64,12 +70,12 @@ public abstract class JavaMergeTestCase extends MergeTestCase {
         String name = "testCase = " + getClass().getSimpleName() + ", parameter = %s, printerConfiguration = %s";
 
         if (parameterVariants().isEmpty()) {
-            return printerConfigurations().stream()
-                    .map(pc -> Arguments.argumentSet(String.format(name, "null", pc), this, null, pc));
+            return mergeConfigurations().stream()
+                    .map(pc -> Arguments.argumentSet(String.format(name, "null", pc.id), this, null, pc));
         } else {
             return parameterVariants().stream()
-                    .flatMap(pv -> printerConfigurations().stream()
-                            .map(pc -> Arguments.argumentSet(String.format(name, pv, pc), this, pv, pc)));
+                    .flatMap(pv -> mergeConfigurations().stream()
+                            .map(pc -> Arguments.argumentSet(String.format(name, pv, pc.id), this, pv, pc)));
         }
     }
 }

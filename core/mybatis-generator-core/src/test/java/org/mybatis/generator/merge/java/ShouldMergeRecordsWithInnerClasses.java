@@ -69,16 +69,16 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter, JavaMergerFactory.PrinterConfiguration printerConfiguration) {
-        return switch (printerConfiguration) {
-            case ECLIPSE -> """
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "Eclipse" -> """
                 package foo;
-                
+
                 import java.io.Serializable;
                 import java.util.stream.IntStream;
 
                 import javax.annotation.Generated;
-                
+
                 public record Name(int id, String firstName, String lastName) implements Serializable {
 
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -96,15 +96,15 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                     }
                 }
                 """;
-        case LEXICAL_PRESERVING -> """
+            case "LexicalPreserving" -> """
                 package foo;
-                
+
                 import java.util.stream.IntStream;
                 import javax.annotation.Generated;
                 import java.io.Serializable;
-                
+
                 public record Name(int id, String firstName, String lastName) implements Serializable {
-                
+
                   @Generated("org.mybatis.generator.api.MyBatisGenerator")
                   public static class SomeClass {
                     public int method2() {
@@ -122,12 +122,21 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                   }
                 }
                 """;
+            default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
     @Override
-    public List<JavaMergerFactory.PrinterConfiguration> printerConfigurations() {
-        return List.of(JavaMergerFactory.PrinterConfiguration.ECLIPSE,
-                JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
+    public List<MergeConfigurationAndId> mergeConfigurations() {
+        MergeConfiguration eclipse = new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+                .build();
+
+        MergeConfiguration lexicalPreserving = new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .build();
+
+        return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
     }
 }

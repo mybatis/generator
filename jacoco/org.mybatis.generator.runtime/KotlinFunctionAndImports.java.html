@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinFunctionAndImports.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime</a> &gt; <span class="el_source">KotlinFunctionAndImports.java</span></div><h1>KotlinFunctionAndImports.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.dom.kotlin.KotlinArg;
+import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.exception.InternalException;
+
+public class KotlinFunctionAndImports {
+
+    private final KotlinFunction function;
+    private final Set&lt;String&gt; imports;
+
+<span class="fc" id="L35">    private KotlinFunctionAndImports(Builder builder) {</span>
+<span class="fc" id="L36">        function = Objects.requireNonNull(builder.function);</span>
+<span class="fc" id="L37">        imports = builder.imports;</span>
+<span class="fc" id="L38">    }</span>
+
+    public KotlinFunction getFunction() {
+<span class="fc" id="L41">        return function;</span>
+    }
+
+    public Set&lt;String&gt; getImports() {
+<span class="fc" id="L45">        return imports;</span>
+    }
+
+    public static Builder withFunction(KotlinFunction function) {
+<span class="fc" id="L49">        return new Builder().withFunction(function);</span>
+    }
+
+<span class="fc" id="L52">    public static class Builder {</span>
+        private @Nullable KotlinFunction function;
+<span class="fc" id="L54">        private final Set&lt;String&gt; imports = new HashSet&lt;&gt;();</span>
+
+        public Builder withFunction(KotlinFunction function) {
+<span class="fc" id="L57">            this.function = function;</span>
+<span class="fc" id="L58">            return this;</span>
+        }
+
+        public Builder withImport(String im) {
+<span class="fc" id="L62">            this.imports.add(im);</span>
+<span class="fc" id="L63">            return this;</span>
+        }
+
+        public Builder withImports(Set&lt;String&gt; imports) {
+<span class="fc" id="L67">            this.imports.addAll(imports);</span>
+<span class="fc" id="L68">            return this;</span>
+        }
+
+        public Builder withExtraFunctionParts(KotlinFunctionParts kotlinFunctionParts) {
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">            if (function == null) {</span>
+<span class="nc" id="L73">                throw new InternalException(getString(&quot;RuntimeError.30&quot;)); //$NON-NLS-1$</span>
+            }
+
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            for (KotlinArg argument : kotlinFunctionParts.getArguments()) {</span>
+<span class="fc" id="L77">                function.addArgument(argument);</span>
+<span class="fc" id="L78">            }</span>
+
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            for (String annotation : kotlinFunctionParts.getAnnotations()) {</span>
+<span class="fc" id="L81">                function.addAnnotation(annotation);</span>
+<span class="fc" id="L82">            }</span>
+
+<span class="fc" id="L84">            function.addCodeLines(kotlinFunctionParts.getCodeLines());</span>
+<span class="fc" id="L85">            imports.addAll(kotlinFunctionParts.getImports());</span>
+<span class="fc" id="L86">            return this;</span>
+        }
+
+        public KotlinFunctionAndImports build() {
+<span class="fc" id="L90">            return new KotlinFunctionAndImports(this);</span>
+        }
+
+        public Optional&lt;KotlinFunctionAndImports&gt; buildOptional() {
+<span class="fc" id="L94">            return Optional.of(build());</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

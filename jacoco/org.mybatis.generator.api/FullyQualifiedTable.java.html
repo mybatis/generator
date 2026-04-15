@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FullyQualifiedTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">FullyQualifiedTable.java</span></div><h1>FullyQualifiedTable.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api;
+
+import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
+import static org.mybatis.generator.internal.util.StringUtility.mapStringValueOrElseGet;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.StringUtility.stringValueOrElseGet;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.DomainObjectRenamingRule;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
+
+public class FullyQualifiedTable {
+    private final @Nullable String introspectedCatalog;
+    private final @Nullable String introspectedSchema;
+    private final String introspectedTableName;
+    private final @Nullable String runtimeCatalog;
+    private final @Nullable String runtimeSchema;
+    private final @Nullable String runtimeTableName;
+    private @Nullable String configuredDomainObjectName;
+    private @Nullable String domainObjectSubPackage;
+    private final @Nullable String alias;
+    private final boolean ignoreQualifiersAtRuntime;
+    private final String beginningDelimiter;
+    private final String endingDelimiter;
+    private final @Nullable DomainObjectRenamingRule domainObjectRenamingRule;
+
+<span class="fc" id="L48">    public FullyQualifiedTable(Builder builder) {</span>
+<span class="fc" id="L49">        introspectedCatalog = builder.introspectedCatalog;</span>
+<span class="fc" id="L50">        introspectedSchema = builder.introspectedSchema;</span>
+<span class="fc" id="L51">        introspectedTableName = Objects.requireNonNull(builder.introspectedTableName);</span>
+<span class="fc" id="L52">        ignoreQualifiersAtRuntime = builder.ignoreQualifiersAtRuntime;</span>
+<span class="fc" id="L53">        runtimeCatalog = builder.runtimeCatalog;</span>
+<span class="fc" id="L54">        runtimeSchema = builder.runtimeSchema;</span>
+<span class="fc" id="L55">        runtimeTableName = builder.runtimeTableName;</span>
+<span class="fc" id="L56">        domainObjectRenamingRule = builder.domainObjectRenamingRule;</span>
+
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (stringHasValue(builder.domainObjectName)) {</span>
+<span class="fc" id="L59">            int index = builder.domainObjectName.lastIndexOf('.');</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            if (index == -1) {</span>
+<span class="fc" id="L61">                configuredDomainObjectName = builder.domainObjectName;</span>
+            } else {
+<span class="fc" id="L63">                configuredDomainObjectName = builder.domainObjectName.substring(index + 1);</span>
+<span class="fc" id="L64">                domainObjectSubPackage = builder.domainObjectName.substring(0, index);</span>
+            }
+        }
+
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (builder.alias == null) {</span>
+<span class="fc" id="L69">            alias = null;</span>
+        } else {
+<span class="fc" id="L71">            this.alias = builder.alias.trim();</span>
+        }
+
+<span class="pc bpc" id="L74" title="1 of 4 branches missed.">        if (builder.delimitIdentifiers &amp;&amp; builder.context != null) {</span>
+<span class="fc" id="L75">            beginningDelimiter =  builder.context.getBeginningDelimiter();</span>
+<span class="fc" id="L76">            endingDelimiter = builder.context.getEndingDelimiter();</span>
+        } else {
+<span class="fc" id="L78">            beginningDelimiter = &quot;&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L79">            endingDelimiter = &quot;&quot;; //$NON-NLS-1$</span>
+
+        }
+<span class="fc" id="L82">    }</span>
+
+    public Optional&lt;String&gt; getIntrospectedCatalog() {
+<span class="fc" id="L85">        return Optional.ofNullable(introspectedCatalog);</span>
+    }
+
+    public Optional&lt;String&gt; getIntrospectedSchema() {
+<span class="fc" id="L89">        return Optional.ofNullable(introspectedSchema);</span>
+    }
+
+    public String getIntrospectedTableName() {
+<span class="fc" id="L93">        return introspectedTableName;</span>
+    }
+
+    public String getFullyQualifiedTableNameAtRuntime() {
+<span class="fc" id="L97">        StringBuilder localCatalog = new StringBuilder();</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (!ignoreQualifiersAtRuntime) {</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">            if (stringHasValue(runtimeCatalog)) {</span>
+<span class="nc" id="L100">                localCatalog.append(runtimeCatalog);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">            } else if (stringHasValue(introspectedCatalog)) {</span>
+<span class="nc" id="L102">                localCatalog.append(introspectedCatalog);</span>
+            }
+        }
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (!localCatalog.isEmpty()) {</span>
+<span class="nc" id="L106">            addDelimiters(localCatalog);</span>
+        }
+
+<span class="fc" id="L109">        StringBuilder localSchema = new StringBuilder();</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        if (!ignoreQualifiersAtRuntime) {</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">            if (stringHasValue(runtimeSchema)) {</span>
+<span class="nc" id="L112">                localSchema.append(runtimeSchema);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">            } else if (stringHasValue(introspectedSchema)) {</span>
+<span class="fc" id="L114">                localSchema.append(introspectedSchema);</span>
+            }
+        }
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        if (!localSchema.isEmpty()) {</span>
+<span class="fc" id="L118">            addDelimiters(localSchema);</span>
+        }
+
+<span class="fc" id="L121">        StringBuilder localTableName = new StringBuilder();</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        if (stringHasValue(runtimeTableName)) {</span>
+<span class="nc" id="L123">            localTableName.append(runtimeTableName);</span>
+        } else {
+<span class="fc" id="L125">            localTableName.append(introspectedTableName);</span>
+        }
+<span class="fc" id="L127">        addDelimiters(localTableName);</span>
+
+<span class="fc" id="L129">        return composeFullyQualifiedTableName(localCatalog.toString(), localSchema.toString(),</span>
+<span class="fc" id="L130">                localTableName.toString(), '.');</span>
+    }
+
+    public String getAliasedFullyQualifiedTableNameAtRuntime() {
+<span class="fc" id="L134">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L136">        sb.append(getFullyQualifiedTableNameAtRuntime());</span>
+
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        if (stringHasValue(alias)) {</span>
+<span class="fc" id="L139">            sb.append(' ');</span>
+<span class="fc" id="L140">            sb.append(alias);</span>
+        }
+
+<span class="fc" id="L143">        return sb.toString();</span>
+    }
+
+    public String getDomainObjectName() {
+<span class="fc" id="L147">        return stringValueOrElseGet(configuredDomainObjectName, this::calculateDomainObjectName);</span>
+    }
+
+    private String calculateDomainObjectName() {
+<span class="fc" id="L151">        String finalDomainObjectName = mapStringValueOrElseGet(runtimeTableName,</span>
+<span class="nc" id="L152">                s -&gt; JavaBeansUtil.getCamelCaseString(s, true),</span>
+<span class="fc" id="L153">                () -&gt; JavaBeansUtil.getCamelCaseString(introspectedTableName, true));</span>
+
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (domainObjectRenamingRule != null) {</span>
+<span class="fc" id="L156">            Pattern pattern = domainObjectRenamingRule.pattern();</span>
+<span class="fc" id="L157">            String replaceString = domainObjectRenamingRule.replaceString();</span>
+<span class="fc" id="L158">            Matcher matcher = pattern.matcher(finalDomainObjectName);</span>
+<span class="fc" id="L159">            finalDomainObjectName = JavaBeansUtil.getFirstCharacterUppercase(matcher.replaceAll(replaceString));</span>
+        }
+<span class="fc" id="L161">        return finalDomainObjectName;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L166" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L167">            return true;</span>
+        }
+
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (!(obj instanceof FullyQualifiedTable other)) {</span>
+<span class="nc" id="L171">            return false;</span>
+        }
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        return Objects.equals(this.introspectedTableName, other.introspectedTableName)</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">                &amp;&amp; Objects.equals(this.introspectedCatalog, other.introspectedCatalog)</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">                &amp;&amp; Objects.equals(this.introspectedSchema, other.introspectedSchema);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L181">        return Objects.hash(introspectedTableName, introspectedCatalog, introspectedCatalog);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L186">        return composeFullyQualifiedTableName(</span>
+                introspectedCatalog, introspectedSchema, introspectedTableName,
+                '.');
+    }
+
+    public Optional&lt;String&gt; getAlias() {
+<span class="nc" id="L192">        return Optional.ofNullable(alias);</span>
+    }
+
+    /**
+     * Calculates a Java package fragment based on the table catalog and schema.
+     * If qualifiers are ignored, then this method will return an empty string.
+     *
+     * &lt;p&gt;This method is used for determining the sub package for Java client and
+     * SQL map (XML) objects.  It ignores any sub-package added to the
+     * domain object name in the table configuration.
+     *
+     * @param isSubPackagesEnabled
+     *            the is sub packages enabled
+     * @return the subpackage for this table
+     */
+    public String getSubPackageForClientOrSqlMap(boolean isSubPackagesEnabled) {
+<span class="fc" id="L208">        StringBuilder sb = new StringBuilder();</span>
+<span class="pc bpc" id="L209" title="1 of 4 branches missed.">        if (!ignoreQualifiersAtRuntime &amp;&amp; isSubPackagesEnabled) {</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">            if (stringHasValue(runtimeCatalog)) {</span>
+<span class="nc" id="L211">                sb.append('.');</span>
+<span class="nc" id="L212">                sb.append(runtimeCatalog.toLowerCase());</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">            } else if (stringHasValue(introspectedCatalog)) {</span>
+<span class="nc" id="L214">                sb.append('.');</span>
+<span class="nc" id="L215">                sb.append(introspectedCatalog.toLowerCase());</span>
+            }
+
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">            if (stringHasValue(runtimeSchema)) {</span>
+<span class="nc" id="L219">                sb.append('.');</span>
+<span class="nc" id="L220">                sb.append(runtimeSchema.toLowerCase());</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">            } else if (stringHasValue(introspectedSchema)) {</span>
+<span class="fc" id="L222">                sb.append('.');</span>
+<span class="fc" id="L223">                sb.append(introspectedSchema.toLowerCase());</span>
+            }
+        }
+
+        // TODO - strip characters that are not valid in package names
+<span class="fc" id="L228">        return sb.toString();</span>
+    }
+
+    /**
+     * Calculates a Java package fragment based on the table catalog and schema.
+     * If qualifiers are ignored, then this method will return an empty string.
+     *
+     * &lt;p&gt;This method is used for determining the sub package for Java model objects only.
+     * It takes into account the possibility that a sub-package was added to the
+     * domain object name in the table configuration.
+     *
+     * @param isSubPackagesEnabled
+     *            the is sub packages enabled
+     * @return the subpackage for this table
+     */
+    public String getSubPackageForModel(boolean isSubPackagesEnabled) {
+<span class="fc" id="L244">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L245">        sb.append(getSubPackageForClientOrSqlMap(isSubPackagesEnabled));</span>
+
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        if (stringHasValue(domainObjectSubPackage)) {</span>
+<span class="fc" id="L248">            sb.append('.');</span>
+<span class="fc" id="L249">            sb.append(domainObjectSubPackage);</span>
+        }
+
+<span class="fc" id="L252">        return sb.toString();</span>
+    }
+
+    private void addDelimiters(StringBuilder sb) {
+<span class="fc bfc" id="L256" title="All 2 branches covered.">        if (stringHasValue(beginningDelimiter)) {</span>
+<span class="fc" id="L257">            sb.insert(0, beginningDelimiter);</span>
+        }
+
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        if (stringHasValue(endingDelimiter)) {</span>
+<span class="fc" id="L261">            sb.append(endingDelimiter);</span>
+        }
+<span class="fc" id="L263">    }</span>
+
+    public Optional&lt;String&gt; getDomainObjectSubPackage() {
+<span class="fc" id="L266">        return Optional.ofNullable(domainObjectSubPackage);</span>
+    }
+
+<span class="fc" id="L269">    public static class Builder {</span>
+        private @Nullable String introspectedCatalog;
+        private @Nullable String introspectedSchema;
+        private @Nullable String introspectedTableName;
+        private @Nullable String runtimeCatalog;
+        private @Nullable String runtimeSchema;
+        private @Nullable String runtimeTableName;
+        private @Nullable String domainObjectName;
+        private @Nullable String alias;
+        private boolean ignoreQualifiersAtRuntime;
+        private boolean delimitIdentifiers;
+        private @Nullable DomainObjectRenamingRule domainObjectRenamingRule;
+        private @Nullable Context context;
+
+        /**
+         * Sets the actual catalog of the table as returned from DatabaseMetaData.
+         *
+         * &lt;p&gt;This value should only be set if the user configured a catalog. Otherwise, the
+         * DatabaseMetaData is reporting some database default that we don't want in the generated code.
+         *
+         * @param introspectedCatalog the introspected catalog
+         * @return this builder
+         */
+        public Builder withIntrospectedCatalog(@Nullable String introspectedCatalog) {
+<span class="fc" id="L293">            this.introspectedCatalog = introspectedCatalog;</span>
+<span class="fc" id="L294">            return this;</span>
+        }
+
+        /**
+         * Sets the actual schema of the table as returned from DatabaseMetaData.
+         *
+         * &lt;p&gt;This value should only be set if the user configured a schema. Otherwise, the
+         * DatabaseMetaData is reporting some database default that we don't want in the generated code.
+         *
+         * @param introspectedSchema the introspected schema
+         * @return this builder
+         */
+        public Builder withIntrospectedSchema(@Nullable String introspectedSchema) {
+<span class="fc" id="L307">            this.introspectedSchema = introspectedSchema;</span>
+<span class="fc" id="L308">            return this;</span>
+        }
+
+        /**
+         * Sets the actual table name as returned from DatabaseMetaData.
+         *
+         * @param introspectedTableName the introspected table name
+         * @return this builder
+         */
+        public Builder withIntrospectedTableName(String introspectedTableName) {
+<span class="fc" id="L318">            this.introspectedTableName = introspectedTableName;</span>
+<span class="fc" id="L319">            return this;</span>
+        }
+
+        /**
+         * Sets the runtime catalog.
+         *
+         * &lt;p&gt;This is used to &quot;rename&quot; the catalog in the generated SQL. This is useful, for example, when
+         *    generating code against one catalog that should run with a different catalog.
+         *
+         * @param runtimeCatalog the runtime catalog
+         * @return this builder
+         */
+        public Builder withRuntimeCatalog(@Nullable String runtimeCatalog) {
+<span class="fc" id="L332">            this.runtimeCatalog = runtimeCatalog;</span>
+<span class="fc" id="L333">            return this;</span>
+        }
+
+        /**
+         * Sets the runtime schema.
+         *
+         * &lt;p&gt;This is used to &quot;rename&quot; the schema in the generated SQL. This is useful, for example, when
+         *    generating code against one schema that should run with a different schema.
+         *
+         * @param runtimeSchema the runtime schema
+         * @return this builder
+         */
+        public Builder withRuntimeSchema(@Nullable String runtimeSchema) {
+<span class="fc" id="L346">            this.runtimeSchema = runtimeSchema;</span>
+<span class="fc" id="L347">            return this;</span>
+        }
+
+        /**
+         * Sets the runtime table name.
+         *
+         * &lt;p&gt;This is used to &quot;rename&quot; the table in the generated SQL. This is useful, for example, when generating
+         *    code to run with an Oracle synonym. The user would have to specify the actual table name and schema
+         *    for generation, but would want to use the synonym name in the generated SQL
+         *
+         * @param runtimeTableName the runtime table name
+         * @return this builder
+         */
+        public Builder withRuntimeTableName(@Nullable String runtimeTableName) {
+<span class="fc" id="L361">            this.runtimeTableName = runtimeTableName;</span>
+<span class="fc" id="L362">            return this;</span>
+        }
+
+        /**
+         * Set the configured domain object name for this table.
+         *
+         * &lt;p&gt;If nothing is configured, we'll build the domain object named based on the tableName or runtimeTableName.
+         *
+         * @param domainObjectName the domain object name
+         * @return this builder
+         */
+        public Builder withDomainObjectName(@Nullable String domainObjectName) {
+<span class="fc" id="L374">            this.domainObjectName = domainObjectName;</span>
+<span class="fc" id="L375">            return this;</span>
+        }
+
+        /**
+         * Sets a configured alias for the table. This alias will be added to the table name in the SQL.
+         *
+         * @param alias the alias
+         * @return this builder
+         */
+        public Builder withAlias(@Nullable String alias) {
+<span class="fc" id="L385">            this.alias = alias;</span>
+<span class="fc" id="L386">            return this;</span>
+        }
+
+        /**
+         * If true, then the catalog and schema qualifiers will be ignored when composing fully qualified names
+         * in the generated SQL.
+         *
+         * &lt;p&gt;This is used, for example, when the user needs to specify a specific schema for
+         * generating code but does not want the schema in the generated SQL
+         *
+         * @param ignoreQualifiersAtRuntime whether to ignore qualifiers at runtime
+         * @return this builder
+         */
+        public Builder withIgnoreQualifiersAtRuntime(boolean ignoreQualifiersAtRuntime) {
+<span class="fc" id="L400">            this.ignoreQualifiersAtRuntime = ignoreQualifiersAtRuntime;</span>
+<span class="fc" id="L401">            return this;</span>
+        }
+
+        /**
+         * If true, then the table identifiers will be delimited at runtime.
+         *
+         * &lt;p&gt;The delimiter characters are obtained from the Context.
+         *
+         * @param delimitIdentifiers whether to delimit identifiers at runtime
+         * @return this builder
+         */
+        public Builder withDelimitIdentifiers(boolean delimitIdentifiers) {
+<span class="fc" id="L413">            this.delimitIdentifiers = delimitIdentifiers;</span>
+<span class="fc" id="L414">            return this;</span>
+        }
+
+        /**
+         * Sets a domain object renaming rule.
+         *
+         * &lt;p&gt;This is ignored is a domain object name is configured.
+         *
+         * &lt;p&gt;If a domain object name is not configured, we'll build the domain object named based on the tableName
+         * or runtimeTableName, and then we use the domain object renaming rule to generate the final domain object
+         * name.
+         *
+         * @param domainObjectRenamingRule the domain object renaming rule
+         * @return this builder
+         */
+        public Builder withDomainObjectRenamingRule(@Nullable DomainObjectRenamingRule domainObjectRenamingRule) {
+<span class="fc" id="L430">            this.domainObjectRenamingRule = domainObjectRenamingRule;</span>
+<span class="fc" id="L431">            return this;</span>
+        }
+
+        public Builder withContext(Context context) {
+<span class="fc" id="L435">            this.context = context;</span>
+<span class="fc" id="L436">            return this;</span>
+        }
+
+        public FullyQualifiedTable build() {
+<span class="fc" id="L440">            return new FullyQualifiedTable(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.javamapper.elements</a> &gt; <span class="el_source">UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.java</span></div><h1>UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
+
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+
+public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends AbstractJavaMapperMethodGenerator {
+    protected final boolean isSimple;
+
+    protected UpdateByPrimaryKeyWithoutBLOBsMethodGenerator(Builder builder) {
+<span class="fc" id="L31">        super(builder);</span>
+<span class="fc" id="L32">        isSimple = builder.isSimple;</span>
+<span class="fc" id="L33">    }</span>
+
+    @Override
+    public Optional&lt;JavaMethodAndImports&gt; generateMethodAndImports() {
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (!shouldGenerate()) {</span>
+<span class="fc" id="L38">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L41">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L42">        FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());</span>
+<span class="fc" id="L43">        String statementId = introspectedTable.getUpdateByPrimaryKeyStatementId();</span>
+<span class="fc" id="L44">        importedTypes.add(parameterType);</span>
+
+<span class="fc" id="L46">        Method method = buildBasicUpdateByPrimaryKeyMethod(statementId, parameterType);</span>
+<span class="fc" id="L47">        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, importedTypes);</span>
+
+<span class="fc" id="L49">        return JavaMethodAndImports.withMethod(method)</span>
+<span class="fc" id="L50">                .withImports(importedTypes)</span>
+<span class="fc" id="L51">                .withExtraMethodParts(extraMethodParts())</span>
+<span class="fc" id="L52">                .buildOptional();</span>
+    }
+
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+<span class="fc" id="L57">        return pluginAggregator</span>
+<span class="fc" id="L58">                .clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);</span>
+    }
+
+    protected boolean shouldGenerate() {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (isSimple) {</span>
+<span class="fc" id="L63">            return introspectedTable.getRules().generateUpdateByPrimaryKeySelective();</span>
+        } else {
+<span class="fc" id="L65">            return introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs();</span>
+        }
+    }
+
+<span class="fc" id="L69">    public static class Builder extends AbstractGeneratorBuilder&lt;Builder&gt; {</span>
+        private boolean isSimple;
+
+        public Builder isSimple(boolean isSimple) {
+<span class="fc" id="L73">            this.isSimple = isSimple;</span>
+<span class="fc" id="L74">            return this;</span>
+        }
+
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L79">            return this;</span>
+        }
+
+        public UpdateByPrimaryKeyWithoutBLOBsMethodGenerator build() {
+<span class="fc" id="L83">            return new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

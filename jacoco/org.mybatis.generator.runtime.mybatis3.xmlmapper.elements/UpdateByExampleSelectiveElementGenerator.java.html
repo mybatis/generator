@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateByExampleSelectiveElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">UpdateByExampleSelectiveElementGenerator.java</span></div><h1>UpdateByExampleSelectiveElementGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
+
+import java.util.Optional;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
+
+public class UpdateByExampleSelectiveElementGenerator extends AbstractXmlMapperElementGenerator {
+
+    protected UpdateByExampleSelectiveElementGenerator(Builder builder) {
+<span class="fc" id="L30">        super(builder);</span>
+<span class="fc" id="L31">    }</span>
+
+    @Override
+    public Optional&lt;XmlElement&gt; generateElement() {
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if (!introspectedTable.getRules().generateUpdateByExampleSelective()) {</span>
+<span class="fc" id="L36">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L39">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L41">        answer.addAttribute(new Attribute(</span>
+<span class="fc" id="L42">                &quot;id&quot;, introspectedTable.getUpdateByExampleSelectiveStatementId())); //$NON-NLS-1$</span>
+
+<span class="fc" id="L44">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, &quot;map&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+<span class="fc" id="L46">        commentGenerator.addComment(answer);</span>
+
+<span class="fc" id="L48">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L49">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L50">        sb.append(introspectedTable.getAliasedFullyQualifiedRuntimeTableName());</span>
+<span class="fc" id="L51">        answer.addElement(new TextElement(sb.toString()));</span>
+
+<span class="fc" id="L53">        XmlElement dynamicElement = new XmlElement(&quot;set&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L54">        answer.addElement(dynamicElement);</span>
+
+        for (IntrospectedColumn introspectedColumn :
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                ListUtilities.filterColumnsForUpdate(introspectedTable.getAllColumns())) {</span>
+<span class="fc" id="L58">            sb.setLength(0);</span>
+<span class="fc" id="L59">            sb.append(introspectedColumn.getJavaProperty(&quot;row.&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L60">            sb.append(&quot; != null&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L61">            XmlElement isNotNullElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L62">            isNotNullElement.addAttribute(new Attribute(&quot;test&quot;, sb.toString())); //$NON-NLS-1$</span>
+<span class="fc" id="L63">            dynamicElement.addElement(isNotNullElement);</span>
+
+<span class="fc" id="L65">            sb.setLength(0);</span>
+<span class="fc" id="L66">            sb.append(MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn));</span>
+<span class="fc" id="L67">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L68">            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn, &quot;row.&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L69">            sb.append(',');</span>
+
+<span class="fc" id="L71">            isNotNullElement.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L72">        }</span>
+
+<span class="fc" id="L74">        answer.addElement(getUpdateByExampleIncludeElement());</span>
+
+<span class="fc" id="L76">        return Optional.of(answer);</span>
+    }
+
+    @Override
+    public boolean callPlugins(XmlElement element) {
+<span class="fc" id="L81">        return pluginAggregator.sqlMapUpdateByExampleSelectiveElementGenerated(element, introspectedTable);</span>
+    }
+
+<span class="fc" id="L84">    public static class Builder extends AbstractGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L87">            return this;</span>
+        }
+
+        public UpdateByExampleSelectiveElementGenerator build() {
+<span class="fc" id="L91">            return new UpdateByExampleSelectiveElementGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

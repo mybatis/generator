@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JavaTypeResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">JavaTypeResolver.java</span></div><h1>JavaTypeResolver.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Properties;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.config.Context;
+
+/**
+ * This interface describes methods that are required in any Java type resolver.
+ * A Java type resolver is used to make a default translation between a JDBC
+ * type as returned from the database introspection process, and a Java type.
+ *
+ * @author Jeff Butler
+ */
+public interface JavaTypeResolver {
+    /**
+     * Adds properties for this instance from any properties configured in the
+     * JavaTypeResolverConfiguration.
+     *
+     * &lt;p&gt;This method will be called before any of the get methods.
+     *
+     * @param properties All properties from the configuration
+     */
+    void addConfigurationProperties(Properties properties);
+
+    /**
+     * Sets the instance of the Context object associated with this instance.
+     *
+     * &lt;p&gt;This method will be called before any of the get methods.
+     *
+     * @param context The current Context
+     */
+    void setContext(Context context);
+
+    /**
+     * The generator will supply a list to this method. The implementation class may add strings to the list that will
+     * be treated as warning messages and displayed to the user. The concept of a warning is that code generation can
+     * continue, but that the results may not be what is expected.
+     *
+     * @param warnings warnings
+     */
+    void setWarnings(List&lt;String&gt; warnings);
+
+    /**
+     * Calculates and returns the type information that should be associated with
+     * this column based on the jdbc type, length, and scale of the column.
+     *
+     * @param introspectedColumn the column whose type information needs to be calculated
+     * @return the calculated type information, or empty if this is an unsupported type.
+     *     If empty, we will set the JDBC type to OTHER and the Java type to Object and issue a warning
+     *     unless the column is ignored or otherwise overridden
+     */
+    Optional&lt;JdbcTypeInformation&gt; calculateTypeInformation(IntrospectedColumn introspectedColumn);
+
+<span class="fc" id="L72">    record JdbcTypeInformation(String jdbcTypeName, FullyQualifiedJavaType fullyQualifiedJavaType) {</span>
+        public JdbcTypeInformation withJavaType(FullyQualifiedJavaType fullyQualifiedJavaType) {
+<span class="fc" id="L74">            return new JdbcTypeInformation(jdbcTypeName, fullyQualifiedJavaType);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

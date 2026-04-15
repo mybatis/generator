@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResultMapWithBLOBsElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">ResultMapWithBLOBsElementGenerator.java</span></div><h1>ResultMapWithBLOBsElementGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
+
+import java.util.Optional;
+
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+
+public class ResultMapWithBLOBsElementGenerator extends AbstractXmlMapperElementGenerator {
+
+    protected ResultMapWithBLOBsElementGenerator(Builder builder) {
+<span class="fc" id="L26">        super(builder);</span>
+<span class="fc" id="L27">    }</span>
+
+    @Override
+    public Optional&lt;XmlElement&gt; generateElement() {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (!introspectedTable.getRules().generateResultMapWithBLOBs()) {</span>
+<span class="fc" id="L32">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L35">        XmlElement answer = new XmlElement(&quot;resultMap&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L37">        answer.addAttribute(new Attribute(&quot;id&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L38">                introspectedTable.getResultMapWithBLOBsId()));</span>
+
+        String returnType;
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
+<span class="fc" id="L42">            returnType = introspectedTable.getRecordWithBLOBsType();</span>
+        } else {
+            // table has BLOBs, but no BLOB class - BLOB fields must be
+            // in the base class
+<span class="fc" id="L46">            returnType = introspectedTable.getBaseRecordType();</span>
+        }
+
+<span class="fc" id="L49">        answer.addAttribute(new Attribute(&quot;type&quot;, returnType)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L51">        commentGenerator.addComment(answer);</span>
+
+<span class="fc bfc" id="L53" title="All 4 branches covered.">        if (introspectedTable.isConstructorBased() || introspectedTable.isRecordBased()) {</span>
+<span class="fc" id="L54">            addResultMapConstructorElements(answer);</span>
+        } else {
+<span class="fc" id="L56">            answer.addAttribute(new Attribute(&quot;extends&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L57">                    introspectedTable.getBaseResultMapId()));</span>
+<span class="fc" id="L58">            addResultMapElements(answer);</span>
+        }
+
+<span class="fc" id="L61">        return Optional.of(answer);</span>
+    }
+
+    private void addResultMapElements(XmlElement answer) {
+<span class="fc" id="L65">        buildResultMapItems(ResultElementType.RESULT, introspectedTable.getBLOBColumns()).forEach(answer::addElement);</span>
+<span class="fc" id="L66">    }</span>
+
+    private void addResultMapConstructorElements(XmlElement answer) {
+<span class="fc" id="L69">        answer.addElement(buildConstructorElement(true));</span>
+<span class="fc" id="L70">    }</span>
+
+    @Override
+    public boolean callPlugins(XmlElement element) {
+<span class="fc" id="L74">        return pluginAggregator.sqlMapResultMapWithBLOBsElementGenerated(element, introspectedTable);</span>
+    }
+
+<span class="fc" id="L77">    public static class Builder extends AbstractGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L80">            return this;</span>
+        }
+
+        public ResultMapWithBLOBsElementGenerator build() {
+<span class="fc" id="L84">            return new ResultMapWithBLOBsElementGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

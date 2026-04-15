@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnnotatedSelectByExampleWithBLOBsMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated</a> &gt; <span class="el_source">AnnotatedSelectByExampleWithBLOBsMethodGenerator.java</span></div><h1>AnnotatedSelectByExampleWithBLOBsMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.runtime.JavaMethodParts;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectByExampleWithBLOBsMethodGenerator;
+
+public class AnnotatedSelectByExampleWithBLOBsMethodGenerator extends SelectByExampleWithBLOBsMethodGenerator {
+
+    protected AnnotatedSelectByExampleWithBLOBsMethodGenerator(AnnotatedBuilder builder) {
+<span class="fc" id="L26">        super(builder);</span>
+<span class="fc" id="L27">    }</span>
+
+    @Override
+    protected JavaMethodParts extraMethodParts() {
+<span class="fc" id="L31">        var builder = new JavaMethodParts.Builder();</span>
+<span class="fc" id="L32">        addAnnotations(builder);</span>
+<span class="fc" id="L33">        addImports(builder);</span>
+<span class="fc" id="L34">        return builder.build();</span>
+    }
+
+    private void addAnnotations(JavaMethodParts.Builder builder) {
+<span class="fc" id="L38">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());</span>
+
+<span class="fc" id="L40">        String s = &quot;@SelectProvider(type=&quot; //$NON-NLS-1$</span>
+<span class="fc" id="L41">                + fqjt.getShortName()</span>
+                + &quot;.class, method=\&quot;&quot; //$NON-NLS-1$
+<span class="fc" id="L43">                + introspectedTable.getSelectByExampleWithBLOBsStatementId()</span>
+                + &quot;\&quot;)&quot;;//$NON-NLS-1$
+<span class="fc" id="L45">        builder.withAnnotation(s);</span>
+
+<span class="fc" id="L47">        builder.withAnnotations(getAnnotatedResultAnnotations(true));</span>
+<span class="fc" id="L48">    }</span>
+
+    private void addImports(JavaMethodParts.Builder builder) {
+<span class="fc" id="L51">        builder.withImports(getAnnotatedSelectImports());</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {</span>
+<span class="fc" id="L53">            builder.withImports(getAnnotatedResultImports(introspectedColumn));</span>
+<span class="fc" id="L54">        }</span>
+
+<span class="fc" id="L56">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.SelectProvider&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L57">    }</span>
+
+<span class="fc" id="L59">    public static class AnnotatedBuilder extends SelectByExampleWithBLOBsMethodGenerator.Builder {</span>
+        @Override
+        protected AnnotatedBuilder getThis() {
+<span class="fc" id="L62">            return this;</span>
+        }
+
+        @Override
+        public AnnotatedSelectByExampleWithBLOBsMethodGenerator build() {
+<span class="fc" id="L67">            return new AnnotatedSelectByExampleWithBLOBsMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

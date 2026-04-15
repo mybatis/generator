@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DeleteByPrimaryKeyElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">DeleteByPrimaryKeyElementGenerator.java</span></div><h1>DeleteByPrimaryKeyElementGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
+
+import java.util.Optional;
+
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+
+public class DeleteByPrimaryKeyElementGenerator extends AbstractXmlMapperElementGenerator {
+
+    private final boolean isSimple;
+
+    protected DeleteByPrimaryKeyElementGenerator(Builder builder) {
+<span class="fc" id="L29">        super(builder);</span>
+<span class="fc" id="L30">        this.isSimple = builder.isSimple;</span>
+<span class="fc" id="L31">    }</span>
+
+    @Override
+    public Optional&lt;XmlElement&gt; generateElement() {
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if (!introspectedTable.getRules().generateDeleteByPrimaryKey()) {</span>
+<span class="fc" id="L36">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L39">        XmlElement answer = new XmlElement(&quot;delete&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L41">        answer.addAttribute(new Attribute(&quot;id&quot;, introspectedTable.getDeleteByPrimaryKeyStatementId())); //$NON-NLS-1$</span>
+        String parameterClass;
+<span class="fc bfc" id="L43" title="All 4 branches covered.">        if (!isSimple &amp;&amp; introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
+<span class="fc" id="L44">            parameterClass = introspectedTable.getPrimaryKeyType();</span>
+        } else {
+            // PK fields are in the base class. If more than on PK
+            // field, then they are coming in a map.
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            if (introspectedTable.getPrimaryKeyColumns().size() &gt; 1) {</span>
+<span class="fc" id="L49">                parameterClass = &quot;map&quot;; //$NON-NLS-1$</span>
+            } else {
+<span class="fc" id="L51">                parameterClass =</span>
+<span class="fc" id="L52">                        introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();</span>
+            }
+        }
+<span class="fc" id="L55">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, parameterClass)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L57">        commentGenerator.addComment(answer);</span>
+
+<span class="fc" id="L59">        String sb = &quot;delete from &quot; + introspectedTable.getFullyQualifiedTableNameAtRuntime(); //$NON-NLS-1$</span>
+<span class="fc" id="L60">        answer.addElement(new TextElement(sb));</span>
+
+<span class="fc" id="L62">        buildPrimaryKeyWhereClause().forEach(answer::addElement);</span>
+
+<span class="fc" id="L64">        return Optional.of(answer);</span>
+    }
+
+    @Override
+    public boolean callPlugins(XmlElement element) {
+<span class="fc" id="L69">        return pluginAggregator.sqlMapDeleteByPrimaryKeyElementGenerated(element,introspectedTable);</span>
+    }
+
+<span class="fc" id="L72">    public static class Builder extends AbstractGeneratorBuilder&lt;Builder&gt; {</span>
+        private boolean isSimple;
+
+        public Builder isSimple(boolean isSimple) {
+<span class="fc" id="L76">            this.isSimple = isSimple;</span>
+<span class="fc" id="L77">            return this;</span>
+        }
+
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L82">            return this;</span>
+        }
+
+        public DeleteByPrimaryKeyElementGenerator build() {
+<span class="fc" id="L86">            return new DeleteByPrimaryKeyElementGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

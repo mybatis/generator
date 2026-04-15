@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneratedJavaFile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">GeneratedJavaFile.java</span></div><h1>GeneratedJavaFile.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api;
+
+import org.mybatis.generator.api.dom.java.CompilationUnit;
+
+public class GeneratedJavaFile extends GeneratedFile {
+    private final CompilationUnit compilationUnit;
+    private final boolean isMergeable;
+
+    public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject) {
+<span class="fc" id="L25">        this(compilationUnit, targetProject, true);</span>
+<span class="fc" id="L26">    }</span>
+
+    public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject, boolean isMergeable) {
+<span class="fc" id="L29">        super(targetProject);</span>
+<span class="fc" id="L30">        this.compilationUnit = compilationUnit;</span>
+<span class="fc" id="L31">        this.isMergeable = isMergeable;</span>
+<span class="fc" id="L32">    }</span>
+
+    @Override
+    public String getFileName() {
+<span class="fc" id="L36">        return compilationUnit.getType().getShortNameWithoutTypeArguments() + &quot;.java&quot;; //$NON-NLS-1$</span>
+    }
+
+    @Override
+    public String getTargetPackage() {
+<span class="fc" id="L41">        return compilationUnit.getType().getPackageName();</span>
+    }
+
+    /**
+     * Return the compilation unit created for this file. The compilation unit will be run through the
+     * Java formatter before it is written to disk.
+     *
+     * @return the CompilationUnit associated with this file.
+     */
+    public CompilationUnit getCompilationUnit() {
+<span class="fc" id="L51">        return compilationUnit;</span>
+    }
+
+    /**
+     * A Java file is mergeable if the getCompilationUnit() method returns a valid compilation unit.
+     *
+     * @return true if this file is mergeable
+     */
+    @Override
+    public boolean isMergeable() {
+<span class="nc" id="L61">        return isMergeable;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

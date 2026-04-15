@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientGeneratorConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">ClientGeneratorConfiguration.java</span></div><h1>ClientGeneratorConfiguration.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.config;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.KnownRuntime;
+
+public class ClientGeneratorConfiguration extends PropertyHolder {
+    private final String targetPackage;
+    private final String targetProject;
+    private final @Nullable LegacyClientType legacyClientType;
+
+    protected ClientGeneratorConfiguration(Builder builder) {
+<span class="fc" id="L34">        super(builder);</span>
+<span class="fc" id="L35">        targetPackage = Objects.requireNonNull(builder.targetPackage);</span>
+<span class="fc" id="L36">        targetProject = Objects.requireNonNull(builder.targetProject);</span>
+<span class="fc" id="L37">        legacyClientType = builder.legacyClientType;</span>
+<span class="fc" id="L38">    }</span>
+
+    public String getTargetProject() {
+<span class="fc" id="L41">        return targetProject;</span>
+    }
+
+    public String getTargetPackage() {
+<span class="fc" id="L45">        return targetPackage;</span>
+    }
+
+    public Optional&lt;LegacyClientType&gt; getLegacyClientType() {
+<span class="fc" id="L49">        return Optional.ofNullable(legacyClientType);</span>
+    }
+
+    public void validate(List&lt;String&gt; errors, String contextId, KnownRuntime knownRuntime) {
+<span class="fc" id="L53">        String errorMessage = &quot;ValidationError.31&quot;; //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L55" title="All 4 branches covered.">        if (knownRuntime.isLegacyMyBatis3Based() &amp;&amp; legacyClientType == null) {</span>
+<span class="fc" id="L56">            errors.add(getString(errorMessage, &quot;null&quot;, contextId)); //$NON-NLS-1$</span>
+        }
+
+<span class="pc bpc" id="L59" title="1 of 4 branches missed.">        if (knownRuntime == KnownRuntime.MYBATIS3_SIMPLE &amp;&amp; legacyClientType == LegacyClientType.MIXED_MAPPER) {</span>
+<span class="nc" id="L60">            errors.add(getString(errorMessage, legacyClientType.name(), contextId));</span>
+        }
+
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (!stringHasValue(targetProject)) {</span>
+<span class="nc" id="L64">            errors.add(getString(&quot;ValidationError.2&quot;, contextId)); //$NON-NLS-1$</span>
+        }
+
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (!stringHasValue(targetPackage)) {</span>
+<span class="nc" id="L68">            errors.add(getString(&quot;ValidationError.12&quot;, &quot;clientGenerator&quot;, contextId)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+        }
+<span class="fc" id="L70">    }</span>
+
+    public boolean requiresXmlMapper() {
+<span class="fc bfc" id="L73" title="All 4 branches covered.">        return legacyClientType == LegacyClientType.XML_MAPPER || legacyClientType == LegacyClientType.MIXED_MAPPER;</span>
+    }
+
+<span class="fc" id="L76">    public static class Builder extends AbstractBuilder&lt;Builder&gt; {</span>
+        private @Nullable String targetPackage;
+        private @Nullable String targetProject;
+        private @Nullable LegacyClientType legacyClientType;
+
+        public Builder withTargetPackage(@Nullable String targetPackage) {
+<span class="fc" id="L82">            this.targetPackage = targetPackage;</span>
+<span class="fc" id="L83">            return this;</span>
+        }
+
+        public Builder withTargetProject(@Nullable String targetProject) {
+<span class="fc" id="L87">            this.targetProject = targetProject;</span>
+<span class="fc" id="L88">            return this;</span>
+        }
+
+        public Builder withLegacyClientType(@Nullable LegacyClientType legacyClientType) {
+<span class="fc" id="L92">            this.legacyClientType = legacyClientType;</span>
+<span class="fc" id="L93">            return this;</span>
+        }
+
+        public ClientGeneratorConfiguration build() {
+<span class="fc" id="L97">            return new ClientGeneratorConfiguration(this);</span>
+        }
+
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L102">            return this;</span>
+        }
+    }
+
+<span class="fc" id="L106">    public enum LegacyClientType {</span>
+<span class="fc" id="L107">        ANNOTATED_MAPPER(&quot;AnnotatedMapper&quot;), //$NON-NLS-1$</span>
+<span class="fc" id="L108">        MIXED_MAPPER(&quot;MixedMapper&quot;), //$NON-NLS-1$</span>
+<span class="fc" id="L109">        XML_MAPPER(&quot;XmlMapper&quot;); //$NON-NLS-1$</span>
+
+        private final String alias;
+
+<span class="fc" id="L113">        LegacyClientType(String alias) {</span>
+<span class="fc" id="L114">            this.alias = alias;</span>
+<span class="fc" id="L115">        }</span>
+
+        public static @Nullable LegacyClientType getByAlias(String alias) {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            for (LegacyClientType ct : values()) {</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">                if (ct.alias.equalsIgnoreCase(alias)) {</span>
+<span class="fc" id="L120">                    return ct;</span>
+                }
+            }
+<span class="fc" id="L123">            return null;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

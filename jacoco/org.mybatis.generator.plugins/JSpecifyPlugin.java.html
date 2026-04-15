@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JSpecifyPlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.plugins</a> &gt; <span class="el_source">JSpecifyPlugin.java</span></div><h1>JSpecifyPlugin.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.plugins;
+
+import java.util.List;
+import java.util.function.Consumer;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.java.TopLevelRecord;
+
+<span class="fc" id="L32">public class JSpecifyPlugin extends PluginAdapter {</span>
+    private static final String JSPECIFY_PLUGIN_ENABLED = &quot;JSpecifyPluginEnabled&quot;; //$NON-NLS-1$
+    private static final String SKIP_PROPERTY = &quot;skipJSpecifyPlugin&quot;; //$NON-NLS-1$
+<span class="fc" id="L35">    public static final FullyQualifiedJavaType NULLABLE_IMPORT</span>
+            = new FullyQualifiedJavaType(&quot;org.jspecify.annotations.Nullable&quot;); //$NON-NLS-1$
+    public static final String NULLABLE_ANNOTATION = &quot;@Nullable&quot;; //$NON-NLS-1$
+<span class="fc" id="L38">    public static final FullyQualifiedJavaType NULL_MARKED_IMPORT</span>
+            = new FullyQualifiedJavaType(&quot;org.jspecify.annotations.NullMarked&quot;); //$NON-NLS-1$
+    public static final String NULL_MARKED_ANNOTATION = &quot;@NullMarked&quot;; //$NON-NLS-1$
+
+    @Override
+    public boolean validate(List&lt;String&gt; warnings) {
+<span class="fc" id="L44">        return true;</span>
+    }
+
+    @Override
+    public void initialized(IntrospectedTable introspectedTable) {
+<span class="fc" id="L49">        boolean skipped = Boolean.parseBoolean(introspectedTable.getTableConfigurationProperty(SKIP_PROPERTY));</span>
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (!skipped) {</span>
+<span class="fc" id="L52">            introspectedTable.setAttribute(JSPECIFY_PLUGIN_ENABLED, Boolean.TRUE);</span>
+        }
+<span class="fc" id="L54">    }</span>
+
+    @Override
+    public boolean clientUpdateSelectiveColumnsMethodGenerated(Method method, Interface interfaze,
+                                                               IntrospectedTable introspectedTable) {
+        // this method doesn't work well with null-marked models. Better to use the full function update statement
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        return !isEnabled(introspectedTable);</span>
+    }
+
+    @Override
+    public boolean clientUpdateAllColumnsMethodGenerated(Method method, Interface interfaze,
+                                                         IntrospectedTable introspectedTable) {
+        // this method doesn't work well with null-marked models. Better to use the full function update statement
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        return !isEnabled(introspectedTable);</span>
+    }
+
+    @Override
+    public boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method, Interface interfaze,
+                                                                    IntrospectedTable introspectedTable) {
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (introspectedTable.getKnownRuntime().isLegacyMyBatis3Based()) {</span>
+            // we don't have a general purpose update in the legacy MyBatis 3 runtimes, so we need it there
+<span class="fc" id="L75">            return true;</span>
+        }
+
+        // this method doesn't work well with null-marked models. Better to use the full function update statement
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        return !isEnabled(introspectedTable);</span>
+    }
+
+    @Override
+    public boolean clientGenerated(Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (isEnabled(introspectedTable)) {</span>
+<span class="fc" id="L85">            interfaze.addImportedType(NULL_MARKED_IMPORT);</span>
+<span class="fc" id="L86">            interfaze.addAnnotation(NULL_MARKED_ANNOTATION);</span>
+        }
+
+<span class="fc" id="L89">        return true;</span>
+    }
+
+    @Override
+    public boolean dynamicSqlSupportGenerated(TopLevelClass supportClass, IntrospectedTable introspectedTable) {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (isEnabled(introspectedTable)) {</span>
+<span class="fc" id="L95">            supportClass.addImportedType(NULL_MARKED_IMPORT);</span>
+<span class="fc" id="L96">            supportClass.addAnnotation(NULL_MARKED_ANNOTATION);</span>
+        }
+
+<span class="fc" id="L99">        return true;</span>
+    }
+
+    @Override
+    public boolean modelRecordGenerated(TopLevelRecord topLevelRecord, IntrospectedTable introspectedTable) {
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (isEnabled(introspectedTable)) {</span>
+<span class="fc" id="L105">            topLevelRecord.addImportedType(NULL_MARKED_IMPORT);</span>
+<span class="fc" id="L106">            topLevelRecord.addAnnotation(NULL_MARKED_ANNOTATION);</span>
+
+<span class="fc" id="L108">            addNullableToParameters(topLevelRecord.getParameters(), introspectedTable, topLevelRecord::addImportedType);</span>
+        }
+
+<span class="fc" id="L111">        return true;</span>
+    }
+
+    @Override
+    public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L116">        return processGeneratedClass(topLevelClass, introspectedTable);</span>
+    }
+
+    @Override
+    public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L121">        return processGeneratedClass(topLevelClass, introspectedTable);</span>
+    }
+
+    @Override
+    public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass topLevelClass,
+                                                      IntrospectedTable introspectedTable) {
+<span class="fc" id="L127">        return processGeneratedClass(topLevelClass, introspectedTable);</span>
+    }
+
+    @Override
+    public boolean modelFieldGenerated(Field field, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+                                       IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+<span class="fc bfc" id="L133" title="All 4 branches covered.">        if (isEnabled(introspectedTable) &amp;&amp; introspectedColumn.isNullable()</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                &amp;&amp; !introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {</span>
+<span class="fc" id="L135">            topLevelClass.addImportedType(NULLABLE_IMPORT);</span>
+<span class="fc" id="L136">            field.addTypeAnnotation(NULLABLE_ANNOTATION);</span>
+        }
+
+<span class="fc" id="L139">        return true;</span>
+    }
+
+    @Override
+    public boolean modelGetterMethodGenerated(Method method, TopLevelClass topLevelClass,
+                                              IntrospectedColumn introspectedColumn,
+                                              IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+<span class="fc bfc" id="L146" title="All 4 branches covered.">        if (isEnabled(introspectedTable) &amp;&amp; introspectedColumn.isNullable()</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">                &amp;&amp; !introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {</span>
+<span class="fc" id="L148">            topLevelClass.addImportedType(NULLABLE_IMPORT);</span>
+<span class="fc" id="L149">            method.addReturnTypeAnnotation(NULLABLE_ANNOTATION);</span>
+        }
+
+<span class="fc" id="L152">        return true;</span>
+    }
+
+    private boolean processGeneratedClass(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        if (isEnabled(introspectedTable)) {</span>
+<span class="fc" id="L157">            topLevelClass.addImportedType(NULL_MARKED_IMPORT);</span>
+<span class="fc" id="L158">            topLevelClass.addAnnotation(NULL_MARKED_ANNOTATION);</span>
+
+            // add nullable to parameterized constructor parameters
+<span class="fc" id="L161">            topLevelClass.getMethods().stream()</span>
+<span class="fc" id="L162">                    .filter(Method::isConstructor)</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">                    .filter(m -&gt; !m.getParameters().isEmpty())</span>
+<span class="fc" id="L164">                    .findFirst()</span>
+<span class="fc" id="L165">                    .ifPresent(m -&gt; addNullableToParameters(m.getParameters(), introspectedTable,</span>
+<span class="fc" id="L166">                            topLevelClass::addImportedType));</span>
+        }
+
+<span class="fc" id="L169">        return true;</span>
+    }
+
+    private void addNullableToParameters(List&lt;Parameter&gt; parameters, IntrospectedTable introspectedTable,
+                                         Consumer&lt;FullyQualifiedJavaType&gt; importConsumer) {
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        for (Parameter parameter : parameters) {</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">            if (isColumnNullable(parameter.getName(), introspectedTable)) {</span>
+<span class="fc" id="L176">                importConsumer.accept(NULLABLE_IMPORT);</span>
+<span class="fc" id="L177">                parameter.addAnnotation(NULLABLE_ANNOTATION);</span>
+            }
+<span class="fc" id="L179">        }</span>
+<span class="fc" id="L180">    }</span>
+
+    private boolean isColumnNullable(String property, IntrospectedTable introspectedTable) {
+<span class="fc" id="L183">        return introspectedTable.getAllColumns().stream()</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">                .filter(c -&gt; !c.getFullyQualifiedJavaType().isPrimitive())</span>
+<span class="fc" id="L185">                .filter(c -&gt; c.getJavaProperty().equals(property))</span>
+<span class="fc" id="L186">                .anyMatch(IntrospectedColumn::isNullable);</span>
+    }
+
+    public static boolean isEnabled(IntrospectedTable introspectedTable) {
+<span class="fc" id="L190">        Boolean enabled = (Boolean) introspectedTable.getAttribute(JSPECIFY_PLUGIN_ENABLED);</span>
+<span class="fc" id="L191">        return Boolean.TRUE.equals(enabled);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

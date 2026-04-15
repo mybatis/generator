@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Context.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">Context.java</span></div><h1>Context.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.config;
+
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.KnownRuntime;
+
+public class Context extends PropertyHolder {
+    private final String id;
+    private final @Nullable JDBCConnectionConfiguration jdbcConnectionConfiguration;
+    private final @Nullable ConnectionFactoryConfiguration connectionFactoryConfiguration;
+    private final @Nullable SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
+    private final @Nullable JavaTypeResolverConfiguration javaTypeResolverConfiguration;
+    private final ModelGeneratorConfiguration modelGeneratorConfiguration;
+    private final @Nullable ClientGeneratorConfiguration clientGeneratorConfiguration;
+    private final List&lt;TableConfiguration&gt; tableConfigurations;
+    private final ModelType defaultModelType;
+    private final String beginningDelimiter;
+    private final String endingDelimiter;
+    private final @Nullable Boolean autoDelimitKeywords;
+    private final @Nullable CommentGeneratorConfiguration commentGeneratorConfiguration;
+    private final List&lt;PluginConfiguration&gt; pluginConfigurations;
+    private final @Nullable String targetRuntime;
+    private final @Nullable String introspectedColumnImpl;
+
+    protected Context(Builder builder) {
+<span class="fc" id="L51">        super(builder);</span>
+<span class="fc" id="L52">        id = Objects.requireNonNull(builder.id, getString(&quot;ValidationError.16&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L53">        defaultModelType = Objects.requireNonNullElseGet(builder.defaultModelType,</span>
+<span class="fc" id="L54">                () -&gt; calculateDefaultModelType(builder.targetRuntime));</span>
+<span class="fc" id="L55">        tableConfigurations = Collections.unmodifiableList(builder.tableConfigurations);</span>
+<span class="fc" id="L56">        pluginConfigurations = Collections.unmodifiableList(builder.pluginConfigurations);</span>
+<span class="fc" id="L57">        commentGeneratorConfiguration = builder.commentGeneratorConfiguration;</span>
+<span class="fc" id="L58">        jdbcConnectionConfiguration = builder.jdbcConnectionConfiguration;</span>
+<span class="fc" id="L59">        connectionFactoryConfiguration = builder.connectionFactoryConfiguration;</span>
+<span class="fc" id="L60">        sqlMapGeneratorConfiguration = builder.sqlMapGeneratorConfiguration;</span>
+<span class="fc" id="L61">        javaTypeResolverConfiguration = builder.javaTypeResolverConfiguration;</span>
+<span class="fc" id="L62">        introspectedColumnImpl = builder.introspectedColumnImpl;</span>
+<span class="fc" id="L63">        modelGeneratorConfiguration = Objects.requireNonNull(builder.modelGeneratorConfiguration,</span>
+<span class="fc" id="L64">                getString(&quot;ValidationError.8&quot;, id)); //$NON-NLS-1$</span>
+<span class="fc" id="L65">        clientGeneratorConfiguration = builder.clientGeneratorConfiguration;</span>
+<span class="fc" id="L66">        targetRuntime = builder.targetRuntime;</span>
+
+<span class="fc" id="L68">        String property = getProperty(PropertyRegistry.CONTEXT_BEGINNING_DELIMITER);</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        beginningDelimiter = property == null ? Defaults.DEFAULT_BEGINNING_DELIMITER : property;</span>
+
+<span class="fc" id="L71">        property = getProperty(PropertyRegistry.CONTEXT_ENDING_DELIMITER);</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        endingDelimiter = property == null ? Defaults.DEFAULT_ENDING_DELIMITER : property;</span>
+
+<span class="fc" id="L74">        property = getProperty(PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS);</span>
+<span class="fc" id="L75">        autoDelimitKeywords = isTrue(property);</span>
+<span class="fc" id="L76">    }</span>
+
+    private ModelType calculateDefaultModelType(@Nullable String targetRuntime) {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (targetRuntime == null) {</span>
+<span class="fc" id="L80">            return ModelType.FLAT; // MyBatis Dynamic SQL is the default runtime</span>
+        } else {
+<span class="fc" id="L82">            KnownRuntime knownRuntime = KnownRuntime.getByAlias(targetRuntime);</span>
+<span class="fc bfc" id="L83" title="All 4 branches covered.">            if (knownRuntime.isDynamicSqlBased() || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {</span>
+<span class="fc" id="L84">                return ModelType.FLAT;</span>
+            } else {
+<span class="fc" id="L86">                return ModelType.CONDITIONAL;</span>
+            }
+        }
+    }
+
+    public Optional&lt;ClientGeneratorConfiguration&gt; getClientGeneratorConfiguration() {
+<span class="fc" id="L92">        return Optional.ofNullable(clientGeneratorConfiguration);</span>
+    }
+
+    public ModelGeneratorConfiguration getModelGeneratorConfiguration() {
+<span class="fc" id="L96">        return Objects.requireNonNull(modelGeneratorConfiguration);</span>
+    }
+
+    public Optional&lt;JavaTypeResolverConfiguration&gt; getJavaTypeResolverConfiguration() {
+<span class="fc" id="L100">        return Optional.ofNullable(javaTypeResolverConfiguration);</span>
+    }
+
+    public Optional&lt;SqlMapGeneratorConfiguration&gt; getSqlMapGeneratorConfiguration() {
+<span class="fc" id="L104">        return Optional.ofNullable(sqlMapGeneratorConfiguration);</span>
+    }
+
+    /**
+     * This method does a simple validate, it makes sure that all required fields have been filled in. It does not do
+     * any more complex operations such as validating that database tables exist or validating that named columns exist
+     *
+     * @param errors
+     *            the errors
+     */
+    public void validate(List&lt;String&gt; errors) {
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        if (!stringHasValue(id)) {</span>
+<span class="nc" id="L116">            errors.add(getString(&quot;ValidationError.16&quot;)); //$NON-NLS-1$</span>
+        }
+
+<span class="fc bfc" id="L119" title="All 4 branches covered.">        if (jdbcConnectionConfiguration == null &amp;&amp; connectionFactoryConfiguration == null) {</span>
+            // must specify one
+<span class="fc" id="L121">            errors.add(getString(&quot;ValidationError.10&quot;, id)); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L122" title="All 4 branches covered.">        } else if (jdbcConnectionConfiguration != null &amp;&amp; connectionFactoryConfiguration != null) {</span>
+            // must not specify both
+<span class="fc" id="L124">            errors.add(getString(&quot;ValidationError.10&quot;, id)); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        } else if (jdbcConnectionConfiguration != null) {</span>
+<span class="fc" id="L126">            jdbcConnectionConfiguration.validate(errors);</span>
+        } else {
+<span class="fc" id="L128">            connectionFactoryConfiguration.validate(errors);</span>
+        }
+
+<span class="fc" id="L131">        modelGeneratorConfiguration.validate(errors, id);</span>
+
+<span class="fc" id="L133">        KnownRuntime knownRuntime = KnownRuntime.getByAlias(targetRuntime);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (clientGeneratorConfiguration != null) {</span>
+<span class="fc" id="L135">            clientGeneratorConfiguration.validate(errors, id, knownRuntime);</span>
+        }
+
+<span class="fc bfc" id="L138" title="All 4 branches covered.">        if (knownRuntime.isLegacyMyBatis3Based()</span>
+                &amp;&amp; clientGeneratorConfiguration != null
+<span class="fc bfc" id="L140" title="All 4 branches covered.">                &amp;&amp; clientGeneratorConfiguration.requiresXmlMapper()</span>
+                &amp;&amp; sqlMapGeneratorConfiguration == null) {
+<span class="fc" id="L142">            errors.add(getString(&quot;ValidationError.9&quot;, id)); //$NON-NLS-1$</span>
+        }
+
+<span class="fc bfc" id="L145" title="All 4 branches covered.">        if (knownRuntime == KnownRuntime.MYBATIS3_DYNAMIC_SQL || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {</span>
+<span class="pc bpc" id="L146" title="1 of 4 branches missed.">            if (defaultModelType != ModelType.FLAT &amp;&amp; defaultModelType != ModelType.RECORD) {</span>
+<span class="nc" id="L147">                errors.add(getString(&quot;ValidationError.29&quot;, getId())); //$NON-NLS-1$</span>
+            }
+        }
+
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        if (sqlMapGeneratorConfiguration != null) {</span>
+<span class="fc" id="L152">            sqlMapGeneratorConfiguration.validate(errors, id);</span>
+        }
+
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (tableConfigurations.isEmpty()) {</span>
+<span class="fc" id="L156">            errors.add(getString(&quot;ValidationError.3&quot;, id)); //$NON-NLS-1$</span>
+        } else {
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            for (int i = 0; i &lt; tableConfigurations.size(); i++) {</span>
+<span class="fc" id="L159">                TableConfiguration tc = tableConfigurations.get(i);</span>
+
+<span class="fc" id="L161">                tc.validate(errors, i, this, knownRuntime);</span>
+            }
+        }
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {</span>
+<span class="fc" id="L166">            pluginConfiguration.validate(errors, id);</span>
+<span class="fc" id="L167">        }</span>
+<span class="fc" id="L168">    }</span>
+
+    public String getId() {
+<span class="fc" id="L171">        return id;</span>
+    }
+
+    public ModelType getDefaultModelType() {
+<span class="fc" id="L175">        return defaultModelType;</span>
+    }
+
+    public String getBeginningDelimiter() {
+<span class="fc" id="L179">        return beginningDelimiter;</span>
+    }
+
+    public String getEndingDelimiter() {
+<span class="fc" id="L183">        return endingDelimiter;</span>
+    }
+
+    public Optional&lt;CommentGeneratorConfiguration&gt; getCommentGeneratorConfiguration() {
+<span class="fc" id="L187">        return Optional.ofNullable(commentGeneratorConfiguration);</span>
+    }
+
+    public Optional&lt;String&gt; getTargetRuntime() {
+<span class="fc" id="L191">        return Optional.ofNullable(targetRuntime);</span>
+    }
+
+    public Optional&lt;String&gt; getIntrospectedColumnImpl() {
+<span class="fc" id="L195">        return Optional.ofNullable(introspectedColumnImpl);</span>
+    }
+
+
+    public int getIntrospectionSteps() {
+<span class="fc" id="L200">        int steps = 0;</span>
+
+<span class="fc" id="L202">        steps++; // connect to database</span>
+
+        // for each table:
+        //
+        // 1. Create introspected table implementation
+
+<span class="fc" id="L208">        steps += tableConfigurations.size();</span>
+
+<span class="fc" id="L210">        return steps;</span>
+    }
+
+    public Stream&lt;PluginConfiguration&gt; pluginConfigurations() {
+<span class="fc" id="L214">        return pluginConfigurations.stream();</span>
+    }
+
+    public List&lt;TableConfiguration&gt; tableConfigurations() {
+<span class="fc" id="L218">        return tableConfigurations;</span>
+    }
+
+    public boolean autoDelimitKeywords() {
+<span class="pc bpc" id="L222" title="1 of 4 branches missed.">        return autoDelimitKeywords != null &amp;&amp; autoDelimitKeywords;</span>
+    }
+
+    public @Nullable ConnectionFactoryConfiguration getConnectionFactoryConfiguration() {
+<span class="fc" id="L226">        return connectionFactoryConfiguration;</span>
+    }
+
+    public @Nullable JDBCConnectionConfiguration getJDBCConnectionConfiguration() {
+<span class="fc" id="L230">        return jdbcConnectionConfiguration;</span>
+    }
+
+<span class="fc" id="L233">    public static class Builder extends AbstractBuilder&lt;Builder&gt; {</span>
+        private @Nullable String id;
+        private @Nullable ModelType defaultModelType;
+        private @Nullable String targetRuntime;
+        private @Nullable String introspectedColumnImpl;
+<span class="fc" id="L238">        private final List&lt;PluginConfiguration&gt; pluginConfigurations = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L239">        private final ArrayList&lt;TableConfiguration&gt; tableConfigurations = new ArrayList&lt;&gt;();</span>
+        private @Nullable CommentGeneratorConfiguration commentGeneratorConfiguration;
+        private @Nullable JDBCConnectionConfiguration jdbcConnectionConfiguration;
+        private @Nullable ConnectionFactoryConfiguration connectionFactoryConfiguration;
+        private @Nullable SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
+        private @Nullable JavaTypeResolverConfiguration javaTypeResolverConfiguration;
+        private @Nullable ModelGeneratorConfiguration modelGeneratorConfiguration;
+        private @Nullable ClientGeneratorConfiguration clientGeneratorConfiguration;
+
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L250">            return this;</span>
+        }
+
+        public Context build() {
+<span class="fc" id="L254">            return new Context(this);</span>
+        }
+
+        public Builder withId(String id) {
+<span class="fc" id="L258">            this.id = id;</span>
+<span class="fc" id="L259">            return this;</span>
+        }
+
+        public Builder withDefaultModelType(@Nullable ModelType defaultModelType) {
+<span class="fc" id="L263">            this.defaultModelType = defaultModelType;</span>
+<span class="fc" id="L264">            return this;</span>
+        }
+
+        public Builder withTargetRuntime(@Nullable String targetRuntime) {
+<span class="fc" id="L268">            this.targetRuntime = targetRuntime;</span>
+<span class="fc" id="L269">            return this;</span>
+        }
+
+        public Builder withIntrospectedColumnImpl(@Nullable String introspectedColumnImpl) {
+<span class="fc" id="L273">            this.introspectedColumnImpl = introspectedColumnImpl;</span>
+<span class="fc" id="L274">            return this;</span>
+        }
+
+        @SuppressWarnings(&quot;UnusedReturnValue&quot;)
+        public Builder withPluginConfiguration(PluginConfiguration pluginConfiguration) {
+<span class="fc" id="L279">            pluginConfigurations.add(pluginConfiguration);</span>
+<span class="fc" id="L280">            return this;</span>
+        }
+
+        @SuppressWarnings(&quot;UnusedReturnValue&quot;)
+        public Builder withTableConfiguration(TableConfiguration tableConfiguration) {
+<span class="fc" id="L285">            tableConfigurations.add(tableConfiguration);</span>
+<span class="fc" id="L286">            return this;</span>
+        }
+
+        @SuppressWarnings(&quot;UnusedReturnValue&quot;)
+        public Builder withCommentGeneratorConfiguration(CommentGeneratorConfiguration commentGeneratorConfiguration) {
+<span class="fc" id="L291">            this.commentGeneratorConfiguration = commentGeneratorConfiguration;</span>
+<span class="fc" id="L292">            return this;</span>
+        }
+
+        @SuppressWarnings(&quot;UnusedReturnValue&quot;)
+        public Builder withJdbcConnectionConfiguration(JDBCConnectionConfiguration jdbcConnectionConfiguration) {
+<span class="fc" id="L297">            this.jdbcConnectionConfiguration = jdbcConnectionConfiguration;</span>
+<span class="fc" id="L298">            return this;</span>
+        }
+
+        @SuppressWarnings(&quot;UnusedReturnValue&quot;)
+        public Builder withSqlMapGeneratorConfiguration(SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration) {
+<span class="fc" id="L303">            this.sqlMapGeneratorConfiguration = sqlMapGeneratorConfiguration;</span>
+<span class="fc" id="L304">            return this;</span>
+        }
+
+        public Builder withConnectionFactoryConfiguration(
+                ConnectionFactoryConfiguration connectionFactoryConfiguration) {
+<span class="fc" id="L309">            this.connectionFactoryConfiguration = connectionFactoryConfiguration;</span>
+<span class="fc" id="L310">            return this;</span>
+        }
+
+        @SuppressWarnings(&quot;UnusedReturnValue&quot;)
+        public Builder withJavaTypeResolverConfiguration(JavaTypeResolverConfiguration javaTypeResolverConfiguration) {
+<span class="fc" id="L315">            this.javaTypeResolverConfiguration = javaTypeResolverConfiguration;</span>
+<span class="fc" id="L316">            return this;</span>
+        }
+
+        public Builder withModelGeneratorConfiguration(
+                ModelGeneratorConfiguration modelGeneratorConfiguration) {
+<span class="fc" id="L321">            this.modelGeneratorConfiguration = modelGeneratorConfiguration;</span>
+<span class="fc" id="L322">            return this;</span>
+        }
+
+        @SuppressWarnings(&quot;UnusedReturnValue&quot;)
+        public Builder withClientGeneratorConfiguration(ClientGeneratorConfiguration clientGeneratorConfiguration) {
+<span class="fc" id="L327">            this.clientGeneratorConfiguration = clientGeneratorConfiguration;</span>
+<span class="fc" id="L328">            return this;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

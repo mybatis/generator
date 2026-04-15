@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinDataClassGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamicsql.kotlin</a> &gt; <span class="el_source">KotlinDataClassGenerator.java</span></div><h1>KotlinDataClassGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamicsql.kotlin;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.Collections;
+import java.util.List;
+
+import org.mybatis.generator.api.FullyQualifiedTable;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
+import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinModifier;
+import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
+import org.mybatis.generator.codegen.AbstractKotlinGenerator;
+
+public class KotlinDataClassGenerator extends AbstractKotlinGenerator {
+
+    public KotlinDataClassGenerator(Builder builder) {
+<span class="fc" id="L36">        super(builder);</span>
+<span class="fc" id="L37">    }</span>
+
+    @Override
+    public List&lt;KotlinFile&gt; getKotlinFiles() {
+<span class="fc" id="L41">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
+<span class="fc" id="L42">        progressCallback.startTask(getString(&quot;Progress.8&quot;, table.toString())); //$NON-NLS-1$</span>
+<span class="fc" id="L43">        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(introspectedTable.getKotlinRecordType());</span>
+
+<span class="fc" id="L45">        KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());</span>
+<span class="fc" id="L46">        kf.setPackage(type.getPackageName());</span>
+
+<span class="fc" id="L48">        KotlinType dataClass = KotlinType.newClass(type.getShortNameWithoutTypeArguments())</span>
+<span class="fc" id="L49">                .withModifier(KotlinModifier.DATA)</span>
+<span class="fc" id="L50">                .build();</span>
+<span class="fc" id="L51">        kf.addNamedItem(dataClass);</span>
+
+<span class="fc" id="L53">        commentGenerator.addFileComment(kf);</span>
+
+<span class="fc" id="L55">        commentGenerator.addModelClassComment(dataClass, introspectedTable);</span>
+
+<span class="fc" id="L57">        List&lt;IntrospectedColumn&gt; introspectedColumns = introspectedTable.getAllColumns();</span>
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedColumns) {</span>
+<span class="fc" id="L60">            FullyQualifiedKotlinType kotlinType =</span>
+<span class="fc" id="L61">                    JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());</span>
+
+            KotlinProperty.Builder kpBuilder;
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            if (introspectedTable.generateKotlinV1Model()) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">                if (introspectedTable.isImmutable()) {</span>
+<span class="fc" id="L66">                    kpBuilder = KotlinProperty.newVal(introspectedColumn.getJavaProperty());</span>
+                } else {
+<span class="fc" id="L68">                    kpBuilder = KotlinProperty.newVar(introspectedColumn.getJavaProperty());</span>
+                }
+            } else {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">                if (introspectedColumn.isIdentity()) {</span>
+<span class="fc" id="L72">                    kpBuilder = KotlinProperty.newVar(introspectedColumn.getJavaProperty());</span>
+                } else {
+<span class="fc" id="L74">                    kpBuilder = KotlinProperty.newVal(introspectedColumn.getJavaProperty());</span>
+                }
+            }
+
+<span class="fc bfc" id="L78" title="All 4 branches covered.">            if (introspectedTable.generateKotlinV1Model() || introspectedColumn.isNullable()</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">                    || introspectedColumn.isIdentity()) {</span>
+<span class="fc" id="L80">                kpBuilder.withDataType(kotlinType.getShortNameWithTypeArguments() + &quot;?&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L81">                        .withInitializationString(&quot;null&quot;); //$NON-NLS-1$</span>
+            } else {
+<span class="fc" id="L83">                kpBuilder.withDataType(kotlinType.getShortNameWithTypeArguments());</span>
+            }
+
+<span class="fc" id="L86">            dataClass.addConstructorProperty(kpBuilder.build());</span>
+
+<span class="fc" id="L88">            kf.addImports(kotlinType.getImportList());</span>
+<span class="fc" id="L89">        }</span>
+
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (pluginAggregator.kotlinDataClassGenerated(kf, dataClass, introspectedTable)) {</span>
+<span class="fc" id="L92">            return List.of(kf);</span>
+        } else {
+<span class="nc" id="L94">            return Collections.emptyList();</span>
+        }
+    }
+
+<span class="fc" id="L98">    public static class Builder extends AbstractKotlinGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L101">            return this;</span>
+        }
+
+        @Override
+        public KotlinDataClassGenerator build() {
+<span class="fc" id="L106">            return new KotlinDataClassGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

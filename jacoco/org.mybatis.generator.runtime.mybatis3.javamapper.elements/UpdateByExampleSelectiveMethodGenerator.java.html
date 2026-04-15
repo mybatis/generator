@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateByExampleSelectiveMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.javamapper.elements</a> &gt; <span class="el_source">UpdateByExampleSelectiveMethodGenerator.java</span></div><h1>UpdateByExampleSelectiveMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
+
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+
+public class UpdateByExampleSelectiveMethodGenerator extends AbstractJavaMapperMethodGenerator {
+
+    protected UpdateByExampleSelectiveMethodGenerator(Builder builder) {
+<span class="fc" id="L30">        super(builder);</span>
+<span class="fc" id="L31">    }</span>
+
+    @Override
+    public Optional&lt;JavaMethodAndImports&gt; generateMethodAndImports() {
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (!introspectedTable.getRules().generateUpdateByExampleSelective()) {</span>
+<span class="nc" id="L36">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L39">        String statementId = introspectedTable.getUpdateByExampleSelectiveStatementId();</span>
+<span class="fc" id="L40">        FullyQualifiedJavaType parameterType = introspectedTable.getRules().calculateAllFieldsClass();</span>
+<span class="fc" id="L41">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
+
+<span class="fc" id="L43">        Method method = buildBasicUpdateByExampleMethod(statementId, parameterType, importedTypes);</span>
+
+<span class="fc" id="L45">        return JavaMethodAndImports.withMethod(method)</span>
+<span class="fc" id="L46">                .withImports(importedTypes)</span>
+<span class="fc" id="L47">                .withExtraMethodParts(extraMethodParts())</span>
+<span class="fc" id="L48">                .buildOptional();</span>
+    }
+
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+<span class="fc" id="L53">        return pluginAggregator.clientUpdateByExampleSelectiveMethodGenerated(method, interfaze, introspectedTable);</span>
+    }
+
+<span class="fc" id="L56">    public static class Builder extends AbstractGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L59">            return this;</span>
+        }
+
+        public UpdateByExampleSelectiveMethodGenerator build() {
+<span class="fc" id="L63">            return new UpdateByExampleSelectiveMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

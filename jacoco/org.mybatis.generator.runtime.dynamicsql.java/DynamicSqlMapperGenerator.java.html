@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DynamicSqlMapperGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamicsql.java</a> &gt; <span class="el_source">DynamicSqlMapperGenerator.java</span></div><h1>DynamicSqlMapperGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamicsql.java;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.runtime.JavaFieldAndImports;
+import org.mybatis.generator.runtime.common.RootClassAndInterfaceUtility;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicInsertMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicMultipleInsertMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicSelectManyMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.BasicSelectOneMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.DeleteByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.FragmentGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.GeneralCountMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.GeneralDeleteMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.GeneralSelectDistinctMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.GeneralSelectMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.GeneralSelectOneMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.GeneralUpdateMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.InsertMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.InsertMultipleMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.InsertSelectiveMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.SelectByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.SelectListGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.UpdateAllColumnsMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.UpdateByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.UpdateByPrimaryKeySelectiveMethodGenerator;
+import org.mybatis.generator.runtime.dynamicsql.java.elements.UpdateSelectiveColumnsMethodGenerator;
+
+public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
+    // record type for insert, select, update
+    protected final FullyQualifiedJavaType recordType;
+    // id to use for the common result map
+    protected final String resultMapId;
+    // name of the field containing the table in the support class
+    protected final String tableFieldName;
+    protected final FragmentGenerator fragmentGenerator;
+    protected final boolean hasGeneratedKeys;
+
+    public DynamicSqlMapperGenerator(Builder builder) {
+<span class="fc" id="L68">        super(builder);</span>
+
+<span class="fc" id="L70">        recordType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());</span>
+<span class="fc" id="L71">        resultMapId = recordType.getShortNameWithoutTypeArguments() + &quot;Result&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L72">        boolean useSnakeCase = introspectedTable</span>
+<span class="fc" id="L73">                .findTableOrClientGeneratorPropertyAsBoolean(PropertyRegistry.ANY_USE_SNAKE_CASE_IDENTIFIERS);</span>
+
+<span class="fc" id="L75">        tableFieldName = calculateTableFieldName(useSnakeCase);</span>
+<span class="fc" id="L76">        fragmentGenerator = new FragmentGenerator.Builder()</span>
+<span class="fc" id="L77">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L78">                .withResultMapId(resultMapId)</span>
+<span class="fc" id="L79">                .withTableFieldName(tableFieldName)</span>
+<span class="fc" id="L80">                .useSnakeCase(useSnakeCase)</span>
+<span class="fc" id="L81">                .withRecordType(recordType)</span>
+<span class="fc" id="L82">                .withCommentGenerator(commentGenerator)</span>
+<span class="fc" id="L83">                .build();</span>
+
+<span class="fc" id="L85">        hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();</span>
+<span class="fc" id="L86">    }</span>
+
+    private String calculateTableFieldName(boolean useSnakeCase) {
+<span class="fc" id="L89">        String name =</span>
+<span class="fc" id="L90">                JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (useSnakeCase) {</span>
+<span class="fc" id="L92">            name = StringUtility.convertCamelCaseToSnakeCase(name);</span>
+        }
+
+<span class="fc" id="L95">        return name;</span>
+    }
+
+    @Override
+    public List&lt;CompilationUnit&gt; getCompilationUnits() {
+<span class="fc" id="L100">        progressCallback.startTask(getString(&quot;Progress.17&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L101">                introspectedTable.getFullyQualifiedTable().toString()));</span>
+
+<span class="fc" id="L103">        Interface interfaze = createBasicInterface();</span>
+
+<span class="fc" id="L105">        TopLevelClass supportClass = getSupportClass();</span>
+<span class="fc" id="L106">        String staticImportString =</span>
+<span class="fc" id="L107">                supportClass.getType().getFullyQualifiedNameWithoutTypeParameters() + &quot;.*&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L108">        interfaze.addStaticImport(staticImportString);</span>
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (hasGeneratedKeys) {</span>
+<span class="fc" id="L111">            addBasicInsertMethod(interfaze);</span>
+<span class="fc" id="L112">            addBasicInsertMultipleMethod(interfaze);</span>
+        }
+
+<span class="fc" id="L115">        boolean reuseResultMap = addBasicSelectManyMethod(interfaze);</span>
+<span class="fc" id="L116">        addBasicSelectOneMethod(interfaze, reuseResultMap);</span>
+
+<span class="fc" id="L118">        addGeneralCountMethod(interfaze);</span>
+<span class="fc" id="L119">        addGeneralDeleteMethod(interfaze);</span>
+<span class="fc" id="L120">        addDeleteByPrimaryKeyMethod(interfaze);</span>
+<span class="fc" id="L121">        addInsertOneMethod(interfaze);</span>
+<span class="fc" id="L122">        addInsertMultipleMethod(interfaze);</span>
+<span class="fc" id="L123">        addInsertSelectiveMethod(interfaze);</span>
+<span class="fc" id="L124">        addSelectListField(interfaze);</span>
+<span class="fc" id="L125">        addGeneralSelectOneMethod(interfaze);</span>
+<span class="fc" id="L126">        addGeneralSelectMethod(interfaze);</span>
+<span class="fc" id="L127">        addSelectDistinctMethod(interfaze);</span>
+<span class="fc" id="L128">        addSelectByPrimaryKeyMethod(interfaze);</span>
+<span class="fc" id="L129">        addGeneralUpdateMethod(interfaze);</span>
+<span class="fc" id="L130">        addUpdateAllMethod(interfaze);</span>
+<span class="fc" id="L131">        addUpdateSelectiveMethod(interfaze);</span>
+<span class="fc" id="L132">        addUpdateByPrimaryKeyMethod(interfaze);</span>
+<span class="fc" id="L133">        addUpdateByPrimaryKeySelectiveMethod(interfaze);</span>
+
+<span class="fc" id="L135">        List&lt;CompilationUnit&gt; answer = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (pluginAggregator.clientGenerated(interfaze, introspectedTable)) {</span>
+<span class="fc" id="L137">            answer.add(interfaze);</span>
+        }
+
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (pluginAggregator.dynamicSqlSupportGenerated(supportClass, introspectedTable)) {</span>
+<span class="fc" id="L141">            answer.add(supportClass);</span>
+        }
+
+<span class="fc" id="L144">        return answer;</span>
+    }
+
+    protected Interface createBasicInterface() {
+<span class="fc" id="L148">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType());</span>
+<span class="fc" id="L149">        Interface interfaze = new Interface(type);</span>
+<span class="fc" id="L150">        interfaze.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L151">        commentGenerator.addJavaFileComment(interfaze);</span>
+<span class="fc" id="L152">        interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Mapper&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L153">        interfaze.addAnnotation(&quot;@Mapper&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L155">        RootClassAndInterfaceUtility.addRootInterfaceIfNecessary(interfaze, introspectedTable);</span>
+<span class="fc" id="L156">        return interfaze;</span>
+    }
+
+    protected TopLevelClass getSupportClass() {
+<span class="fc" id="L160">        return initializeSubBuilder(new DynamicSqlSupportClassGenerator.Builder())</span>
+<span class="fc" id="L161">                .build()</span>
+<span class="fc" id="L162">                .generate();</span>
+    }
+
+    protected void addInsertOneMethod(Interface interfaze) {
+<span class="fc" id="L166">        var generated = initializeSubBuilder(new InsertMethodGenerator.Builder())</span>
+<span class="fc" id="L167">                .withTableFieldName(tableFieldName)</span>
+<span class="fc" id="L168">                .withRecordType(recordType)</span>
+<span class="fc" id="L169">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L170">                .build()</span>
+<span class="fc" id="L171">                .execute(interfaze);</span>
+
+<span class="fc bfc" id="L173" title="All 4 branches covered.">        if (generated &amp;&amp; !hasGeneratedKeys) {</span>
+            // add common interface
+<span class="fc" id="L175">            addCommonInsertInterface(interfaze);</span>
+        }
+<span class="fc" id="L177">    }</span>
+
+    protected void addCommonInsertInterface(Interface interfaze) {
+<span class="fc" id="L180">        FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(</span>
+                &quot;org.mybatis.dynamic.sql.util.mybatis3.CommonInsertMapper&lt;&quot; //$NON-NLS-1$
+<span class="fc" id="L182">                        + recordType.getFullyQualifiedName() + &quot;&gt;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L183">        interfaze.addSuperInterface(superInterface);</span>
+<span class="fc" id="L184">        interfaze.addImportedTypes(superInterface.getImportList().stream()</span>
+<span class="fc" id="L185">                .map(FullyQualifiedJavaType::new)</span>
+<span class="fc" id="L186">                .collect(Collectors.toSet()));</span>
+<span class="fc" id="L187">    }</span>
+
+    protected void addBasicInsertMultipleMethod(Interface interfaze) {
+<span class="fc" id="L190">        initializeSubBuilder(new BasicMultipleInsertMethodGenerator.Builder())</span>
+<span class="fc" id="L191">                .withRecordType(recordType)</span>
+<span class="fc" id="L192">                .build()</span>
+<span class="fc" id="L193">                .execute(interfaze);</span>
+<span class="fc" id="L194">    }</span>
+
+    protected void addInsertMultipleMethod(Interface interfaze) {
+<span class="fc" id="L197">        var generated = initializeSubBuilder(new InsertMultipleMethodGenerator.Builder())</span>
+<span class="fc" id="L198">                .withTableFieldName(tableFieldName)</span>
+<span class="fc" id="L199">                .withRecordType(recordType)</span>
+<span class="fc" id="L200">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L201">                .build()</span>
+<span class="fc" id="L202">                .execute(interfaze);</span>
+
+<span class="fc bfc" id="L204" title="All 4 branches covered.">        if (generated &amp;&amp; !hasGeneratedKeys) {</span>
+            // add common interface
+<span class="fc" id="L206">            addCommonInsertInterface(interfaze);</span>
+        }
+<span class="fc" id="L208">    }</span>
+
+    protected void addGeneralCountMethod(Interface interfaze) {
+<span class="fc" id="L211">        var generated = initializeSubBuilder(new GeneralCountMethodGenerator.Builder())</span>
+<span class="fc" id="L212">                .withTableFieldName(tableFieldName)</span>
+<span class="fc" id="L213">                .build()</span>
+<span class="fc" id="L214">                .execute(interfaze);</span>
+
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">        if (generated) {</span>
+            // add common interface
+<span class="fc" id="L218">            FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(</span>
+                    &quot;org.mybatis.dynamic.sql.util.mybatis3.CommonCountMapper&quot;); //$NON-NLS-1$
+<span class="fc" id="L220">            interfaze.addSuperInterface(superInterface);</span>
+<span class="fc" id="L221">            interfaze.addImportedType(superInterface);</span>
+        }
+<span class="fc" id="L223">    }</span>
+
+    protected void addGeneralDeleteMethod(Interface interfaze) {
+<span class="fc" id="L226">        var generated = initializeSubBuilder(new GeneralDeleteMethodGenerator.Builder())</span>
+<span class="fc" id="L227">                .withTableFieldName(tableFieldName)</span>
+<span class="fc" id="L228">                .build()</span>
+<span class="fc" id="L229">                .execute(interfaze);</span>
+
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        if (generated) {</span>
+            // add common interface
+<span class="fc" id="L233">            FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(</span>
+                    &quot;org.mybatis.dynamic.sql.util.mybatis3.CommonDeleteMapper&quot;); //$NON-NLS-1$
+<span class="fc" id="L235">            interfaze.addSuperInterface(superInterface);</span>
+<span class="fc" id="L236">            interfaze.addImportedType(superInterface);</span>
+        }
+<span class="fc" id="L238">    }</span>
+
+    protected void addSelectListField(Interface interfaze) {
+<span class="fc" id="L241">        var generator = initializeSubBuilder(new SelectListGenerator.Builder())</span>
+<span class="fc" id="L242">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L243">                .build();</span>
+
+<span class="fc" id="L245">        JavaFieldAndImports javaFieldAndImports = generator.generateFieldAndImports();</span>
+
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">        if (generator.callPlugins(javaFieldAndImports.getField(), interfaze)) {</span>
+<span class="fc" id="L248">            interfaze.addField(javaFieldAndImports.getField());</span>
+<span class="fc" id="L249">            interfaze.addImportedTypes(javaFieldAndImports.getImports());</span>
+        }
+<span class="fc" id="L251">    }</span>
+
+    protected void addGeneralSelectMethod(Interface interfaze) {
+<span class="fc" id="L254">        initializeSubBuilder(new GeneralSelectMethodGenerator.Builder())</span>
+<span class="fc" id="L255">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L256">                .build()</span>
+<span class="fc" id="L257">                .execute(interfaze);</span>
+<span class="fc" id="L258">    }</span>
+
+    protected void addSelectDistinctMethod(Interface interfaze) {
+<span class="fc" id="L261">        initializeSubBuilder(new GeneralSelectDistinctMethodGenerator.Builder())</span>
+<span class="fc" id="L262">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L263">                .build()</span>
+<span class="fc" id="L264">                .execute(interfaze);</span>
+<span class="fc" id="L265">    }</span>
+
+    protected void addGeneralSelectOneMethod(Interface interfaze) {
+<span class="fc" id="L268">        initializeSubBuilder(new GeneralSelectOneMethodGenerator.Builder())</span>
+<span class="fc" id="L269">                .withTableFieldName(tableFieldName)</span>
+<span class="fc" id="L270">                .withRecordType(recordType)</span>
+<span class="fc" id="L271">                .build()</span>
+<span class="fc" id="L272">                .execute(interfaze);</span>
+<span class="fc" id="L273">    }</span>
+
+    protected void addGeneralUpdateMethod(Interface interfaze) {
+<span class="fc" id="L276">        var generated = initializeSubBuilder(new GeneralUpdateMethodGenerator.Builder())</span>
+<span class="fc" id="L277">                .withTableFieldName(tableFieldName)</span>
+<span class="fc" id="L278">                .build()</span>
+<span class="fc" id="L279">                .execute(interfaze);</span>
+
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        if (generated) {</span>
+            // add common interface
+<span class="fc" id="L283">            FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(</span>
+                    &quot;org.mybatis.dynamic.sql.util.mybatis3.CommonUpdateMapper&quot;); //$NON-NLS-1$
+<span class="fc" id="L285">            interfaze.addSuperInterface(superInterface);</span>
+<span class="fc" id="L286">            interfaze.addImportedType(superInterface);</span>
+        }
+<span class="fc" id="L288">    }</span>
+
+    protected void addUpdateAllMethod(Interface interfaze) {
+<span class="fc" id="L291">        initializeSubBuilder(new UpdateAllColumnsMethodGenerator.Builder())</span>
+<span class="fc" id="L292">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L293">                .withRecordType(recordType)</span>
+<span class="fc" id="L294">                .build()</span>
+<span class="fc" id="L295">                .execute(interfaze);</span>
+<span class="fc" id="L296">    }</span>
+
+    protected void addUpdateSelectiveMethod(Interface interfaze) {
+<span class="fc" id="L299">        initializeSubBuilder(new UpdateSelectiveColumnsMethodGenerator.Builder())</span>
+<span class="fc" id="L300">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L301">                .withRecordType(recordType)</span>
+<span class="fc" id="L302">                .build()</span>
+<span class="fc" id="L303">                .execute(interfaze);</span>
+<span class="fc" id="L304">    }</span>
+
+    protected void addBasicSelectOneMethod(Interface interfaze, boolean reuseResultMap) {
+<span class="fc" id="L307">        initializeSubBuilder(new BasicSelectOneMethodGenerator.Builder())</span>
+<span class="fc" id="L308">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L309">                .withRecordType(recordType)</span>
+<span class="fc" id="L310">                .withResultMapId(resultMapId)</span>
+<span class="fc" id="L311">                .withReuseResultMap(reuseResultMap)</span>
+<span class="fc" id="L312">                .build()</span>
+<span class="fc" id="L313">                .execute(interfaze);</span>
+<span class="fc" id="L314">    }</span>
+
+    protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
+<span class="fc" id="L317">        initializeSubBuilder(new DeleteByPrimaryKeyMethodGenerator.Builder())</span>
+<span class="fc" id="L318">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L319">                .build()</span>
+<span class="fc" id="L320">                .execute(interfaze);</span>
+<span class="fc" id="L321">    }</span>
+
+    protected void addInsertSelectiveMethod(Interface interfaze) {
+<span class="fc" id="L324">        var generated = initializeSubBuilder(new InsertSelectiveMethodGenerator.Builder())</span>
+<span class="fc" id="L325">                .withTableFieldName(tableFieldName)</span>
+<span class="fc" id="L326">                .withRecordType(recordType)</span>
+<span class="fc" id="L327">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L328">                .build()</span>
+<span class="fc" id="L329">                .execute(interfaze);</span>
+
+<span class="fc bfc" id="L331" title="All 4 branches covered.">        if (generated &amp;&amp; !hasGeneratedKeys) {</span>
+            // add common interface
+<span class="fc" id="L333">            addCommonInsertInterface(interfaze);</span>
+        }
+<span class="fc" id="L335">    }</span>
+
+    protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
+<span class="fc" id="L338">        initializeSubBuilder(new SelectByPrimaryKeyMethodGenerator.Builder())</span>
+<span class="fc" id="L339">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L340">                .withRecordType(recordType)</span>
+<span class="fc" id="L341">                .build()</span>
+<span class="fc" id="L342">                .execute(interfaze);</span>
+<span class="fc" id="L343">    }</span>
+
+    protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {
+<span class="fc" id="L346">        initializeSubBuilder(new UpdateByPrimaryKeyMethodGenerator.Builder())</span>
+<span class="fc" id="L347">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L348">                .withRecordType(recordType)</span>
+<span class="fc" id="L349">                .build()</span>
+<span class="fc" id="L350">                .execute(interfaze);</span>
+<span class="fc" id="L351">    }</span>
+
+    protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
+<span class="fc" id="L354">        initializeSubBuilder(new UpdateByPrimaryKeySelectiveMethodGenerator.Builder())</span>
+<span class="fc" id="L355">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L356">                .withRecordType(recordType)</span>
+<span class="fc" id="L357">                .build()</span>
+<span class="fc" id="L358">                .execute(interfaze);</span>
+<span class="fc" id="L359">    }</span>
+
+    protected void addBasicInsertMethod(Interface interfaze) {
+<span class="fc" id="L362">        initializeSubBuilder(new BasicInsertMethodGenerator.Builder())</span>
+<span class="fc" id="L363">                .withRecordType(recordType)</span>
+<span class="fc" id="L364">                .build()</span>
+<span class="fc" id="L365">                .execute(interfaze);</span>
+<span class="fc" id="L366">    }</span>
+
+    protected boolean addBasicSelectManyMethod(Interface interfaze) {
+<span class="fc" id="L369">        return initializeSubBuilder(new BasicSelectManyMethodGenerator.Builder())</span>
+<span class="fc" id="L370">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L371">                .withRecordType(recordType)</span>
+<span class="fc" id="L372">                .build()</span>
+<span class="fc" id="L373">                .execute(interfaze);</span>
+    }
+
+<span class="fc" id="L376">    public static class Builder extends AbstractJavaGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L379">            return this;</span>
+        }
+
+        @Override
+        public DynamicSqlMapperGenerator build() {
+<span class="fc" id="L384">            return new DynamicSqlMapperGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

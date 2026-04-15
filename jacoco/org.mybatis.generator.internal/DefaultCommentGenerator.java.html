@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultCommentGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal</a> &gt; <span class="el_source">DefaultCommentGenerator.java</span></div><h1>DefaultCommentGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal;
+
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.Set;
+
+import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.api.dom.OutputUtilities;
+import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.InnerClass;
+import org.mybatis.generator.api.dom.java.InnerEnum;
+import org.mybatis.generator.api.dom.java.InnerRecord;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.config.MergeConstants;
+import org.mybatis.generator.config.PropertyRegistry;
+
+public class DefaultCommentGenerator implements CommentGenerator {
+
+<span class="fc" id="L46">    private final Properties properties = new Properties();</span>
+
+    private boolean suppressDate;
+
+    private boolean suppressAllComments;
+
+    private boolean minimizeComments;
+
+    /** If suppressAllComments or minimizeComments is true, this option is ignored. */
+    private boolean addRemarkComments;
+
+<span class="fc" id="L57">    private final FullyQualifiedJavaType generatedImport =</span>
+            new FullyQualifiedJavaType(&quot;jakarta.annotation.Generated&quot;); //$NON-NLS-1$
+
+    public DefaultCommentGenerator() {
+<span class="fc" id="L61">        super();</span>
+<span class="fc" id="L62">        suppressDate = false;</span>
+<span class="fc" id="L63">        suppressAllComments = false;</span>
+<span class="fc" id="L64">        addRemarkComments = false;</span>
+<span class="fc" id="L65">        minimizeComments = false;</span>
+<span class="fc" id="L66">    }</span>
+
+    @Override
+    public void addConfigurationProperties(Properties props) {
+<span class="fc" id="L70">        this.properties.putAll(props);</span>
+
+<span class="fc" id="L72">        suppressDate = isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_DATE));</span>
+<span class="fc" id="L73">        suppressAllComments = isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_ALL_COMMENTS));</span>
+<span class="fc" id="L74">        addRemarkComments = isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_ADD_REMARK_COMMENTS));</span>
+<span class="fc" id="L75">        minimizeComments = isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_MINIMIZE_COMMENTS));</span>
+<span class="fc" id="L76">    }</span>
+
+    /**
+     * Adds a suitable comment to warn users that the element was generated and
+     * when it was generated.
+     *
+     * @param xmlElement the XML element
+     */
+    @Override
+    public void addComment(XmlElement xmlElement) {
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (suppressAllComments) {</span>
+<span class="fc" id="L87">            return;</span>
+        }
+
+<span class="fc" id="L90">        xmlElement.addElement(new TextElement(&quot;&lt;!--&quot;)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L92">        String sb = OutputUtilities.xmlIndent(1)</span>
+                + &quot;Generated Code - &quot; //$NON-NLS-1$
+                + MergeConstants.NEW_ELEMENT_TAG;
+<span class="fc" id="L95">        xmlElement.addElement(new TextElement(sb));</span>
+
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        if (!minimizeComments) {</span>
+<span class="fc" id="L98">            xmlElement.addElement(</span>
+<span class="fc" id="L99">                    new TextElement(OutputUtilities.xmlIndent(1)</span>
+                            + &quot;This element is automatically generated by MyBatis Generator,&quot; //$NON-NLS-1$
+                            + &quot; do not modify.&quot;)); //$NON-NLS-1$
+        }
+
+<span class="fc" id="L104">        getDateString().ifPresent(s -&gt; {</span>
+<span class="fc" id="L105">            String text = OutputUtilities.xmlIndent(1)</span>
+                    + &quot;This element was generated on &quot; //$NON-NLS-1$
+                    + s
+                    + '.';
+<span class="fc" id="L109">            xmlElement.addElement(new TextElement(text));</span>
+
+<span class="fc" id="L111">        });</span>
+
+<span class="fc" id="L113">        xmlElement.addElement(new TextElement(&quot;--&gt;&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L114">    }</span>
+
+    /**
+     * Returns a formatted date string to include in the Javadoc tag and XML
+     * comments. You may return null if you do not want the date in these
+     * documentation elements.
+     *
+     * @return a string representing the current timestamp, or null
+     */
+    protected Optional&lt;String&gt; getDateString() {
+<span class="fc bfc" id="L124" title="All 4 branches covered.">        if (suppressDate || minimizeComments) {</span>
+<span class="fc" id="L125">            return Optional.empty();</span>
+        } else {
+<span class="fc" id="L127">            return Optional.of(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(ZonedDateTime.now()));</span>
+        }
+    }
+
+    @Override
+    public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="pc bpc" id="L133" title="1 of 4 branches missed.">        if (suppressAllComments || minimizeComments) {</span>
+<span class="fc" id="L134">            return;</span>
+        }
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (addRemarkComments) {</span>
+<span class="fc" id="L138">            introspectedTable.getRemarks().ifPresent(remarks -&gt; {</span>
+<span class="fc" id="L139">                topLevelClass.addJavaDocLine(&quot;/**&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L140">                topLevelClass.addJavaDocLine(&quot; * Database Table Remarks:&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L141">                String[] remarkLines = remarks.split(System.lineSeparator());</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">                for (String remarkLine : remarkLines) {</span>
+<span class="fc" id="L143">                    topLevelClass.addJavaDocLine(&quot; *   &quot; + remarkLine); //$NON-NLS-1$</span>
+                }
+<span class="fc" id="L145">                topLevelClass.addJavaDocLine(&quot; */&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L146">            });</span>
+        }
+<span class="fc" id="L148">    }</span>
+
+    @Override
+    public void addGeneralMethodAnnotation(Method method, IntrospectedTable introspectedTable,
+            Set&lt;FullyQualifiedJavaType&gt; imports) {
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (suppressAllComments) {</span>
+<span class="fc" id="L154">            return;</span>
+        }
+
+<span class="fc" id="L157">        imports.add(generatedImport);</span>
+<span class="fc" id="L158">        String comment = &quot;Source Table: &quot; + introspectedTable.getFullyQualifiedTable(); //$NON-NLS-1$</span>
+<span class="fc" id="L159">        method.addAnnotation(getGeneratedAnnotation(comment, false));</span>
+<span class="fc" id="L160">    }</span>
+
+    @Override
+    public void addGeneralMethodAnnotation(Method method, IntrospectedTable introspectedTable,
+            IntrospectedColumn introspectedColumn, Set&lt;FullyQualifiedJavaType&gt; imports) {
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if (suppressAllComments) {</span>
+<span class="fc" id="L166">            return;</span>
+        }
+
+<span class="fc" id="L169">        imports.add(generatedImport);</span>
+<span class="fc" id="L170">        String comment = &quot;Source field: &quot; //$NON-NLS-1$</span>
+<span class="fc" id="L171">                + introspectedTable.getFullyQualifiedTable() + &quot;.&quot; //$NON-NLS-1$</span>
+<span class="fc" id="L172">                + introspectedColumn.getActualColumnName();</span>
+<span class="fc" id="L173">        method.addAnnotation(getGeneratedAnnotation(comment, false));</span>
+<span class="fc" id="L174">    }</span>
+
+    @Override
+    public void addFieldAnnotation(Field field, IntrospectedTable introspectedTable,
+            Set&lt;FullyQualifiedJavaType&gt; imports) {
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (suppressAllComments) {</span>
+<span class="fc" id="L180">            return;</span>
+        }
+
+<span class="fc" id="L183">        imports.add(generatedImport);</span>
+<span class="fc" id="L184">        String comment = &quot;Source Table: &quot; + introspectedTable.getFullyQualifiedTable(); //$NON-NLS-1$</span>
+<span class="fc" id="L185">        field.addAnnotation(getGeneratedAnnotation(comment, false));</span>
+<span class="fc" id="L186">    }</span>
+
+    @Override
+    public void addFieldAnnotation(Field field, IntrospectedTable introspectedTable,
+            IntrospectedColumn introspectedColumn, Set&lt;FullyQualifiedJavaType&gt; imports) {
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (suppressAllComments) {</span>
+<span class="fc" id="L192">            return;</span>
+        }
+
+<span class="fc" id="L195">        imports.add(generatedImport);</span>
+<span class="fc" id="L196">        String comment = &quot;Source field: &quot; //$NON-NLS-1$</span>
+<span class="fc" id="L197">                + introspectedTable.getFullyQualifiedTable() + &quot;.&quot; //$NON-NLS-1$</span>
+<span class="fc" id="L198">                + introspectedColumn.getActualColumnName();</span>
+<span class="fc" id="L199">        field.addAnnotation(getGeneratedAnnotation(comment, false));</span>
+
+<span class="pc bpc" id="L201" title="1 of 4 branches missed.">        if (!minimizeComments &amp;&amp; addRemarkComments) {</span>
+<span class="fc" id="L202">            introspectedColumn.getRemarks().ifPresent(r -&gt; {</span>
+<span class="fc" id="L203">                field.addJavaDocLine(&quot;/**&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L204">                field.addJavaDocLine(&quot; * Database Column Remarks:&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L205">                String[] remarkLines = r.split(System.lineSeparator());</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">                for (String remarkLine : remarkLines) {</span>
+<span class="fc" id="L207">                    field.addJavaDocLine(&quot; *   &quot; + remarkLine); //$NON-NLS-1$</span>
+                }
+<span class="fc" id="L209">                field.addJavaDocLine(&quot; */&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L210">            });</span>
+        }
+<span class="fc" id="L212">    }</span>
+
+    @Override
+    public void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable,
+            Set&lt;FullyQualifiedJavaType&gt; imports) {
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        if (suppressAllComments) {</span>
+<span class="fc" id="L218">            return;</span>
+        }
+
+<span class="fc" id="L221">        imports.add(generatedImport);</span>
+<span class="fc" id="L222">        String comment = &quot;Source Table: &quot; + introspectedTable.getFullyQualifiedTable(); //$NON-NLS-1$</span>
+<span class="fc" id="L223">        innerClass.addAnnotation(getGeneratedAnnotation(comment, false));</span>
+<span class="fc" id="L224">    }</span>
+
+    @Override
+    public void addClassAnnotationAndMarkAsDoNotDelete(InnerClass innerClass, IntrospectedTable introspectedTable,
+                                                       Set&lt;FullyQualifiedJavaType&gt; imports) {
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        if (suppressAllComments) {</span>
+<span class="fc" id="L230">            return;</span>
+        }
+
+<span class="fc" id="L233">        imports.add(generatedImport);</span>
+<span class="fc" id="L234">        innerClass.addAnnotation(getGeneratedAnnotation(MergeConstants.DO_NOT_DELETE_DURING_MERGE, true));</span>
+<span class="fc" id="L235">    }</span>
+
+    @Override
+    public void addRecordAnnotation(InnerRecord innerRecord, IntrospectedTable introspectedTable,
+                                    Set&lt;FullyQualifiedJavaType&gt; imports) {
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">        if (suppressAllComments) {</span>
+<span class="nc" id="L241">            return;</span>
+        }
+
+<span class="fc" id="L244">        imports.add(generatedImport);</span>
+<span class="fc" id="L245">        String comment = &quot;Source Table: &quot; + introspectedTable.getFullyQualifiedTable(); //$NON-NLS-1$</span>
+<span class="fc" id="L246">        innerRecord.addAnnotation(getGeneratedAnnotation(comment, false));</span>
+<span class="fc" id="L247">    }</span>
+
+    @Override
+    public void addEnumAnnotation(InnerEnum innerEnum, IntrospectedTable introspectedTable,
+                                  Set&lt;FullyQualifiedJavaType&gt; imports) {
+<span class="nc bnc" id="L252" title="All 2 branches missed.">        if (suppressAllComments) {</span>
+<span class="nc" id="L253">            return;</span>
+        }
+
+<span class="nc" id="L256">        imports.add(generatedImport);</span>
+<span class="nc" id="L257">        String comment = &quot;Source Table: &quot; + introspectedTable.getFullyQualifiedTable(); //$NON-NLS-1$</span>
+<span class="nc" id="L258">        innerEnum.addAnnotation(getGeneratedAnnotation(comment, false));</span>
+<span class="nc" id="L259">    }</span>
+
+    private String getGeneratedAnnotation(String comment, boolean forceComment) {
+<span class="fc" id="L262">        StringBuilder buffer = new StringBuilder();</span>
+<span class="fc" id="L263">        buffer.append(&quot;@Generated(&quot;); //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L265" title="All 4 branches covered.">        if (forceComment || !minimizeComments) {</span>
+<span class="fc" id="L266">            buffer.append(&quot;value=\&quot;&quot;); //$NON-NLS-1$</span>
+        } else {
+<span class="fc" id="L268">            buffer.append('\&quot;');</span>
+        }
+
+
+<span class="fc" id="L272">        buffer.append(MyBatisGenerator.class.getName());</span>
+<span class="fc" id="L273">        buffer.append('\&quot;');</span>
+
+<span class="fc" id="L275">        getDateString().ifPresent(s -&gt; buffer.append(String.format(&quot;, date=\&quot;%s\&quot;&quot;, s))); //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L277" title="All 4 branches covered.">        if (forceComment || !minimizeComments) {</span>
+<span class="fc" id="L278">            buffer.append(String.format(&quot;, comments=\&quot;%s\&quot;&quot;, comment)); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L281">        buffer.append(')');</span>
+<span class="fc" id="L282">        return buffer.toString();</span>
+    }
+
+    @Override
+    public void addFileComment(KotlinFile kotlinFile) {
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">        if (suppressAllComments) {</span>
+<span class="nc" id="L288">            return;</span>
+        }
+
+<span class="fc" id="L291">        kotlinFile.addFileCommentLine(&quot;/*&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L292">        kotlinFile.addFileCommentLine(&quot; * Auto-generated file. Created by MyBatis Generator&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L293">        getDateString().ifPresent(s -&gt; kotlinFile.addFileCommentLine(&quot; * Generation date: &quot; + s));</span>
+<span class="fc" id="L294">        kotlinFile.addFileCommentLine(&quot; */&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L295">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JavaMergeUtilities.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.merge.java</a> &gt; <span class="el_source">JavaMergeUtilities.java</span></div><h1>JavaMergeUtilities.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.merge.java;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
+import com.github.javaparser.ast.body.BodyDeclaration;
+import com.github.javaparser.ast.body.FieldDeclaration;
+import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.nodeTypes.NodeWithSimpleName;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
+
+public class JavaMergeUtilities {
+    private JavaMergeUtilities() {
+        // utility class, no instances
+    }
+
+    /**
+     * Compare two compilation units and find imports that are in the existing file but not in the new file.
+     * We assume this means they are required for some custom method, so we will add them to the new
+     * file if there are other items to merge. This may create unused imports in the new file if the
+     * initial assumption is incorrect, but better safe than sorry.
+     *
+     * @param existingCompilationUnit compilation unit representing the existing file
+     * @param newCompilationUnit compilation unit representing the new file
+     */
+    public static List&lt;ImportDeclaration&gt; findCustomImports(CompilationUnit existingCompilationUnit,
+                                                            CompilationUnit newCompilationUnit) {
+<span class="fc" id="L47">        List&lt;ImportDeclaration&gt; customImports = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L49">        List&lt;String&gt; newFileImports = newCompilationUnit.getImports().stream()</span>
+<span class="fc" id="L50">                .map(JavaMergeUtilities::stringify).toList();</span>
+
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (ImportDeclaration id : existingCompilationUnit.getImports()) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">            if (!newFileImports.contains(stringify(id))) {</span>
+<span class="fc" id="L54">                customImports.add(id);</span>
+            }
+<span class="fc" id="L56">        }</span>
+
+<span class="fc" id="L58">        return customImports;</span>
+    }
+
+    /**
+     * Compare two members to see if they are &quot;functionally equivalent&quot;. This is defined as:
+     *
+     * &lt;ul&gt;
+     *     &lt;li&gt;Members are the same type&lt;/li&gt;
+     *     &lt;li&gt;Members have the same signature or basic declaration&lt;/li&gt;
+     * &lt;/ul&gt;
+     *
+     * @param member1 the first member
+     * @param member2 the second member
+     * @return true if the members are functionally equivalent
+     */
+    public static boolean membersMatch(BodyDeclaration&lt;?&gt; member1, BodyDeclaration&lt;?&gt; member2) {
+<span class="fc bfc" id="L74" title="All 4 branches covered.">        if (member1.isTypeDeclaration() &amp;&amp; member2.isTypeDeclaration()) {</span>
+<span class="fc" id="L75">            return member1.asTypeDeclaration().getNameAsString()</span>
+<span class="fc" id="L76">                    .equals(member2.asTypeDeclaration().getNameAsString());</span>
+<span class="fc bfc" id="L77" title="All 4 branches covered.">        } else if (member1.isCallableDeclaration() &amp;&amp; member2.isCallableDeclaration()) {</span>
+<span class="fc" id="L78">            return member1.asCallableDeclaration().getSignature().asString()</span>
+<span class="fc" id="L79">                    .equals(member2.asCallableDeclaration().getSignature().asString());</span>
+<span class="pc bpc" id="L80" title="1 of 4 branches missed.">        } else if (member1.isFieldDeclaration() &amp;&amp; member2.isFieldDeclaration()) {</span>
+<span class="fc" id="L81">            return stringify(member1.asFieldDeclaration()).equals(stringify(member2.asFieldDeclaration()));</span>
+        }
+
+<span class="fc" id="L84">        return false;</span>
+    }
+
+    public static List&lt;ClassOrInterfaceType&gt; findCustomSuperInterfaces(BodyDeclaration&lt;?&gt; existingType,
+                                                                       BodyDeclaration&lt;?&gt; newType) {
+<span class="fc" id="L89">        List&lt;ClassOrInterfaceType&gt; customSuperInterfaces = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L91">        List&lt;String&gt; newFileSuperInterfaces = findSuperInterfaces(newType).stream()</span>
+<span class="fc" id="L92">                .map(NodeWithSimpleName::getNameAsString).toList();</span>
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (ClassOrInterfaceType id : findSuperInterfaces(existingType)) {</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            if (!newFileSuperInterfaces.contains(id.getNameAsString())) {</span>
+<span class="fc" id="L96">                customSuperInterfaces.add(id);</span>
+            }
+<span class="fc" id="L98">        }</span>
+
+<span class="fc" id="L100">        return customSuperInterfaces;</span>
+    }
+
+    public static List&lt;ClassOrInterfaceType&gt; findSuperInterfaces(BodyDeclaration&lt;?&gt; bodyDeclaration) {
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (bodyDeclaration.isClassOrInterfaceDeclaration()) {</span>
+<span class="fc" id="L105">            return bodyDeclaration.asClassOrInterfaceDeclaration().getImplementedTypes();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        } else if (bodyDeclaration.isEnumDeclaration()) {</span>
+<span class="fc" id="L107">            return bodyDeclaration.asEnumDeclaration().getImplementedTypes();</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        } else if (bodyDeclaration.isRecordDeclaration()) {</span>
+<span class="fc" id="L109">            return bodyDeclaration.asRecordDeclaration().getImplementedTypes();</span>
+        }
+
+<span class="nc" id="L112">        return Collections.emptyList();</span>
+    }
+
+    public static void addSuperInterface(BodyDeclaration&lt;?&gt; bodyDeclaration, ClassOrInterfaceType superInterface) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (bodyDeclaration.isClassOrInterfaceDeclaration()) {</span>
+<span class="fc" id="L117">            bodyDeclaration.asClassOrInterfaceDeclaration().addImplementedType(superInterface);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        } else if (bodyDeclaration.isEnumDeclaration()) {</span>
+<span class="nc" id="L119">            bodyDeclaration.asEnumDeclaration().addImplementedType(superInterface);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        } else if (bodyDeclaration.isRecordDeclaration()) {</span>
+<span class="fc" id="L121">            bodyDeclaration.asRecordDeclaration().addImplementedType(superInterface);</span>
+        }
+<span class="fc" id="L123">    }</span>
+
+    /**
+     * Create a string representation of an import that we can use to find matches.
+     *
+     * @param importDeclaration the import declaration to stringify
+     * @return string representation of the import (not a full import statement)
+     */
+    public static String stringify(ImportDeclaration importDeclaration) {
+<span class="fc" id="L132">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (importDeclaration.isStatic()) {</span>
+<span class="fc" id="L134">            sb.append(&quot;static &quot;); //$NON-NLS-1$</span>
+        }
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (importDeclaration.isModule()) {</span>
+<span class="nc" id="L137">            sb.append(&quot;module &quot;); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L139">        sb.append(importDeclaration.getNameAsString());</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (importDeclaration.isAsterisk()) {</span>
+<span class="nc" id="L141">            sb.append(&quot;.*&quot;); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L144">        return sb.toString();</span>
+    }
+
+    public static String stringify(FieldDeclaration fieldDeclaration) {
+<span class="fc" id="L148">        return fieldDeclaration.getVariables().stream()</span>
+<span class="fc" id="L149">                .map(JavaMergeUtilities::stringify)</span>
+<span class="fc" id="L150">                .collect(Collectors.joining(&quot;,&quot;)); //$NON-NLS-1$</span>
+    }
+
+    public static String stringify(VariableDeclarator variableDeclarator) {
+<span class="fc" id="L154">        return variableDeclarator.getType().toString()</span>
+                + &quot; &quot; //$NON-NLS-1$
+<span class="fc" id="L156">                + variableDeclarator.getName().toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

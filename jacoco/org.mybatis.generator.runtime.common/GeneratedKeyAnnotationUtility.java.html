@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneratedKeyAnnotationUtility.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.common</a> &gt; <span class="el_source">GeneratedKeyAnnotationUtility.java</span></div><h1>GeneratedKeyAnnotationUtility.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.common;
+
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForKotlin;
+
+import java.util.Optional;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
+import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
+import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.runtime.JavaMethodParts;
+import org.mybatis.generator.runtime.KotlinFunctionParts;
+
+<span class="nc" id="L32">public class GeneratedKeyAnnotationUtility {</span>
+    private static final String OPTIONS_IMPORT = &quot;org.apache.ibatis.annotations.Options&quot;; //$NON-NLS-1$
+    private static final String SELECT_KEY_IMPORT = &quot;org.apache.ibatis.annotations.SelectKey&quot;; //$NON-NLS-1$
+
+    private static final String OPTIONS_TEMPLATE =
+            &quot;@Options(useGeneratedKeys=true, keyProperty=\&quot;%s\&quot;, keyColumn=\&quot;%s\&quot;)&quot;; //$NON-NLS-1$
+    private static final String JAVA_SELECT_KEY_TEMPLATE =
+            &quot;@SelectKey(statement=\&quot;%s\&quot;, keyProperty=\&quot;%s\&quot;, before=%s, resultType=%s.class)&quot;; //$NON-NLS-1$
+    private static final String KOTLIN_SELECT_KEY_TEMPLATE =
+            &quot;@SelectKey(statement=[\&quot;%s\&quot;], keyProperty=\&quot;%s\&quot;, before=%s, resultType=%s::class)&quot;; //$NON-NLS-1$
+
+    public static Optional&lt;JavaMethodParts&gt; getLegacyJavaGeneratedKeyAnnotation(IntrospectedTable introspectedTable,
+                                                                                GeneratedKey gk) {
+<span class="fc" id="L45">        return introspectedTable.getColumn(gk.getColumn()).map(introspectedColumn -&gt; {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            if (gk.isJdbcStandard()) {</span>
+<span class="fc" id="L47">                return calculateJavaOptionsAnnotation(Prefix.LEGACY, introspectedColumn);</span>
+            } else {
+<span class="fc" id="L49">                return calculateJavaSelectKeyAnnotation(Prefix.LEGACY, introspectedColumn, gk);</span>
+            }
+        });
+    }
+
+    public static Optional&lt;JavaMethodParts&gt; getJavaMultiRowGeneratedKeyAnnotation(IntrospectedTable introspectedTable,
+                                                                                  GeneratedKey gk) {
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (!gk.isJdbcStandard()) {</span>
+<span class="nc" id="L57">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L60">        return introspectedTable.getColumn(gk.getColumn()).map(introspectedColumn -&gt;</span>
+<span class="fc" id="L61">            calculateJavaOptionsAnnotation(Prefix.DSQL_MULTI_ROW, introspectedColumn)</span>
+        );
+    }
+
+    public static Optional&lt;JavaMethodParts&gt; getJavaSingleRowGeneratedKeyAnnotation(IntrospectedTable introspectedTable,
+                                                                                   GeneratedKey gk) {
+<span class="fc" id="L67">        return introspectedTable.getColumn(gk.getColumn()).map(introspectedColumn -&gt; {</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">            if (gk.isJdbcStandard()) {</span>
+<span class="fc" id="L69">                return calculateJavaOptionsAnnotation(Prefix.DSQL_SINGLE_ROW, introspectedColumn);</span>
+            } else {
+<span class="fc" id="L71">                return calculateJavaSelectKeyAnnotation(Prefix.DSQL_SINGLE_ROW, introspectedColumn, gk);</span>
+            }
+        });
+    }
+
+    private static JavaMethodParts calculateJavaSelectKeyAnnotation(Prefix prefix,
+                                                                    IntrospectedColumn introspectedColumn,
+                                                                    GeneratedKey gk) {
+<span class="fc" id="L79">        JavaMethodParts.Builder builder = new JavaMethodParts.Builder();</span>
+<span class="fc" id="L80">        builder.withImport(new FullyQualifiedJavaType(SELECT_KEY_IMPORT));</span>
+<span class="fc" id="L81">        FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();</span>
+<span class="fc" id="L82">        String annotation = String.format(JAVA_SELECT_KEY_TEMPLATE,</span>
+<span class="fc" id="L83">                gk.getRuntimeSqlStatement(),</span>
+<span class="fc" id="L84">                prefix.value() + introspectedColumn.getJavaProperty(),</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">                !gk.isIdentity(),</span>
+<span class="fc" id="L86">                fqjt.getShortName());</span>
+<span class="fc" id="L87">        builder.withAnnotation(annotation);</span>
+<span class="fc" id="L88">        return builder.build();</span>
+    }
+
+    private static JavaMethodParts calculateJavaOptionsAnnotation(Prefix prefix,
+                                                                  IntrospectedColumn introspectedColumn) {
+<span class="fc" id="L93">        JavaMethodParts.Builder builder = new JavaMethodParts.Builder();</span>
+<span class="fc" id="L94">        builder.withImport(new FullyQualifiedJavaType(OPTIONS_IMPORT));</span>
+<span class="fc" id="L95">        String annotation = String.format(OPTIONS_TEMPLATE,</span>
+<span class="fc" id="L96">                prefix.value() + introspectedColumn.getJavaProperty(),</span>
+<span class="fc" id="L97">                escapeStringForJava(introspectedColumn.getActualColumnName()));</span>
+<span class="fc" id="L98">        builder.withAnnotation(annotation);</span>
+<span class="fc" id="L99">        return builder.build();</span>
+    }
+
+    public static Optional&lt;KotlinFunctionParts&gt; getKotlinMultiRowGeneratedKeyAnnotation(
+            IntrospectedTable introspectedTable, GeneratedKey gk) {
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (!gk.isJdbcStandard()) {</span>
+<span class="nc" id="L105">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L108">        return introspectedTable.getColumn(gk.getColumn()).map(introspectedColumn -&gt;</span>
+<span class="fc" id="L109">                calculateKotlinOptionsAnnotation(Prefix.DSQL_MULTI_ROW, introspectedColumn));</span>
+    }
+
+    public static Optional&lt;KotlinFunctionParts&gt; getKotlinSingleRowGeneratedKeyAnnotation(
+            IntrospectedTable introspectedTable, GeneratedKey gk) {
+<span class="fc" id="L114">        return introspectedTable.getColumn(gk.getColumn()).map(introspectedColumn -&gt; {</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">            if (gk.isJdbcStandard()) {</span>
+<span class="fc" id="L116">                return calculateKotlinOptionsAnnotation(Prefix.DSQL_SINGLE_ROW, introspectedColumn);</span>
+            } else {
+<span class="fc" id="L118">                KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();</span>
+<span class="fc" id="L119">                builder.withImport(SELECT_KEY_IMPORT);</span>
+<span class="fc" id="L120">                FullyQualifiedKotlinType kt =</span>
+<span class="fc" id="L121">                        JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());</span>
+<span class="fc" id="L122">                String annotation = String.format(KOTLIN_SELECT_KEY_TEMPLATE,</span>
+<span class="fc" id="L123">                        gk.getRuntimeSqlStatement(),</span>
+<span class="fc" id="L124">                        Prefix.DSQL_SINGLE_ROW.value() + introspectedColumn.getJavaProperty(),</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">                        !gk.isIdentity(),</span>
+<span class="fc" id="L126">                        kt.getShortNameWithoutTypeArguments());</span>
+<span class="fc" id="L127">                builder.withAnnotation(annotation);</span>
+<span class="fc" id="L128">                return builder.build();</span>
+            }
+        });
+    }
+
+    private static KotlinFunctionParts calculateKotlinOptionsAnnotation(Prefix prefix,
+                                                                        IntrospectedColumn introspectedColumn) {
+<span class="fc" id="L135">        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();</span>
+<span class="fc" id="L136">        builder.withImport(OPTIONS_IMPORT);</span>
+<span class="fc" id="L137">        String annotation = String.format(OPTIONS_TEMPLATE,</span>
+<span class="fc" id="L138">                prefix.value() + introspectedColumn.getJavaProperty(),</span>
+<span class="fc" id="L139">                escapeStringForKotlin(introspectedColumn.getActualColumnName()));</span>
+<span class="fc" id="L140">        builder.withAnnotation(annotation);</span>
+<span class="fc" id="L141">        return builder.build();</span>
+    }
+
+<span class="fc" id="L144">    private enum Prefix {</span>
+<span class="fc" id="L145">        LEGACY(&quot;&quot;), //$NON-NLS-1$</span>
+<span class="fc" id="L146">        DSQL_SINGLE_ROW(&quot;row.&quot;), //$NON-NLS-1$</span>
+<span class="fc" id="L147">        DSQL_MULTI_ROW(&quot;records.&quot;); //$NON-NLS-1$</span>
+
+        private final String value;
+
+<span class="fc" id="L151">        Prefix(String value) {</span>
+<span class="fc" id="L152">            this.value = value;</span>
+<span class="fc" id="L153">        }</span>
+
+        public String value() {
+<span class="fc" id="L156">            return value;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

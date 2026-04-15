@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinMapperAndExtensionsGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamicsql.kotlin</a> &gt; <span class="el_source">KotlinMapperAndExtensionsGenerator.java</span></div><h1>KotlinMapperAndExtensionsGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamicsql.kotlin;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
+import org.mybatis.generator.codegen.AbstractKotlinGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.BasicInsertFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.BasicMultipleInsertFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.BasicSelectManyFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.BasicSelectOneFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.ColumnListGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.DeleteByPrimaryKeyExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.GeneralCountExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.GeneralDeleteExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.GeneralSelectDistinctExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.GeneralSelectExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.GeneralSelectOneExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.GeneralUpdateExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.InsertExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.InsertMultipleExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.InsertMultipleVarargExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.InsertSelectiveExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.KotlinFragmentGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.KotlinPropertyAndImports;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.SelectByPrimaryKeyExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.UpdateAllColumnsExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.UpdateByPrimaryKeyExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.UpdateByPrimaryKeySelectiveExtensionFunctionGenerator;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.elements.UpdateSelectiveColumnsExtensionFunctionGenerator;
+
+public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator {
+    // record type for insert, select, update
+    protected final FullyQualifiedKotlinType recordType;
+    // id to use for the common result map
+    protected final String resultMapId;
+    protected final KotlinFragmentGenerator fragmentGenerator;
+    protected final KotlinDynamicSqlSupportClassGenerator supportClassGenerator;
+    protected final boolean hasGeneratedKeys;
+
+    public KotlinMapperAndExtensionsGenerator(Builder builder) {
+<span class="fc" id="L61">        super(builder);</span>
+<span class="fc" id="L62">        supportClassGenerator = initializeSubBuilder(new KotlinDynamicSqlSupportClassGenerator.Builder())</span>
+<span class="fc" id="L63">                .build();</span>
+<span class="fc" id="L64">        recordType = new FullyQualifiedKotlinType(introspectedTable.getKotlinRecordType());</span>
+<span class="fc" id="L65">        resultMapId = recordType.getShortNameWithoutTypeArguments() + &quot;Result&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L66">        fragmentGenerator = new KotlinFragmentGenerator.Builder()</span>
+<span class="fc" id="L67">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L68">                .withResultMapId(resultMapId)</span>
+<span class="fc" id="L69">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L70">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L71">                .build();</span>
+
+<span class="fc" id="L73">        hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();</span>
+<span class="fc" id="L74">    }</span>
+
+    @Override
+    public List&lt;KotlinFile&gt; getKotlinFiles() {
+<span class="fc" id="L78">        progressCallback.startTask(getString(&quot;Progress.17&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L79">                introspectedTable.getFullyQualifiedTable().toString()));</span>
+
+<span class="fc" id="L81">        KotlinFile mapperFile = createMapperInterfaceFile();</span>
+<span class="fc" id="L82">        KotlinType mapperType = createMapperInterfaceType(mapperFile);</span>
+
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (hasGeneratedKeys) {</span>
+<span class="fc" id="L85">            addBasicInsertFunction(mapperFile, mapperType);</span>
+<span class="fc" id="L86">            addBasicInsertMultipleFunction(mapperFile, mapperType);</span>
+        }
+
+<span class="fc" id="L89">        boolean reuseResultMap = addBasicSelectManyFunction(mapperFile, mapperType);</span>
+<span class="fc" id="L90">        addBasicSelectOneFunction(mapperFile, mapperType, reuseResultMap);</span>
+
+<span class="fc" id="L92">        String mapperName = mapperType.getName();</span>
+
+<span class="fc" id="L94">        addGeneralCountExtensionFunction(mapperFile, mapperType, mapperName);</span>
+<span class="fc" id="L95">        addGeneralDeleteExtensionFunction(mapperFile, mapperType, mapperName);</span>
+<span class="fc" id="L96">        addDeleteByPrimaryKeyExtensionFunction(mapperFile, mapperName);</span>
+<span class="fc" id="L97">        addInsertOneExtensionFunction(mapperFile, mapperType, mapperName);</span>
+<span class="fc" id="L98">        addInsertMultipleExtensionFunction(mapperFile, mapperType, mapperName);</span>
+<span class="fc" id="L99">        addInsertMultipleVarargExtensionFunction(mapperFile, mapperName);</span>
+<span class="fc" id="L100">        addInsertSelectiveExtensionFunction(mapperFile, mapperType, mapperName);</span>
+<span class="fc" id="L101">        addColumnListProperty(mapperFile);</span>
+<span class="fc" id="L102">        addGeneralSelectExtensionFunction(mapperFile, mapperName);</span>
+<span class="fc" id="L103">        addGeneralSelectOneExtensionFunction(mapperFile, mapperName);</span>
+<span class="fc" id="L104">        addSelectDistinctExtensionFunction(mapperFile, mapperName);</span>
+<span class="fc" id="L105">        addSelectByPrimaryKeyExtensionFunction(mapperFile, mapperName);</span>
+<span class="fc" id="L106">        addGeneralUpdateExtensionFunction(mapperFile, mapperType, mapperName);</span>
+<span class="fc" id="L107">        addUpdateAllColumnsExtensionFunction(mapperFile);</span>
+<span class="fc" id="L108">        addUpdateSelectiveColumnsExtensionFunction(mapperFile);</span>
+<span class="fc" id="L109">        addUpdateByPrimaryKeyExtensionFunction(mapperFile, mapperName);</span>
+<span class="fc" id="L110">        addUpdateByPrimaryKeySelectiveExtensionFunction(mapperFile, mapperName);</span>
+
+<span class="fc" id="L112">        KotlinFile supportFile = supportClassGenerator.getKotlinFile();</span>
+
+<span class="fc" id="L114">        List&lt;KotlinFile&gt; answer = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        if (pluginAggregator.dynamicSqlSupportGenerated(supportFile,</span>
+<span class="fc" id="L116">                supportClassGenerator.getOuterObject(),</span>
+<span class="fc" id="L117">                supportClassGenerator.getInnerClass(),</span>
+                introspectedTable)) {
+<span class="fc" id="L119">            answer.add(supportFile);</span>
+        }
+
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        if (pluginAggregator.mapperGenerated(mapperFile, mapperType, introspectedTable)) {</span>
+<span class="fc" id="L123">            answer.add(mapperFile);</span>
+        }
+
+<span class="fc" id="L126">        return answer;</span>
+    }
+
+    protected KotlinFile createMapperInterfaceFile() {
+<span class="fc" id="L130">        FullyQualifiedKotlinType kotlinType =</span>
+<span class="fc" id="L131">                new FullyQualifiedKotlinType(introspectedTable.getMyBatis3JavaMapperType());</span>
+
+<span class="fc" id="L133">        KotlinFile kotlinFile = new KotlinFile(kotlinType.getShortNameWithoutTypeArguments());</span>
+<span class="fc" id="L134">        kotlinFile.setPackage(kotlinType.getPackageName());</span>
+
+<span class="fc" id="L136">        return kotlinFile;</span>
+    }
+
+    protected KotlinType createMapperInterfaceType(KotlinFile mapperFile) {
+<span class="fc" id="L140">        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(introspectedTable.getMyBatis3JavaMapperType());</span>
+
+<span class="fc" id="L142">        KotlinType kotlinType = KotlinType.newInterface(type.getShortNameWithoutTypeArguments())</span>
+<span class="fc" id="L143">                .withAnnotation(&quot;@Mapper&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L144">                .build();</span>
+
+<span class="fc" id="L146">        mapperFile.addImport(&quot;org.apache.ibatis.annotations.Mapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L147">        mapperFile.addNamedItem(kotlinType);</span>
+
+<span class="fc" id="L149">        commentGenerator.addFileComment(mapperFile);</span>
+
+<span class="fc" id="L151">        return kotlinType;</span>
+    }
+
+    protected void addBasicInsertFunction(KotlinFile mapperFile, KotlinType mapperType) {
+<span class="fc" id="L155">        initializeSubBuilder(new BasicInsertFunctionGenerator.Builder())</span>
+<span class="fc" id="L156">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L157">                .withRecordType(recordType)</span>
+<span class="fc" id="L158">                .build()</span>
+<span class="fc" id="L159">                .execute(mapperFile, mapperType);</span>
+<span class="fc" id="L160">    }</span>
+
+    protected void addBasicInsertMultipleFunction(KotlinFile mapperFile, KotlinType mapperType) {
+<span class="fc" id="L163">        initializeSubBuilder(new BasicMultipleInsertFunctionGenerator.Builder())</span>
+<span class="fc" id="L164">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L165">                .withRecordType(recordType)</span>
+<span class="fc" id="L166">                .build()</span>
+<span class="fc" id="L167">                .execute(mapperFile, mapperType);</span>
+<span class="fc" id="L168">    }</span>
+
+    protected void addBasicSelectOneFunction(KotlinFile mapperFile, KotlinType mapperType, boolean reuseResultMap) {
+<span class="fc" id="L171">        initializeSubBuilder(new BasicSelectOneFunctionGenerator.Builder())</span>
+<span class="fc" id="L172">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L173">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L174">                .withRecordType(recordType)</span>
+<span class="fc" id="L175">                .withResultMapId(resultMapId)</span>
+<span class="fc" id="L176">                .withReuseResultMap(reuseResultMap)</span>
+<span class="fc" id="L177">                .build()</span>
+<span class="fc" id="L178">                .execute(mapperFile, mapperType);</span>
+<span class="fc" id="L179">    }</span>
+
+    protected boolean addBasicSelectManyFunction(KotlinFile mapperFile, KotlinType mapperType) {
+<span class="fc" id="L182">        return initializeSubBuilder(new BasicSelectManyFunctionGenerator.Builder())</span>
+<span class="fc" id="L183">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L184">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L185">                .withRecordType(recordType)</span>
+<span class="fc" id="L186">                .build()</span>
+<span class="fc" id="L187">                .execute(mapperFile, mapperType);</span>
+    }
+
+    protected void addInsertOneExtensionFunction(KotlinFile mapperFile, KotlinType mapperType, String mapperName) {
+<span class="fc" id="L191">        var generated = initializeSubBuilder(new InsertExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L192">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L193">                .withRecordType(recordType)</span>
+<span class="fc" id="L194">                .withMapperName(mapperName)</span>
+<span class="fc" id="L195">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L196">                .build()</span>
+<span class="fc" id="L197">                .execute(mapperFile);</span>
+
+<span class="fc bfc" id="L199" title="All 4 branches covered.">        if (generated &amp;&amp; !hasGeneratedKeys) {</span>
+<span class="fc" id="L200">            addCommonInsertInterface(mapperFile, mapperType);</span>
+        }
+<span class="fc" id="L202">    }</span>
+
+    protected void addCommonInsertInterface(KotlinFile mapperFile, KotlinType mapperType) {
+<span class="fc" id="L205">        mapperType.addSuperType(&quot;CommonInsertMapper&lt;&quot; //$NON-NLS-1$</span>
+<span class="fc" id="L206">                + recordType.getShortNameWithTypeArguments() + &quot;&gt;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L207">        mapperFile.addImport(&quot;org.mybatis.dynamic.sql.util.mybatis3.CommonInsertMapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L208">        mapperFile.addImports(recordType.getImportList());</span>
+<span class="fc" id="L209">    }</span>
+
+    protected void addInsertMultipleExtensionFunction(KotlinFile mapperFile, KotlinType mapperType, String mapperName) {
+<span class="fc" id="L212">        var generated = initializeSubBuilder(new InsertMultipleExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L213">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L214">                .withRecordType(recordType)</span>
+<span class="fc" id="L215">                .withMapperName(mapperName)</span>
+<span class="fc" id="L216">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L217">                .build()</span>
+<span class="fc" id="L218">                .execute(mapperFile);</span>
+
+<span class="fc bfc" id="L220" title="All 4 branches covered.">        if (generated &amp;&amp; !hasGeneratedKeys) {</span>
+<span class="fc" id="L221">            addCommonInsertInterface(mapperFile, mapperType);</span>
+        }
+<span class="fc" id="L223">    }</span>
+
+    protected void addInsertMultipleVarargExtensionFunction(KotlinFile mapperFile, String mapperName) {
+<span class="fc" id="L226">        initializeSubBuilder(new InsertMultipleVarargExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L227">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L228">                .withRecordType(recordType)</span>
+<span class="fc" id="L229">                .withMapperName(mapperName)</span>
+<span class="fc" id="L230">                .build()</span>
+<span class="fc" id="L231">                .execute(mapperFile);</span>
+<span class="fc" id="L232">    }</span>
+
+    protected void addGeneralCountExtensionFunction(KotlinFile mapperFile, KotlinType mapperType, String mapperName) {
+<span class="fc" id="L235">        var generated = initializeSubBuilder(new GeneralCountExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L236">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L237">                .withTableFieldImport(supportClassGenerator.getTablePropertyImport())</span>
+<span class="fc" id="L238">                .withMapperName(mapperName)</span>
+<span class="fc" id="L239">                .build()</span>
+<span class="fc" id="L240">                .execute(mapperFile);</span>
+
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">        if (generated) {</span>
+            // add common interface
+<span class="fc" id="L244">            mapperType.addSuperType(&quot;CommonCountMapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L245">            mapperFile.addImport(&quot;org.mybatis.dynamic.sql.util.mybatis3.CommonCountMapper&quot;); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L247">    }</span>
+
+    protected void addGeneralDeleteExtensionFunction(KotlinFile mapperFile, KotlinType mapperType, String mapperName) {
+<span class="fc" id="L250">        var generated = initializeSubBuilder(new GeneralDeleteExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L251">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L252">                .withMapperName(mapperName)</span>
+<span class="fc" id="L253">                .build()</span>
+<span class="fc" id="L254">                .execute(mapperFile);</span>
+
+<span class="fc bfc" id="L256" title="All 2 branches covered.">        if (generated) {</span>
+            // add common interface
+<span class="fc" id="L258">            mapperType.addSuperType(&quot;CommonDeleteMapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L259">            mapperFile.addImport(&quot;org.mybatis.dynamic.sql.util.mybatis3.CommonDeleteMapper&quot;); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L261">    }</span>
+
+    protected void addColumnListProperty(KotlinFile mapperFile) {
+<span class="fc" id="L264">        ColumnListGenerator generator = initializeSubBuilder(new ColumnListGenerator.Builder())</span>
+<span class="fc" id="L265">                .withSupportObjectImport(supportClassGenerator.getSupportObjectImport())</span>
+<span class="fc" id="L266">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L267">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L268">                .build();</span>
+
+<span class="fc" id="L270">        KotlinPropertyAndImports propertyAndImports = generator.generatePropertyAndImports();</span>
+
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">        if (generator.callPlugins(propertyAndImports.getProperty(), mapperFile)) {</span>
+<span class="fc" id="L273">            mapperFile.addNamedItem(propertyAndImports.getProperty());</span>
+<span class="fc" id="L274">            mapperFile.addImports(propertyAndImports.getImports());</span>
+        }
+<span class="fc" id="L276">    }</span>
+
+    protected void addGeneralSelectExtensionFunction(KotlinFile mapperFile, String mapperName) {
+<span class="fc" id="L279">        initializeSubBuilder(new GeneralSelectExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L280">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L281">                .withMapperName(mapperName)</span>
+<span class="fc" id="L282">                .build()</span>
+<span class="fc" id="L283">                .execute(mapperFile);</span>
+<span class="fc" id="L284">    }</span>
+
+    protected void addSelectDistinctExtensionFunction(KotlinFile mapperFile, String mapperName) {
+<span class="fc" id="L287">        initializeSubBuilder(new GeneralSelectDistinctExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L288">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L289">                .withMapperName(mapperName)</span>
+<span class="fc" id="L290">                .build()</span>
+<span class="fc" id="L291">                .execute(mapperFile);</span>
+<span class="fc" id="L292">    }</span>
+
+    protected void addGeneralSelectOneExtensionFunction(KotlinFile mapperFile, String mapperName) {
+<span class="fc" id="L295">        initializeSubBuilder(new GeneralSelectOneExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L296">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L297">                .withMapperName(mapperName)</span>
+<span class="fc" id="L298">                .build()</span>
+<span class="fc" id="L299">                .execute(mapperFile);</span>
+<span class="fc" id="L300">    }</span>
+
+    protected void addGeneralUpdateExtensionFunction(KotlinFile mapperFile, KotlinType mapperType, String mapperName) {
+<span class="fc" id="L303">        var generated = initializeSubBuilder(new GeneralUpdateExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L304">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L305">                .withMapperName(mapperName)</span>
+<span class="fc" id="L306">                .build()</span>
+<span class="fc" id="L307">                .execute(mapperFile);</span>
+
+<span class="fc bfc" id="L309" title="All 2 branches covered.">        if (generated) {</span>
+            // add common interface
+<span class="fc" id="L311">            mapperType.addSuperType(&quot;CommonUpdateMapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L312">            mapperFile.addImport(&quot;org.mybatis.dynamic.sql.util.mybatis3.CommonUpdateMapper&quot;); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L314">    }</span>
+
+    protected void addUpdateAllColumnsExtensionFunction(KotlinFile mapperFile) {
+<span class="fc" id="L317">        initializeSubBuilder(new UpdateAllColumnsExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L318">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L319">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L320">                .withRecordType(recordType)</span>
+<span class="fc" id="L321">                .build()</span>
+<span class="fc" id="L322">                .execute(mapperFile);</span>
+<span class="fc" id="L323">    }</span>
+
+    protected void addUpdateSelectiveColumnsExtensionFunction(KotlinFile mapperFile) {
+<span class="fc" id="L326">        initializeSubBuilder(new UpdateSelectiveColumnsExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L327">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L328">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L329">                .withRecordType(recordType)</span>
+<span class="fc" id="L330">                .build()</span>
+<span class="fc" id="L331">                .execute(mapperFile);</span>
+<span class="fc" id="L332">    }</span>
+
+    protected void addDeleteByPrimaryKeyExtensionFunction(KotlinFile mapperFile, String mapperName) {
+<span class="fc" id="L335">        initializeSubBuilder(new DeleteByPrimaryKeyExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L336">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L337">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L338">                .withMapperName(mapperName)</span>
+<span class="fc" id="L339">                .build()</span>
+<span class="fc" id="L340">                .execute(mapperFile);</span>
+<span class="fc" id="L341">    }</span>
+
+    protected void addInsertSelectiveExtensionFunction(KotlinFile mapperFile, KotlinType mapperType,
+                                                       String mapperName) {
+<span class="fc" id="L345">        var generated = initializeSubBuilder(new InsertSelectiveExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L346">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L347">                .withRecordType(recordType)</span>
+<span class="fc" id="L348">                .withMapperName(mapperName)</span>
+<span class="fc" id="L349">                .withSupportObjectImport(supportClassGenerator.getSupportObjectImport())</span>
+<span class="fc" id="L350">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L351">                .build()</span>
+<span class="fc" id="L352">                .execute(mapperFile);</span>
+
+<span class="fc bfc" id="L354" title="All 4 branches covered.">        if (generated &amp;&amp; !hasGeneratedKeys) {</span>
+<span class="fc" id="L355">            addCommonInsertInterface(mapperFile, mapperType);</span>
+        }
+<span class="fc" id="L357">    }</span>
+
+    protected void addSelectByPrimaryKeyExtensionFunction(KotlinFile mapperFile, String mapperName) {
+<span class="fc" id="L360">        initializeSubBuilder(new SelectByPrimaryKeyExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L361">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L362">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L363">                .withMapperName(mapperName)</span>
+<span class="fc" id="L364">                .build()</span>
+<span class="fc" id="L365">                .execute(mapperFile);</span>
+<span class="fc" id="L366">    }</span>
+
+    protected void addUpdateByPrimaryKeyExtensionFunction(KotlinFile mapperFile, String mapperName) {
+<span class="fc" id="L369">        initializeSubBuilder(new UpdateByPrimaryKeyExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L370">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L371">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L372">                .withRecordType(recordType)</span>
+<span class="fc" id="L373">                .withMapperName(mapperName)</span>
+<span class="fc" id="L374">                .build()</span>
+<span class="fc" id="L375">                .execute(mapperFile);</span>
+<span class="fc" id="L376">    }</span>
+
+    protected void addUpdateByPrimaryKeySelectiveExtensionFunction(KotlinFile mapperFile, String mapperName) {
+<span class="fc" id="L379">        initializeSubBuilder(new UpdateByPrimaryKeySelectiveExtensionFunctionGenerator.Builder())</span>
+<span class="fc" id="L380">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L381">                .withTableFieldName(supportClassGenerator.getTablePropertyName())</span>
+<span class="fc" id="L382">                .withRecordType(recordType)</span>
+<span class="fc" id="L383">                .withMapperName(mapperName)</span>
+<span class="fc" id="L384">                .build()</span>
+<span class="fc" id="L385">                .execute(mapperFile);</span>
+<span class="fc" id="L386">    }</span>
+
+<span class="fc" id="L388">    public static class Builder extends AbstractKotlinGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L391">            return this;</span>
+        }
+
+        @Override
+        public KotlinMapperAndExtensionsGenerator build() {
+<span class="fc" id="L396">            return new KotlinMapperAndExtensionsGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

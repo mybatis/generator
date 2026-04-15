@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DynamicSqlSupportClassGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamicsql.java</a> &gt; <span class="el_source">DynamicSqlSupportClassGenerator.java</span></div><h1>DynamicSqlSupportClassGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamicsql.java;
+
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
+import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
+
+import java.util.List;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.InnerClass;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.codegen.AbstractGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.internal.util.messages.Messages;
+
+public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
+    private final boolean useSnakeCase;
+
+    private DynamicSqlSupportClassGenerator(Builder builder) {
+<span class="fc" id="L40">        super(builder);</span>
+<span class="fc" id="L41">        useSnakeCase = introspectedTable</span>
+<span class="fc" id="L42">                .findTableOrClientGeneratorPropertyAsBoolean(PropertyRegistry.ANY_USE_SNAKE_CASE_IDENTIFIERS);</span>
+<span class="fc" id="L43">    }</span>
+
+    public TopLevelClass generate() {
+<span class="fc" id="L46">        TopLevelClass topLevelClass = buildBasicClass();</span>
+<span class="fc" id="L47">        Field tableField = calculateTableDefinition(topLevelClass);</span>
+<span class="fc" id="L48">        topLevelClass.addImportedType(tableField.getType());</span>
+<span class="fc" id="L49">        topLevelClass.addField(tableField);</span>
+
+<span class="fc" id="L51">        InnerClass innerClass = buildInnerTableClass(topLevelClass);</span>
+<span class="fc" id="L52">        topLevelClass.addInnerClass(innerClass);</span>
+
+<span class="fc" id="L54">        List&lt;IntrospectedColumn&gt; columns = introspectedTable.getAllColumns();</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (IntrospectedColumn column : columns) {</span>
+<span class="fc" id="L56">            handleColumn(topLevelClass, innerClass, column, tableField.getName());</span>
+<span class="fc" id="L57">        }</span>
+
+<span class="fc" id="L59">        return topLevelClass;</span>
+    }
+
+    private TopLevelClass buildBasicClass() {
+<span class="fc" id="L63">        TopLevelClass topLevelClass = new TopLevelClass(introspectedTable.getMyBatisDynamicSqlSupportType());</span>
+<span class="fc" id="L64">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L65">        topLevelClass.setFinal(true);</span>
+<span class="fc" id="L66">        topLevelClass.addImportedType(new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.SqlColumn&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L67">        topLevelClass.addImportedType(</span>
+                new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.AliasableSqlTable&quot;)); //$NON-NLS-1$
+<span class="fc" id="L69">        topLevelClass.addImportedType(new FullyQualifiedJavaType(&quot;java.sql.JDBCType&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L70">        return topLevelClass;</span>
+    }
+
+    private InnerClass buildInnerTableClass(TopLevelClass topLevelClass) {
+<span class="fc" id="L74">        FullyQualifiedJavaType fqjt =</span>
+<span class="fc" id="L75">                new FullyQualifiedJavaType(introspectedTable.getMyBatisDynamicSQLTableObjectName());</span>
+<span class="fc" id="L76">        InnerClass innerClass = new InnerClass(fqjt.getShortName());</span>
+<span class="fc" id="L77">        innerClass.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L78">        innerClass.setStatic(true);</span>
+<span class="fc" id="L79">        innerClass.setFinal(true);</span>
+<span class="fc" id="L80">        innerClass.setSuperClass(new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.AliasableSqlTable&lt;&quot; //$NON-NLS-1$</span>
+<span class="fc" id="L81">                        + fqjt.getShortName() + &quot;&gt;&quot;)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L83">        Method method = new Method(fqjt.getShortName());</span>
+<span class="fc" id="L84">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L85">        method.setConstructor(true);</span>
+<span class="fc" id="L86">        method.addBodyLine(&quot;super(\&quot;&quot; //$NON-NLS-1$</span>
+<span class="fc" id="L87">                + escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())</span>
+<span class="fc" id="L88">                + &quot;\&quot;, &quot; + fqjt.getShortName() + &quot;::new&quot; //$NON-NLS-1$ //$NON-NLS-2$</span>
+                + &quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L90">        innerClass.addMethod(method);</span>
+
+<span class="fc" id="L92">        commentGenerator.addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());</span>
+
+<span class="fc" id="L94">        return innerClass;</span>
+    }
+
+    private Field calculateTableDefinition(TopLevelClass topLevelClass) {
+<span class="fc" id="L98">        FullyQualifiedJavaType fqjt =</span>
+<span class="fc" id="L99">                new FullyQualifiedJavaType(introspectedTable.getMyBatisDynamicSQLTableObjectName());</span>
+<span class="fc" id="L100">        String fieldName =</span>
+<span class="fc" id="L101">                JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        if (useSnakeCase) {</span>
+<span class="fc" id="L103">            fieldName = StringUtility.convertCamelCaseToSnakeCase(fieldName);</span>
+        }
+
+<span class="fc" id="L106">        Field field = new Field(fieldName, fqjt);</span>
+<span class="fc" id="L107">        commentGenerator.addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());</span>
+<span class="fc" id="L108">        field.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L109">        field.setStatic(true);</span>
+<span class="fc" id="L110">        field.setFinal(true);</span>
+
+<span class="fc" id="L112">        String initializationString = String.format(&quot;new %s()&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L113">                escapeStringForJava(introspectedTable.getMyBatisDynamicSQLTableObjectName()));</span>
+<span class="fc" id="L114">        field.setInitializationString(initializationString);</span>
+<span class="fc" id="L115">        return field;</span>
+    }
+
+    private void handleColumn(TopLevelClass topLevelClass, InnerClass innerClass,
+            IntrospectedColumn column, String tableFieldName) {
+<span class="fc" id="L120">        topLevelClass.addImportedType(column.getFullyQualifiedJavaType());</span>
+
+        FullyQualifiedJavaType javaType;
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        if (column.getFullyQualifiedJavaType().isPrimitive()) {</span>
+<span class="fc" id="L124">            javaType = column.getFullyQualifiedJavaType().getPrimitiveTypeWrapper();</span>
+        } else {
+<span class="fc" id="L126">            javaType = column.getFullyQualifiedJavaType();</span>
+        }
+
+<span class="fc" id="L129">        FullyQualifiedJavaType fieldType = calculateFieldType(javaType);</span>
+<span class="fc" id="L130">        String fieldName = column.getJavaProperty();</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (useSnakeCase) {</span>
+<span class="fc" id="L132">            fieldName = StringUtility.convertCamelCaseToSnakeCase(fieldName);</span>
+        }
+
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (fieldName.equals(tableFieldName)) {</span>
+            // name collision, skip the shortcut field
+<span class="fc" id="L137">            warnings.add(</span>
+<span class="fc" id="L138">                    Messages.getString(&quot;Warning.29&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L139">                            fieldName, topLevelClass.getType().getFullyQualifiedName()));</span>
+        } else {
+            // shortcut field
+<span class="fc" id="L142">            Field field = new Field(fieldName, fieldType);</span>
+<span class="fc" id="L143">            field.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L144">            field.setStatic(true);</span>
+<span class="fc" id="L145">            field.setFinal(true);</span>
+<span class="fc" id="L146">            field.setInitializationString(tableFieldName + &quot;.&quot; + fieldName); //$NON-NLS-1$</span>
+<span class="fc" id="L147">            commentGenerator.addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());</span>
+<span class="fc" id="L148">            topLevelClass.addField(field);</span>
+        }
+
+        // inner class field
+<span class="fc" id="L152">        Field field = new Field(fieldName, fieldType);</span>
+<span class="fc" id="L153">        field.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L154">        field.setFinal(true);</span>
+<span class="fc" id="L155">        field.setInitializationString(calculateInnerInitializationString(column, javaType));</span>
+<span class="fc" id="L156">        innerClass.addField(field);</span>
+<span class="fc" id="L157">    }</span>
+
+    private FullyQualifiedJavaType calculateFieldType(FullyQualifiedJavaType javaType) {
+<span class="fc" id="L160">        return new FullyQualifiedJavaType(String.format(&quot;SqlColumn&lt;%s&gt;&quot;, javaType.getShortName())); //$NON-NLS-1$</span>
+    }
+
+    private String calculateInnerInitializationString(IntrospectedColumn column, FullyQualifiedJavaType javaType) {
+<span class="fc" id="L164">        StringBuilder initializationString = new StringBuilder();</span>
+
+<span class="fc" id="L166">        initializationString.append(String.format(&quot;column(\&quot;%s\&quot;, JDBCType.%s&quot;, //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L167">                escapeStringForJava(getEscapedColumnName(column)),</span>
+<span class="fc" id="L168">                column.getJdbcTypeName()));</span>
+
+<span class="fc" id="L170">        column.getTypeHandler().ifPresentOrElse(</span>
+<span class="fc" id="L171">                th -&gt; initializationString.append(String.format(&quot;, \&quot;%s\&quot;)&quot;, th)), //$NON-NLS-1$</span>
+<span class="fc" id="L172">                () -&gt; initializationString.append(')'));</span>
+
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        if (StringUtility.isTrue(</span>
+<span class="fc" id="L175">                column.getProperties().getProperty(PropertyRegistry.COLUMN_OVERRIDE_FORCE_JAVA_TYPE))) {</span>
+<span class="fc" id="L176">            initializationString.append(&quot;.withJavaType(&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L177">            initializationString.append(javaType.getShortName());</span>
+<span class="fc" id="L178">            initializationString.append(&quot;.class)&quot;); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L181">        initializationString.append(&quot;.withJavaProperty(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L182">        initializationString.append(column.getJavaProperty());</span>
+<span class="fc" id="L183">        initializationString.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L185">        return initializationString.toString();</span>
+    }
+
+<span class="fc" id="L188">    public static class Builder extends AbstractGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L191">            return this;</span>
+        }
+
+        public DynamicSqlSupportClassGenerator build() {
+<span class="fc" id="L195">            return new DynamicSqlSupportClassGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

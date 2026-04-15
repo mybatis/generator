@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SimpleXMLMapperGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.xmlmapper</a> &gt; <span class="el_source">SimpleXMLMapperGenerator.java</span></div><h1>SimpleXMLMapperGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.xmlmapper;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.FullyQualifiedTable;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.Document;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.codegen.XmlConstants;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.DeleteByPrimaryKeyElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.InsertElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.ResultMapWithoutBLOBsElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.SimpleSelectAllElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.SimpleSelectByPrimaryKeyElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithoutBLOBsElementGenerator;
+
+public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
+    protected SimpleXMLMapperGenerator(Builder builder) {
+<span class="fc" id="L36">        super(builder);</span>
+<span class="fc" id="L37">    }</span>
+
+    protected XmlElement getSqlMapElement() {
+<span class="fc" id="L40">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
+<span class="fc" id="L41">        progressCallback.startTask(getString(&quot;Progress.12&quot;, table.toString())); //$NON-NLS-1$</span>
+<span class="fc" id="L42">        XmlElement answer = new XmlElement(&quot;mapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L43">        answer.addAttribute(new Attribute(&quot;namespace&quot;, introspectedTable.getMyBatis3SqlMapNamespace())); //$NON-NLS-1$</span>
+
+<span class="fc" id="L45">        commentGenerator.addRootComment(answer);</span>
+
+<span class="fc" id="L47">        addResultMapElement(answer);</span>
+<span class="fc" id="L48">        addDeleteByPrimaryKeyElement(answer);</span>
+<span class="fc" id="L49">        addInsertElement(answer);</span>
+<span class="fc" id="L50">        addUpdateByPrimaryKeyElement(answer);</span>
+<span class="fc" id="L51">        addSelectByPrimaryKeyElement(answer);</span>
+<span class="fc" id="L52">        addSelectAllElement(answer);</span>
+
+<span class="fc" id="L54">        return answer;</span>
+    }
+
+    protected void addResultMapElement(XmlElement parentElement) {
+<span class="fc" id="L58">        initializeSubBuilder(new ResultMapWithoutBLOBsElementGenerator.Builder())</span>
+<span class="fc" id="L59">                .isSimple(true)</span>
+<span class="fc" id="L60">                .build()</span>
+<span class="fc" id="L61">                .execute(parentElement);</span>
+<span class="fc" id="L62">    }</span>
+
+    protected void addSelectByPrimaryKeyElement(XmlElement parentElement) {
+<span class="fc" id="L65">        initializeSubBuilder(new SimpleSelectByPrimaryKeyElementGenerator.Builder())</span>
+<span class="fc" id="L66">                .build()</span>
+<span class="fc" id="L67">                .execute(parentElement);</span>
+<span class="fc" id="L68">    }</span>
+
+    protected void addSelectAllElement(XmlElement parentElement) {
+<span class="fc" id="L71">        initializeSubBuilder(new SimpleSelectAllElementGenerator.Builder())</span>
+<span class="fc" id="L72">                .build()</span>
+<span class="fc" id="L73">                .execute(parentElement);</span>
+<span class="fc" id="L74">    }</span>
+
+    protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
+<span class="fc" id="L77">        initializeSubBuilder(new DeleteByPrimaryKeyElementGenerator.Builder())</span>
+<span class="fc" id="L78">                .isSimple(true)</span>
+<span class="fc" id="L79">                .build()</span>
+<span class="fc" id="L80">                .execute(parentElement);</span>
+<span class="fc" id="L81">    }</span>
+
+    protected void addInsertElement(XmlElement parentElement) {
+<span class="fc" id="L84">        initializeSubBuilder(new InsertElementGenerator.Builder())</span>
+<span class="fc" id="L85">                .isSimple(true)</span>
+<span class="fc" id="L86">                .build()</span>
+<span class="fc" id="L87">                .execute(parentElement);</span>
+<span class="fc" id="L88">    }</span>
+
+    protected void addUpdateByPrimaryKeyElement(XmlElement parentElement) {
+<span class="fc" id="L91">        initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder())</span>
+<span class="fc" id="L92">                .isSimple(true)</span>
+<span class="fc" id="L93">                .build()</span>
+<span class="fc" id="L94">                .execute(parentElement);</span>
+<span class="fc" id="L95">    }</span>
+
+    @Override
+    public @Nullable Document getDocument() {
+<span class="fc" id="L99">        Document document = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,</span>
+<span class="fc" id="L100">                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, getSqlMapElement());</span>
+
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (!pluginAggregator.sqlMapDocumentGenerated(document, introspectedTable)) {</span>
+<span class="nc" id="L103">            document = null;</span>
+        }
+
+<span class="fc" id="L106">        return document;</span>
+    }
+
+<span class="fc" id="L109">    public static class Builder extends AbstractXmlGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L112">            return this;</span>
+        }
+
+        @Override
+        public SimpleXMLMapperGenerator build() {
+<span class="fc" id="L117">            return new SimpleXMLMapperGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExampleWhereClauseElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">ExampleWhereClauseElementGenerator.java</span></div><h1>ExampleWhereClauseElementGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
+
+import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+
+public class ExampleWhereClauseElementGenerator extends AbstractXmlMapperElementGenerator {
+
+    private final boolean isForUpdateByExample;
+
+    public ExampleWhereClauseElementGenerator(Builder builder) {
+<span class="fc" id="L31">        super(builder);</span>
+<span class="fc" id="L32">        this.isForUpdateByExample = builder.isForUpdateByExample;</span>
+<span class="fc" id="L33">    }</span>
+
+    @Override
+    public Optional&lt;XmlElement&gt; generateElement() {
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (!shouldGenerate()) {</span>
+<span class="fc" id="L38">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L41">        XmlElement answer = new XmlElement(&quot;sql&quot;); //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (isForUpdateByExample) {</span>
+<span class="fc" id="L44">            answer.addAttribute(new Attribute(</span>
+<span class="fc" id="L45">                    &quot;id&quot;, introspectedTable.getMyBatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$</span>
+        } else {
+<span class="fc" id="L47">            answer.addAttribute(new Attribute(</span>
+<span class="fc" id="L48">                    &quot;id&quot;, introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L51">        commentGenerator.addComment(answer);</span>
+
+<span class="fc" id="L53">        XmlElement whereElement = new XmlElement(&quot;where&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L54">        answer.addElement(whereElement);</span>
+
+<span class="fc" id="L56">        XmlElement outerForEachElement = new XmlElement(&quot;foreach&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (isForUpdateByExample) {</span>
+<span class="fc" id="L58">            outerForEachElement.addAttribute(new Attribute(</span>
+                    &quot;collection&quot;, &quot;example.oredCriteria&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
+        } else {
+<span class="fc" id="L61">            outerForEachElement.addAttribute(new Attribute(</span>
+                    &quot;collection&quot;, &quot;oredCriteria&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+<span class="fc" id="L64">        outerForEachElement.addAttribute(new Attribute(&quot;item&quot;, &quot;criteria&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L65">        outerForEachElement.addAttribute(new Attribute(&quot;separator&quot;, &quot;or&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L66">        whereElement.addElement(outerForEachElement);</span>
+
+<span class="fc" id="L68">        XmlElement ifElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L69">        ifElement.addAttribute(new Attribute(&quot;test&quot;, &quot;criteria.valid&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L70">        outerForEachElement.addElement(ifElement);</span>
+
+<span class="fc" id="L72">        XmlElement trimElement = new XmlElement(&quot;trim&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L73">        trimElement.addAttribute(new Attribute(&quot;prefix&quot;, &quot;(&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L74">        trimElement.addAttribute(new Attribute(&quot;suffix&quot;, &quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L75">        trimElement.addAttribute(new Attribute(&quot;prefixOverrides&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+<span class="fc" id="L77">        ifElement.addElement(trimElement);</span>
+
+<span class="fc" id="L79">        trimElement.addElement(getMiddleForEachElement(null));</span>
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">            if (introspectedColumn.getTypeHandler().isPresent()) {</span>
+<span class="fc" id="L83">                trimElement.addElement(getMiddleForEachElement(introspectedColumn));</span>
+            }
+<span class="fc" id="L85">        }</span>
+
+<span class="fc" id="L87">        return Optional.of(answer);</span>
+    }
+
+    private XmlElement getMiddleForEachElement(@Nullable IntrospectedColumn introspectedColumn) {
+<span class="fc" id="L91">        StringBuilder sb = new StringBuilder();</span>
+        String criteriaAttribute;
+        boolean typeHandled;
+        String typeHandlerString;
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (introspectedColumn == null) {</span>
+<span class="fc" id="L96">            criteriaAttribute = &quot;criteria.criteria&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L97">            typeHandled = false;</span>
+<span class="fc" id="L98">            typeHandlerString = null;</span>
+        } else {
+<span class="fc" id="L100">            sb.setLength(0);</span>
+<span class="fc" id="L101">            sb.append(&quot;criteria.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L102">            sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L103">            sb.append(&quot;Criteria&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L104">            criteriaAttribute = sb.toString();</span>
+
+<span class="fc" id="L106">            typeHandled = true;</span>
+
+<span class="fc" id="L108">            typeHandlerString = introspectedColumn.getTypeHandler().map(th -&gt; &quot;,typeHandler=&quot; + th) //$NON-NLS-1$</span>
+<span class="fc" id="L109">            .orElse(&quot;&quot;); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L112">        XmlElement middleForEachElement = new XmlElement(&quot;foreach&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L113">        middleForEachElement.addAttribute(new Attribute(</span>
+                &quot;collection&quot;, criteriaAttribute)); //$NON-NLS-1$
+<span class="fc" id="L115">        middleForEachElement.addAttribute(new Attribute(&quot;item&quot;, &quot;criterion&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+<span class="fc" id="L117">        XmlElement chooseElement = new XmlElement(&quot;choose&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L118">        middleForEachElement.addElement(chooseElement);</span>
+
+<span class="fc" id="L120">        XmlElement when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L121">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.noValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L122">        when.addElement(new TextElement(&quot;and ${criterion.condition}&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L123">        chooseElement.addElement(when);</span>
+
+<span class="fc" id="L125">        when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L126">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.singleValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L127">        sb.setLength(0);</span>
+<span class="fc" id="L128">        sb.append(&quot;and ${criterion.condition} #{criterion.value&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (typeHandled) {</span>
+<span class="fc" id="L130">            sb.append(typeHandlerString);</span>
+        }
+<span class="fc" id="L132">        sb.append('}');</span>
+<span class="fc" id="L133">        when.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L134">        chooseElement.addElement(when);</span>
+
+<span class="fc" id="L136">        when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L137">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.betweenValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L138">        sb.setLength(0);</span>
+<span class="fc" id="L139">        sb.append(&quot;and ${criterion.condition} #{criterion.value&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        if (typeHandled) {</span>
+<span class="fc" id="L141">            sb.append(typeHandlerString);</span>
+        }
+<span class="fc" id="L143">        sb.append(&quot;} and #{criterion.secondValue&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if (typeHandled) {</span>
+<span class="fc" id="L145">            sb.append(typeHandlerString);</span>
+        }
+<span class="fc" id="L147">        sb.append('}');</span>
+<span class="fc" id="L148">        when.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L149">        chooseElement.addElement(when);</span>
+
+<span class="fc" id="L151">        when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L152">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.listValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L153">        when.addElement(new TextElement(&quot;and ${criterion.condition}&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L154">        XmlElement innerForEach = new XmlElement(&quot;foreach&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L155">        innerForEach.addAttribute(new Attribute(&quot;collection&quot;, &quot;criterion.value&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L156">        innerForEach.addAttribute(new Attribute(&quot;item&quot;, &quot;listItem&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L157">        innerForEach.addAttribute(new Attribute(&quot;open&quot;, &quot;(&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L158">        innerForEach.addAttribute(new Attribute(&quot;close&quot;, &quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L159">        innerForEach.addAttribute(new Attribute(&quot;separator&quot;, &quot;,&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L160">        sb.setLength(0);</span>
+<span class="fc" id="L161">        sb.append(&quot;#{listItem&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (typeHandled) {</span>
+<span class="fc" id="L163">            sb.append(typeHandlerString);</span>
+        }
+<span class="fc" id="L165">        sb.append('}');</span>
+<span class="fc" id="L166">        innerForEach.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L167">        when.addElement(innerForEach);</span>
+<span class="fc" id="L168">        chooseElement.addElement(when);</span>
+
+<span class="fc" id="L170">        return middleForEachElement;</span>
+    }
+
+    @Override
+    public boolean callPlugins(XmlElement element) {
+<span class="fc" id="L175">        return pluginAggregator.sqlMapExampleWhereClauseElementGenerated(element, introspectedTable);</span>
+    }
+
+    private boolean shouldGenerate() {
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (isForUpdateByExample) {</span>
+<span class="fc" id="L180">            return introspectedTable.getRules().generateMyBatis3UpdateByExampleWhereClause();</span>
+        } else {
+<span class="fc" id="L182">            return introspectedTable.getRules().generateSQLExampleWhereClause();</span>
+        }
+    }
+
+<span class="fc" id="L186">    public static class Builder extends AbstractGeneratorBuilder&lt;Builder&gt; {</span>
+        private boolean isForUpdateByExample;
+
+        public Builder isForUpdateByExample(boolean isForUpdateByExample) {
+<span class="fc" id="L190">            this.isForUpdateByExample = isForUpdateByExample;</span>
+<span class="fc" id="L191">            return this;</span>
+        }
+
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L196">            return this;</span>
+        }
+
+        public ExampleWhereClauseElementGenerator build() {
+<span class="fc" id="L200">            return new ExampleWhereClauseElementGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

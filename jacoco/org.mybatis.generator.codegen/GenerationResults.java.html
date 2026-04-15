@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GenerationResults.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen</a> &gt; <span class="el_source">GenerationResults.java</span></div><h1>GenerationResults.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.codegen;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.GeneratedKotlinFile;
+import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.GenericGeneratedFile;
+import org.mybatis.generator.api.JavaFormatter;
+import org.mybatis.generator.api.KotlinFormatter;
+import org.mybatis.generator.api.XmlFormatter;
+
+/**
+ * Container for generated files from a single context.
+ * Also includes information needed for writing those files to disk.
+ */
+public class GenerationResults {
+    private final CalculatedContextValues contextValues;
+    private final List&lt;GeneratedJavaFile&gt; generatedJavaFiles;
+    private final List&lt;GeneratedXmlFile&gt; generatedXmlFiles;
+    private final List&lt;GeneratedKotlinFile&gt; generatedKotlinFiles;
+    private final List&lt;GenericGeneratedFile&gt; generatedGenericFiles;
+
+<span class="fc" id="L42">    protected GenerationResults(Builder builder) {</span>
+<span class="fc" id="L43">        contextValues = Objects.requireNonNull(builder.contextValues);</span>
+<span class="fc" id="L44">        generatedJavaFiles = builder.generatedJavaFiles;</span>
+<span class="fc" id="L45">        generatedXmlFiles = builder.generatedXmlFiles;</span>
+<span class="fc" id="L46">        generatedKotlinFiles = builder.generatedKotlinFiles;</span>
+<span class="fc" id="L47">        generatedGenericFiles = builder.generatedGenericFiles;</span>
+<span class="fc" id="L48">    }</span>
+
+    public JavaFormatter javaFormatter() {
+<span class="nc" id="L51">        return contextValues.javaFormatter();</span>
+    }
+
+    public KotlinFormatter kotlinFormatter() {
+<span class="nc" id="L55">        return contextValues.kotlinFormatter();</span>
+    }
+
+    public XmlFormatter xmlFormatter() {
+<span class="nc" id="L59">        return contextValues.xmlFormatter();</span>
+    }
+
+    public @Nullable String javaFileEncoding() {
+<span class="nc" id="L63">        return contextValues.javaFileEncoding();</span>
+    }
+
+    public @Nullable String kotlinFileEncoding() {
+<span class="nc" id="L67">        return contextValues.kotlinFileEncoding();</span>
+    }
+
+    public List&lt;GeneratedJavaFile&gt; generatedJavaFiles() {
+<span class="fc" id="L71">        return generatedJavaFiles;</span>
+    }
+
+    public List&lt;GeneratedXmlFile&gt; generatedXmlFiles() {
+<span class="fc" id="L75">        return generatedXmlFiles;</span>
+    }
+
+    public List&lt;GeneratedKotlinFile&gt; generatedKotlinFiles() {
+<span class="fc" id="L79">        return generatedKotlinFiles;</span>
+    }
+
+    public List&lt;GenericGeneratedFile&gt; generatedGenericFiles() {
+<span class="fc" id="L83">        return generatedGenericFiles;</span>
+    }
+
+    public int getNumberOfGeneratedFiles() {
+<span class="fc" id="L87">        return generatedJavaFiles().size()</span>
+<span class="fc" id="L88">                + generatedXmlFiles().size()</span>
+<span class="fc" id="L89">                + generatedKotlinFiles().size()</span>
+<span class="fc" id="L90">                + generatedGenericFiles().size();</span>
+    }
+
+<span class="fc" id="L93">    public static class Builder {</span>
+        private @Nullable CalculatedContextValues contextValues;
+<span class="fc" id="L95">        private final List&lt;GeneratedJavaFile&gt; generatedJavaFiles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L96">        private final List&lt;GeneratedXmlFile&gt; generatedXmlFiles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L97">        private final List&lt;GeneratedKotlinFile&gt; generatedKotlinFiles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L98">        private final List&lt;GenericGeneratedFile&gt; generatedGenericFiles = new ArrayList&lt;&gt;();</span>
+
+        public Builder withContextValues(CalculatedContextValues contextValues) {
+<span class="fc" id="L101">            this.contextValues = contextValues;</span>
+<span class="fc" id="L102">            return this;</span>
+        }
+
+        public Builder withGeneratedJavaFiles(List&lt;GeneratedJavaFile&gt; generatedJavaFiles) {
+<span class="fc" id="L106">            this.generatedJavaFiles.addAll(generatedJavaFiles);</span>
+<span class="fc" id="L107">            return this;</span>
+        }
+
+        public Builder withGeneratedKotlinFiles(List&lt;GeneratedKotlinFile&gt; generatedKotlinFiles) {
+<span class="fc" id="L111">            this.generatedKotlinFiles.addAll(generatedKotlinFiles);</span>
+<span class="fc" id="L112">            return this;</span>
+        }
+
+        public Builder withGeneratedXmlFiles(List&lt;GeneratedXmlFile&gt; generatedXmlFiles) {
+<span class="fc" id="L116">            this.generatedXmlFiles.addAll(generatedXmlFiles);</span>
+<span class="fc" id="L117">            return this;</span>
+        }
+
+        public Builder withGeneratedGenericFiles(List&lt;GenericGeneratedFile&gt; generatedGenericFiles) {
+<span class="fc" id="L121">            this.generatedGenericFiles.addAll(generatedGenericFiles);</span>
+<span class="fc" id="L122">            return this;</span>
+        }
+
+        public GenerationResults build() {
+<span class="fc" id="L126">            return new GenerationResults(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RootClassAndInterfaceUtility.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.common</a> &gt; <span class="el_source">RootClassAndInterfaceUtility.java</span></div><h1>RootClassAndInterfaceUtility.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.common;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.config.PropertyRegistry;
+
+public class RootClassAndInterfaceUtility {
+    private RootClassAndInterfaceUtility() {
+        // utility class - no instances
+    }
+
+    public static Optional&lt;String&gt; getRootClass(IntrospectedTable introspectedTable) {
+<span class="fc" id="L32">        return introspectedTable.findTableOrModelGeneratorProperty(PropertyRegistry.ANY_ROOT_CLASS);</span>
+    }
+
+    public static void addRootInterfaceIfNecessary(Interface mapper, IntrospectedTable introspectedTable) {
+<span class="fc" id="L36">        introspectedTable.findTableOrClientGeneratorProperty(PropertyRegistry.ANY_ROOT_INTERFACE)</span>
+<span class="fc" id="L37">                .map(FullyQualifiedJavaType::new)</span>
+<span class="fc" id="L38">                .ifPresent(rootInterface -&gt; addRootInterface(mapper, introspectedTable, rootInterface));</span>
+<span class="fc" id="L39">    }</span>
+
+    private static void addRootInterface(Interface mapper, IntrospectedTable introspectedTable,
+                                         FullyQualifiedJavaType rootInterface) {
+<span class="fc" id="L43">        boolean inject = introspectedTable.findTableOrClientGeneratorPropertyAsBoolean(</span>
+                PropertyRegistry.ANY_INJECT_MODEL_INTO_ROOT_INTERFACE);
+
+        FullyQualifiedJavaType rootInterfaceType;
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (inject) {</span>
+<span class="fc" id="L48">            rootInterfaceType = injectRootModel(rootInterface, calculateRootModel(introspectedTable));</span>
+        } else {
+<span class="fc" id="L50">            rootInterfaceType = rootInterface;</span>
+        }
+
+<span class="fc" id="L53">        mapper.addSuperInterface(rootInterfaceType);</span>
+<span class="fc" id="L54">        mapper.addImportedTypes(rootInterfaceType.getImportList().stream()</span>
+<span class="fc" id="L55">                .map(FullyQualifiedJavaType::new).collect(Collectors.toSet()));</span>
+<span class="fc" id="L56">    }</span>
+
+    private static FullyQualifiedJavaType injectRootModel(FullyQualifiedJavaType baseInterface,
+                                                          FullyQualifiedJavaType injectedType) {
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (baseInterface.getTypeArguments().size() == 1) {</span>
+<span class="fc" id="L61">            FullyQualifiedJavaType answer =</span>
+<span class="fc" id="L62">                    new FullyQualifiedJavaType(baseInterface.getFullyQualifiedNameWithoutTypeParameters());</span>
+<span class="fc" id="L63">            answer.addTypeArgument(new FullyQualifiedJavaType(injectedType.getShortName()));</span>
+<span class="fc" id="L64">            return answer;</span>
+        } else {
+<span class="nc" id="L66">            return baseInterface;</span>
+        }
+    }
+
+    private static FullyQualifiedJavaType calculateRootModel(IntrospectedTable introspectedTable) {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
+<span class="fc" id="L72">            return new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType());</span>
+        } else {
+<span class="fc" id="L74">            return new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

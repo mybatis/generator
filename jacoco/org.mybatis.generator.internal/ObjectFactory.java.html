@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal</a> &gt; <span class="el_source">ObjectFactory.java</span></div><h1>ObjectFactory.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringValueOrElse;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.ConnectionFactory;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.JavaFormatter;
+import org.mybatis.generator.api.JavaTypeResolver;
+import org.mybatis.generator.api.KnownRuntime;
+import org.mybatis.generator.api.KotlinFormatter;
+import org.mybatis.generator.api.Plugin;
+import org.mybatis.generator.api.XmlFormatter;
+import org.mybatis.generator.config.CommentGeneratorConfiguration;
+import org.mybatis.generator.config.ConnectionFactoryConfiguration;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.Defaults;
+import org.mybatis.generator.config.JavaTypeResolverConfiguration;
+import org.mybatis.generator.config.PluginConfiguration;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.exception.InternalException;
+
+/**
+ * This class creates the different objects needed by the generator.
+ *
+ * @author Jeff Butler
+ */
+public class ObjectFactory {
+
+    private static final List&lt;ClassLoader&gt; externalClassLoaders;
+
+    static {
+<span class="fc" id="L54">        externalClassLoaders = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * Utility class. No instances allowed.
+     */
+    private ObjectFactory() {
+        super();
+    }
+
+    /**
+     * Clears the class loaders.  This method should be called at the beginning of
+     * a generation run so that and change to the classloading configuration
+     * will be reflected.  For example, if the eclipse launcher changes configuration
+     * it might not be updated if eclipse hasn't been restarted.
+     *
+     */
+    public static void reset() {
+<span class="fc" id="L72">        externalClassLoaders.clear();</span>
+<span class="fc" id="L73">    }</span>
+
+    /**
+     * Adds a custom classloader to the collection of classloaders searched for &quot;external&quot; classes. These are classes
+     * that do not depend on any of the generator's classes or interfaces. Examples are JDBC drivers, root classes, root
+     * interfaces, etc.
+     *
+     * @param classLoader
+     *            the class loader
+     */
+    public static synchronized void addExternalClassLoader(ClassLoader classLoader) {
+<span class="nc" id="L84">        externalClassLoaders.add(classLoader);</span>
+<span class="nc" id="L85">    }</span>
+
+    /**
+     * Returns a class loaded from the context classloader, or the classloader supplied by a client. This is
+     * appropriate for JDBC drivers, model root classes, etc. It is not appropriate for any class that extends one of
+     * the supplied classes or interfaces.
+     *
+     * @param type
+     *            the type
+     * @return the Class loaded from the external classloader
+     * @throws ClassNotFoundException
+     *             the class not found exception
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static &lt;T&gt; Class&lt;T&gt; externalClassForName(String type) throws ClassNotFoundException {
+        Class&lt;T&gt; clazz;
+
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        for (ClassLoader classLoader : externalClassLoaders) {</span>
+            try {
+<span class="nc" id="L104">                clazz = (Class&lt;T&gt;) Class.forName(type, true, classLoader);</span>
+<span class="nc" id="L105">                return clazz;</span>
+<span class="nc" id="L106">            } catch (Exception e) {</span>
+                // ignore - fail safe below
+            }
+<span class="nc" id="L109">        }</span>
+
+<span class="fc" id="L111">        return internalClassForName(type);</span>
+    }
+
+    public static &lt;T&gt; T createExternalObject(String type) {
+        T answer;
+
+        try {
+<span class="nc" id="L118">            Class&lt;T&gt; clazz = externalClassForName(type);</span>
+<span class="nc" id="L119">            answer = clazz.getConstructor().newInstance();</span>
+<span class="nc" id="L120">        } catch (Exception e) {</span>
+<span class="nc" id="L121">            throw new InternalException(getString(&quot;RuntimeError.6&quot;, type), e); //$NON-NLS-1$</span>
+<span class="nc" id="L122">        }</span>
+
+<span class="nc" id="L124">        return answer;</span>
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static &lt;T&gt; Class&lt;T&gt; internalClassForName(String type) throws ClassNotFoundException {
+        Class&lt;?&gt; clazz;
+        try {
+<span class="fc" id="L131">            ClassLoader cl = Thread.currentThread().getContextClassLoader();</span>
+<span class="fc" id="L132">            clazz = Class.forName(type, true, cl);</span>
+<span class="fc" id="L133">        } catch (Exception e) {</span>
+            // ignore - failsafe below
+<span class="fc" id="L135">            clazz = null;</span>
+<span class="fc" id="L136">        }</span>
+
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        if (clazz == null) {</span>
+<span class="nc" id="L139">            clazz = Class.forName(type, true, ObjectFactory.class.getClassLoader());</span>
+        }
+
+<span class="fc" id="L142">        return (Class&lt;T&gt;) clazz;</span>
+    }
+
+    public static Optional&lt;URL&gt; getResource(String resource) {
+        URL url;
+
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        for (ClassLoader classLoader : externalClassLoaders) {</span>
+<span class="nc" id="L149">            url = classLoader.getResource(resource);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            if (url != null) {</span>
+<span class="nc" id="L151">                return Optional.of(url);</span>
+            }
+<span class="nc" id="L153">        }</span>
+
+<span class="fc" id="L155">        ClassLoader cl = Thread.currentThread().getContextClassLoader();</span>
+<span class="fc" id="L156">        url = cl.getResource(resource);</span>
+
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        if (url == null) {</span>
+<span class="nc" id="L159">            url = ObjectFactory.class.getClassLoader().getResource(resource);</span>
+        }
+
+<span class="fc" id="L162">        return Optional.ofNullable(url);</span>
+    }
+
+    public static &lt;T&gt; T createInternalObject(String type) {
+        T answer;
+
+        try {
+<span class="fc" id="L169">            Class&lt;T&gt; clazz = internalClassForName(type);</span>
+<span class="fc" id="L170">            answer = clazz.getConstructor().newInstance();</span>
+<span class="nc" id="L171">        } catch (Exception e) {</span>
+<span class="nc" id="L172">            throw new InternalException(getString(&quot;RuntimeError.6&quot;, type), e); //$NON-NLS-1$</span>
+<span class="fc" id="L173">        }</span>
+
+<span class="fc" id="L175">        return answer;</span>
+    }
+
+    public static JavaTypeResolver createJavaTypeResolver(Context context, List&lt;String&gt; warnings) {
+<span class="fc" id="L179">        String type = context.getJavaTypeResolverConfiguration()</span>
+<span class="fc" id="L180">                .map(JavaTypeResolverConfiguration::getImplementationType)</span>
+<span class="fc" id="L181">                .orElse(Defaults.DEFAULT_JAVA_TYPE_RESOLVER);</span>
+
+<span class="fc" id="L183">        JavaTypeResolver answer = createInternalObject(type);</span>
+<span class="fc" id="L184">        answer.setWarnings(warnings);</span>
+
+<span class="fc" id="L186">        context.getJavaTypeResolverConfiguration()</span>
+<span class="fc" id="L187">                .ifPresent(c -&gt; answer.addConfigurationProperties(c.getProperties()));</span>
+
+<span class="fc" id="L189">        answer.setContext(context);</span>
+
+<span class="fc" id="L191">        return answer;</span>
+    }
+
+    public static Plugin createPlugin(Context context, PluginConfiguration pluginConfiguration,
+                                      CommentGenerator commentGenerator, KnownRuntime knownRuntime) {
+<span class="fc" id="L196">        Plugin plugin = createInternalObject(pluginConfiguration.getConfigurationType().orElseThrow());</span>
+<span class="fc" id="L197">        plugin.setContext(context);</span>
+<span class="fc" id="L198">        plugin.setProperties(pluginConfiguration.getProperties());</span>
+<span class="fc" id="L199">        plugin.setCommentGenerator(commentGenerator);</span>
+<span class="fc" id="L200">        plugin.setKnownRuntime(knownRuntime);</span>
+<span class="fc" id="L201">        return plugin;</span>
+    }
+
+    public static CommentGenerator createCommentGenerator(Context context) {
+        CommentGenerator answer;
+
+<span class="fc" id="L207">        String type = context.getCommentGeneratorConfiguration()</span>
+<span class="fc" id="L208">                .map(CommentGeneratorConfiguration::getImplementationType)</span>
+<span class="fc" id="L209">                .orElse(Defaults.DEFAULT_COMMENT_GENERATOR);</span>
+
+<span class="fc" id="L211">        answer = createInternalObject(type);</span>
+
+<span class="fc" id="L213">        context.getCommentGeneratorConfiguration()</span>
+<span class="fc" id="L214">                .ifPresent(c -&gt; answer.addConfigurationProperties(c.getProperties()));</span>
+
+<span class="fc" id="L216">        return answer;</span>
+    }
+
+    public static ConnectionFactory createConnectionFactory(ConnectionFactoryConfiguration config) {
+        ConnectionFactory answer;
+
+<span class="fc" id="L222">        String type = config.getImplementationType();</span>
+
+<span class="fc" id="L224">        answer = createInternalObject(type);</span>
+<span class="fc" id="L225">        answer.addConfigurationProperties(config.getProperties());</span>
+
+<span class="fc" id="L227">        return answer;</span>
+    }
+
+    public static JavaFormatter createJavaFormatter(Context context) {
+<span class="fc" id="L231">        String type = stringValueOrElse(context.getProperty(PropertyRegistry.CONTEXT_JAVA_FORMATTER),</span>
+                Defaults.DEFAULT_JAVA_FORMATTER);
+<span class="fc" id="L233">        JavaFormatter answer = createInternalObject(type);</span>
+
+<span class="fc" id="L235">        answer.setContext(context);</span>
+
+<span class="fc" id="L237">        return answer;</span>
+    }
+
+    public static KotlinFormatter createKotlinFormatter(Context context) {
+<span class="fc" id="L241">        String type = stringValueOrElse(context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FORMATTER),</span>
+                Defaults.DEFAULT_KOTLIN_FORMATTER);
+<span class="fc" id="L243">        KotlinFormatter answer = createInternalObject(type);</span>
+
+<span class="fc" id="L245">        answer.setContext(context);</span>
+
+<span class="fc" id="L247">        return answer;</span>
+    }
+
+    public static XmlFormatter createXmlFormatter(Context context) {
+<span class="fc" id="L251">        String type = stringValueOrElse(context.getProperty(PropertyRegistry.CONTEXT_XML_FORMATTER),</span>
+                Defaults.DEFAULT_XML_FORMATTER);
+<span class="fc" id="L253">        XmlFormatter answer = createInternalObject(type);</span>
+
+<span class="fc" id="L255">        answer.setContext(context);</span>
+
+<span class="fc" id="L257">        return answer;</span>
+    }
+
+    public static IntrospectedColumn createIntrospectedColumn(Context context) {
+<span class="fc" id="L261">        String type = context.getIntrospectedColumnImpl().orElse(IntrospectedColumn.class.getName());</span>
+<span class="fc" id="L262">        IntrospectedColumn answer = createInternalObject(type);</span>
+<span class="fc" id="L263">        answer.setContext(context);</span>
+
+<span class="fc" id="L265">        return answer;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

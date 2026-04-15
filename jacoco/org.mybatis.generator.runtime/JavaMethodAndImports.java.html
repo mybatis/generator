@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JavaMethodAndImports.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime</a> &gt; <span class="el_source">JavaMethodAndImports.java</span></div><h1>JavaMethodAndImports.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.exception.InternalException;
+
+public class JavaMethodAndImports {
+
+    private final Method method;
+    private final Set&lt;FullyQualifiedJavaType&gt; imports;
+    private final Set&lt;String&gt; staticImports;
+
+<span class="fc" id="L37">    private JavaMethodAndImports(Builder builder) {</span>
+<span class="fc" id="L38">        method = Objects.requireNonNull(builder.method);</span>
+<span class="fc" id="L39">        imports = builder.imports;</span>
+<span class="fc" id="L40">        staticImports = builder.staticImports;</span>
+<span class="fc" id="L41">    }</span>
+
+    public Method getMethod() {
+<span class="fc" id="L44">        return method;</span>
+    }
+
+    public Set&lt;FullyQualifiedJavaType&gt; getImports() {
+<span class="fc" id="L48">        return imports;</span>
+    }
+
+    public Set&lt;String&gt; getStaticImports() {
+<span class="fc" id="L52">        return staticImports;</span>
+    }
+
+    public static Builder withMethod(Method method) {
+<span class="fc" id="L56">        return new Builder().withMethod(method);</span>
+    }
+
+<span class="fc" id="L59">    public static class Builder {</span>
+        private @Nullable Method method;
+<span class="fc" id="L61">        private final Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L62">        private final Set&lt;String&gt; staticImports = new HashSet&lt;&gt;();</span>
+
+        public Builder withMethod(Method method) {
+<span class="fc" id="L65">            this.method = method;</span>
+<span class="fc" id="L66">            return this;</span>
+        }
+
+        public Builder withImport(FullyQualifiedJavaType importedType) {
+<span class="fc" id="L70">            this.imports.add(importedType);</span>
+<span class="fc" id="L71">            return this;</span>
+        }
+
+        public Builder withImports(Set&lt;FullyQualifiedJavaType&gt; imports) {
+<span class="fc" id="L75">            this.imports.addAll(imports);</span>
+<span class="fc" id="L76">            return this;</span>
+        }
+
+        public Builder withStaticImport(String staticImport) {
+<span class="fc" id="L80">            this.staticImports.add(staticImport);</span>
+<span class="fc" id="L81">            return this;</span>
+        }
+
+        public Builder withStaticImports(Set&lt;String&gt; staticImports) {
+<span class="fc" id="L85">            this.staticImports.addAll(staticImports);</span>
+<span class="fc" id="L86">            return this;</span>
+        }
+
+        public Builder withExtraMethodParts(JavaMethodParts javaMethodParts) {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (method == null) {</span>
+<span class="fc" id="L91">                throw new InternalException(getString(&quot;RuntimeError.30&quot;)); //$NON-NLS-1$</span>
+            }
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            for (Parameter parameter : javaMethodParts.getParameters()) {</span>
+<span class="fc" id="L95">                method.addParameter(parameter);</span>
+<span class="fc" id="L96">            }</span>
+
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            for (String annotation : javaMethodParts.getAnnotations()) {</span>
+<span class="fc" id="L99">                method.addAnnotation(annotation);</span>
+<span class="fc" id="L100">            }</span>
+
+<span class="fc" id="L102">            method.addBodyLines(javaMethodParts.getBodyLines());</span>
+
+<span class="fc" id="L104">            withImports(javaMethodParts.getImports());</span>
+<span class="fc" id="L105">            return this;</span>
+        }
+
+        public JavaMethodAndImports build() {
+<span class="fc" id="L109">            return new JavaMethodAndImports(this);</span>
+        }
+
+        public Optional&lt;JavaMethodAndImports&gt; buildOptional() {
+<span class="fc" id="L113">            return Optional.of(build());</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

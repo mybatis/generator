@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InsertElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">InsertElementGenerator.java</span></div><h1>InsertElementGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.OutputUtilities;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
+
+public class InsertElementGenerator extends AbstractXmlMapperElementGenerator {
+
+    private final boolean isSimple;
+
+    protected InsertElementGenerator(Builder builder) {
+<span class="fc" id="L35">        super(builder);</span>
+<span class="fc" id="L36">        this.isSimple = builder.isSimple;</span>
+<span class="fc" id="L37">    }</span>
+
+    @Override
+    public Optional&lt;XmlElement&gt; generateElement() {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (!introspectedTable.getRules().generateInsert()) {</span>
+<span class="fc" id="L42">            return Optional.empty();</span>
+        }
+
+        FullyQualifiedJavaType parameterType;
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (isSimple) {</span>
+<span class="fc" id="L47">            parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());</span>
+        } else {
+<span class="fc" id="L49">            parameterType = introspectedTable.getRules().calculateAllFieldsClass();</span>
+        }
+
+<span class="fc" id="L52">        StringBuilder insertClause = new StringBuilder();</span>
+
+<span class="fc" id="L54">        insertClause.append(&quot;insert into &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L55">        insertClause.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());</span>
+<span class="fc" id="L56">        insertClause.append(&quot; (&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L58">        StringBuilder valuesClause = new StringBuilder();</span>
+<span class="fc" id="L59">        valuesClause.append(&quot;values (&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L61">        List&lt;String&gt; valuesClauses = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L62">        List&lt;IntrospectedColumn&gt; columns =</span>
+<span class="fc" id="L63">                ListUtilities.filterColumnsForInsert(introspectedTable.getAllColumns());</span>
+<span class="fc" id="L64">        XmlElement answer = buildInitialInsert(introspectedTable.getInsertStatementId(), parameterType);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (int i = 0; i &lt; columns.size(); i++) {</span>
+<span class="fc" id="L66">            IntrospectedColumn introspectedColumn = columns.get(i);</span>
+
+<span class="fc" id="L68">            insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));</span>
+<span class="fc" id="L69">            valuesClause.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            if (i + 1 &lt; columns.size()) {</span>
+<span class="fc" id="L71">                insertClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L72">                valuesClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
+            }
+
+<span class="fc bfc" id="L75" title="All 2 branches covered.">            if (valuesClause.length() &gt; 80) {</span>
+<span class="fc" id="L76">                answer.addElement(new TextElement(insertClause.toString()));</span>
+<span class="fc" id="L77">                insertClause.setLength(0);</span>
+<span class="fc" id="L78">                OutputUtilities.xmlIndent(insertClause, 1);</span>
+
+<span class="fc" id="L80">                valuesClauses.add(valuesClause.toString());</span>
+<span class="fc" id="L81">                valuesClause.setLength(0);</span>
+<span class="fc" id="L82">                OutputUtilities.xmlIndent(valuesClause, 1);</span>
+            }
+        }
+
+<span class="fc" id="L86">        insertClause.append(')');</span>
+<span class="fc" id="L87">        answer.addElement(new TextElement(insertClause.toString()));</span>
+
+<span class="fc" id="L89">        valuesClause.append(')');</span>
+<span class="fc" id="L90">        valuesClauses.add(valuesClause.toString());</span>
+
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        for (String clause : valuesClauses) {</span>
+<span class="fc" id="L93">            answer.addElement(new TextElement(clause));</span>
+<span class="fc" id="L94">        }</span>
+
+<span class="fc" id="L96">        return Optional.of(answer);</span>
+    }
+
+    @Override
+    public boolean callPlugins(XmlElement element) {
+<span class="fc" id="L101">        return pluginAggregator.sqlMapInsertElementGenerated(element, introspectedTable);</span>
+    }
+
+<span class="fc" id="L104">    public static class Builder extends AbstractGeneratorBuilder&lt;Builder&gt; {</span>
+        private boolean isSimple;
+
+        public Builder isSimple(boolean isSimple) {
+<span class="fc" id="L108">            this.isSimple = isSimple;</span>
+<span class="fc" id="L109">            return this;</span>
+        }
+
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L114">            return this;</span>
+        }
+
+        public InsertElementGenerator build() {
+<span class="fc" id="L118">            return new InsertElementGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

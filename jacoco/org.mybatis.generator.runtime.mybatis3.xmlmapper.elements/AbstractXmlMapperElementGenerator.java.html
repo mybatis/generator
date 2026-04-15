@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractXmlMapperElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">AbstractXmlMapperElementGenerator.java</span></div><h1>AbstractXmlMapperElementGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.xmlmapper.elements;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.OutputUtilities;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.runtime.AbstractXmlElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
+
+public abstract class AbstractXmlMapperElementGenerator extends AbstractXmlElementGenerator {
+    protected AbstractXmlMapperElementGenerator(AbstractGeneratorBuilder&lt;?&gt; builder) {
+<span class="fc" id="L35">        super(builder);</span>
+<span class="fc" id="L36">    }</span>
+
+    /**
+     * This method should return an XmlElement for the select key used to
+     * automatically generate keys.
+     *
+     * @param introspectedColumn
+     *            the column related to the select key statement
+     * @param generatedKey
+     *            the generated key for the current table
+     *
+     * @return the selectKey element
+     */
+    protected XmlElement getSelectKey(IntrospectedColumn introspectedColumn,
+            GeneratedKey generatedKey) {
+<span class="fc" id="L51">        String identityColumnType = introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName();</span>
+
+<span class="fc" id="L53">        XmlElement answer = new XmlElement(&quot;selectKey&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L54">        answer.addAttribute(new Attribute(&quot;resultType&quot;, identityColumnType)); //$NON-NLS-1$</span>
+<span class="fc" id="L55">        answer.addAttribute(new Attribute(</span>
+<span class="fc" id="L56">                &quot;keyProperty&quot;, introspectedColumn.getJavaProperty())); //$NON-NLS-1$</span>
+<span class="fc" id="L57">        answer.addAttribute(new Attribute(&quot;order&quot;, generatedKey.getMyBatis3Order())); //$NON-NLS-1$</span>
+
+<span class="fc" id="L59">        answer.addElement(new TextElement(generatedKey.getRuntimeSqlStatement()));</span>
+
+<span class="fc" id="L61">        return answer;</span>
+    }
+
+    protected XmlElement getBaseColumnListElement() {
+<span class="fc" id="L65">        XmlElement answer = new XmlElement(&quot;include&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L66">        answer.addAttribute(new Attribute(&quot;refid&quot;, introspectedTable.getBaseColumnListId())); //$NON-NLS-1$</span>
+<span class="fc" id="L67">        return answer;</span>
+    }
+
+    protected XmlElement getBlobColumnListElement() {
+<span class="fc" id="L71">        XmlElement answer = new XmlElement(&quot;include&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L72">        answer.addAttribute(new Attribute(&quot;refid&quot;, introspectedTable.getBlobColumnListId())); //$NON-NLS-1$</span>
+<span class="fc" id="L73">        return answer;</span>
+    }
+
+    protected XmlElement getExampleIncludeElement() {
+<span class="fc" id="L77">        XmlElement ifElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L78">        ifElement.addAttribute(new Attribute(&quot;test&quot;, &quot;_parameter != null&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+<span class="fc" id="L80">        XmlElement includeElement = new XmlElement(&quot;include&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L81">        includeElement.addAttribute(new Attribute(&quot;refid&quot;, introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$</span>
+<span class="fc" id="L82">        ifElement.addElement(includeElement);</span>
+
+<span class="fc" id="L84">        return ifElement;</span>
+    }
+
+    protected XmlElement getUpdateByExampleIncludeElement() {
+<span class="fc" id="L88">        XmlElement ifElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L89">        ifElement.addAttribute(new Attribute(&quot;test&quot;, &quot;example != null&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+<span class="fc" id="L91">        XmlElement includeElement = new XmlElement(&quot;include&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L92">        includeElement.addAttribute(new Attribute(&quot;refid&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L93">                introspectedTable.getMyBatis3UpdateByExampleWhereClauseId()));</span>
+<span class="fc" id="L94">        ifElement.addElement(includeElement);</span>
+
+<span class="fc" id="L96">        return ifElement;</span>
+    }
+
+    protected List&lt;TextElement&gt; buildSelectList(List&lt;IntrospectedColumn&gt; columns) {
+<span class="fc" id="L100">        return buildSelectList(&quot;&quot;, columns); //$NON-NLS-1$</span>
+    }
+
+    protected List&lt;TextElement&gt; buildSelectList(String initial, List&lt;IntrospectedColumn&gt; columns) {
+<span class="fc" id="L104">        List&lt;TextElement&gt; answer = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L105">        StringBuilder sb = new StringBuilder(initial);</span>
+<span class="fc" id="L106">        Iterator&lt;IntrospectedColumn&gt; iter = columns.iterator();</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L108">            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter.next()));</span>
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
+<span class="fc" id="L111">                sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
+            }
+
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            if (sb.length() &gt; 80) {</span>
+<span class="fc" id="L115">                answer.add(new TextElement(sb.toString()));</span>
+<span class="fc" id="L116">                sb.setLength(0);</span>
+            }
+        }
+
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (!sb.isEmpty()) {</span>
+<span class="fc" id="L121">            answer.add(new TextElement(sb.toString()));</span>
+        }
+
+<span class="fc" id="L124">        return answer;</span>
+    }
+
+    protected List&lt;TextElement&gt; buildPrimaryKeyWhereClause() {
+<span class="fc" id="L128">        List&lt;TextElement&gt; answer = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L129">        boolean first = true;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {</span>
+            String line;
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            if (first) {</span>
+<span class="fc" id="L133">                line = &quot;where &quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L134">                first = false;</span>
+            } else {
+<span class="fc" id="L136">                line = &quot;  and &quot;; //$NON-NLS-1$</span>
+            }
+
+<span class="fc" id="L139">            line += MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);</span>
+<span class="fc" id="L140">            line += &quot; = &quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L141">            line += MyBatis3FormattingUtilities.getParameterClause(introspectedColumn);</span>
+<span class="fc" id="L142">            answer.add(new TextElement(line));</span>
+<span class="fc" id="L143">        }</span>
+
+<span class="fc" id="L145">        return answer;</span>
+    }
+
+    protected XmlElement buildInitialInsert(String statementId, FullyQualifiedJavaType parameterType) {
+<span class="fc" id="L149">        XmlElement answer = new XmlElement(&quot;insert&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L151">        answer.addAttribute(new Attribute(&quot;id&quot;, statementId)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L153">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, parameterType.getFullyQualifiedName())); //$NON-NLS-1$</span>
+
+<span class="fc" id="L155">        commentGenerator.addComment(answer);</span>
+
+<span class="fc" id="L157">        introspectedTable.getGeneratedKey().ifPresent(gk -&gt;</span>
+<span class="fc" id="L158">                introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -&gt; {</span>
+                    // if the column is null, then it's a configuration error. The
+                    // warning has already been reported
+<span class="fc bfc" id="L161" title="All 2 branches covered.">                    if (gk.isJdbcStandard()) {</span>
+<span class="fc" id="L162">                        answer.addAttribute(new Attribute(&quot;useGeneratedKeys&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L163">                        answer.addAttribute(</span>
+<span class="fc" id="L164">                                new Attribute(&quot;keyProperty&quot;, introspectedColumn.getJavaProperty())); //$NON-NLS-1$</span>
+<span class="fc" id="L165">                        answer.addAttribute(</span>
+<span class="fc" id="L166">                                new Attribute(&quot;keyColumn&quot;, introspectedColumn.getActualColumnName())); //$NON-NLS-1$</span>
+                    } else {
+<span class="fc" id="L168">                        answer.addElement(getSelectKey(introspectedColumn, gk));</span>
+                    }
+<span class="fc" id="L170">                })</span>
+        );
+
+<span class="fc" id="L173">        return answer;</span>
+    }
+
+<span class="fc" id="L176">    protected enum ResultElementType {</span>
+<span class="fc" id="L177">        ID(&quot;id&quot;), //$NON-NLS-1$</span>
+<span class="fc" id="L178">        RESULT(&quot;result&quot;); //$NON-NLS-1$</span>
+
+        private final String value;
+
+<span class="fc" id="L182">        ResultElementType(String value) {</span>
+<span class="fc" id="L183">            this.value = value;</span>
+<span class="fc" id="L184">        }</span>
+    }
+
+    protected List&lt;XmlElement&gt; buildResultMapItems(ResultElementType elementType, List&lt;IntrospectedColumn&gt; columns) {
+<span class="fc" id="L188">        List&lt;XmlElement&gt; answer = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : columns) {</span>
+<span class="fc" id="L190">            XmlElement resultElement = new XmlElement(elementType.value);</span>
+
+<span class="fc" id="L192">            resultElement.addAttribute(buildColumnAttribute(introspectedColumn));</span>
+<span class="fc" id="L193">            resultElement.addAttribute(new Attribute(&quot;property&quot;, introspectedColumn.getJavaProperty())); //$NON-NLS-1$</span>
+<span class="fc" id="L194">            resultElement.addAttribute(new Attribute(&quot;jdbcType&quot;, introspectedColumn.getJdbcTypeName())); //$NON-NLS-1$</span>
+
+<span class="fc" id="L196">            introspectedColumn.getTypeHandler().ifPresent(</span>
+<span class="fc" id="L197">                    th -&gt; resultElement.addAttribute(new Attribute(&quot;typeHandler&quot;, th))); //$NON-NLS-1$</span>
+
+<span class="fc" id="L199">            answer.add(resultElement);</span>
+<span class="fc" id="L200">        }</span>
+
+<span class="fc" id="L202">        return answer;</span>
+    }
+
+    protected XmlElement buildConstructorElement(boolean includeBlobColumns) {
+<span class="fc" id="L206">        XmlElement constructor = new XmlElement(&quot;constructor&quot;); //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {</span>
+<span class="fc" id="L209">            XmlElement resultElement = new XmlElement(&quot;idArg&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L211">            resultElement.addAttribute(buildColumnAttribute(introspectedColumn));</span>
+<span class="fc" id="L212">            resultElement.addAttribute(new Attribute(&quot;jdbcType&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L213">                    introspectedColumn.getJdbcTypeName()));</span>
+<span class="fc" id="L214">            resultElement.addAttribute(new Attribute(&quot;javaType&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L215">                    introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName()));</span>
+
+<span class="fc" id="L217">            introspectedColumn.getTypeHandler().ifPresent(</span>
+<span class="nc" id="L218">                    th -&gt; resultElement.addAttribute(new Attribute(&quot;typeHandler&quot;, th))); //$NON-NLS-1$</span>
+
+<span class="fc" id="L220">            constructor.addElement(resultElement);</span>
+<span class="fc" id="L221">        }</span>
+
+        List&lt;IntrospectedColumn&gt; columns;
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        if (includeBlobColumns) {</span>
+<span class="fc" id="L225">            columns = introspectedTable.getNonPrimaryKeyColumns();</span>
+        } else {
+<span class="fc" id="L227">            columns = introspectedTable.getBaseColumns();</span>
+        }
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : columns) {</span>
+<span class="fc" id="L230">            XmlElement resultElement = new XmlElement(&quot;arg&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L232">            resultElement.addAttribute(buildColumnAttribute(introspectedColumn));</span>
+<span class="fc" id="L233">            resultElement.addAttribute(new Attribute(&quot;jdbcType&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L234">                    introspectedColumn.getJdbcTypeName()));</span>
+
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">            if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {</span>
+                // need to use the MyBatis type alias for a primitive byte
+<span class="nc" id="L238">                String s = '_'</span>
+<span class="nc" id="L239">                        + introspectedColumn.getFullyQualifiedJavaType().getShortName();</span>
+<span class="nc" id="L240">                resultElement.addAttribute(new Attribute(&quot;javaType&quot;, s)); //$NON-NLS-1$</span>
+<span class="pc bfc" id="L241" title="All 2 branches covered.">            } else if (&quot;byte[]&quot;.equals(introspectedColumn.getFullyQualifiedJavaType() //$NON-NLS-1$</span>
+<span class="fc" id="L242">                    .getFullyQualifiedName())) {</span>
+                // need to use the MyBatis type alias for a primitive byte arry
+<span class="fc" id="L244">                resultElement.addAttribute(new Attribute(&quot;javaType&quot;, //$NON-NLS-1$</span>
+                        &quot;_byte[]&quot;)); //$NON-NLS-1$
+            } else {
+<span class="fc" id="L247">                resultElement.addAttribute(new Attribute(&quot;javaType&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L248">                        introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName()));</span>
+            }
+
+<span class="fc" id="L251">            introspectedColumn.getTypeHandler().ifPresent(</span>
+<span class="nc" id="L252">                    th -&gt; resultElement.addAttribute(new Attribute(&quot;typeHandler&quot;, th))); //$NON-NLS-1$</span>
+
+<span class="fc" id="L254">            constructor.addElement(resultElement);</span>
+<span class="fc" id="L255">        }</span>
+
+<span class="fc" id="L257">        return constructor;</span>
+    }
+
+    protected Attribute buildColumnAttribute(IntrospectedColumn introspectedColumn) {
+<span class="fc" id="L261">        return new Attribute(&quot;column&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L262">                MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn));</span>
+    }
+
+    protected XmlElement buildUpdateByExampleElement(String statementId, List&lt;IntrospectedColumn&gt; columns) {
+<span class="fc" id="L266">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L268">        answer.addAttribute(new Attribute(&quot;id&quot;, statementId)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L270">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, &quot;map&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L271">        commentGenerator.addComment(answer);</span>
+
+<span class="fc" id="L273">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L274">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L275">        sb.append(introspectedTable.getAliasedFullyQualifiedRuntimeTableName());</span>
+<span class="fc" id="L276">        answer.addElement(new TextElement(sb.toString()));</span>
+
+        // set up for first column
+<span class="fc" id="L279">        sb.setLength(0);</span>
+<span class="fc" id="L280">        sb.append(&quot;set &quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L282">        Iterator&lt;IntrospectedColumn&gt; iter = ListUtilities.filterColumnsForUpdate(columns).iterator();</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L284">            IntrospectedColumn introspectedColumn = iter.next();</span>
+
+<span class="fc" id="L286">            sb.append(MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn));</span>
+<span class="fc" id="L287">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L288">            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn, &quot;row.&quot;)); //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L290" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
+<span class="fc" id="L291">                sb.append(',');</span>
+            }
+
+<span class="fc" id="L294">            answer.addElement(new TextElement(sb.toString()));</span>
+
+            // set up for the next column
+<span class="fc bfc" id="L297" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
+<span class="fc" id="L298">                sb.setLength(0);</span>
+<span class="fc" id="L299">                OutputUtilities.xmlIndent(sb, 1);</span>
+            }
+<span class="fc" id="L301">        }</span>
+
+<span class="fc" id="L303">        answer.addElement(getUpdateByExampleIncludeElement());</span>
+<span class="fc" id="L304">        return answer;</span>
+    }
+
+    protected XmlElement buildUpdateByPrimaryKeyElement(String statementId, String parameterType,
+                                                        List&lt;IntrospectedColumn&gt; columns) {
+<span class="fc" id="L309">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L311">        answer.addAttribute(new Attribute(&quot;id&quot;, statementId)); //$NON-NLS-1$</span>
+<span class="fc" id="L312">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, parameterType)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L314">        commentGenerator.addComment(answer);</span>
+
+<span class="fc" id="L316">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L317">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L318">        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());</span>
+<span class="fc" id="L319">        answer.addElement(new TextElement(sb.toString()));</span>
+
+        // set up for first column
+<span class="fc" id="L322">        sb.setLength(0);</span>
+<span class="fc" id="L323">        sb.append(&quot;set &quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L325">        Iterator&lt;IntrospectedColumn&gt; iter = ListUtilities.filterColumnsForUpdate(columns).iterator();</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L327">            IntrospectedColumn introspectedColumn = iter.next();</span>
+
+<span class="fc" id="L329">            sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));</span>
+<span class="fc" id="L330">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L331">            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));</span>
+
+<span class="fc bfc" id="L333" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
+<span class="fc" id="L334">                sb.append(',');</span>
+            }
+
+<span class="fc" id="L337">            answer.addElement(new TextElement(sb.toString()));</span>
+
+            // set up for the next column
+<span class="fc bfc" id="L340" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
+<span class="fc" id="L341">                sb.setLength(0);</span>
+<span class="fc" id="L342">                OutputUtilities.xmlIndent(sb, 1);</span>
+            }
+<span class="fc" id="L344">        }</span>
+
+<span class="fc" id="L346">        buildPrimaryKeyWhereClause().forEach(answer::addElement);</span>
+
+<span class="fc" id="L348">        return answer;</span>
+    }
+
+    protected XmlElement generateSelectByExample(boolean forBlobs) {
+        String statementId;
+        String resultMapId;
+<span class="fc bfc" id="L354" title="All 2 branches covered.">        if (forBlobs) {</span>
+<span class="fc" id="L355">            statementId = introspectedTable.getSelectByExampleWithBLOBsStatementId();</span>
+<span class="fc" id="L356">            resultMapId = introspectedTable.getResultMapWithBLOBsId();</span>
+        } else {
+<span class="fc" id="L358">            statementId = introspectedTable.getSelectByExampleStatementId();</span>
+<span class="fc" id="L359">            resultMapId = introspectedTable.getBaseResultMapId();</span>
+        }
+
+<span class="fc" id="L362">        XmlElement answer = new XmlElement(&quot;select&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L363">        answer.addAttribute(new Attribute(&quot;id&quot;, statementId)); //$NON-NLS-1$</span>
+<span class="fc" id="L364">        answer.addAttribute(new Attribute(&quot;resultMap&quot;, resultMapId)); //$NON-NLS-1$</span>
+<span class="fc" id="L365">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, introspectedTable.getExampleType())); //$NON-NLS-1$</span>
+
+<span class="fc" id="L367">        commentGenerator.addComment(answer);</span>
+
+<span class="fc" id="L369">        answer.addElement(new TextElement(&quot;select&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L370">        XmlElement ifElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L371">        ifElement.addAttribute(new Attribute(&quot;test&quot;, &quot;distinct&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L372">        ifElement.addElement(new TextElement(&quot;distinct&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L373">        answer.addElement(ifElement);</span>
+
+<span class="fc" id="L375">        answer.addElement(getBaseColumnListElement());</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">        if (forBlobs) {</span>
+<span class="fc" id="L377">            answer.addElement(new TextElement(&quot;,&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L378">            answer.addElement(getBlobColumnListElement());</span>
+        }
+
+<span class="fc" id="L381">        String fromLine = &quot;from &quot; + introspectedTable.getAliasedFullyQualifiedRuntimeTableName(); //$NON-NLS-1$</span>
+<span class="fc" id="L382">        answer.addElement(new TextElement(fromLine));</span>
+<span class="fc" id="L383">        answer.addElement(getExampleIncludeElement());</span>
+
+<span class="fc" id="L385">        ifElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L386">        ifElement.addAttribute(new Attribute(&quot;test&quot;, &quot;orderByClause != null&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L387">        ifElement.addElement(new TextElement(&quot;order by ${orderByClause}&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L388">        answer.addElement(ifElement);</span>
+
+<span class="fc" id="L390">        return answer;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicSelectOneMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamicsql.java.elements</a> &gt; <span class="el_source">BasicSelectOneMethodGenerator.java</span></div><h1>BasicSelectOneMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamicsql.java.elements;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.JavaMethodParts;
+
+public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
+
+    private final FullyQualifiedJavaType recordType;
+    private final String resultMapId;
+    private final FragmentGenerator fragmentGenerator;
+    private final boolean reuseResultMap;
+
+    private BasicSelectOneMethodGenerator(Builder builder) {
+<span class="fc" id="L40">        super(builder);</span>
+<span class="fc" id="L41">        recordType = Objects.requireNonNull(builder.recordType);</span>
+<span class="fc" id="L42">        resultMapId = Objects.requireNonNull(builder.resultMapId);</span>
+<span class="fc" id="L43">        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);</span>
+<span class="fc" id="L44">        reuseResultMap = builder.reuseResultMap;</span>
+<span class="fc" id="L45">    }</span>
+
+    @Override
+    public Optional&lt;JavaMethodAndImports&gt; generateMethodAndImports() {
+<span class="fc" id="L49">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;&gt;();</span>
+
+<span class="fc" id="L51">        FullyQualifiedJavaType parameterType =</span>
+                new FullyQualifiedJavaType(
+                        &quot;org.mybatis.dynamic.sql.select.render.SelectStatementProvider&quot;); //$NON-NLS-1$
+<span class="fc" id="L54">        imports.add(parameterType);</span>
+
+<span class="fc" id="L56">        FullyQualifiedJavaType adapter =</span>
+                new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.util.SqlProviderAdapter&quot;); //$NON-NLS-1$
+<span class="fc" id="L58">        imports.add(adapter);</span>
+
+<span class="fc" id="L60">        FullyQualifiedJavaType annotation =</span>
+                new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.SelectProvider&quot;); //$NON-NLS-1$
+<span class="fc" id="L62">        imports.add(annotation);</span>
+
+<span class="fc" id="L64">        FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(&quot;java.util.Optional&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L65">        returnType.addTypeArgument(recordType);</span>
+
+<span class="fc" id="L67">        imports.add(returnType);</span>
+
+<span class="fc" id="L69">        Method method = new Method(&quot;selectOne&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L70">        method.setAbstract(true);</span>
+
+<span class="fc" id="L72">        imports.add(recordType);</span>
+<span class="fc" id="L73">        method.setReturnType(returnType);</span>
+<span class="fc" id="L74">        method.addParameter(new Parameter(parameterType, &quot;selectStatement&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L75">        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);</span>
+<span class="fc" id="L76">        method.addAnnotation(&quot;@SelectProvider(type=SqlProviderAdapter.class, method=\&quot;select\&quot;)&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L78">        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)</span>
+<span class="fc" id="L79">                .withImports(imports);</span>
+
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (reuseResultMap) {</span>
+<span class="fc" id="L82">            FullyQualifiedJavaType rmAnnotation =</span>
+                    new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.ResultMap&quot;); //$NON-NLS-1$
+<span class="fc" id="L84">            builder.withImport(rmAnnotation);</span>
+<span class="fc" id="L85">            method.addAnnotation(&quot;@ResultMap(\&quot;&quot; + resultMapId + &quot;\&quot;)&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L86">        } else {</span>
+            JavaMethodParts javaMethodParts;
+<span class="nc bnc" id="L88" title="All 4 branches missed.">            if (introspectedTable.isConstructorBased() || introspectedTable.isRecordBased()) {</span>
+<span class="nc" id="L89">                javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();</span>
+            } else {
+<span class="nc" id="L91">                javaMethodParts = fragmentGenerator.getAnnotatedResults();</span>
+            }
+<span class="nc" id="L93">            builder.withExtraMethodParts(javaMethodParts);</span>
+        }
+
+<span class="fc" id="L96">        return builder.buildOptional();</span>
+    }
+
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+<span class="fc" id="L101">        return pluginAggregator.clientBasicSelectOneMethodGenerated(method, interfaze, introspectedTable);</span>
+    }
+
+<span class="fc" id="L104">    public static class Builder extends AbstractGeneratorBuilder&lt;Builder&gt; {</span>
+        private @Nullable FullyQualifiedJavaType recordType;
+        private @Nullable String resultMapId;
+        private @Nullable FragmentGenerator fragmentGenerator;
+        private boolean reuseResultMap;
+
+        public Builder withRecordType(FullyQualifiedJavaType recordType) {
+<span class="fc" id="L111">            this.recordType = recordType;</span>
+<span class="fc" id="L112">            return this;</span>
+        }
+
+        public Builder withResultMapId(String resultMapId) {
+<span class="fc" id="L116">            this.resultMapId = resultMapId;</span>
+<span class="fc" id="L117">            return this;</span>
+        }
+
+        public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
+<span class="fc" id="L121">            this.fragmentGenerator = fragmentGenerator;</span>
+<span class="fc" id="L122">            return this;</span>
+        }
+
+        public Builder withReuseResultMap(boolean reuseResultMap) {
+<span class="fc" id="L126">            this.reuseResultMap = reuseResultMap;</span>
+<span class="fc" id="L127">            return this;</span>
+        }
+
+        @Override
+        public Builder getThis() {
+<span class="fc" id="L132">            return this;</span>
+        }
+
+        public BasicSelectOneMethodGenerator build() {
+<span class="fc" id="L136">            return new BasicSelectOneMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

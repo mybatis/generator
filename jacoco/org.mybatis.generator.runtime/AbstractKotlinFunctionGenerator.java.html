@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractKotlinFunctionGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime</a> &gt; <span class="el_source">AbstractKotlinFunctionGenerator.java</span></div><h1>AbstractKotlinFunctionGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime;
+
+import java.util.Optional;
+
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
+import org.mybatis.generator.codegen.AbstractGenerator;
+
+public abstract class AbstractKotlinFunctionGenerator extends AbstractGenerator {
+    protected AbstractKotlinFunctionGenerator(AbstractGenerator.AbstractGeneratorBuilder&lt;?&gt; builder) {
+<span class="fc" id="L27">        super(builder);</span>
+<span class="fc" id="L28">    }</span>
+
+    /**
+     * Executes this generator, calls plugins, and applies the generated function and imports to
+     * the Kotlin file. This variant expects the generated function to be a function in a type.
+     *
+     * @param kotlinFile The Kotlin file to which the generated imports will be added.
+     * @param kotlinType The Kotlin type to which the generated function will be added.
+     * @return true if the function and imports were successfully generated and added to the Kotlin file, false
+     *     otherwise.
+     */
+    public boolean execute(KotlinFile kotlinFile, KotlinType kotlinType) {
+<span class="fc" id="L40">        return generateFunctionAndImports()</span>
+<span class="fc" id="L41">                .filter(fi -&gt; callPlugins(fi.getFunction(), kotlinFile))</span>
+<span class="fc" id="L42">                .map(mi -&gt; {</span>
+<span class="fc" id="L43">                    kotlinType.addNamedItem(mi.getFunction());</span>
+<span class="fc" id="L44">                    kotlinFile.addImports(mi.getImports());</span>
+<span class="fc" id="L45">                    return true;</span>
+                })
+<span class="fc" id="L47">                .orElse(false);</span>
+    }
+
+    /**
+     * Executes this generator, calls plugins, and applies the generated function and imports to
+     * the Kotlin file. This variant expects the generated function to be a top-level function.
+     *
+     * @param kotlinFile The Kotlin file to which the generated function and imports will be added.
+     * @return true if the function and imports were successfully generated and added to the Kotlin file, false
+     *     otherwise.
+     */
+    public boolean execute(KotlinFile kotlinFile) {
+<span class="fc" id="L59">        return generateFunctionAndImports()</span>
+<span class="fc" id="L60">                .filter(fi -&gt; callPlugins(fi.getFunction(), kotlinFile))</span>
+<span class="fc" id="L61">                .map(mi -&gt; {</span>
+<span class="fc" id="L62">                    kotlinFile.addNamedItem(mi.getFunction());</span>
+<span class="fc" id="L63">                    kotlinFile.addImports(mi.getImports());</span>
+<span class="fc" id="L64">                    return true;</span>
+                })
+<span class="fc" id="L66">                .orElse(false);</span>
+    }
+
+    public abstract Optional&lt;KotlinFunctionAndImports&gt; generateFunctionAndImports();
+
+    public abstract boolean callPlugins(KotlinFunction function, KotlinFile kotlinFile);
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InsertExtensionFunctionGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamicsql.kotlin.elements</a> &gt; <span class="el_source">InsertExtensionFunctionGenerator.java</span></div><h1>InsertExtensionFunctionGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamicsql.kotlin.elements;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
+import org.mybatis.generator.api.dom.kotlin.KotlinArg;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.runtime.KotlinFunctionAndImports;
+import org.mybatis.generator.runtime.KotlinFunctionParts;
+
+public class InsertExtensionFunctionGenerator extends AbstractKotlinMapperFunctionGenerator {
+    private final FullyQualifiedKotlinType recordType;
+    private final String mapperName;
+    private final KotlinFragmentGenerator fragmentGenerator;
+
+    private InsertExtensionFunctionGenerator(Builder builder) {
+<span class="fc" id="L37">        super(builder);</span>
+<span class="fc" id="L38">        recordType = Objects.requireNonNull(builder.recordType);</span>
+<span class="fc" id="L39">        mapperName = Objects.requireNonNull(builder.mapperName);</span>
+<span class="fc" id="L40">        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);</span>
+<span class="fc" id="L41">    }</span>
+
+    @Override
+    public Optional&lt;KotlinFunctionAndImports&gt; generateFunctionAndImports() {
+<span class="fc" id="L45">        Set&lt;String&gt; imports = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L46">        imports.add(&quot;org.mybatis.dynamic.sql.util.kotlin.mybatis3.insert&quot;);</span>
+
+<span class="fc" id="L48">        KotlinFunctionParts functionBody = fragmentGenerator.generateInsertBody();</span>
+
+<span class="fc" id="L50">        KotlinFunction function = KotlinFunction.newOneLineFunction(mapperName + &quot;.insert&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L51">                .withArgument(KotlinArg.newArg(&quot;row&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L52">                        .withDataType(recordType.getShortNameWithTypeArguments())</span>
+<span class="fc" id="L53">                        .build())</span>
+<span class="fc" id="L54">                .withCodeLines(functionBody.getCodeLines())</span>
+<span class="fc" id="L55">                .build();</span>
+
+<span class="fc" id="L57">        commentGenerator.addGeneralFunctionComment(function, introspectedTable, imports);</span>
+
+<span class="fc" id="L59">        return KotlinFunctionAndImports.withFunction(function)</span>
+<span class="fc" id="L60">                .withImports(imports)</span>
+<span class="fc" id="L61">                .withImports(functionBody.getImports())</span>
+<span class="fc" id="L62">                .withImports(recordType.getImportList())</span>
+<span class="fc" id="L63">                .buildOptional();</span>
+    }
+
+    @Override
+    public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
+<span class="fc" id="L68">        return pluginAggregator.clientInsertMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);</span>
+    }
+
+<span class="fc" id="L71">    public static class Builder extends BaseBuilder&lt;Builder&gt; {</span>
+        private @Nullable FullyQualifiedKotlinType recordType;
+        private @Nullable String mapperName;
+        private @Nullable KotlinFragmentGenerator fragmentGenerator;
+
+        public Builder withRecordType(FullyQualifiedKotlinType recordType) {
+<span class="fc" id="L77">            this.recordType = recordType;</span>
+<span class="fc" id="L78">            return this;</span>
+        }
+
+        public Builder withMapperName(String mapperName) {
+<span class="fc" id="L82">            this.mapperName = mapperName;</span>
+<span class="fc" id="L83">            return this;</span>
+        }
+
+        public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
+<span class="fc" id="L87">            this.fragmentGenerator = fragmentGenerator;</span>
+<span class="fc" id="L88">            return this;</span>
+        }
+
+        @Override
+        public Builder getThis() {
+<span class="fc" id="L93">            return this;</span>
+        }
+
+        public InsertExtensionFunctionGenerator build() {
+<span class="fc" id="L97">            return new InsertExtensionFunctionGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

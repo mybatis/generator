@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnnotatedInsertMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated</a> &gt; <span class="el_source">AnnotatedInsertMethodGenerator.java</span></div><h1>AnnotatedInsertMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
+
+import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
+import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
+import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.runtime.JavaMethodParts;
+import org.mybatis.generator.runtime.common.GeneratedKeyAnnotationUtility;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.InsertMethodGenerator;
+
+public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
+    protected AnnotatedInsertMethodGenerator(AnnotatedBuilder builder) {
+<span class="fc" id="L36">        super(builder);</span>
+<span class="fc" id="L37">    }</span>
+
+    @Override
+    protected JavaMethodParts extraMethodParts() {
+<span class="fc" id="L41">        var builder = new JavaMethodParts.Builder()</span>
+<span class="fc" id="L42">                .withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Insert&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L43">        addAnnotations(builder);</span>
+
+<span class="fc" id="L45">        introspectedTable.getGeneratedKey()</span>
+<span class="fc" id="L46">                .flatMap(gk -&gt; GeneratedKeyAnnotationUtility.getLegacyJavaGeneratedKeyAnnotation(introspectedTable, gk))</span>
+<span class="fc" id="L47">                .ifPresent(builder::withJavaMethodParts);</span>
+
+<span class="fc" id="L49">        return builder.build();</span>
+    }
+
+
+    private void addAnnotations(JavaMethodParts.Builder builder) {
+<span class="fc" id="L54">        builder.withAnnotation(&quot;@Insert({&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L55">        StringBuilder insertClause = new StringBuilder();</span>
+<span class="fc" id="L56">        StringBuilder valuesClause = new StringBuilder();</span>
+
+<span class="fc" id="L58">        javaIndent(insertClause, 1);</span>
+<span class="fc" id="L59">        javaIndent(valuesClause, 1);</span>
+
+<span class="fc" id="L61">        insertClause.append(&quot;\&quot;insert into &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L62">        insertClause.append(escapeStringForJava(introspectedTable</span>
+<span class="fc" id="L63">                .getFullyQualifiedTableNameAtRuntime()));</span>
+<span class="fc" id="L64">        insertClause.append(&quot; (&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L66">        valuesClause.append(&quot;\&quot;values (&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L68">        List&lt;String&gt; valuesClauses = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L69">        Iterator&lt;IntrospectedColumn&gt; iter =</span>
+<span class="fc" id="L70">                ListUtilities.filterColumnsForInsert(introspectedTable.getAllColumns())</span>
+<span class="fc" id="L71">                .iterator();</span>
+<span class="fc" id="L72">        boolean hasFields = false;</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L74">            IntrospectedColumn introspectedColumn = iter.next();</span>
+
+<span class="fc" id="L76">            insertClause.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));</span>
+<span class="fc" id="L77">            valuesClause.append(getParameterClause(introspectedColumn));</span>
+<span class="fc" id="L78">            hasFields = true;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
+<span class="fc" id="L80">                insertClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L81">                valuesClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
+            }
+
+<span class="fc bfc" id="L84" title="All 2 branches covered.">            if (valuesClause.length() &gt; 60) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">                if (!iter.hasNext()) {</span>
+<span class="fc" id="L86">                    insertClause.append(')');</span>
+<span class="fc" id="L87">                    valuesClause.append(')');</span>
+                }
+<span class="fc" id="L89">                insertClause.append(&quot;\&quot;,&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L90">                valuesClause.append('\&quot;');</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">                if (iter.hasNext()) {</span>
+<span class="fc" id="L92">                    valuesClause.append(',');</span>
+                }
+
+<span class="fc" id="L95">                builder.withAnnotation(insertClause.toString());</span>
+<span class="fc" id="L96">                insertClause.setLength(0);</span>
+<span class="fc" id="L97">                javaIndent(insertClause, 1);</span>
+<span class="fc" id="L98">                insertClause.append('\&quot;');</span>
+
+<span class="fc" id="L100">                valuesClauses.add(valuesClause.toString());</span>
+<span class="fc" id="L101">                valuesClause.setLength(0);</span>
+<span class="fc" id="L102">                javaIndent(valuesClause, 1);</span>
+<span class="fc" id="L103">                valuesClause.append('\&quot;');</span>
+<span class="fc" id="L104">                hasFields = false;</span>
+            }
+<span class="fc" id="L106">        }</span>
+
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (hasFields) {</span>
+<span class="fc" id="L109">            insertClause.append(&quot;)\&quot;,&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L110">            builder.withAnnotation(insertClause.toString());</span>
+
+<span class="fc" id="L112">            valuesClause.append(&quot;)\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L113">            valuesClauses.add(valuesClause.toString());</span>
+        }
+
+<span class="fc" id="L116">        builder.withAnnotations(valuesClauses);</span>
+
+<span class="fc" id="L118">        builder.withAnnotation(&quot;})&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L119">    }</span>
+
+<span class="fc" id="L121">    public static class AnnotatedBuilder extends InsertMethodGenerator.Builder {</span>
+        @Override
+        protected AnnotatedBuilder getThis() {
+<span class="fc" id="L124">            return this;</span>
+        }
+
+        @Override
+        public AnnotatedInsertMethodGenerator build() {
+<span class="fc" id="L129">            return new AnnotatedInsertMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

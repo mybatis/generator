@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractRuntime.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">AbstractRuntime.java</span></div><h1>AbstractRuntime.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.xml.Document;
+import org.mybatis.generator.codegen.AbstractGenerator;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.AbstractKotlinGenerator;
+import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.config.ClientGeneratorConfiguration;
+import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
+
+public abstract class AbstractRuntime extends AbstractGenerator {
+<span class="fc" id="L34">    protected final List&lt;AbstractKotlinGenerator&gt; kotlinGenerators = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L35">    protected final List&lt;AbstractJavaGenerator&gt; javaGenerators = new ArrayList&lt;&gt;();</span>
+    protected @Nullable AbstractXmlGenerator xmlMapperGenerator;
+
+    protected AbstractRuntime(AbstractRuntimeBuilder&lt;?&gt; builder) {
+<span class="fc" id="L39">        super(builder);</span>
+<span class="fc" id="L40">    }</span>
+
+    protected Optional&lt;String&gt; getClientProject() {
+<span class="fc" id="L43">        return context.getClientGeneratorConfiguration().map(ClientGeneratorConfiguration::getTargetProject);</span>
+    }
+
+    protected String getModelProject() {
+<span class="fc" id="L47">        return context.getModelGeneratorConfiguration().getTargetProject();</span>
+    }
+
+    /**
+     * This method should return the number of progress messages that will be
+     * sent during the generation phase.
+     *
+     * @return the number of progress messages
+     */
+    public int getGenerationSteps() {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        return javaGenerators.size() + kotlinGenerators.size() + (xmlMapperGenerator == null ? 0 : 1);</span>
+    }
+
+    /**
+     * This method should return a list of generated Java files related to this
+     * table. This list could include various types of model classes, as well as
+     * client classes.
+     *
+     * @return the list of generated Java files for this table
+     */
+    public List&lt;GeneratedJavaFile&gt; getGeneratedJavaFiles() {
+<span class="fc" id="L68">        List&lt;GeneratedJavaFile&gt; answer = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (AbstractJavaGenerator javaGenerator : javaGenerators) {</span>
+<span class="fc" id="L71">            List&lt;CompilationUnit&gt; compilationUnits = javaGenerator.getCompilationUnits();</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            for (CompilationUnit compilationUnit : compilationUnits) {</span>
+<span class="fc" id="L73">                GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit, javaGenerator.getProject());</span>
+<span class="fc" id="L74">                answer.add(gjf);</span>
+<span class="fc" id="L75">            }</span>
+<span class="fc" id="L76">        }</span>
+
+<span class="fc" id="L78">        return answer;</span>
+    }
+
+    /**
+     * This method should return a list of generated XML files related to this
+     * table. Most implementations will only return one file - the generated
+     * SqlMap file.
+     *
+     * @return the list of generated XML files for this table
+     */
+    public List&lt;GeneratedXmlFile&gt; getGeneratedXmlFiles() {
+<span class="fc" id="L89">        List&lt;GeneratedXmlFile&gt; answer = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (xmlMapperGenerator != null) {</span>
+<span class="fc" id="L92">            Document document = xmlMapperGenerator.getDocument();</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">            if (document != null) {</span>
+<span class="fc" id="L94">                GeneratedXmlFile gxf = new GeneratedXmlFile(document,</span>
+<span class="fc" id="L95">                        introspectedTable.getMyBatis3XmlMapperFileName(),</span>
+<span class="fc" id="L96">                        introspectedTable.getMyBatis3XmlMapperPackage(),</span>
+<span class="fc" id="L97">                        context.getSqlMapGeneratorConfiguration()</span>
+<span class="fc" id="L98">                                .map(SqlMapGeneratorConfiguration::getTargetProject).orElse(&quot;&quot;),</span>
+                        true);
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">                if (pluginAggregator.sqlMapGenerated(gxf, introspectedTable)) {</span>
+<span class="fc" id="L101">                    answer.add(gxf);</span>
+                }
+            }
+        }
+
+<span class="fc" id="L106">        return answer;</span>
+    }
+
+    /**
+     * This method should return a list of generated Kotlin files related to this
+     * table. This list could include a data classes, a mapper interface, extension methods, etc.
+     *
+     * @return the list of generated Kotlin files for this table
+     */
+    public List&lt;GeneratedKotlinFile&gt; getGeneratedKotlinFiles() {
+<span class="fc" id="L116">        List&lt;GeneratedKotlinFile&gt; answer = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        for (AbstractKotlinGenerator kotlinGenerator : kotlinGenerators) {</span>
+<span class="fc" id="L119">            List&lt;KotlinFile&gt; kotlinFiles = kotlinGenerator.getKotlinFiles();</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">            for (KotlinFile kotlinFile : kotlinFiles) {</span>
+<span class="fc" id="L121">                GeneratedKotlinFile gjf = new GeneratedKotlinFile(kotlinFile, kotlinGenerator.getProject());</span>
+<span class="fc" id="L122">                answer.add(gjf);</span>
+<span class="fc" id="L123">            }</span>
+<span class="fc" id="L124">        }</span>
+
+<span class="fc" id="L126">        return answer;</span>
+    }
+
+    public IntrospectedTable getIntrospectedTable() {
+<span class="fc" id="L130">        return introspectedTable;</span>
+    }
+
+<span class="fc" id="L133">    public abstract static class AbstractRuntimeBuilder&lt;T extends AbstractRuntimeBuilder&lt;T&gt;&gt;</span>
+            extends AbstractGeneratorBuilder&lt;T&gt; {
+        public abstract AbstractRuntime build();
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

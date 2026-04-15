@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneratorAntTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.ant</a> &gt; <span class="el_source">GeneratorAntTask.java</span></div><h1>GeneratorAntTask.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.ant;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.StringUtility.tokenize;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
+
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.PropertySet;
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.config.Configuration;
+import org.mybatis.generator.config.xml.ConfigurationParser;
+import org.mybatis.generator.exception.InvalidConfigurationException;
+import org.mybatis.generator.exception.XMLParserException;
+import org.mybatis.generator.internal.DefaultShellCallback;
+
+/**
+ * This is an Ant task that will run the generator. The following is a sample
+ * Ant script that shows how to run the generator from Ant:
+ *
+ * &lt;pre&gt;
+ *  &amp;lt;project default=&quot;genfiles&quot; basedir=&quot;.&quot;&amp;gt;
+ *    &amp;lt;property name=&quot;generated.source.dir&quot; value=&quot;${basedir}&quot; /&amp;gt;
+ *    &amp;lt;target name=&quot;genfiles&quot; description=&quot;Generate the files&quot;&amp;gt;
+ *      &amp;lt;taskdef name=&quot;mbgenerator&quot;
+ *               classname=&quot;org.mybatis.generator.ant.GeneratorAntTask&quot;
+ *               classpath=&quot;mybatis-generator-core-x.x.x.jar&quot; /&amp;gt;
+ *      &amp;lt;mbgenerator overwrite=&quot;true&quot; configfile=&quot;generatorConfig.xml&quot; verbose=&quot;false&quot; &amp;gt;
+ *        &amp;lt;propertyset&amp;gt;
+ *          &amp;lt;propertyref name=&quot;generated.source.dir&quot;/&amp;gt;
+ *        &amp;lt;/propertyset&amp;gt;
+ *      &amp;lt;/mbgenerator&amp;gt;
+ *    &amp;lt;/target&amp;gt;
+ *  &amp;lt;/project&amp;gt;
+ * &lt;/pre&gt;
+ *
+ * &lt;p&gt;The task requires that the attribute &quot;configFile&quot; be set to an existing XML
+ * configuration file.
+ *
+ * &lt;p&gt;The task supports these optional attributes:
+ * &lt;ul&gt;
+ *     &lt;li&gt;&quot;overwrite&quot; - if true, then existing Java files will be overwritten. if
+ *         false (default), then existing Java files will be untouched and the generator
+ *         will write new Java files with a unique name&lt;/li&gt;
+ *     &lt;li&gt;&quot;verbose&quot; - if true, then the generator will log progress messages to the
+ *         Ant log. Default is false&lt;/li&gt;
+ *     &lt;li&gt;&quot;contextIds&quot; - a comma delimited list of contaxtIds to use for this run&lt;/li&gt;
+ *     &lt;li&gt;&quot;fullyQualifiedTableNames&quot; - a comma-delimited list of fully qualified
+ *         table names to use for this run&lt;/li&gt;
+ *     &lt;li&gt;
+ *         &quot;javaMergeEnabled&quot; - if true, then existing Java files will be merged. if
+ *         false (default), then existing Java files will be untouched and the generator
+ *         will write new Java files with a unique name
+ *     &lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ *
+ * @author Jeff Butler
+ */
+<span class="fc" id="L87">public class GeneratorAntTask extends Task {</span>
+
+    private @Nullable String configfile;
+    private boolean overwrite;
+    private @Nullable PropertySet propertyset;
+    private boolean verbose;
+    private @Nullable String contextIds;
+    private @Nullable String fullyQualifiedTableNames;
+    private boolean javaMergeEnabled;
+
+    @Override
+    public void execute() {
+<span class="fc" id="L99">        File configurationFile = calculateConfigurationFile();</span>
+<span class="fc" id="L100">        Set&lt;String&gt; fullyQualifiedTables = calculateTables();</span>
+<span class="fc" id="L101">        Set&lt;String&gt; contexts = calculateContexts();</span>
+
+<span class="fc" id="L103">        List&lt;String&gt; warnings = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">            Properties p = propertyset == null ? null : propertyset.getProperties();</span>
+
+<span class="fc" id="L107">            ConfigurationParser cp = new ConfigurationParser(p);</span>
+<span class="fc" id="L108">            Configuration config = cp.parseConfiguration(configurationFile);</span>
+<span class="fc" id="L109">            warnings.addAll(cp.getWarnings());</span>
+
+<span class="fc" id="L111">            MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()</span>
+<span class="fc" id="L112">                    .withConfiguration(config)</span>
+<span class="fc" id="L113">                    .withShellCallback(new DefaultShellCallback())</span>
+<span class="fc" id="L114">                    .withProgressCallback(new AntProgressCallback(this, verbose))</span>
+<span class="fc" id="L115">                    .withContextIds(contexts)</span>
+<span class="fc" id="L116">                    .withFullyQualifiedTableNames(fullyQualifiedTables)</span>
+<span class="fc" id="L117">                    .withJavaFileMergeEnabled(javaMergeEnabled)</span>
+<span class="fc" id="L118">                    .withOverwriteEnabled(overwrite)</span>
+<span class="fc" id="L119">                    .build();</span>
+
+<span class="fc" id="L121">            warnings.addAll(myBatisGenerator.generateAndWrite());</span>
+<span class="fc" id="L122">        } catch (XMLParserException | InvalidConfigurationException e) {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">            for (String error : e.getExtraMessages()) {</span>
+<span class="fc" id="L124">                log(error, Project.MSG_ERR);</span>
+<span class="fc" id="L125">            }</span>
+<span class="fc" id="L126">            throw new BuildException(e.getMessage(), e);</span>
+<span class="fc" id="L127">        } catch (SQLException | IOException e) {</span>
+<span class="fc" id="L128">            throw new BuildException(e.getMessage(), e);</span>
+<span class="nc" id="L129">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L130">            Thread.currentThread().interrupt();</span>
+<span class="fc" id="L131">        } catch (Exception e) {</span>
+<span class="fc" id="L132">            log(e, Project.MSG_ERR);</span>
+<span class="fc" id="L133">            throw new BuildException(e.getMessage(), e);</span>
+<span class="pc" id="L134">        }</span>
+
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        for (String error : warnings) {</span>
+<span class="fc" id="L137">            log(error, Project.MSG_WARN);</span>
+<span class="fc" id="L138">        }</span>
+<span class="fc" id="L139">    }</span>
+
+    private Set&lt;String&gt; calculateContexts() {
+<span class="fc" id="L142">        return tokenize(contextIds);</span>
+    }
+
+    private Set&lt;String&gt; calculateTables() {
+<span class="fc" id="L146">        return tokenize(fullyQualifiedTableNames);</span>
+    }
+
+    private File calculateConfigurationFile() {
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (!stringHasValue(configfile)) {</span>
+<span class="fc" id="L151">            throw new BuildException(getString(&quot;RuntimeError.0&quot;)); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L154">        Path configurationFile = Path.of(configfile);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (Files.notExists(configurationFile)) {</span>
+<span class="fc" id="L156">            throw new BuildException(getString(&quot;RuntimeError.1&quot;, configfile)); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L158">        return configurationFile.toFile();</span>
+    }
+
+    public @Nullable String getConfigfile() {
+<span class="fc" id="L162">        return configfile;</span>
+    }
+
+    public void setConfigfile(String configfile) {
+<span class="fc" id="L166">        this.configfile = configfile;</span>
+<span class="fc" id="L167">    }</span>
+
+    public boolean isOverwrite() {
+<span class="fc" id="L170">        return overwrite;</span>
+    }
+
+    public void setOverwrite(boolean overwrite) {
+<span class="fc" id="L174">        this.overwrite = overwrite;</span>
+<span class="fc" id="L175">    }</span>
+
+    public PropertySet createPropertyset() {
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (propertyset == null) {</span>
+<span class="fc" id="L179">            propertyset = new PropertySet();</span>
+        }
+
+<span class="fc" id="L182">        return propertyset;</span>
+    }
+
+    public boolean isVerbose() {
+<span class="fc" id="L186">        return verbose;</span>
+    }
+
+    public void setVerbose(boolean verbose) {
+<span class="fc" id="L190">        this.verbose = verbose;</span>
+<span class="fc" id="L191">    }</span>
+
+    public @Nullable String getContextIds() {
+<span class="fc" id="L194">        return contextIds;</span>
+    }
+
+    public void setContextIds(String contextIds) {
+<span class="fc" id="L198">        this.contextIds = contextIds;</span>
+<span class="fc" id="L199">    }</span>
+
+    public @Nullable String getFullyQualifiedTableNames() {
+<span class="fc" id="L202">        return fullyQualifiedTableNames;</span>
+    }
+
+    public void setFullyQualifiedTableNames(String fullyQualifiedTableNames) {
+<span class="fc" id="L206">        this.fullyQualifiedTableNames = fullyQualifiedTableNames;</span>
+<span class="fc" id="L207">    }</span>
+
+    public boolean isJavaMergeEnabled() {
+<span class="fc" id="L210">        return javaMergeEnabled;</span>
+    }
+
+    public void setJavaMergeEnabled(boolean javaMergeEnabled) {
+<span class="fc" id="L214">        this.javaMergeEnabled = javaMergeEnabled;</span>
+<span class="fc" id="L215">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

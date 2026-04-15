@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SqlProviderGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.javamapper</a> &gt; <span class="el_source">SqlProviderGenerator.java</span></div><h1>SqlProviderGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.javamapper;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderApplyWhereMethodGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderCountByExampleMethodGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderDeleteByExampleMethodGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderInsertSelectiveMethodGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderSelectByExampleWithBLOBsMethodGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderSelectByExampleWithoutBLOBsMethodGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByExampleSelectiveMethodGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByExampleWithBLOBsMethodGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByExampleWithoutBLOBsMethodGenerator;
+import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByPrimaryKeySelectiveMethodGenerator;
+
+public class SqlProviderGenerator extends AbstractJavaGenerator {
+
+    public SqlProviderGenerator(Builder builder) {
+<span class="fc" id="L42">        super(builder);</span>
+<span class="fc" id="L43">    }</span>
+
+    @Override
+    public List&lt;CompilationUnit&gt; getCompilationUnits() {
+<span class="fc" id="L47">        progressCallback.startTask(getString(&quot;Progress.18&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L48">                introspectedTable.getFullyQualifiedTable().toString()));</span>
+
+<span class="fc" id="L50">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());</span>
+<span class="fc" id="L51">        TopLevelClass topLevelClass = new TopLevelClass(type);</span>
+<span class="fc" id="L52">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L53">        commentGenerator.addJavaFileComment(topLevelClass);</span>
+
+<span class="fc" id="L55">        boolean addApplyWhereMethod = addCountByExampleMethod(topLevelClass);</span>
+<span class="fc" id="L56">        addApplyWhereMethod |= addDeleteByExampleMethod(topLevelClass);</span>
+<span class="fc" id="L57">        addInsertSelectiveMethod(topLevelClass);</span>
+<span class="fc" id="L58">        addApplyWhereMethod |= addSelectByExampleWithBLOBsMethod(topLevelClass);</span>
+<span class="fc" id="L59">        addApplyWhereMethod |= addSelectByExampleWithoutBLOBsMethod(topLevelClass);</span>
+<span class="fc" id="L60">        addApplyWhereMethod |= addUpdateByExampleSelectiveMethod(topLevelClass);</span>
+<span class="fc" id="L61">        addApplyWhereMethod |= addUpdateByExampleWithBLOBsMethod(topLevelClass);</span>
+<span class="fc" id="L62">        addApplyWhereMethod |= addUpdateByExampleWithoutBLOBsMethod(topLevelClass);</span>
+<span class="fc" id="L63">        addUpdateByPrimaryKeySelectiveMethod(topLevelClass);</span>
+
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        if (addApplyWhereMethod) {</span>
+<span class="fc" id="L66">            addApplyWhereMethod(topLevelClass);</span>
+        }
+
+<span class="fc" id="L69">        List&lt;CompilationUnit&gt; answer = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (!topLevelClass.getMethods().isEmpty()</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">                &amp;&amp; pluginAggregator.providerGenerated(topLevelClass, introspectedTable)) {</span>
+<span class="fc" id="L73">            answer.add(topLevelClass);</span>
+        }
+
+<span class="fc" id="L76">        return answer;</span>
+    }
+
+    protected boolean addCountByExampleMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L80">        return initializeSubBuilder(new ProviderCountByExampleMethodGenerator.Builder())</span>
+<span class="fc" id="L81">                .build()</span>
+<span class="fc" id="L82">                .execute(topLevelClass);</span>
+    }
+
+    protected boolean addDeleteByExampleMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L86">        return initializeSubBuilder(new ProviderDeleteByExampleMethodGenerator.Builder())</span>
+<span class="fc" id="L87">                .build()</span>
+<span class="fc" id="L88">                .execute(topLevelClass);</span>
+    }
+
+    protected void addInsertSelectiveMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L92">        initializeSubBuilder(new ProviderInsertSelectiveMethodGenerator.Builder())</span>
+<span class="fc" id="L93">                .build()</span>
+<span class="fc" id="L94">                .execute(topLevelClass);</span>
+<span class="fc" id="L95">    }</span>
+
+    protected boolean addSelectByExampleWithBLOBsMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L98">        return initializeSubBuilder(new ProviderSelectByExampleWithBLOBsMethodGenerator.Builder())</span>
+<span class="fc" id="L99">                .build()</span>
+<span class="fc" id="L100">                .execute(topLevelClass);</span>
+    }
+
+    protected boolean addSelectByExampleWithoutBLOBsMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L104">        return initializeSubBuilder(new ProviderSelectByExampleWithoutBLOBsMethodGenerator.Builder())</span>
+<span class="fc" id="L105">                .build()</span>
+<span class="fc" id="L106">                .execute(topLevelClass);</span>
+    }
+
+    protected boolean addUpdateByExampleSelectiveMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L110">        return initializeSubBuilder(new ProviderUpdateByExampleSelectiveMethodGenerator.Builder())</span>
+<span class="fc" id="L111">                .build()</span>
+<span class="fc" id="L112">                .execute(topLevelClass);</span>
+    }
+
+    protected boolean addUpdateByExampleWithBLOBsMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L116">        return initializeSubBuilder(new ProviderUpdateByExampleWithBLOBsMethodGenerator.Builder())</span>
+<span class="fc" id="L117">                .build()</span>
+<span class="fc" id="L118">                .execute(topLevelClass);</span>
+    }
+
+    protected boolean addUpdateByExampleWithoutBLOBsMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L122">        return initializeSubBuilder(new ProviderUpdateByExampleWithoutBLOBsMethodGenerator.Builder())</span>
+<span class="fc" id="L123">                .build()</span>
+<span class="fc" id="L124">                .execute(topLevelClass);</span>
+    }
+
+    protected void addUpdateByPrimaryKeySelectiveMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L128">        initializeSubBuilder(new ProviderUpdateByPrimaryKeySelectiveMethodGenerator.Builder())</span>
+<span class="fc" id="L129">                .build()</span>
+<span class="fc" id="L130">                .execute(topLevelClass);</span>
+<span class="fc" id="L131">    }</span>
+
+    protected void addApplyWhereMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L134">        initializeSubBuilder(new ProviderApplyWhereMethodGenerator.Builder())</span>
+<span class="fc" id="L135">                .build()</span>
+<span class="fc" id="L136">                .execute(topLevelClass);</span>
+<span class="fc" id="L137">    }</span>
+
+<span class="fc" id="L139">    public static class Builder extends AbstractJavaGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L142">            return this;</span>
+        }
+
+        @Override
+        public SqlProviderGenerator build() {
+<span class="fc" id="L147">            return new SqlProviderGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

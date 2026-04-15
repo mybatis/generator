@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShellCallback.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">ShellCallback.java</span></div><h1>ShellCallback.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api;
+
+import java.io.File;
+
+import org.mybatis.generator.exception.ShellException;
+
+/**
+ * This interface defines methods that a shell should support to enable
+ * the generator to work. A &quot;shell&quot; is defined as the execution environment (i.e. an
+ * Eclipse plugin, and Ant task, a Maven Mojo, etc.)
+ *
+ * @author Jeff Butler
+ */
+public interface ShellCallback {
+
+    /**
+     * This method is called to ask the shell to resolve a project/package combination into a directory on the file
+     * system. This method is called repeatedly (once for each generated file), so it would be wise for an implementing
+     * class to cache results.
+     *
+     * &lt;p&gt;The returned &lt;code&gt;java.io.File&lt;/code&gt; object:
+     * &lt;ul&gt;
+     *   &lt;li&gt;Must be a directory&lt;/li&gt;
+     *   &lt;li&gt;Must exist&lt;/li&gt;
+     * &lt;/ul&gt;
+     *
+     * &lt;p&gt;The default shell callback interprets both values as directories and simply concatenates the two values to
+     * generate the default directory.
+     *
+     * @param targetProject
+     *            the target project
+     * @param targetPackage
+     *            the target package
+     *
+     * @return the directory (must exist)
+     *
+     * @throws ShellException
+     *             if the project/package cannot be resolved into a directory on the file system. In this case, the
+     *             generator will not save the file it is currently working on. The generator will add the exception
+     *             message to the list of warnings automatically.
+     */
+    File getDirectory(String targetProject, String targetPackage)
+            throws ShellException;
+
+    /**
+     * After all files are saved to the file system, this method is called
+     * once for each unique project affected by the generation run.
+     * This method is useful if your IDE needs to be informed that file
+     * system objects have been created or updated. If you are running
+     * outside an IDE, your implementation need not do anything in this
+     * method.
+     *
+     * @param project the project to be refreshed
+     */
+<span class="nc" id="L70">    default void refreshProject(String project) {}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DomWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.merge.xml</a> &gt; <span class="el_source">DomWriter.java</span></div><h1>DomWriter.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.merge.xml;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.exception.MergeException;
+import org.w3c.dom.Attr;
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.Comment;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.Element;
+import org.w3c.dom.EntityReference;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.ProcessingInstruction;
+import org.w3c.dom.Text;
+
+/**
+ * This class is used to generate a String representation of an XML document. It
+ * is very much based on the class dom.Writer from the Apache Xerces examples,
+ * but I've simplified and updated it.
+ *
+ * @author Andy Clark, IBM (Original work)
+ * @author Jeff Butler (derivation)
+ */
+public class DomWriter {
+    protected final PrintWriter printWriter;
+    protected final StringWriter sw;
+    protected final Document document;
+    protected boolean isXML11;
+
+<span class="fc" id="L51">    public DomWriter(Document document) {</span>
+<span class="fc" id="L52">        sw = new StringWriter();</span>
+<span class="fc" id="L53">        printWriter = new PrintWriter(sw);</span>
+<span class="fc" id="L54">        this.document = document;</span>
+<span class="fc" id="L55">    }</span>
+
+    public synchronized String getFormattedDocument() throws MergeException {
+<span class="fc" id="L58">        write(document);</span>
+<span class="fc" id="L59">        return sw.toString();</span>
+    }
+
+    protected Attr[] sortAttributes(@Nullable NamedNodeMap attrs) {
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        int len = (attrs != null) ? attrs.getLength() : 0;</span>
+<span class="fc" id="L64">        Attr[] array = new Attr[len];</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (int i = 0; i &lt; len; i++) {</span>
+<span class="fc" id="L66">            array[i] = (Attr) attrs.item(i);</span>
+        }
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (int i = 0; i &lt; len - 1; i++) {</span>
+<span class="fc" id="L69">            String name = array[i].getNodeName();</span>
+<span class="fc" id="L70">            int index = i;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">            for (int j = i + 1; j &lt; len; j++) {</span>
+<span class="fc" id="L72">                String curName = array[j].getNodeName();</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">                if (curName.compareTo(name) &lt; 0) {</span>
+<span class="nc" id="L74">                    name = curName;</span>
+<span class="nc" id="L75">                    index = j;</span>
+                }
+            }
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">            if (index != i) {</span>
+<span class="nc" id="L79">                Attr temp = array[i];</span>
+<span class="nc" id="L80">                array[i] = array[index];</span>
+<span class="nc" id="L81">                array[index] = temp;</span>
+            }
+        }
+
+<span class="fc" id="L85">        return array;</span>
+    }
+
+    protected void normalizeAndPrint(@Nullable String s, boolean isAttValue) {
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        int len = (s != null) ? s.length() : 0;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (int i = 0; i &lt; len; i++) {</span>
+<span class="fc" id="L91">            char c = s.charAt(i);</span>
+<span class="fc" id="L92">            normalizeAndPrint(c, isAttValue);</span>
+        }
+<span class="fc" id="L94">    }</span>
+
+    protected void normalizeAndPrint(char c, boolean isAttValue) {
+
+<span class="pc bpc" id="L98" title="5 of 7 branches missed.">        switch (c) {</span>
+        case '&lt;':
+<span class="nc" id="L100">            handleLessThan();</span>
+<span class="nc" id="L101">            break;</span>
+        case '&gt;':
+<span class="nc" id="L103">            handleGreaterThan();</span>
+<span class="nc" id="L104">            break;</span>
+        case '&amp;':
+<span class="nc" id="L106">            handleAmpersand();</span>
+<span class="nc" id="L107">            break;</span>
+        case '&quot;':
+<span class="nc" id="L109">            handleDoubleQuote(isAttValue);</span>
+<span class="nc" id="L110">            break;</span>
+        case '\r':
+<span class="nc" id="L112">            handleCarriageReturn();</span>
+<span class="nc" id="L113">            break;</span>
+        case '\n':
+<span class="fc" id="L115">            handleLineFeed();</span>
+<span class="fc" id="L116">            break;</span>
+        default:
+<span class="fc" id="L118">            handleDefault(c, isAttValue);</span>
+        }
+<span class="fc" id="L120">    }</span>
+
+    private void handleDefault(char c, boolean isAttValue) {
+        // In XML 1.1, control chars in the ranges [#x1-#x1F, #x7F-#x9F]
+        // must be escaped.
+        //
+        // Escape space characters that would be normalized to #x20 in
+        // attribute values
+        // when the document is reparsed.
+        //
+        // Escape NEL (0x85) and LSEP (0x2028) that appear in content
+        // if the document is XML 1.1, since they would be normalized to LF
+        // when the document is reparsed.
+<span class="pc bpc" id="L133" title="17 of 22 branches missed.">        if (isXML11</span>
+                &amp;&amp; ((c &gt;= 0x01 &amp;&amp; c &lt;= 0x1F &amp;&amp; c != 0x09 &amp;&amp; c != 0x0A)
+                        || (c &gt;= 0x7F &amp;&amp; c &lt;= 0x9F) || c == 0x2028)
+                || isAttValue &amp;&amp; (c == 0x09 || c == 0x0A)) {
+<span class="nc" id="L137">            printWriter.print(&quot;&amp;#x&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L138">            printWriter.print(Integer.toHexString(c).toUpperCase());</span>
+<span class="nc" id="L139">            printWriter.print(';');</span>
+        } else {
+<span class="fc" id="L141">            printWriter.print(c);</span>
+        }
+<span class="fc" id="L143">    }</span>
+
+    private void handleLineFeed() {
+        // If LF is part of the document's content, it
+        // should be printed back out with the system default
+        // line separator.  XML parsing forces \n only after a parse,
+        // but we should write it out as it was to avoid whitespace
+        // commits on some version control systems.
+<span class="fc" id="L151">        printWriter.print(System.lineSeparator());</span>
+<span class="fc" id="L152">    }</span>
+
+    private void handleCarriageReturn() {
+        // If CR is part of the document's content, it
+        // must be printed as a literal otherwise
+        // it would be normalized to LF when the document
+        // is reparsed.
+<span class="nc" id="L159">        printWriter.print(&quot;&amp;#xD;&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L160">    }</span>
+
+    private void handleDoubleQuote(boolean isAttValue) {
+        // A '&quot;' that appears in character data
+        // does not need to be escaped.
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (isAttValue) {</span>
+<span class="nc" id="L166">            printWriter.print(&quot;&amp;quot;&quot;); //$NON-NLS-1$</span>
+        } else {
+<span class="nc" id="L168">            printWriter.print('&quot;');</span>
+        }
+<span class="nc" id="L170">    }</span>
+
+    private void handleAmpersand() {
+<span class="nc" id="L173">        printWriter.print(&quot;&amp;amp;&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L174">    }</span>
+
+    private void handleGreaterThan() {
+<span class="nc" id="L177">        printWriter.print(&quot;&amp;gt;&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L178">    }</span>
+
+    private void handleLessThan() {
+<span class="nc" id="L181">        printWriter.print(&quot;&amp;lt;&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L182">    }</span>
+
+    /**
+     * Extracts the XML version from the Document.
+     *
+     * @param document
+     *            the document
+     * @return the version
+     */
+    protected String getVersion(Document document) {
+<span class="fc" id="L192">        return document.getXmlVersion();</span>
+    }
+
+    protected void writeAnyNode(Node node) throws MergeException {
+<span class="fc" id="L196">        short type = node.getNodeType();</span>
+<span class="pc bpc" id="L197" title="5 of 9 branches missed.">        switch (type) {</span>
+        case Node.DOCUMENT_NODE:
+<span class="nc" id="L199">            write((Document) node);</span>
+<span class="nc" id="L200">            break;</span>
+
+        case Node.DOCUMENT_TYPE_NODE:
+<span class="nc" id="L203">            write((DocumentType) node);</span>
+<span class="nc" id="L204">            break;</span>
+
+        case Node.ELEMENT_NODE:
+<span class="fc" id="L207">            write((Element) node);</span>
+<span class="fc" id="L208">            break;</span>
+
+        case Node.ENTITY_REFERENCE_NODE:
+<span class="nc" id="L211">            write((EntityReference) node);</span>
+<span class="nc" id="L212">            break;</span>
+
+        case Node.CDATA_SECTION_NODE:
+<span class="fc" id="L215">            write((CDATASection) node);</span>
+<span class="fc" id="L216">            break;</span>
+
+        case Node.TEXT_NODE:
+<span class="fc" id="L219">            write((Text) node);</span>
+<span class="fc" id="L220">            break;</span>
+
+        case Node.PROCESSING_INSTRUCTION_NODE:
+<span class="nc" id="L223">            write((ProcessingInstruction) node);</span>
+<span class="nc" id="L224">            break;</span>
+
+        case Node.COMMENT_NODE:
+<span class="fc" id="L227">            write((Comment) node);</span>
+<span class="fc" id="L228">            break;</span>
+
+        default:
+<span class="nc" id="L231">            throw new MergeException(getString(&quot;RuntimeError.18&quot;, Short.toString(type))); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L233">    }</span>
+
+    protected void write(Document node) throws MergeException {
+<span class="fc" id="L236">        isXML11 = &quot;1.1&quot;.equals(getVersion(node)); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">        if (isXML11) {</span>
+<span class="nc" id="L238">            printWriter.println(&quot;&lt;?xml version=\&quot;1.1\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;); //$NON-NLS-1$</span>
+        } else {
+<span class="fc" id="L240">            printWriter.println(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L242">        printWriter.flush();</span>
+<span class="fc" id="L243">        write(node.getDoctype());</span>
+<span class="fc" id="L244">        write(node.getDocumentElement());</span>
+<span class="fc" id="L245">    }</span>
+
+    protected void write(DocumentType node) {
+<span class="fc" id="L248">        printWriter.print(&quot;&lt;!DOCTYPE &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L249">        printWriter.print(node.getName());</span>
+<span class="fc" id="L250">        String publicId = node.getPublicId();</span>
+<span class="fc" id="L251">        String systemId = node.getSystemId();</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">        if (publicId != null) {</span>
+<span class="fc" id="L253">            printWriter.print(&quot; PUBLIC \&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L254">            printWriter.print(publicId);</span>
+<span class="fc" id="L255">            printWriter.print(&quot;\&quot; \&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L256">            printWriter.print(systemId);</span>
+<span class="fc" id="L257">            printWriter.print('\&quot;');</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">        } else if (systemId != null) {</span>
+<span class="nc" id="L259">            printWriter.print(&quot; SYSTEM \&quot;&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L260">            printWriter.print(systemId);</span>
+<span class="nc" id="L261">            printWriter.print('&quot;');</span>
+        }
+
+<span class="fc" id="L264">        String internalSubset = node.getInternalSubset();</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">        if (internalSubset != null) {</span>
+<span class="nc" id="L266">            printWriter.println(&quot; [&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L267">            printWriter.print(internalSubset);</span>
+<span class="nc" id="L268">            printWriter.print(']');</span>
+        }
+<span class="fc" id="L270">        printWriter.println('&gt;');</span>
+<span class="fc" id="L271">    }</span>
+
+    protected void write(Element node) throws MergeException {
+<span class="fc" id="L274">        printWriter.print('&lt;');</span>
+<span class="fc" id="L275">        printWriter.print(node.getNodeName());</span>
+<span class="fc" id="L276">        Attr[] attrs = sortAttributes(node.getAttributes());</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">        for (Attr attr : attrs) {</span>
+<span class="fc" id="L278">            printWriter.print(' ');</span>
+<span class="fc" id="L279">            printWriter.print(attr.getNodeName());</span>
+<span class="fc" id="L280">            printWriter.print(&quot;=\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L281">            normalizeAndPrint(attr.getNodeValue(), true);</span>
+<span class="fc" id="L282">            printWriter.print('&quot;');</span>
+        }
+
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        if (node.getChildNodes().getLength() == 0) {</span>
+<span class="fc" id="L286">            printWriter.print(&quot; /&gt;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L287">            printWriter.flush();</span>
+        } else {
+<span class="fc" id="L289">            printWriter.print('&gt;');</span>
+<span class="fc" id="L290">            printWriter.flush();</span>
+
+<span class="fc" id="L292">            Node child = node.getFirstChild();</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">            while (child != null) {</span>
+<span class="fc" id="L294">                writeAnyNode(child);</span>
+<span class="fc" id="L295">                child = child.getNextSibling();</span>
+            }
+
+<span class="fc" id="L298">            printWriter.print(&quot;&lt;/&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L299">            printWriter.print(node.getNodeName());</span>
+<span class="fc" id="L300">            printWriter.print('&gt;');</span>
+<span class="fc" id="L301">            printWriter.flush();</span>
+        }
+<span class="fc" id="L303">    }</span>
+
+    protected void write(EntityReference node) {
+<span class="nc" id="L306">        printWriter.print('&amp;');</span>
+<span class="nc" id="L307">        printWriter.print(node.getNodeName());</span>
+<span class="nc" id="L308">        printWriter.print(';');</span>
+<span class="nc" id="L309">        printWriter.flush();</span>
+<span class="nc" id="L310">    }</span>
+
+    protected void write(CDATASection node) {
+<span class="fc" id="L313">        printWriter.print(&quot;&lt;![CDATA[&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L314">        String data = node.getNodeValue();</span>
+        // XML parsers normalize line endings to '\n'. We should write
+        // it out as it was in the original to avoid whitespace commits
+        // on some version control systems
+<span class="pc bpc" id="L318" title="1 of 2 branches missed.">        int len = (data != null) ? data.length() : 0;</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">        for (int i = 0; i &lt; len; i++) {</span>
+<span class="fc" id="L320">            char c = data.charAt(i);</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">            if (c == '\n') {</span>
+<span class="fc" id="L322">                handleLineFeed();</span>
+            } else {
+<span class="fc" id="L324">                printWriter.print(c);</span>
+            }
+        }
+<span class="fc" id="L327">        printWriter.print(&quot;]]&gt;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L328">        printWriter.flush();</span>
+<span class="fc" id="L329">    }</span>
+
+    protected void write(Text node) {
+<span class="fc" id="L332">        normalizeAndPrint(node.getNodeValue(), false);</span>
+<span class="fc" id="L333">        printWriter.flush();</span>
+<span class="fc" id="L334">    }</span>
+
+    protected void write(ProcessingInstruction node) {
+<span class="nc" id="L337">        printWriter.print(&quot;&lt;?&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L338">        printWriter.print(node.getNodeName());</span>
+<span class="nc" id="L339">        String data = node.getNodeValue();</span>
+<span class="nc bnc" id="L340" title="All 4 branches missed.">        if (data != null &amp;&amp; !data.isEmpty()) {</span>
+<span class="nc" id="L341">            printWriter.print(' ');</span>
+<span class="nc" id="L342">            printWriter.print(data);</span>
+        }
+<span class="nc" id="L344">        printWriter.print(&quot;?&gt;&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L345">        printWriter.flush();</span>
+<span class="nc" id="L346">    }</span>
+
+    protected void write(Comment node) {
+<span class="fc" id="L349">        printWriter.print(&quot;&lt;!--&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L350">        String comment = node.getNodeValue();</span>
+<span class="pc bpc" id="L351" title="2 of 4 branches missed.">        if (comment != null &amp;&amp; !comment.isEmpty()) {</span>
+<span class="fc" id="L352">            normalizeAndPrint(comment, false);</span>
+        }
+<span class="fc" id="L354">        printWriter.print(&quot;--&gt;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L355">        printWriter.flush();</span>
+<span class="fc" id="L356">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

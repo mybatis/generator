@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KnownRuntime.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">KnownRuntime.java</span></div><h1>KnownRuntime.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.runtime.dynamicsql.java.JavaDynamicSqlRuntime;
+import org.mybatis.generator.runtime.dynamicsql.kotlin.KotlinDynamicSqlRuntime;
+import org.mybatis.generator.runtime.mybatis3.LegacyJavaRuntime;
+import org.mybatis.generator.runtime.mybatis3.LegacySimpleJavaRuntime;
+
+<span class="fc" id="L24">public enum KnownRuntime {</span>
+<span class="fc" id="L25">    MYBATIS3(&quot;MyBatis3&quot;, LegacyJavaRuntime.Builder.class.getName(), false, true),</span>
+<span class="fc" id="L26">    MYBATIS3_SIMPLE(&quot;MyBatis3Simple&quot;, LegacySimpleJavaRuntime.Builder.class.getName(), false, true),</span>
+<span class="fc" id="L27">    MYBATIS3_DYNAMIC_SQL(&quot;MyBatis3DynamicSql&quot;, JavaDynamicSqlRuntime.Builder.class.getName(), true, false),</span>
+<span class="fc" id="L28">    MYBATIS3_KOTLIN(&quot;MyBatis3Kotlin&quot;, KotlinDynamicSqlRuntime.Builder.class.getName(), true, false),</span>
+<span class="fc" id="L29">    UNKNOWN(&quot;Unknown&quot;, &quot;Unknown&quot;, false, false);</span>
+
+    private final String alias;
+    private final String builderClassName;
+    private final boolean isDynamicSqlBased;
+    private final boolean isLegacyMyBatis3Based;
+
+    public String getBuilderClassName() {
+<span class="fc" id="L37">        return builderClassName;</span>
+    }
+
+    public String getAlias() {
+<span class="fc" id="L41">        return alias;</span>
+    }
+
+    public boolean isDynamicSqlBased() {
+<span class="fc" id="L45">        return isDynamicSqlBased;</span>
+    }
+
+    public boolean isLegacyMyBatis3Based() {
+<span class="fc" id="L49">        return isLegacyMyBatis3Based;</span>
+    }
+
+<span class="fc" id="L52">    KnownRuntime(String alias, String builderClassName, boolean isDynamicSqlBased, boolean isLegacyMyBatis3Based) {</span>
+<span class="fc" id="L53">        this.alias = alias;</span>
+<span class="fc" id="L54">        this.builderClassName = builderClassName;</span>
+<span class="fc" id="L55">        this.isDynamicSqlBased = isDynamicSqlBased;</span>
+<span class="fc" id="L56">        this.isLegacyMyBatis3Based = isLegacyMyBatis3Based;</span>
+<span class="fc" id="L57">    }</span>
+
+    public static KnownRuntime getByAlias(@Nullable String alias) {
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for (KnownRuntime rt : values()) {</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">            if (rt.alias.equalsIgnoreCase(alias)) {</span>
+<span class="fc" id="L62">                return rt;</span>
+            }
+        }
+<span class="fc" id="L65">        return UNKNOWN;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

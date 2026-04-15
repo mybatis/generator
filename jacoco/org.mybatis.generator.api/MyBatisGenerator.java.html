@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyBatisGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">MyBatisGenerator.java</span></div><h1>MyBatisGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api;
+
+import static org.mybatis.generator.internal.util.ClassloaderUtility.getCustomClassloader;
+import static org.mybatis.generator.internal.util.StringUtility.mapStringValueOrElseGet;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.codegen.CalculatedContextValues;
+import org.mybatis.generator.codegen.GenerationEngine;
+import org.mybatis.generator.codegen.GenerationResults;
+import org.mybatis.generator.codegen.IntrospectionEngine;
+import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.config.Configuration;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.exception.InternalException;
+import org.mybatis.generator.exception.InvalidConfigurationException;
+import org.mybatis.generator.exception.MergeException;
+import org.mybatis.generator.exception.ShellException;
+import org.mybatis.generator.internal.DefaultShellCallback;
+import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.merge.java.JavaFileMerger;
+import org.mybatis.generator.merge.java.JavaMergerFactory;
+import org.mybatis.generator.merge.xml.XmlFileMergerJaxp;
+
+/**
+ * This class is the main interface to MyBatis generator. A typical execution of the tool involves these steps:
+ * &lt;ol&gt;
+ * &lt;li&gt;Create a Configuration object. The Configuration can be the result of a parsing the XML configuration file, or it
+ * can be created solely in Java.&lt;/li&gt;
+ * &lt;li&gt;Create a MyBatisGenerator object&lt;/li&gt;
+ * &lt;li&gt;Call one of the generate() methods&lt;/li&gt;
+ * &lt;/ol&gt;
+ *
+ * @author Jeff Butler
+ *
+ * @see org.mybatis.generator.config.xml.ConfigurationParser
+ */
+public class MyBatisGenerator {
+    private final Configuration configuration;
+    private final ShellCallback shellCallback;
+    private final ProgressCallback progressCallback;
+    private final Set&lt;String&gt; contextIds;
+    private final Set&lt;String&gt; fullyQualifiedTableNames;
+    private final JavaFileMerger javaFileMerger;
+    private final boolean isOverwriteEnabled;
+    private final boolean isJavaFileMergeEnabled;
+
+<span class="fc" id="L80">    private final List&lt;GenerationResults&gt; generationResultsList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L82">    private MyBatisGenerator(Builder builder) {</span>
+<span class="fc" id="L83">        configuration = Objects.requireNonNull(builder.configuration, getString(&quot;RuntimeError.2&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L84">        shellCallback = Objects.requireNonNullElseGet(builder.shellCallback, DefaultShellCallback::new);</span>
+<span class="fc" id="L85">        progressCallback = Objects.requireNonNullElseGet(builder.progressCallback, () -&gt; new ProgressCallback() {});</span>
+<span class="fc" id="L86">        fullyQualifiedTableNames = builder.fullyQualifiedTableNames;</span>
+<span class="fc" id="L87">        contextIds = builder.contextIds;</span>
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (builder.isJavaFileMergeEnabled) {</span>
+<span class="nc" id="L90">            isJavaFileMergeEnabled = true;</span>
+<span class="nc" id="L91">            javaFileMerger = JavaMergerFactory.getMerger(JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);</span>
+        } else {
+<span class="fc" id="L93">            isJavaFileMergeEnabled = false;</span>
+<span class="pc" id="L94">            javaFileMerger = (newContent, existingContent) -&gt; newContent;</span>
+        }
+
+<span class="fc" id="L97">        isOverwriteEnabled = builder.isOverwriteEnabled;</span>
+<span class="fc" id="L98">    }</span>
+
+    /**
+     * This is one of the main methods for generating code. This method is long-running, but progress can be provided
+     * and the method can be canceled through the ProgressCallback interface. This method will not write results to
+     * the disk. The generated objects can be retrieved from the getGeneratedJavaFiles(), getGeneratedKotlinFiles(),
+     * getGeneratedXmlFiles(), and getGeneratedGenericFiles() methods.
+     *
+     * @return any warnings created during the generation process
+     * @throws SQLException
+     *             the SQL exception
+     * @throws InterruptedException
+     *             if the method is canceled through the ProgressCallback
+     * @throws InvalidConfigurationException
+     *             if the specified configuration is invalid
+     */
+    public List&lt;String&gt; generateOnly() throws SQLException, InterruptedException, InvalidConfigurationException {
+<span class="fc" id="L115">        List&lt;String&gt; warnings = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L116">        generateFiles(warnings);</span>
+<span class="fc" id="L117">        progressCallback.done();</span>
+<span class="fc" id="L118">        return warnings;</span>
+    }
+
+    /**
+     * This is one of the main methods for generating code. This method is long-running, but progress can be provided
+     * and the method can be canceled through the ProgressCallback interface. This method will write results to
+     * the disk.
+     *
+     * @return any warnings created during the generation process
+     * @throws SQLException
+     *             the SQL exception
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     * @throws InterruptedException
+     *             if the method is canceled through the ProgressCallback
+     * @throws InvalidConfigurationException
+     *             if the specified configuration is invalid
+     */
+    public List&lt;String&gt; generateAndWrite() throws SQLException, IOException, InterruptedException,
+            InvalidConfigurationException {
+<span class="fc" id="L138">        List&lt;String&gt; warnings = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L139">        generateFiles(warnings);</span>
+<span class="fc" id="L140">        writeGeneratedFiles(warnings);</span>
+<span class="fc" id="L141">        progressCallback.done();</span>
+<span class="fc" id="L142">        return warnings;</span>
+    }
+
+    private void generateFiles(List&lt;String&gt; warnings) throws SQLException, InterruptedException,
+            InvalidConfigurationException {
+<span class="fc" id="L147">        configuration.validate();</span>
+<span class="fc" id="L148">        generationResultsList.clear();</span>
+<span class="fc" id="L149">        ObjectFactory.reset();</span>
+<span class="fc" id="L150">        RootClassInfo.reset();</span>
+
+<span class="fc" id="L152">        setupCustomClassloader();</span>
+<span class="fc" id="L153">        List&lt;Context&gt; contextsToRun = calculateContextsToRun();</span>
+<span class="fc" id="L154">        List&lt;CalculatedContextValues&gt; contextValuesList = calculateContextValues(contextsToRun, warnings);</span>
+<span class="fc" id="L155">        List&lt;ContextValuesAndTables&gt; contextValuesAndTablesList = runAllIntrospections(contextValuesList, warnings);</span>
+<span class="fc" id="L156">        List&lt;GenerationEngine&gt; generationEngines = createGenerationEngines(contextValuesAndTablesList, warnings);</span>
+<span class="fc" id="L157">        runGenerationEngines(generationEngines);</span>
+<span class="fc" id="L158">    }</span>
+
+    private void setupCustomClassloader() {
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (!configuration.getClassPathEntries().isEmpty()) {</span>
+<span class="nc" id="L162">            ClassLoader classLoader = getCustomClassloader(configuration.getClassPathEntries());</span>
+<span class="nc" id="L163">            ObjectFactory.addExternalClassLoader(classLoader);</span>
+        }
+<span class="fc" id="L165">    }</span>
+
+    private List&lt;Context&gt; calculateContextsToRun() {
+        List&lt;Context&gt; contextsToRun;
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        if (fullyQualifiedTableNames.isEmpty()) {</span>
+<span class="fc" id="L170">            contextsToRun = configuration.getContexts();</span>
+        } else {
+<span class="nc" id="L172">            contextsToRun = configuration.getContexts().stream()</span>
+<span class="nc" id="L173">                    .filter(c -&gt; contextIds.contains(c.getId()))</span>
+<span class="nc" id="L174">                    .toList();</span>
+        }
+
+<span class="fc" id="L177">        return contextsToRun;</span>
+    }
+
+    private List&lt;CalculatedContextValues&gt; calculateContextValues(List&lt;Context&gt; contextsToRun, List&lt;String&gt; warnings) {
+<span class="fc" id="L181">        return contextsToRun.stream()</span>
+<span class="fc" id="L182">                .map(c -&gt; createContextValues(c, warnings))</span>
+<span class="fc" id="L183">                .toList();</span>
+    }
+
+    private CalculatedContextValues createContextValues(Context context, List&lt;String&gt; warnings) {
+<span class="fc" id="L187">        return new CalculatedContextValues.Builder()</span>
+<span class="fc" id="L188">                .withContext(context)</span>
+<span class="fc" id="L189">                .withWarnings(warnings)</span>
+<span class="fc" id="L190">                .build();</span>
+    }
+
+    private List&lt;ContextValuesAndTables&gt; runAllIntrospections(List&lt;CalculatedContextValues&gt; contextValuesList,
+                                                              List&lt;String&gt; warnings)
+            throws SQLException, InterruptedException {
+<span class="fc" id="L196">        int totalSteps = contextValuesList.stream()</span>
+<span class="fc" id="L197">                .map(CalculatedContextValues::context)</span>
+<span class="fc" id="L198">                .mapToInt(Context::getIntrospectionSteps)</span>
+<span class="fc" id="L199">                .sum();</span>
+<span class="fc" id="L200">        progressCallback.introspectionStarted(totalSteps);</span>
+
+<span class="fc" id="L202">        List&lt;ContextValuesAndTables&gt; contextValuesAndTablesList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">        for (CalculatedContextValues contextValues : contextValuesList) {</span>
+<span class="fc" id="L204">            contextValuesAndTablesList.add(new ContextValuesAndTables(contextValues,</span>
+<span class="fc" id="L205">                    runContextIntrospection(fullyQualifiedTableNames, contextValues, warnings)));</span>
+<span class="fc" id="L206">        }</span>
+
+<span class="fc" id="L208">        return contextValuesAndTablesList;</span>
+    }
+
+    private List&lt;IntrospectedTable&gt; runContextIntrospection(Set&lt;String&gt; fullyQualifiedTableNames,
+                                                            CalculatedContextValues contextValues,
+                                                            List&lt;String&gt; warnings)
+            throws SQLException, InterruptedException {
+<span class="fc" id="L215">        return new IntrospectionEngine.Builder()</span>
+<span class="fc" id="L216">                .withContextValues(contextValues)</span>
+<span class="fc" id="L217">                .withFullyQualifiedTableNames(fullyQualifiedTableNames)</span>
+<span class="fc" id="L218">                .withWarnings(warnings)</span>
+<span class="fc" id="L219">                .withProgressCallback(progressCallback)</span>
+<span class="fc" id="L220">                .build()</span>
+<span class="fc" id="L221">                .introspectTables();</span>
+    }
+
+    private List&lt;GenerationEngine&gt; createGenerationEngines(List&lt;ContextValuesAndTables&gt; contextValuesAndTablesListList,
+                                                           List&lt;String&gt; warnings) {
+<span class="fc" id="L226">        return contextValuesAndTablesListList.stream()</span>
+<span class="fc" id="L227">                .map(c -&gt; createGenerationEngine(c, warnings))</span>
+<span class="fc" id="L228">                .toList();</span>
+    }
+
+    private GenerationEngine createGenerationEngine(ContextValuesAndTables contextValuesAndTables,
+                                                    List&lt;String&gt; warnings) {
+<span class="fc" id="L233">        return new GenerationEngine.Builder()</span>
+<span class="fc" id="L234">                .withContextValues(contextValuesAndTables.contextValues())</span>
+<span class="fc" id="L235">                .withProgressCallback(progressCallback)</span>
+<span class="fc" id="L236">                .withWarnings(warnings)</span>
+<span class="fc" id="L237">                .withIntrospectedTables(contextValuesAndTables.introspectedTables())</span>
+<span class="fc" id="L238">                .build();</span>
+    }
+
+    private void runGenerationEngines(List&lt;GenerationEngine&gt; generationEngines) throws InterruptedException {
+        // calculate the number of steps
+<span class="fc" id="L243">        int totalSteps = generationEngines.stream().mapToInt(GenerationEngine::getGenerationSteps).sum();</span>
+<span class="fc" id="L244">        progressCallback.generationStarted(totalSteps);</span>
+
+        // now run the generators
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        for (GenerationEngine generationEngine: generationEngines) {</span>
+<span class="fc" id="L248">            var generationResults = generationEngine.generate();</span>
+<span class="fc" id="L249">            generationResultsList.add(generationResults);</span>
+<span class="fc" id="L250">        }</span>
+<span class="fc" id="L251">    }</span>
+
+    private void writeGeneratedFiles(List&lt;String&gt; warnings) throws IOException, InterruptedException {
+<span class="fc" id="L254">        Set&lt;String&gt; projects = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L255">        int totalSteps = generationResultsList.stream().mapToInt(GenerationResults::getNumberOfGeneratedFiles).sum();</span>
+<span class="fc" id="L256">        progressCallback.saveStarted(totalSteps);</span>
+
+<span class="fc bfc" id="L258" title="All 2 branches covered.">        for (GenerationResults generationResults : generationResultsList) {</span>
+<span class="pc bpc" id="L259" title="1 of 2 branches missed.">            for (GeneratedXmlFile gxf : generationResults.generatedXmlFiles()) {</span>
+<span class="nc" id="L260">                projects.add(gxf.getTargetProject());</span>
+<span class="nc" id="L261">                writeGeneratedXmlFile(gxf, generationResults.xmlFormatter(), warnings);</span>
+<span class="nc" id="L262">            }</span>
+
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">            for (GeneratedJavaFile gjf : generationResults.generatedJavaFiles()) {</span>
+<span class="nc" id="L265">                projects.add(gjf.getTargetProject());</span>
+<span class="nc" id="L266">                writeGeneratedJavaFile(gjf, generationResults.javaFormatter(), generationResults.javaFileEncoding(),</span>
+                        warnings);
+<span class="nc" id="L268">            }</span>
+
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">            for (GeneratedKotlinFile gkf : generationResults.generatedKotlinFiles()) {</span>
+<span class="nc" id="L271">                projects.add(gkf.getTargetProject());</span>
+<span class="nc" id="L272">                writeGeneratedKotlinFile(gkf, generationResults.kotlinFormatter(),</span>
+<span class="nc" id="L273">                        generationResults.kotlinFileEncoding(), warnings);</span>
+<span class="nc" id="L274">            }</span>
+
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">            for (GenericGeneratedFile gf : generationResults.generatedGenericFiles()) {</span>
+<span class="nc" id="L277">                projects.add(gf.getTargetProject());</span>
+<span class="nc" id="L278">                writeGenericGeneratedFile(gf, warnings);</span>
+<span class="nc" id="L279">            }</span>
+<span class="fc" id="L280">        }</span>
+
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">        for (String project : projects) {</span>
+<span class="nc" id="L283">            shellCallback.refreshProject(project);</span>
+<span class="nc" id="L284">        }</span>
+<span class="fc" id="L285">    }</span>
+
+    private void writeGeneratedJavaFile(GeneratedJavaFile gf, JavaFormatter javaFormatter,
+                                        @Nullable String javaFileEncoding, List&lt;String&gt; warnings)
+            throws InterruptedException, IOException {
+<span class="nc" id="L290">        String source = javaFormatter.getFormattedContent(gf.getCompilationUnit());</span>
+<span class="nc" id="L291">        writeFile(source, javaFileEncoding, gf, warnings, isJavaFileMergeEnabled,</span>
+<span class="nc" id="L292">                (newContent, existingContent) -&gt; javaFileMerger.getMergedSource(newContent, existingContent,</span>
+                        javaFileEncoding));
+<span class="nc" id="L294">    }</span>
+
+    private void writeGeneratedKotlinFile(GeneratedKotlinFile gf, KotlinFormatter kotlinFormatter,
+                                          @Nullable String kotlinFileEncoding, List&lt;String&gt; warnings)
+            throws InterruptedException, IOException {
+<span class="nc" id="L299">        String source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());</span>
+<span class="nc" id="L300">        writeFile(source, kotlinFileEncoding, gf, warnings, false, Merger.noMerge());</span>
+<span class="nc" id="L301">    }</span>
+
+    private void writeGenericGeneratedFile(GenericGeneratedFile gf, List&lt;String&gt; warnings)
+            throws InterruptedException, IOException {
+<span class="nc" id="L305">        String source = gf.getFormattedContent();</span>
+<span class="nc" id="L306">        writeFile(source, gf.getFileEncoding().orElse(null), gf, warnings, false, Merger.noMerge());</span>
+<span class="nc" id="L307">    }</span>
+
+    private void writeGeneratedXmlFile(GeneratedXmlFile gf, XmlFormatter xmlFormatter, List&lt;String&gt; warnings)
+            throws InterruptedException, IOException {
+<span class="nc" id="L311">        String source = xmlFormatter.getFormattedContent(gf.getDocument());</span>
+<span class="nc" id="L312">        writeFile(source, &quot;UTF-8&quot;, gf, warnings, true, XmlFileMergerJaxp::getMergedSource); //$NON-NLS-1$</span>
+<span class="nc" id="L313">    }</span>
+
+    private void writeFile(String content, @Nullable String encoding, GeneratedFile gf, List&lt;String&gt; warnings,
+                           boolean mergeEnabled, Merger merger)
+            throws InterruptedException, IOException {
+        try {
+<span class="nc" id="L319">            File directory = shellCallback.getDirectory(gf.getTargetProject(), gf.getTargetPackage());</span>
+<span class="nc" id="L320">            Path targetFile = directory.toPath().resolve(gf.getFileName());</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">            if (Files.exists(targetFile)) {</span>
+<span class="nc bnc" id="L322" title="All 4 branches missed.">                if (mergeEnabled &amp;&amp; gf.isMergeable()) {</span>
+<span class="nc" id="L323">                    content = merger.apply(content, targetFile.toFile());</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">                } else if (isOverwriteEnabled) {</span>
+<span class="nc" id="L325">                    warnings.add(getString(&quot;Warning.11&quot;, targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$</span>
+                } else {
+<span class="nc" id="L327">                    targetFile = getUniqueFileName(directory, gf.getFileName());</span>
+<span class="nc" id="L328">                    warnings.add(getString(&quot;Warning.2&quot;, targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$</span>
+                }
+            }
+
+<span class="nc" id="L332">            progressCallback.checkCancel();</span>
+<span class="nc" id="L333">            progressCallback.startTask(getString(&quot;Progress.15&quot;, targetFile.toString())); //$NON-NLS-1$</span>
+<span class="nc" id="L334">            writeFile(targetFile.toFile(), content, encoding);</span>
+<span class="nc" id="L335">        } catch (ShellException e) {</span>
+<span class="nc" id="L336">            warnings.add(e.getMessage());</span>
+<span class="nc" id="L337">        } catch (MergeException e) {</span>
+<span class="nc" id="L338">            warnings.add(e.getMessage());</span>
+<span class="nc" id="L339">            warnings.addAll(e.getExtraMessages());</span>
+<span class="nc" id="L340">        }</span>
+<span class="nc" id="L341">    }</span>
+
+    /**
+     * Writes, or overwrites, the contents of the specified file.
+     *
+     * @param file
+     *            the file
+     * @param content
+     *            the content
+     * @param fileEncoding
+     *            the file encoding
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    private void writeFile(File file, String content, @Nullable String fileEncoding) throws IOException {
+<span class="nc" id="L356">        Charset cs = mapStringValueOrElseGet(fileEncoding, Charset::forName, Charset::defaultCharset);</span>
+<span class="nc" id="L357">        try (OutputStream outputStream = Files.newOutputStream(file.toPath(), StandardOpenOption.CREATE,</span>
+                StandardOpenOption.TRUNCATE_EXISTING)) {
+<span class="nc" id="L359">            try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, cs)) {</span>
+<span class="nc" id="L360">                try (BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter)) {</span>
+<span class="nc" id="L361">                    bufferedWriter.write(content);</span>
+                }
+            }
+        }
+<span class="nc" id="L365">    }</span>
+
+    /**
+     * Gets the unique file name.
+     *
+     * @param directory
+     *            the directory
+     * @param fileName
+     *            the file name
+     * @return the unique file name
+     */
+    private Path getUniqueFileName(File directory, String fileName) {
+<span class="nc" id="L377">        Path answer = null;</span>
+
+        // try up to 1000 times to generate a unique file name
+<span class="nc" id="L380">        StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L381" title="All 2 branches missed.">        for (int i = 1; i &lt; 1000; i++) {</span>
+<span class="nc" id="L382">            sb.setLength(0);</span>
+<span class="nc" id="L383">            sb.append(fileName);</span>
+<span class="nc" id="L384">            sb.append('.');</span>
+<span class="nc" id="L385">            sb.append(i);</span>
+
+<span class="nc" id="L387">            Path testFile = directory.toPath().resolve(sb.toString());</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">            if (Files.notExists(testFile)) {</span>
+<span class="nc" id="L389">                answer = testFile;</span>
+<span class="nc" id="L390">                break;</span>
+            }
+        }
+
+<span class="nc bnc" id="L394" title="All 2 branches missed.">        if (answer == null) {</span>
+<span class="nc" id="L395">            throw new InternalException(getString(&quot;RuntimeError.3&quot;, directory.getAbsolutePath())); //$NON-NLS-1$</span>
+        }
+
+<span class="nc" id="L398">        return answer;</span>
+    }
+
+    /**
+     * Returns the list of generated Java files after a call to one of the generate methods.
+     * This is useful if you prefer to process the generated files yourself and do not want
+     * the generator to write them to disk.
+     *
+     * @return the list of generated Java files
+     */
+    public List&lt;GeneratedJavaFile&gt; getGeneratedJavaFiles() {
+<span class="fc" id="L409">        return generationResultsList.stream()</span>
+<span class="fc" id="L410">                .map(GenerationResults::generatedJavaFiles)</span>
+<span class="fc" id="L411">                .flatMap(Collection::stream)</span>
+<span class="fc" id="L412">                .toList();</span>
+    }
+
+    /**
+     * Returns the list of generated Kotlin files after a call to one of the generate methods.
+     * This is useful if you prefer to process the generated files yourself and do not want
+     * the generator to write them to disk.
+     *
+     * @return the list of generated Kotlin files
+     */
+    public List&lt;GeneratedKotlinFile&gt; getGeneratedKotlinFiles() {
+<span class="fc" id="L423">        return generationResultsList.stream()</span>
+<span class="fc" id="L424">                .map(GenerationResults::generatedKotlinFiles)</span>
+<span class="fc" id="L425">                .flatMap(Collection::stream)</span>
+<span class="fc" id="L426">                .toList();</span>
+    }
+
+    /**
+     * Returns the list of generated XML files after a call to one of the generate methods.
+     * This is useful if you prefer to process the generated files yourself and do not want
+     * the generator to write them to disk.
+     *
+     * @return the list of generated XML files
+     */
+    public List&lt;GeneratedXmlFile&gt; getGeneratedXmlFiles() {
+<span class="fc" id="L437">        return generationResultsList.stream()</span>
+<span class="fc" id="L438">                .map(GenerationResults::generatedXmlFiles)</span>
+<span class="fc" id="L439">                .flatMap(Collection::stream)</span>
+<span class="fc" id="L440">                .toList();</span>
+    }
+
+    /**
+     * Returns the list of generated generic files after a call to one of the generate methods.
+     * This is useful if you prefer to process the generated files yourself and do not want
+     * the generator to write them to disk.
+     *
+     * &lt;p&gt;The list will be empty unless you have used a plugin that generates generic files
+     * or are using a custom runtime.
+     *
+     * @return the list of generated generic files
+     */
+    public List&lt;GenericGeneratedFile&gt; getGeneratedGenericFiles() {
+<span class="nc" id="L454">        return generationResultsList.stream()</span>
+<span class="nc" id="L455">                .map(GenerationResults::generatedGenericFiles)</span>
+<span class="nc" id="L456">                .flatMap(Collection::stream)</span>
+<span class="nc" id="L457">                .toList();</span>
+    }
+
+<span class="fc" id="L460">    private record ContextValuesAndTables(CalculatedContextValues contextValues,</span>
+                                          List&lt;IntrospectedTable&gt; introspectedTables) { }
+
+    @FunctionalInterface
+    private interface Merger {
+        String apply(String newContent, File existingContent) throws MergeException;
+
+        static Merger noMerge() {
+<span class="nc" id="L468">            return (newContent, existingContent) -&gt; newContent;</span>
+        }
+    }
+
+<span class="fc" id="L472">    public static class Builder {</span>
+        private @Nullable Configuration configuration;
+        private @Nullable ShellCallback shellCallback;
+        private @Nullable ProgressCallback progressCallback;
+<span class="fc" id="L476">        private final Set&lt;String&gt; contextIds = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L477">        private final Set&lt;String&gt; fullyQualifiedTableNames = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L478">        private boolean isOverwriteEnabled = false;</span>
+<span class="fc" id="L479">        private boolean isJavaFileMergeEnabled = false;</span>
+
+        public Builder withConfiguration(Configuration configuration) {
+<span class="fc" id="L482">            this.configuration = configuration;</span>
+<span class="fc" id="L483">            return this;</span>
+        }
+
+        public Builder withShellCallback(ShellCallback shellCallback) {
+<span class="fc" id="L487">            this.shellCallback = shellCallback;</span>
+<span class="fc" id="L488">            return this;</span>
+        }
+
+        public Builder withProgressCallback(@Nullable ProgressCallback progressCallback) {
+<span class="fc" id="L492">            this.progressCallback = progressCallback;</span>
+<span class="fc" id="L493">            return this;</span>
+        }
+
+        /**
+         * Set of context IDs to use in generation. Only the contexts with an id specified in this set will run.
+         * If the set is empty, then all contexts are run.
+         *
+         * @param contextIds
+         *            a set of contextIds to use in code generation
+         *
+         * @return this builder
+         */
+        public Builder withContextIds(Set&lt;String&gt; contextIds) {
+<span class="fc" id="L506">            this.contextIds.addAll(contextIds);</span>
+<span class="fc" id="L507">            return this;</span>
+        }
+
+        /**
+         *  Set of table names to generate. The elements of the set must be Strings that exactly match what's
+         *  specified in the configuration. For example, if a table name = &quot;foo&quot; and schema = &quot;bar&quot;, then the fully
+         *  qualified table name is &quot;foo.bar&quot;. If the Set is empty, then all tables in the configuration
+         *  will be used for code generation.
+         *
+         * @param fullyQualifiedTableNames
+         *            a set of table names to use in code generation
+         *
+         * @return this builder
+         */
+        public Builder withFullyQualifiedTableNames(Set&lt;String&gt; fullyQualifiedTableNames) {
+<span class="fc" id="L522">            this.fullyQualifiedTableNames.addAll(fullyQualifiedTableNames);</span>
+<span class="fc" id="L523">            return this;</span>
+        }
+
+        /**
+         * If true, then newly generated files will overwrite existing files if there is a collision.
+         * If false, then newly generated files will be written with a unique name when there is a collision.
+         *
+         * &lt;p&gt;The default is &lt;code&gt;false&lt;/code&gt;&lt;/p&gt;
+         *
+         * @param overwriteEnabled where newly generated files should overwrite existing files if there is a collision
+         * @return this builder
+         */
+        public Builder withOverwriteEnabled(boolean overwriteEnabled) {
+<span class="fc" id="L536">            this.isOverwriteEnabled = overwriteEnabled;</span>
+<span class="fc" id="L537">            return this;</span>
+        }
+
+        /**
+         * If true, then newly generated Java files will be merged if they collide with existing files.
+         * If false, then the {@link #withOverwriteEnabled(boolean)} value governs what happens on a collision.
+         *
+         * &lt;p&gt;The default is &lt;code&gt;false&lt;/code&gt;&lt;/p&gt;
+         *
+         * @param javaFileMergeEnabled where the Java file merger support should be enabled
+         * @return this builder
+         */
+        public Builder withJavaFileMergeEnabled(boolean javaFileMergeEnabled) {
+<span class="fc" id="L550">            this.isJavaFileMergeEnabled = javaFileMergeEnabled;</span>
+<span class="fc" id="L551">            return this;</span>
+        }
+
+        public MyBatisGenerator build() {
+<span class="fc" id="L555">            return new MyBatisGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

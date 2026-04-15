@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecordWithBLOBsGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.model</a> &gt; <span class="el_source">RecordWithBLOBsGenerator.java</span></div><h1>RecordWithBLOBsGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.model;
+
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansField;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansGetter;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansSetter;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.mybatis.generator.api.FullyQualifiedTable;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.Plugin;
+import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.runtime.common.RootClassAndInterfaceUtility;
+
+public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
+
+    protected RecordWithBLOBsGenerator(Builder builder) {
+<span class="fc" id="L44">        super(builder);</span>
+<span class="fc" id="L45">    }</span>
+
+    @Override
+    public List&lt;CompilationUnit&gt; getCompilationUnits() {
+<span class="fc" id="L49">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
+<span class="fc" id="L50">        progressCallback.startTask(getString(&quot;Progress.9&quot;, table.toString())); //$NON-NLS-1$</span>
+
+<span class="fc" id="L52">        TopLevelClass topLevelClass = new TopLevelClass(introspectedTable.getRecordWithBLOBsType());</span>
+<span class="fc" id="L53">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L54">        commentGenerator.addJavaFileComment(topLevelClass);</span>
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (introspectedTable.getRules().generateBaseRecordClass()) {</span>
+<span class="fc" id="L57">            topLevelClass.setSuperClass(introspectedTable.getBaseRecordType());</span>
+        } else {
+<span class="fc" id="L59">            topLevelClass.setSuperClass(introspectedTable.getPrimaryKeyType());</span>
+        }
+<span class="fc" id="L61">        commentGenerator.addModelClassComment(topLevelClass, introspectedTable);</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (introspectedTable.isConstructorBased()) {</span>
+<span class="fc" id="L64">            addParameterizedConstructor(topLevelClass);</span>
+
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">            if (!introspectedTable.isImmutable()) {</span>
+<span class="nc" id="L67">                Method method = topLevelClass.generateBasicConstructor();</span>
+<span class="nc" id="L68">                commentGenerator.addGeneralMethodAnnotation(method, introspectedTable,</span>
+<span class="nc" id="L69">                        topLevelClass.getImportedTypes());</span>
+<span class="nc" id="L70">                topLevelClass.addMethod(method);</span>
+            }
+        }
+
+<span class="fc" id="L74">        Optional&lt;RootClassInfo&gt; rootClassInfo = RootClassAndInterfaceUtility.getRootClass(introspectedTable)</span>
+<span class="pc" id="L75">                .map(rc -&gt; RootClassInfo.getInstance(rc, warnings));</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getBLOBColumns()) {</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">            if (rootClassInfo.map(rci -&gt; rci.containsProperty(introspectedColumn)).orElse(false)) {</span>
+<span class="nc" id="L78">                continue;</span>
+            }
+
+<span class="fc" id="L81">            Field field = getJavaBeansField(introspectedColumn, commentGenerator, introspectedTable,</span>
+<span class="fc" id="L82">                    topLevelClass.getImportedTypes());</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">            if (pluginAggregator.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable,</span>
+                    Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
+<span class="fc" id="L85">                topLevelClass.addField(field);</span>
+<span class="fc" id="L86">                topLevelClass.addImportedType(field.getType());</span>
+            }
+
+<span class="fc" id="L89">            Method method = getJavaBeansGetter(introspectedColumn, commentGenerator, introspectedTable,</span>
+<span class="fc" id="L90">                    topLevelClass.getImportedTypes());</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">            if (pluginAggregator.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn,</span>
+                    introspectedTable, Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
+<span class="fc" id="L93">                topLevelClass.addMethod(method);</span>
+            }
+
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            if (!introspectedTable.isImmutable()) {</span>
+<span class="fc" id="L97">                method = getJavaBeansSetter(introspectedColumn, commentGenerator, introspectedTable,</span>
+<span class="fc" id="L98">                        topLevelClass.getImportedTypes());</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                if (pluginAggregator.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn,</span>
+                        introspectedTable, Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
+<span class="fc" id="L101">                    topLevelClass.addMethod(method);</span>
+                }
+            }
+<span class="fc" id="L104">        }</span>
+
+<span class="fc" id="L106">        List&lt;CompilationUnit&gt; answer = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (pluginAggregator.modelRecordWithBLOBsClassGenerated(topLevelClass, introspectedTable)) {</span>
+<span class="fc" id="L108">            answer.add(topLevelClass);</span>
+        }
+<span class="fc" id="L110">        return answer;</span>
+    }
+
+    private void addParameterizedConstructor(TopLevelClass topLevelClass) {
+<span class="fc" id="L114">        Method method = new Method(topLevelClass.getType().getShortName());</span>
+<span class="fc" id="L115">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L116">        method.setConstructor(true);</span>
+<span class="fc" id="L117">        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());</span>
+
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {</span>
+<span class="fc" id="L120">            method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),</span>
+<span class="fc" id="L121">                    introspectedColumn.getJavaProperty()));</span>
+<span class="fc" id="L122">            topLevelClass.addImportedType(introspectedColumn.getFullyQualifiedJavaType());</span>
+<span class="fc" id="L123">        }</span>
+
+<span class="fc" id="L125">        boolean comma = false;</span>
+<span class="fc" id="L126">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L127">        sb.append(&quot;super(&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            if (comma) {</span>
+<span class="fc" id="L130">                sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
+            } else {
+<span class="fc" id="L132">                comma = true;</span>
+            }
+<span class="fc" id="L134">            sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L135">        }</span>
+<span class="fc" id="L136">        sb.append(&quot;);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L137">        method.addBodyLine(sb.toString());</span>
+
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getBLOBColumns()) {</span>
+<span class="fc" id="L140">            method.addBodyLine(JavaBeansUtil.generateFieldSetterForConstructor(introspectedColumn));</span>
+<span class="fc" id="L141">        }</span>
+
+<span class="fc" id="L143">        topLevelClass.addMethod(method);</span>
+<span class="fc" id="L144">    }</span>
+
+<span class="fc" id="L146">    public static class Builder extends AbstractJavaGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L149">            return this;</span>
+        }
+
+        @Override
+        public RecordWithBLOBsGenerator build() {
+<span class="fc" id="L154">            return new RecordWithBLOBsGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

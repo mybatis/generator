@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XMLMapperGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.mybatis3.xmlmapper</a> &gt; <span class="el_source">XMLMapperGenerator.java</span></div><h1>XMLMapperGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.mybatis3.xmlmapper;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.FullyQualifiedTable;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.Document;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.codegen.XmlConstants;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.BaseColumnListElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.BlobColumnListElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.CountByExampleElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.DeleteByExampleElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.DeleteByPrimaryKeyElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.ExampleWhereClauseElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.InsertElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.InsertSelectiveElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.ResultMapWithBLOBsElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.ResultMapWithoutBLOBsElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.SelectByExampleWithBLOBsElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.SelectByExampleWithoutBLOBsElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.SelectByPrimaryKeyElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByExampleSelectiveElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByExampleWithBLOBsElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByExampleWithoutBLOBsElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByPrimaryKeySelectiveElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithBLOBsElementGenerator;
+import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithoutBLOBsElementGenerator;
+
+public class XMLMapperGenerator extends AbstractXmlGenerator {
+    protected XMLMapperGenerator(Builder builder) {
+<span class="fc" id="L49">        super(builder);</span>
+<span class="fc" id="L50">    }</span>
+
+    protected XmlElement getSqlMapElement() {
+<span class="fc" id="L53">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
+<span class="fc" id="L54">        progressCallback.startTask(getString(&quot;Progress.12&quot;, table.toString())); //$NON-NLS-1$</span>
+<span class="fc" id="L55">        XmlElement answer = new XmlElement(&quot;mapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L56">        answer.addAttribute(new Attribute(&quot;namespace&quot;, introspectedTable.getMyBatis3SqlMapNamespace())); //$NON-NLS-1$</span>
+
+<span class="fc" id="L58">        commentGenerator.addRootComment(answer);</span>
+
+<span class="fc" id="L60">        addResultMapWithoutBLOBsElement(answer);</span>
+<span class="fc" id="L61">        addResultMapWithBLOBsElement(answer);</span>
+<span class="fc" id="L62">        addExampleWhereClauseElement(answer);</span>
+<span class="fc" id="L63">        addMyBatis3UpdateByExampleWhereClauseElement(answer);</span>
+<span class="fc" id="L64">        addBaseColumnListElement(answer);</span>
+<span class="fc" id="L65">        addBlobColumnListElement(answer);</span>
+<span class="fc" id="L66">        addSelectByExampleWithBLOBsElement(answer);</span>
+<span class="fc" id="L67">        addSelectByExampleWithoutBLOBsElement(answer);</span>
+<span class="fc" id="L68">        addSelectByPrimaryKeyElement(answer);</span>
+<span class="fc" id="L69">        addDeleteByPrimaryKeyElement(answer);</span>
+<span class="fc" id="L70">        addDeleteByExampleElement(answer);</span>
+<span class="fc" id="L71">        addInsertElement(answer);</span>
+<span class="fc" id="L72">        addInsertSelectiveElement(answer);</span>
+<span class="fc" id="L73">        addCountByExampleElement(answer);</span>
+<span class="fc" id="L74">        addUpdateByExampleSelectiveElement(answer);</span>
+<span class="fc" id="L75">        addUpdateByExampleWithBLOBsElement(answer);</span>
+<span class="fc" id="L76">        addUpdateByExampleWithoutBLOBsElement(answer);</span>
+<span class="fc" id="L77">        addUpdateByPrimaryKeySelectiveElement(answer);</span>
+<span class="fc" id="L78">        addUpdateByPrimaryKeyWithBLOBsElement(answer);</span>
+<span class="fc" id="L79">        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);</span>
+
+<span class="fc" id="L81">        return answer;</span>
+    }
+
+    protected void addResultMapWithoutBLOBsElement(XmlElement parentElement) {
+<span class="fc" id="L85">        initializeSubBuilder(new ResultMapWithoutBLOBsElementGenerator.Builder())</span>
+<span class="fc" id="L86">                .isSimple(false)</span>
+<span class="fc" id="L87">                .build()</span>
+<span class="fc" id="L88">                .execute(parentElement);</span>
+<span class="fc" id="L89">    }</span>
+
+    protected void addResultMapWithBLOBsElement(XmlElement parentElement) {
+<span class="fc" id="L92">        initializeSubBuilder(new ResultMapWithBLOBsElementGenerator.Builder())</span>
+<span class="fc" id="L93">                .build()</span>
+<span class="fc" id="L94">                .execute(parentElement);</span>
+<span class="fc" id="L95">    }</span>
+
+    protected void addExampleWhereClauseElement(XmlElement parentElement) {
+<span class="fc" id="L98">        initializeSubBuilder(new ExampleWhereClauseElementGenerator.Builder())</span>
+<span class="fc" id="L99">                .isForUpdateByExample(false)</span>
+<span class="fc" id="L100">                .build()</span>
+<span class="fc" id="L101">                .execute(parentElement);</span>
+<span class="fc" id="L102">    }</span>
+
+    protected void addMyBatis3UpdateByExampleWhereClauseElement(XmlElement parentElement) {
+<span class="fc" id="L105">        initializeSubBuilder(new ExampleWhereClauseElementGenerator.Builder())</span>
+<span class="fc" id="L106">                .isForUpdateByExample(true)</span>
+<span class="fc" id="L107">                .build()</span>
+<span class="fc" id="L108">                .execute(parentElement);</span>
+<span class="fc" id="L109">    }</span>
+
+    protected void addBaseColumnListElement(XmlElement parentElement) {
+<span class="fc" id="L112">        initializeSubBuilder(new BaseColumnListElementGenerator.Builder())</span>
+<span class="fc" id="L113">                .build()</span>
+<span class="fc" id="L114">                .execute(parentElement);</span>
+<span class="fc" id="L115">    }</span>
+
+    protected void addBlobColumnListElement(XmlElement parentElement) {
+<span class="fc" id="L118">        initializeSubBuilder(new BlobColumnListElementGenerator.Builder())</span>
+<span class="fc" id="L119">                .build()</span>
+<span class="fc" id="L120">                .execute(parentElement);</span>
+<span class="fc" id="L121">    }</span>
+
+    protected void addSelectByExampleWithoutBLOBsElement(XmlElement parentElement) {
+<span class="fc" id="L124">        initializeSubBuilder(new SelectByExampleWithoutBLOBsElementGenerator.Builder())</span>
+<span class="fc" id="L125">                .build()</span>
+<span class="fc" id="L126">                .execute(parentElement);</span>
+<span class="fc" id="L127">    }</span>
+
+    protected void addSelectByExampleWithBLOBsElement(XmlElement parentElement) {
+<span class="fc" id="L130">        initializeSubBuilder(new SelectByExampleWithBLOBsElementGenerator.Builder())</span>
+<span class="fc" id="L131">                .build()</span>
+<span class="fc" id="L132">                .execute(parentElement);</span>
+<span class="fc" id="L133">    }</span>
+
+    protected void addSelectByPrimaryKeyElement(XmlElement parentElement) {
+<span class="fc" id="L136">        initializeSubBuilder(new SelectByPrimaryKeyElementGenerator.Builder())</span>
+<span class="fc" id="L137">                .build()</span>
+<span class="fc" id="L138">                .execute(parentElement);</span>
+<span class="fc" id="L139">    }</span>
+
+    protected void addDeleteByExampleElement(XmlElement parentElement) {
+<span class="fc" id="L142">        initializeSubBuilder(new DeleteByExampleElementGenerator.Builder())</span>
+<span class="fc" id="L143">                .build()</span>
+<span class="fc" id="L144">                .execute(parentElement);</span>
+<span class="fc" id="L145">    }</span>
+
+    protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
+<span class="fc" id="L148">        initializeSubBuilder(new DeleteByPrimaryKeyElementGenerator.Builder())</span>
+<span class="fc" id="L149">                .isSimple(false)</span>
+<span class="fc" id="L150">                .build()</span>
+<span class="fc" id="L151">                .execute(parentElement);</span>
+<span class="fc" id="L152">    }</span>
+
+    protected void addInsertElement(XmlElement parentElement) {
+<span class="fc" id="L155">        initializeSubBuilder(new InsertElementGenerator.Builder())</span>
+<span class="fc" id="L156">                .isSimple(false)</span>
+<span class="fc" id="L157">                .build()</span>
+<span class="fc" id="L158">                .execute(parentElement);</span>
+<span class="fc" id="L159">    }</span>
+
+    protected void addInsertSelectiveElement(XmlElement parentElement) {
+<span class="fc" id="L162">        initializeSubBuilder(new InsertSelectiveElementGenerator.Builder())</span>
+<span class="fc" id="L163">                .build()</span>
+<span class="fc" id="L164">                .execute(parentElement);</span>
+<span class="fc" id="L165">    }</span>
+
+    protected void addCountByExampleElement(XmlElement parentElement) {
+<span class="fc" id="L168">        initializeSubBuilder(new CountByExampleElementGenerator.Builder())</span>
+<span class="fc" id="L169">                .build()</span>
+<span class="fc" id="L170">                .execute(parentElement);</span>
+<span class="fc" id="L171">    }</span>
+
+    protected void addUpdateByExampleSelectiveElement(XmlElement parentElement) {
+<span class="fc" id="L174">        initializeSubBuilder(new UpdateByExampleSelectiveElementGenerator.Builder())</span>
+<span class="fc" id="L175">                .build()</span>
+<span class="fc" id="L176">                .execute(parentElement);</span>
+<span class="fc" id="L177">    }</span>
+
+    protected void addUpdateByExampleWithBLOBsElement(XmlElement parentElement) {
+<span class="fc" id="L180">        initializeSubBuilder(new UpdateByExampleWithBLOBsElementGenerator.Builder())</span>
+<span class="fc" id="L181">                .build()</span>
+<span class="fc" id="L182">                .execute(parentElement);</span>
+<span class="fc" id="L183">    }</span>
+
+    protected void addUpdateByExampleWithoutBLOBsElement(XmlElement parentElement) {
+<span class="fc" id="L186">        initializeSubBuilder(new UpdateByExampleWithoutBLOBsElementGenerator.Builder())</span>
+<span class="fc" id="L187">                .build()</span>
+<span class="fc" id="L188">                .execute(parentElement);</span>
+<span class="fc" id="L189">    }</span>
+
+    protected void addUpdateByPrimaryKeySelectiveElement(XmlElement parentElement) {
+<span class="fc" id="L192">        initializeSubBuilder(new UpdateByPrimaryKeySelectiveElementGenerator.Builder())</span>
+<span class="fc" id="L193">                .build()</span>
+<span class="fc" id="L194">                .execute(parentElement);</span>
+<span class="fc" id="L195">    }</span>
+
+    protected void addUpdateByPrimaryKeyWithBLOBsElement(XmlElement parentElement) {
+<span class="fc" id="L198">        initializeSubBuilder(new UpdateByPrimaryKeyWithBLOBsElementGenerator.Builder())</span>
+<span class="fc" id="L199">                .build()</span>
+<span class="fc" id="L200">                .execute(parentElement);</span>
+<span class="fc" id="L201">    }</span>
+
+    protected void addUpdateByPrimaryKeyWithoutBLOBsElement(XmlElement parentElement) {
+<span class="fc" id="L204">        initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder())</span>
+<span class="fc" id="L205">                .isSimple(false)</span>
+<span class="fc" id="L206">                .build()</span>
+<span class="fc" id="L207">                .execute(parentElement);</span>
+<span class="fc" id="L208">    }</span>
+
+    @Override
+    public @Nullable Document getDocument() {
+<span class="fc" id="L212">        Document document = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,</span>
+<span class="fc" id="L213">                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, getSqlMapElement());</span>
+
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">        if (!pluginAggregator.sqlMapDocumentGenerated(document, introspectedTable)) {</span>
+<span class="nc" id="L216">            document = null;</span>
+        }
+
+<span class="fc" id="L219">        return document;</span>
+    }
+
+<span class="fc" id="L222">    public static class Builder extends AbstractXmlGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L225">            return this;</span>
+        }
+
+        @Override
+        public AbstractXmlGenerator build() {
+<span class="fc" id="L230">            return new XMLMapperGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

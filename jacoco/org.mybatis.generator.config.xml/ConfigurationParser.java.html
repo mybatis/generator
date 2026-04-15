@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigurationParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config.xml</a> &gt; <span class="el_source">ConfigurationParser.java</span></div><h1>ConfigurationParser.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.config.xml;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.codegen.XmlConstants;
+import org.mybatis.generator.config.Configuration;
+import org.mybatis.generator.exception.XMLParserException;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
+public class ConfigurationParser {
+<span class="fc" id="L48">    private final List&lt;String&gt; warnings = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L49">    private final List&lt;String&gt; parseErrors = new ArrayList&lt;&gt;();</span>
+    private final @Nullable Properties extraProperties;
+
+    public ConfigurationParser() {
+<span class="fc" id="L53">        this(null);</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * This constructor accepts a properties object which may be used to specify
+     * an additional property set.  Typically, this property set will be Ant or Maven properties
+     * specified in the build.xml file or the POM.
+     *
+     * &lt;p&gt;If there are name collisions between the different property sets, they will be
+     * resolved in this order:
+     *
+     * &lt;ol&gt;
+     *   &lt;li&gt;System properties take the highest precedence&lt;/li&gt;
+     *   &lt;li&gt;Properties specified in the &amp;lt;properties&amp;gt; configuration
+     *       element are next&lt;/li&gt;
+     *   &lt;li&gt;Properties specified in this &quot;extra&quot; property set are
+     *       the lowest precedence.&lt;/li&gt;
+     * &lt;/ol&gt;
+     *
+     * @param extraProperties an (optional) set of properties used to resolve property
+     *     references in the configuration file
+     */
+<span class="fc" id="L75">    public ConfigurationParser(@Nullable Properties extraProperties) {</span>
+<span class="fc" id="L76">        this.extraProperties = extraProperties;</span>
+<span class="fc" id="L77">    }</span>
+
+    public List&lt;String&gt; getWarnings() {
+<span class="fc" id="L80">        return Collections.unmodifiableList(warnings);</span>
+    }
+
+    public Configuration parseConfiguration(File inputFile) throws IOException, XMLParserException {
+<span class="fc" id="L84">        try (BufferedReader fr = Files.newBufferedReader(inputFile.toPath())) {</span>
+<span class="fc" id="L85">            return parseConfiguration(fr);</span>
+        }
+    }
+
+    public Configuration parseConfiguration(Reader reader) throws IOException, XMLParserException {
+<span class="fc" id="L90">        InputSource is = new InputSource(reader);</span>
+<span class="fc" id="L91">        return parseConfiguration(is);</span>
+    }
+
+    public Configuration parseConfiguration(InputStream inputStream) throws IOException, XMLParserException {
+<span class="fc" id="L95">        InputSource is = new InputSource(inputStream);</span>
+<span class="fc" id="L96">        return parseConfiguration(is);</span>
+    }
+
+    private Configuration parseConfiguration(InputSource inputSource) throws IOException, XMLParserException {
+<span class="fc" id="L100">        parseErrors.clear();</span>
+<span class="fc" id="L101">        warnings.clear();</span>
+
+        try {
+<span class="fc" id="L104">            Document document = basicParse(inputSource);</span>
+
+<span class="pc bpc" id="L106" title="1 of 4 branches missed.">            if (document == null || !parseErrors.isEmpty()) {</span>
+<span class="fc" id="L107">                throw new XMLParserException(getString(&quot;RuntimeError.31&quot;), parseErrors); //$NON-NLS-1$</span>
+            }
+
+            Configuration config;
+<span class="fc" id="L111">            Element rootNode = document.getDocumentElement();</span>
+<span class="fc" id="L112">            DocumentType docType = document.getDoctype();</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">            if (rootNode.getNodeType() == Node.ELEMENT_NODE</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">                    &amp;&amp; docType.getPublicId().equals(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {</span>
+<span class="fc" id="L115">                config = parseMyBatisGeneratorConfiguration(rootNode);</span>
+            } else {
+<span class="nc" id="L117">                throw new XMLParserException(getString(&quot;RuntimeError.5&quot;)); //$NON-NLS-1$</span>
+            }
+
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">            if (!parseErrors.isEmpty()) {</span>
+<span class="nc" id="L121">                throw new XMLParserException(getString(&quot;RuntimeError.31&quot;), parseErrors); //$NON-NLS-1$</span>
+            }
+
+<span class="fc" id="L124">            return config;</span>
+<span class="nc" id="L125">        } catch (ParserConfigurationException e) {</span>
+<span class="nc" id="L126">            throw new XMLParserException(e.getMessage(), e, parseErrors);</span>
+        }
+    }
+
+    private @Nullable Document basicParse(InputSource inputSource) throws IOException, ParserConfigurationException,
+            XMLParserException {
+<span class="fc" id="L132">        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span>
+<span class="fc" id="L133">        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, &quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L134">        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, &quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L135">        factory.setValidating(true);</span>
+
+<span class="fc" id="L137">        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);</span>
+<span class="fc" id="L138">        DocumentBuilder builder = factory.newDocumentBuilder();</span>
+<span class="fc" id="L139">        builder.setEntityResolver(new ParserEntityResolver());</span>
+
+<span class="fc" id="L141">        ParserErrorHandler handler = new ParserErrorHandler(warnings, parseErrors);</span>
+<span class="fc" id="L142">        builder.setErrorHandler(handler);</span>
+
+<span class="fc" id="L144">        Document document = null;</span>
+        try {
+<span class="fc" id="L146">            document = builder.parse(inputSource);</span>
+<span class="nc" id="L147">        } catch (SAXParseException e) {</span>
+<span class="nc" id="L148">            throw new XMLParserException(e.getMessage(), e, parseErrors);</span>
+<span class="nc" id="L149">        } catch (SAXException e) {</span>
+<span class="nc" id="L150">            parseErrors.add(e.getMessage());</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">            if (e.getException() != null) {</span>
+<span class="nc" id="L152">                parseErrors.add(e.getException().getMessage());</span>
+            }
+<span class="fc" id="L154">        }</span>
+
+<span class="fc" id="L156">        return document;</span>
+    }
+
+    private Configuration parseMyBatisGeneratorConfiguration(Element rootNode) throws XMLParserException {
+<span class="fc" id="L160">        MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(extraProperties, warnings);</span>
+<span class="fc" id="L161">        return parser.parseConfiguration(rootNode);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinDynamicSqlSupportClassGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamicsql.kotlin</a> &gt; <span class="el_source">KotlinDynamicSqlSupportClassGenerator.java</span></div><h1>KotlinDynamicSqlSupportClassGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamicsql.kotlin;
+
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForKotlin;
+import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
+
+import java.util.List;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
+import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
+import org.mybatis.generator.codegen.AbstractGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.internal.util.messages.Messages;
+
+public class KotlinDynamicSqlSupportClassGenerator extends AbstractGenerator {
+    private final KotlinFile kotlinFile;
+    private final KotlinType innerClass;
+    private final KotlinType outerObject;
+    private final KotlinProperty tableProperty;
+    private final boolean useSnakeCase;
+
+    public KotlinDynamicSqlSupportClassGenerator(Builder builder) {
+<span class="fc" id="L44">        super(builder);</span>
+<span class="fc" id="L45">        useSnakeCase = introspectedTable</span>
+<span class="fc" id="L46">                .findTableOrClientGeneratorPropertyAsBoolean(PropertyRegistry.ANY_USE_SNAKE_CASE_IDENTIFIERS);</span>
+
+<span class="fc" id="L48">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatisDynamicSqlSupportType());</span>
+
+<span class="fc" id="L50">        kotlinFile = buildBasicFile(type);</span>
+
+<span class="fc" id="L52">        outerObject = buildOuterObject(kotlinFile, type);</span>
+
+<span class="fc" id="L54">        tableProperty = calculateTableProperty();</span>
+<span class="fc" id="L55">        outerObject.addNamedItem(tableProperty);</span>
+
+<span class="fc" id="L57">        innerClass = buildInnerClass();</span>
+
+<span class="fc" id="L59">        List&lt;IntrospectedColumn&gt; columns = introspectedTable.getAllColumns();</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for (IntrospectedColumn column : columns) {</span>
+<span class="fc" id="L61">            handleColumn(kotlinFile, outerObject, innerClass, getTablePropertyName(), column);</span>
+<span class="fc" id="L62">        }</span>
+
+<span class="fc" id="L64">        outerObject.addNamedItem(innerClass);</span>
+<span class="fc" id="L65">    }</span>
+
+    public KotlinFile getKotlinFile() {
+<span class="fc" id="L68">        return kotlinFile;</span>
+    }
+
+    public String getTablePropertyName() {
+<span class="fc" id="L72">        return tableProperty.getName();</span>
+    }
+
+    public KotlinType getInnerClass() {
+<span class="fc" id="L76">        return innerClass;</span>
+    }
+
+    public KotlinType getOuterObject() {
+<span class="fc" id="L80">        return outerObject;</span>
+    }
+
+    public String getTablePropertyImport() {
+<span class="fc" id="L84">        return getSupportObjectImport()</span>
+                + &quot;.&quot; //$NON-NLS-1$
+<span class="fc" id="L86">                + tableProperty.getName();</span>
+    }
+
+    public String getSupportObjectImport() {
+<span class="fc" id="L90">        return kotlinFile.getPackage().map(s -&gt; s + &quot;.&quot;).orElse(&quot;&quot;) //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L91">                + outerObject.getName();</span>
+    }
+
+    private KotlinFile buildBasicFile(FullyQualifiedJavaType type) {
+<span class="fc" id="L95">        KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());</span>
+<span class="fc" id="L96">        kf.setPackage(type.getPackageName());</span>
+<span class="fc" id="L97">        commentGenerator.addFileComment(kf);</span>
+
+<span class="fc" id="L99">        return kf;</span>
+    }
+
+    private KotlinType buildOuterObject(KotlinFile kotlinFile, FullyQualifiedJavaType type) {
+<span class="fc" id="L103">        KotlinType answer = KotlinType.newObject(type.getShortNameWithoutTypeArguments()).build();</span>
+
+<span class="fc" id="L105">        kotlinFile.addImport(&quot;org.mybatis.dynamic.sql.AliasableSqlTable&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L106">        kotlinFile.addImport(&quot;org.mybatis.dynamic.sql.util.kotlin.elements.column&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L107">        kotlinFile.addImport(&quot;java.sql.JDBCType&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L108">        kotlinFile.addNamedItem(answer);</span>
+<span class="fc" id="L109">        return answer;</span>
+    }
+
+
+    private KotlinType buildInnerClass() {
+<span class="fc" id="L114">        String domainObjectName = introspectedTable.getMyBatisDynamicSQLTableObjectName();</span>
+
+<span class="fc" id="L116">        return KotlinType.newClass(domainObjectName)</span>
+<span class="fc" id="L117">                .withSuperType(&quot;AliasableSqlTable&lt;&quot; + domainObjectName + &quot;&gt;(\&quot;&quot; //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L118">                        + escapeStringForKotlin(introspectedTable.getFullyQualifiedTableNameAtRuntime())</span>
+                        + &quot;\&quot;, ::&quot; + domainObjectName //$NON-NLS-1$
+                        + &quot;)&quot;) //$NON-NLS-1$
+<span class="fc" id="L121">                .build();</span>
+    }
+
+    private KotlinProperty calculateTableProperty() {
+<span class="fc" id="L125">        String tableType = introspectedTable.getMyBatisDynamicSQLTableObjectName();</span>
+<span class="fc" id="L126">        String fieldName =  JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (useSnakeCase) {</span>
+<span class="fc" id="L128">            fieldName = StringUtility.convertCamelCaseToSnakeCase(fieldName);</span>
+        }
+
+<span class="fc" id="L131">        return KotlinProperty.newVal(fieldName)</span>
+<span class="fc" id="L132">                .withInitializationString(tableType + &quot;()&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L133">                .build();</span>
+    }
+
+    private void handleColumn(KotlinFile kotlinFile, KotlinType outerObject, KotlinType innerClass,
+            String tableFieldName, IntrospectedColumn column) {
+
+<span class="fc" id="L139">        FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(column.getFullyQualifiedJavaType());</span>
+
+<span class="fc" id="L141">        kotlinFile.addImports(kt.getImportList());</span>
+
+<span class="fc" id="L143">        String fieldName = column.getJavaProperty();</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if (useSnakeCase) {</span>
+<span class="fc" id="L145">            fieldName = StringUtility.convertCamelCaseToSnakeCase(fieldName);</span>
+        }
+
+        // outer object
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (fieldName.equals(tableFieldName)) {</span>
+            // name collision, skip the shortcut field
+<span class="fc" id="L151">            warnings.add(</span>
+<span class="fc" id="L152">                    Messages.getString(&quot;Warning.29&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L153">                            fieldName, getSupportObjectImport()));</span>
+        } else {
+<span class="fc" id="L155">            KotlinProperty prop = KotlinProperty.newVal(fieldName)</span>
+<span class="fc" id="L156">                    .withInitializationString(tableFieldName + &quot;.&quot; + fieldName)</span>
+<span class="fc" id="L157">                    .build();</span>
+<span class="fc" id="L158">            outerObject.addNamedItem(prop);</span>
+        }
+
+
+        // inner class
+<span class="fc" id="L163">        KotlinProperty property = KotlinProperty.newVal(fieldName)</span>
+<span class="fc" id="L164">                .withInitializationString(calculateInnerInitializationString(column, kt))</span>
+<span class="fc" id="L165">                .build();</span>
+
+<span class="fc" id="L167">        innerClass.addNamedItem(property);</span>
+<span class="fc" id="L168">    }</span>
+
+    private String calculateInnerInitializationString(IntrospectedColumn column, FullyQualifiedKotlinType kt) {
+<span class="fc" id="L171">        StringBuilder initializationString = new StringBuilder();</span>
+
+<span class="fc" id="L173">        initializationString.append(String.format(&quot;column&lt;%s&gt;(name = \&quot;%s\&quot;, jdbcType = JDBCType.%s&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L174">                kt.getShortNameWithTypeArguments(),</span>
+<span class="fc" id="L175">                escapeStringForKotlin(getEscapedColumnName(column)),</span>
+<span class="fc" id="L176">                column.getJdbcTypeName()));</span>
+
+<span class="fc" id="L178">        column.getTypeHandler().ifPresent(</span>
+<span class="fc" id="L179">                th -&gt; initializationString.append(String.format(&quot;, typeHandler = \&quot;%s\&quot;&quot;, th))); //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        if (StringUtility.isTrue(</span>
+<span class="fc" id="L182">                column.getProperties().getProperty(PropertyRegistry.COLUMN_OVERRIDE_FORCE_JAVA_TYPE))) {</span>
+<span class="fc" id="L183">            initializationString.append(</span>
+<span class="fc" id="L184">                    String.format(&quot;, javaType = %s::class&quot;, kt.getShortNameWithoutTypeArguments())); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L187">        initializationString.append(</span>
+<span class="fc" id="L188">                String.format(&quot;, javaProperty = \&quot;%s\&quot;&quot;, column.getJavaProperty())); //$NON-NLS-1$</span>
+
+<span class="fc" id="L190">        initializationString.append(')'); //$NON-NLS-1$</span>
+
+<span class="fc" id="L192">        return initializationString.toString();</span>
+    }
+
+<span class="fc" id="L195">    public static class Builder extends AbstractGeneratorBuilder&lt;Builder&gt; {</span>
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L198">            return this;</span>
+        }
+
+        public KotlinDynamicSqlSupportClassGenerator build() {
+<span class="fc" id="L202">            return new KotlinDynamicSqlSupportClassGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

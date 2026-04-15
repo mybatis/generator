@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalculatedContextValues.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen</a> &gt; <span class="el_source">CalculatedContextValues.java</span></div><h1>CalculatedContextValues.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.codegen;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.List;
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.JavaFormatter;
+import org.mybatis.generator.api.KnownRuntime;
+import org.mybatis.generator.api.KotlinFormatter;
+import org.mybatis.generator.api.Plugin;
+import org.mybatis.generator.api.XmlFormatter;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.Defaults;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.internal.PluginAggregator;
+
+/**
+ * This class holds common objects in a context that can be pre-calculated before code generation runs.
+ */
+public class CalculatedContextValues {
+    private final Context context;
+    private final JavaFormatter javaFormatter;
+    private final KotlinFormatter kotlinFormatter;
+    private final XmlFormatter xmlFormatter;
+    private final CommentGenerator commentGenerator;
+    private final @Nullable String javaFileEncoding;
+    private final @Nullable String kotlinFileEncoding;
+    private final PluginAggregator pluginAggregator;
+    private final KnownRuntime knownRuntime;
+    private final String runtimeBuilderClassName;
+
+<span class="fc" id="L51">    protected CalculatedContextValues(Builder builder) {</span>
+<span class="fc" id="L52">        context = Objects.requireNonNull(builder.context);</span>
+<span class="fc" id="L53">        javaFormatter = ObjectFactory.createJavaFormatter(context);</span>
+<span class="fc" id="L54">        kotlinFormatter = ObjectFactory.createKotlinFormatter(context);</span>
+<span class="fc" id="L55">        xmlFormatter = ObjectFactory.createXmlFormatter(context);</span>
+<span class="fc" id="L56">        commentGenerator = ObjectFactory.createCommentGenerator(context);</span>
+<span class="fc" id="L57">        javaFileEncoding = context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING);</span>
+<span class="fc" id="L58">        kotlinFileEncoding = context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FILE_ENCODING);</span>
+<span class="fc" id="L59">        Objects.requireNonNull(builder.warnings);</span>
+
+        // this will either be the alias entered in the configuration, or the default if nothing was specified
+<span class="fc" id="L62">        String builderAlias = context.getTargetRuntime().orElse(Defaults.DEFAULT_RUNTIME.getAlias());</span>
+        // this will either be a successful lookup by alias, or UNKNOWN
+<span class="fc" id="L64">        knownRuntime = KnownRuntime.getByAlias(builderAlias);</span>
+
+<span class="fc" id="L66">        pluginAggregator = new PluginAggregator();</span>
+<span class="fc" id="L67">        context.pluginConfigurations().forEach(pluginConfiguration -&gt; {</span>
+<span class="fc" id="L68">            Plugin plugin = ObjectFactory.createPlugin(context, pluginConfiguration, commentGenerator, knownRuntime);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            if (plugin.validate(builder.warnings)) {</span>
+<span class="fc" id="L70">                pluginAggregator.addPlugin(plugin);</span>
+            } else {
+<span class="fc" id="L72">                builder.warnings.add(getString(&quot;Warning.24&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L73">                        pluginConfiguration.getConfigurationType()</span>
+<span class="fc" id="L74">                                .orElse(&quot;Unknown Plugin Type&quot;), context.getId())); //$NON-NLS-1$</span>
+            }
+<span class="fc" id="L76">        });</span>
+
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (knownRuntime == KnownRuntime.UNKNOWN) {</span>
+<span class="nc" id="L79">            runtimeBuilderClassName = builderAlias;</span>
+        } else {
+<span class="fc" id="L81">            runtimeBuilderClassName = knownRuntime.getBuilderClassName();</span>
+        }
+<span class="fc" id="L83">    }</span>
+
+    public Context context() {
+<span class="fc" id="L86">        return context;</span>
+    }
+
+    public JavaFormatter javaFormatter() {
+<span class="nc" id="L90">        return javaFormatter;</span>
+    }
+
+    public KotlinFormatter kotlinFormatter() {
+<span class="nc" id="L94">        return kotlinFormatter;</span>
+    }
+
+    public XmlFormatter xmlFormatter() {
+<span class="nc" id="L98">        return xmlFormatter;</span>
+    }
+
+    public CommentGenerator commentGenerator() {
+<span class="fc" id="L102">        return commentGenerator;</span>
+    }
+
+    public @Nullable String javaFileEncoding() {
+<span class="nc" id="L106">        return javaFileEncoding;</span>
+    }
+
+    public @Nullable String kotlinFileEncoding() {
+<span class="nc" id="L110">        return kotlinFileEncoding;</span>
+    }
+
+    public PluginAggregator pluginAggregator() {
+<span class="fc" id="L114">        return pluginAggregator;</span>
+    }
+
+    public KnownRuntime knownRuntime() {
+<span class="fc" id="L118">        return knownRuntime;</span>
+    }
+
+    public String runtimeBuilderClassName() {
+<span class="fc" id="L122">        return runtimeBuilderClassName;</span>
+    }
+
+<span class="fc" id="L125">    public static class Builder {</span>
+        private @Nullable Context context;
+        private @Nullable List&lt;String&gt; warnings;
+
+        public Builder withContext(Context context) {
+<span class="fc" id="L130">            this.context = context;</span>
+<span class="fc" id="L131">            return this;</span>
+        }
+
+        public Builder withWarnings(List&lt;String&gt; warnings) {
+<span class="fc" id="L135">            this.warnings = warnings;</span>
+<span class="fc" id="L136">            return this;</span>
+        }
+
+        public CalculatedContextValues build() {
+<span class="fc" id="L140">            return new CalculatedContextValues(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

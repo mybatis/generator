@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecordModelGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.common</a> &gt; <span class="el_source">RecordModelGenerator.java</span></div><h1>RecordModelGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.common;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelRecord;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+
+/**
+ * This model generator builds a record-based model.
+ * Records are inherently immutable and constructor-based, so specifying those attributes will have no effect.
+ *
+ * @author Jeff Butler
+ */
+public class RecordModelGenerator extends AbstractJavaGenerator {
+    private final boolean includeNonBlobsConstructor;
+
+    public RecordModelGenerator(Builder builder) {
+<span class="fc" id="L43">        super(builder);</span>
+<span class="fc" id="L44">        includeNonBlobsConstructor = builder.includeNonBlobsConstructor;</span>
+<span class="fc" id="L45">    }</span>
+
+    @Override
+    public List&lt;CompilationUnit&gt; getCompilationUnits() {
+<span class="fc" id="L49">        progressCallback.startTask(getString(&quot;Progress.8&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L50">                introspectedTable.getFullyQualifiedTable().toString()));</span>
+
+<span class="fc" id="L52">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());</span>
+
+<span class="fc" id="L54">        TopLevelRecord topLevelRecord = new TopLevelRecord(type);</span>
+<span class="fc" id="L55">        topLevelRecord.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L56">        commentGenerator.addJavaFileComment(topLevelRecord);</span>
+<span class="fc" id="L57">        commentGenerator.addRecordAnnotation(topLevelRecord, introspectedTable, topLevelRecord.getImportedTypes());</span>
+
+<span class="fc" id="L59">        addParameters(topLevelRecord);</span>
+
+<span class="fc bfc" id="L61" title="All 4 branches covered.">        if (introspectedTable.hasBLOBColumns() &amp;&amp; includeNonBlobsConstructor) {</span>
+<span class="fc" id="L62">            addNonBlobsConstructor(type.getShortName(), topLevelRecord);</span>
+        }
+
+<span class="fc" id="L65">        List&lt;CompilationUnit&gt; answer = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (pluginAggregator.modelRecordGenerated(topLevelRecord, introspectedTable)) {</span>
+<span class="fc" id="L67">            answer.add(topLevelRecord);</span>
+        }
+<span class="fc" id="L69">        return answer;</span>
+    }
+
+    private void addParameters(TopLevelRecord topLevelRecord) {
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {</span>
+<span class="fc" id="L74">            FullyQualifiedJavaType parameterType = introspectedColumn.getFullyQualifiedJavaType();</span>
+<span class="fc" id="L75">            topLevelRecord.addImportedType(parameterType);</span>
+<span class="fc" id="L76">            topLevelRecord.addParameter(new Parameter(parameterType, introspectedColumn.getJavaProperty()));</span>
+<span class="fc" id="L77">        }</span>
+<span class="fc" id="L78">    }</span>
+
+    private void addNonBlobsConstructor(String methodName, TopLevelRecord topLevelRecord) {
+<span class="fc" id="L81">        Method method = new Method(methodName);</span>
+<span class="fc" id="L82">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L83">        method.setConstructor(true);</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            if (!introspectedColumn.isBLOBColumn()) {</span>
+<span class="fc" id="L87">                FullyQualifiedJavaType parameterType = introspectedColumn.getFullyQualifiedJavaType();</span>
+<span class="fc" id="L88">                method.addParameter(new Parameter(parameterType, introspectedColumn.getJavaProperty()));</span>
+            }
+<span class="fc" id="L90">        }</span>
+<span class="fc" id="L91">        method.addBodyLine(calculateNonBlobsConstructorBodyLine());</span>
+
+<span class="fc" id="L93">        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelRecord.getImportedTypes());</span>
+<span class="fc" id="L94">        topLevelRecord.addMethod(method);</span>
+<span class="fc" id="L95">    }</span>
+
+    private String calculateNonBlobsConstructorBodyLine() {
+<span class="fc" id="L98">        return introspectedTable.getAllColumns().stream().map(introspectedColumn -&gt; {</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            if (introspectedColumn.isBLOBColumn()) {</span>
+<span class="fc" id="L100">                return &quot;null&quot;; //$NON-NLS-1$</span>
+            } else {
+<span class="fc" id="L102">                return introspectedColumn.getJavaProperty();</span>
+            }
+<span class="fc" id="L104">        }).collect(Collectors.joining(&quot;, &quot;, &quot;this(&quot;, &quot;);&quot;)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$</span>
+    }
+
+<span class="fc" id="L107">    public static class Builder extends AbstractJavaGeneratorBuilder&lt;Builder&gt; {</span>
+        private boolean includeNonBlobsConstructor;
+
+        public Builder includeNonBlobsConstructor(boolean includeNonBlobsConstructor) {
+<span class="fc" id="L111">            this.includeNonBlobsConstructor = includeNonBlobsConstructor;</span>
+<span class="fc" id="L112">            return this;</span>
+        }
+
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L117">            return this;</span>
+        }
+
+        @Override
+        public RecordModelGenerator build() {
+<span class="fc" id="L122">            return new RecordModelGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

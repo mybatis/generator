@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IntrospectedTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">IntrospectedTable.java</span></div><h1>IntrospectedTable.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Stream;
+
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.internal.PluginAggregator;
+import org.mybatis.generator.internal.rules.ConditionalModelRules;
+import org.mybatis.generator.internal.rules.FlatModelRules;
+import org.mybatis.generator.internal.rules.HierarchicalModelRules;
+import org.mybatis.generator.internal.rules.Rules;
+
+/**
+ * This class holds the results of database introspection - namely the different columns associated with the table.
+ * The class is a subclass of CodeGenerationAttributes for purposes of preserving compatibility with existing plugin
+ * methods.
+ *
+ * @author Jeff Butler
+ */
+public class IntrospectedTable extends CodeGenerationAttributes {
+<span class="fc" id="L41">    protected final List&lt;IntrospectedColumn&gt; primaryKeyColumns = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L42">    protected final List&lt;IntrospectedColumn&gt; baseColumns = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L43">    protected final List&lt;IntrospectedColumn&gt; blobColumns = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Table remarks retrieved from database metadata.
+     */
+    protected @Nullable String remarks;
+
+    /**
+     * Table type retrieved from database metadata.
+     *
+     * &lt;p&gt;Non-null in practice
+     */
+    protected @Nullable String tableType;
+
+    protected IntrospectedTable(Builder builder) {
+<span class="fc" id="L58">        super(builder);</span>
+<span class="fc" id="L59">        Objects.requireNonNull(builder.pluginAggregator);</span>
+<span class="fc" id="L60">        builder.pluginAggregator.initialized(this);</span>
+<span class="fc" id="L61">    }</span>
+
+    public Optional&lt;IntrospectedColumn&gt; getColumn(String columnName) {
+<span class="fc" id="L64">        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream(), blobColumns.stream())</span>
+<span class="fc" id="L65">                .flatMap(Function.identity())</span>
+<span class="fc" id="L66">                .filter(ic -&gt; columnMatches(ic, columnName))</span>
+<span class="fc" id="L67">                .findFirst();</span>
+    }
+
+    private boolean columnMatches(IntrospectedColumn introspectedColumn, String columnName) {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
+<span class="fc" id="L72">            return introspectedColumn.getActualColumnName().equals(columnName);</span>
+        } else {
+<span class="fc" id="L74">            return introspectedColumn.getActualColumnName().equalsIgnoreCase(columnName);</span>
+        }
+    }
+
+    /**
+     * Returns true if any of the columns in the table are JDBC Dates (as
+     * opposed to timestamps).
+     *
+     * @return true if the table contains DATE columns
+     */
+    public boolean hasJDBCDateColumns() {
+<span class="fc" id="L85">        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream())</span>
+<span class="fc" id="L86">                .flatMap(Function.identity())</span>
+<span class="fc" id="L87">                .anyMatch(IntrospectedColumn::isJDBCDateColumn);</span>
+    }
+
+    /**
+     * Returns true if any of the columns in the table are JDBC Times (as
+     * opposed to timestamps).
+     *
+     * @return true if the table contains TIME columns
+     */
+    public boolean hasJDBCTimeColumns() {
+<span class="fc" id="L97">        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream())</span>
+<span class="fc" id="L98">                .flatMap(Function.identity())</span>
+<span class="fc" id="L99">                .anyMatch(IntrospectedColumn::isJDBCTimeColumn);</span>
+    }
+
+    /**
+     * Returns the columns in the primary key. If the generatePrimaryKeyClass()
+     * method returns false, then these columns will be iterated as the
+     * parameters of the selectByPrimaryKay and deleteByPrimaryKey methods
+     *
+     * @return a List of ColumnDefinition objects for columns in the primary key
+     */
+    public List&lt;IntrospectedColumn&gt; getPrimaryKeyColumns() {
+<span class="fc" id="L110">        return primaryKeyColumns;</span>
+    }
+
+    public boolean hasPrimaryKeyColumns() {
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        return !primaryKeyColumns.isEmpty();</span>
+    }
+
+    public List&lt;IntrospectedColumn&gt; getBaseColumns() {
+<span class="fc" id="L118">        return baseColumns;</span>
+    }
+
+    /**
+     * Returns all columns in the table (for use by the select by primary key and
+     * select by example with BLOBs methods).
+     *
+     * @return a List of ColumnDefinition objects for all columns in the table
+     */
+    public List&lt;IntrospectedColumn&gt; getAllColumns() {
+<span class="fc" id="L128">        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream(), blobColumns.stream())</span>
+<span class="fc" id="L129">                .flatMap(Function.identity())</span>
+<span class="fc" id="L130">                .toList();</span>
+    }
+
+    /**
+     * Returns all columns except BLOBs (for use by the select by example without BLOBs method).
+     *
+     * @return a List of ColumnDefinition objects for columns in the table that are non BLOBs
+     */
+    public List&lt;IntrospectedColumn&gt; getNonBLOBColumns() {
+<span class="fc" id="L139">        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream())</span>
+<span class="fc" id="L140">                .flatMap(Function.identity())</span>
+<span class="fc" id="L141">                .toList();</span>
+    }
+
+    public int getColumnCount() {
+<span class="fc" id="L145">        return primaryKeyColumns.size() + baseColumns.size() + blobColumns.size();</span>
+    }
+
+    public int getNonBLOBColumnCount() {
+<span class="nc" id="L149">        return primaryKeyColumns.size() + baseColumns.size();</span>
+    }
+
+    public List&lt;IntrospectedColumn&gt; getNonPrimaryKeyColumns() {
+<span class="fc" id="L153">        return Stream.of(baseColumns.stream(), blobColumns.stream())</span>
+<span class="fc" id="L154">                .flatMap(Function.identity())</span>
+<span class="fc" id="L155">                .toList();</span>
+    }
+
+    public List&lt;IntrospectedColumn&gt; getBLOBColumns() {
+<span class="fc" id="L159">        return blobColumns;</span>
+    }
+
+    public boolean hasBLOBColumns() {
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        return !blobColumns.isEmpty();</span>
+    }
+
+    public boolean hasBaseColumns() {
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        return !baseColumns.isEmpty();</span>
+    }
+
+    public boolean hasAnyColumns() {
+<span class="pc bpc" id="L171" title="1 of 6 branches missed.">        return hasPrimaryKeyColumns() || hasBaseColumns() || hasBLOBColumns();</span>
+    }
+
+    public void addColumn(IntrospectedColumn introspectedColumn) {
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (introspectedColumn.isBLOBColumn()) {</span>
+<span class="fc" id="L176">            blobColumns.add(introspectedColumn);</span>
+        } else {
+<span class="fc" id="L178">            baseColumns.add(introspectedColumn);</span>
+        }
+
+<span class="fc" id="L181">        introspectedColumn.setIntrospectedTable(this);</span>
+<span class="fc" id="L182">    }</span>
+
+    public void addPrimaryKeyColumn(String columnName) {
+<span class="fc" id="L185">        boolean found = false;</span>
+        // first search base columns
+<span class="fc" id="L187">        Iterator&lt;IntrospectedColumn&gt; iter = baseColumns.iterator();</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L189">            IntrospectedColumn introspectedColumn = iter.next();</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            if (introspectedColumn.getActualColumnName().equals(columnName)) {</span>
+<span class="fc" id="L191">                primaryKeyColumns.add(introspectedColumn);</span>
+<span class="fc" id="L192">                iter.remove();</span>
+<span class="fc" id="L193">                found = true;</span>
+<span class="fc" id="L194">                break;</span>
+            }
+<span class="fc" id="L196">        }</span>
+
+        // search blob columns in the weird event that a blob is the primary key
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (!found) {</span>
+<span class="nc" id="L200">            iter = blobColumns.iterator();</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">            while (iter.hasNext()) {</span>
+<span class="nc" id="L202">                IntrospectedColumn introspectedColumn = iter.next();</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">                if (introspectedColumn.getActualColumnName().equals(columnName)) {</span>
+<span class="nc" id="L204">                    primaryKeyColumns.add(introspectedColumn);</span>
+<span class="nc" id="L205">                    iter.remove();</span>
+<span class="nc" id="L206">                    break;</span>
+                }
+<span class="nc" id="L208">            }</span>
+        }
+<span class="fc" id="L210">    }</span>
+
+    public Optional&lt;String&gt; getRemarks() {
+<span class="fc" id="L213">        return Optional.ofNullable(remarks);</span>
+    }
+
+    public void setRemarks(String remarks) {
+<span class="fc" id="L217">        this.remarks = remarks;</span>
+<span class="fc" id="L218">    }</span>
+
+    public String getTableType() {
+<span class="fc" id="L221">        return Objects.requireNonNull(tableType);</span>
+    }
+
+    public void setTableType(String tableType) {
+<span class="fc" id="L225">        this.tableType = tableType;</span>
+<span class="fc" id="L226">    }</span>
+
+    @Override
+    protected Rules calculateRules() {
+<span class="fc bfc" id="L230" title="All 4 branches covered.">        if (knownRuntime.isDynamicSqlBased() || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {</span>
+<span class="fc" id="L231">            return new FlatModelRules(this);</span>
+        }
+
+<span class="fc bfc" id="L234" title="All 3 branches covered.">        return switch (getModelType()) {</span>
+<span class="fc" id="L235">        case HIERARCHICAL -&gt; new HierarchicalModelRules(this);</span>
+<span class="fc" id="L236">        case FLAT, RECORD -&gt; new FlatModelRules(this);</span>
+<span class="fc" id="L237">        case CONDITIONAL -&gt; new ConditionalModelRules(this);</span>
+        };
+    }
+
+<span class="fc" id="L241">    public static class Builder extends AbstractBuilder&lt;Builder&gt; {</span>
+        private @Nullable PluginAggregator pluginAggregator;
+
+        public Builder withPluginAggregator(PluginAggregator pluginAggregator) {
+<span class="fc" id="L245">            this.pluginAggregator = pluginAggregator;</span>
+<span class="fc" id="L246">            return this;</span>
+        }
+
+        public IntrospectedTable build() {
+<span class="fc" id="L250">            return new IntrospectedTable(this);</span>
+        }
+
+        @Override
+        protected Builder getThis() {
+<span class="fc" id="L255">            return this;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

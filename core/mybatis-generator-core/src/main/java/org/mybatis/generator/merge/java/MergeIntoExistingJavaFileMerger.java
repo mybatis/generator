@@ -60,8 +60,9 @@ import org.mybatis.generator.exception.MergeException;
  * <p>This implementation differs from the original Eclipse-based implementation in the following ways:</p>
  * <ol>
  *     <li>This implementation supports merging enums and records</li>
- *     <li>This implementation supports merging when the existing file is a class or interface, and the newly generated
- *         file is a record (the result will be a record).
+ *     <li>Record merging will only merge custom and generated members. The record parameter list is always replaced
+ *         with the newly generated record parameter list.
+ *     </li>
  *     </li>
  *     <li>This implementation does not support merging the super class from an existing file to the newly generated
  *         file.</li>

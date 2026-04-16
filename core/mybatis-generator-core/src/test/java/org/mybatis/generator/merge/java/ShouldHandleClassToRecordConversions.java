@@ -92,7 +92,6 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
         return switch (id) {
         case "Eclipse" -> expectedEclipseContent();
         case "LexicalPreserving" -> expectedLexicalPreservingContent();
-        case "MergeIntoOld" -> expectedMergeIntoOldContent();
         default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
@@ -135,26 +134,6 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
                 """;
     }
 
-    private String expectedMergeIntoOldContent() {
-        return """
-                package foo;
-
-                import java.io.Serializable;
-
-                import javax.annotation.Generated;
-
-                @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                public record Name(int id, String firstName, String lastName) implements Serializable {
-
-                    private static final long serialVersionUID = 1L;
-
-                    public String fullName() {
-                        return firstName + " " + lastName;
-                    }
-                }
-                """;
-    }
-
     @Override
     public List<MergeConfigurationAndId> mergeConfigurations() {
         MergeConfiguration eclipse = new MergeConfiguration.Builder()
@@ -165,12 +144,8 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
                 .isLexicalPreserving(true)
                 .build();
 
-        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
-                .build();
-
+        // this use case is not supported with the merge into existing strategy
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
-                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
     }
 }

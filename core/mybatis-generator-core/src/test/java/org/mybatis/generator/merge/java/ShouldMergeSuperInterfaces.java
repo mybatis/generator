@@ -111,7 +111,7 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
 
                 import javax.annotation.Generated;
 
-                public class Foo implements Cloneable, Serializable {
+                public class Foo implements Serializable, Cloneable {
 
                     private static final long serialVersionUID = 1L;
 

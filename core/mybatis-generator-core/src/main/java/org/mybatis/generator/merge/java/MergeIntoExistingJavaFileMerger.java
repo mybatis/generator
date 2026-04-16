@@ -160,10 +160,9 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
                 .forEach(existingFileParseResults.compilationUnit()::addImport);
 
         // Look for super interfaces in the new file and merge into the existing file if they aren't present
-//        JavaMergeUtilities
-//                .findCustomSuperInterfaces(existingFileParseResults.typeDeclaration,
-//                        newFileParseResults.typeDeclaration)
-//                .forEach(t -> JavaMergeUtilities.addSuperInterface(newFileParseResults.typeDeclaration, t));
+        JavaMergeUtilities.findCustomSuperInterfaces(newFileParseResults.typeDeclaration(),
+                        existingFileParseResults.typeDeclaration())
+                .forEach(t -> JavaMergeUtilities.addSuperInterface(existingFileParseResults.typeDeclaration(), t));
 
         // Return the new (merged) file
         return printer.print(existingFileParseResults.compilationUnit());

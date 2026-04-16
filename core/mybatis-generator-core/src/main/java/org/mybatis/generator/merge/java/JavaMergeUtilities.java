@@ -85,7 +85,7 @@ public class JavaMergeUtilities {
      * @param member2 the second member
      * @return true if the members are functionally equivalent
      */
-    public static boolean membersMatch(BodyDeclaration<?> member1, BodyDeclaration<?> member2) {
+    private static boolean membersMatch(BodyDeclaration<?> member1, BodyDeclaration<?> member2) {
         if (member1.isTypeDeclaration() && member2.isTypeDeclaration()) {
             return member1.asTypeDeclaration().getNameAsString()
                     .equals(member2.asTypeDeclaration().getNameAsString());
@@ -115,7 +115,7 @@ public class JavaMergeUtilities {
         return customSuperInterfaces;
     }
 
-    public static List<ClassOrInterfaceType> findSuperInterfaces(BodyDeclaration<?> bodyDeclaration) {
+    private static List<ClassOrInterfaceType> findSuperInterfaces(BodyDeclaration<?> bodyDeclaration) {
         if (bodyDeclaration.isClassOrInterfaceDeclaration()) {
             return bodyDeclaration.asClassOrInterfaceDeclaration().getImplementedTypes();
         } else if (bodyDeclaration.isEnumDeclaration()) {
@@ -143,7 +143,7 @@ public class JavaMergeUtilities {
      * @param importDeclaration the import declaration to stringify
      * @return string representation of the import (not a full import statement)
      */
-    public static String stringify(ImportDeclaration importDeclaration) {
+    private static String stringify(ImportDeclaration importDeclaration) {
         StringBuilder sb = new StringBuilder();
         if (importDeclaration.isStatic()) {
             sb.append("static "); //$NON-NLS-1$
@@ -159,13 +159,13 @@ public class JavaMergeUtilities {
         return sb.toString();
     }
 
-    public static String stringify(FieldDeclaration fieldDeclaration) {
+    private static String stringify(FieldDeclaration fieldDeclaration) {
         return fieldDeclaration.getVariables().stream()
                 .map(JavaMergeUtilities::stringify)
                 .collect(Collectors.joining(",")); //$NON-NLS-1$
     }
 
-    public static String stringify(VariableDeclarator variableDeclarator) {
+    private static String stringify(VariableDeclarator variableDeclarator) {
         return variableDeclarator.getType().toString()
                 + " " //$NON-NLS-1$
                 + variableDeclarator.getName().toString();
@@ -185,7 +185,7 @@ public class JavaMergeUtilities {
                 .orElse(GeneratedType.NOT_GENERATED);
     }
 
-    public static boolean isOurGeneratedAnnotation(AnnotationExpr annotationExpr) {
+    private static boolean isOurGeneratedAnnotation(AnnotationExpr annotationExpr) {
         if (!isGeneratedAnnotation(annotationExpr)) {
             return false;
         }
@@ -209,7 +209,7 @@ public class JavaMergeUtilities {
         return false;
     }
 
-    public static boolean hasDoNotDeleteComment(AnnotationExpr annotationExpr) {
+    private static boolean hasDoNotDeleteComment(AnnotationExpr annotationExpr) {
         // check the comments value for the do_not_delete marker string
         if (annotationExpr.isSingleMemberAnnotationExpr()) {
             // no comments in a single member annotation - only the single "value" member"
@@ -229,7 +229,7 @@ public class JavaMergeUtilities {
         return false;
     }
 
-    public static boolean isGeneratedAnnotation(AnnotationExpr annotationExpr) {
+    private static boolean isGeneratedAnnotation(AnnotationExpr annotationExpr) {
         String annotationName = annotationExpr.getNameAsString();
         // Check for @Generated annotation (both javax and jakarta packages)
         return "Generated".equals(annotationName) //$NON-NLS-1$
@@ -237,15 +237,15 @@ public class JavaMergeUtilities {
                 || "jakarta.annotation.Generated".equals(annotationName); //$NON-NLS-1$
     }
 
-    public static boolean isValuePair(MemberValuePair pair) {
+    private static boolean isValuePair(MemberValuePair pair) {
         return pair.getName().asString().equals("value"); //$NON-NLS-1$
     }
 
-    public static boolean isCommentsPair(MemberValuePair pair) {
+    private static boolean isCommentsPair(MemberValuePair pair) {
         return pair.getName().asString().equals("comments"); //$NON-NLS-1$
     }
 
-    public static boolean annotationValueMatchesMyBatisGenerator(StringLiteralExpr expr) {
+    private static boolean annotationValueMatchesMyBatisGenerator(StringLiteralExpr expr) {
         return expr.asString().equals(MyBatisGenerator.class.getName());
     }
 
@@ -257,7 +257,7 @@ public class JavaMergeUtilities {
     }
 
     // Check if the comment contains any of the javadoc tags
-    public static GeneratedType checkJavadocTag(String comment) {
+    private static GeneratedType checkJavadocTag(String comment) {
         for (String tag : MergeConstants.getOldElementTags()) {
             if (comment.contains(tag)) {
                 if (comment.contains(MergeConstants.DO_NOT_DELETE_DURING_MERGE)) {
@@ -270,7 +270,7 @@ public class JavaMergeUtilities {
         return GeneratedType.NOT_GENERATED;
     }
 
-    public static TypeDeclaration<?> findMainTypeDeclaration(CompilationUnit compilationUnit, MergeFileType mergeFileType)
+    private static TypeDeclaration<?> findMainTypeDeclaration(CompilationUnit compilationUnit, MergeFileType mergeFileType)
             throws MergeException {
         // Return the first public type declaration, or the first type declaration if no public one exists
         TypeDeclaration<?> firstType = null;

@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParserConfiguration;
+import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.EnumConstantDeclaration;
 import com.github.javaparser.printer.Printer;
@@ -163,6 +164,15 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
         JavaMergeUtilities.findCustomSuperInterfaces(newFileParseResults.typeDeclaration(),
                         existingFileParseResults.typeDeclaration())
                 .forEach(t -> JavaMergeUtilities.addSuperInterface(existingFileParseResults.typeDeclaration(), t));
+
+        // merge records
+        // TODO(?) this is not really a merge so much as a replace - should we do a merge?
+        if (existingFileParseResults.typeDeclaration().isRecordDeclaration() && newFileParseResults.typeDeclaration().isRecordDeclaration()) {
+            // remove all record fields from the existing file and add from the new file
+            existingFileParseResults.typeDeclaration().asRecordDeclaration().getParameters().clear();
+            existingFileParseResults.typeDeclaration().asRecordDeclaration().getParameters().addAll(
+                    newFileParseResults.typeDeclaration().asRecordDeclaration().getParameters());
+        }
 
         // Return the new (merged) file
         return printer.print(existingFileParseResults.compilationUnit());

@@ -20,7 +20,6 @@ import java.util.List;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParserConfiguration;
-import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.EnumConstantDeclaration;
 import com.github.javaparser.printer.Printer;
@@ -99,9 +98,16 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
         parserConfiguration.setLexicalPreservationEnabled(true);
         JavaParser javaParser = new JavaParser(parserConfiguration);
 
-        // Parse the existing file, remove generated elements
         ParseResults existingFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser, existingFileContent,
                 MergeFileType.EXISTING_FILE);
+
+        // Gather custom members from the existing file. If none, just return the new file as is
+        CustomMemberGatherer customMemberGatherer = new CustomMemberGatherer(existingFileParseResults.typeDeclaration());
+        if (!customMemberGatherer.hasAnyMembersToMerge()) {
+            return newFileContent;
+        }
+
+        // remove generated elements from the existing file
         List<BodyDeclaration<?>> membersToDelete = new ArrayList<>();
         existingFileParseResults.typeDeclaration().getMembers().forEach(member -> {
             GeneratedType generatedType = JavaMergeUtilities.checkForGeneratedAnnotation(member);

@@ -62,9 +62,8 @@ import org.mybatis.generator.exception.MergeException;
  *     <li>Record merging will only merge custom and generated members. The record parameter list is always replaced
  *         with the newly generated record parameter list.
  *     </li>
+ *     <li>This implementation does not support merging the super class from a newly generated file to an existing file.
  *     </li>
- *     <li>This implementation does not support merging the super class from an existing file to the newly generated
- *         file.</li>
  *     <li>This implementation does not attempt to preserve custom annotations added to generated elements. With the
  *         generator now generating code with many annotations, it is challenging to distinguish between annotations
  *         created by MBG, and custom annotations added after code generation by a user. If you need to add

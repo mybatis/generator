@@ -72,16 +72,16 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
     private String expectedEclipseContent() {
         return """
                 package com.example;
-                
+
                 public class TestMapper {
-                
+
                     /**
                      * @mbg.generated
                      */
                     public int newGeneratedMethod() {
                         return 1;
                     }
-                
+
                     public void customMethod() {
                         System.out.println("Custom method");
                     }
@@ -92,9 +92,9 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
     private String expectedLexicalPreservingContent() {
         return """
                 package com.example;
-                
+
                 public class TestMapper {
-                
+
                     /**
                      * @mbg.generated
                      */
@@ -112,13 +112,13 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
     private String expectedMergeIntoOldContent() {
         return """
                 package com.example;
-                
+
                 public class TestMapper {
-                
+
                     public void customMethod() {
                         System.out.println("Custom method");
                     }
-                
+
                     /**
                      * @mbg.generated
                      */

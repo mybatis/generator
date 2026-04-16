@@ -21,6 +21,7 @@ import java.util.List;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.ast.body.BodyDeclaration;
+import com.github.javaparser.ast.body.EnumConstantDeclaration;
 import com.github.javaparser.printer.Printer;
 import org.mybatis.generator.exception.MergeException;
 
@@ -114,6 +115,24 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
             existingFileParseResults.typeDeclaration().remove(member);
         }
 
+        // Remove generated enum constants
+        if (existingFileParseResults.typeDeclaration().isEnumDeclaration()) {
+            List<EnumConstantDeclaration> enumConstantsToDelete = new ArrayList<>();
+            existingFileParseResults.typeDeclaration().asEnumDeclaration().getEntries().forEach( enumDec -> {
+                GeneratedType generatedType = JavaMergeUtilities.checkForGeneratedAnnotation(enumDec);
+                if (generatedType == GeneratedType.GENERATED_REMOVE) {
+                    enumConstantsToDelete.add(enumDec);
+                }
+                generatedType = JavaMergeUtilities.checkForGeneratedJavadocTag(enumDec);
+                if (generatedType == GeneratedType.GENERATED_REMOVE) {
+                    enumConstantsToDelete.add(enumDec);
+                }
+            });
+            for (EnumConstantDeclaration member : enumConstantsToDelete) {
+                existingFileParseResults.typeDeclaration().asEnumDeclaration().remove(member);
+            }
+        }
+
         // 2. Parse the new file, gather generated elements and add to the existing file
         ParseResults newFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser, newFileContent,
                 MergeFileType.NEW_FILE);
@@ -125,22 +144,20 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
         }
 
         // add members from the new file to the existing file
-        int i = 0;
         for (BodyDeclaration<?> member : newFileParseResults.typeDeclaration().getMembers()) {
             existingFileParseResults.typeDeclaration().getMembers().add(member);
-//            existingFileParseResults.typeDeclaration().getMembers().add(i++, member);
+        }
+
+        // add any enum constants from the new file to the existing file
+        if (newFileParseResults.typeDeclaration().isEnumDeclaration()) {
+            existingFileParseResults.typeDeclaration().asEnumDeclaration().getEntries().addAll(
+                    newFileParseResults.typeDeclaration().asEnumDeclaration().getEntries());
         }
 
         // 3. Add imports to existing file from new file that are not in existing file
         JavaMergeUtilities
                 .findCustomImports(newFileParseResults.compilationUnit(), existingFileParseResults.compilationUnit())
                 .forEach(existingFileParseResults.compilationUnit()::addImport);
-
-        // Add custom enum constants from the existing file to the new file
-//        if (newFileParseResults.typeDeclaration.isEnumDeclaration()) {
-//            customMemberGatherer.customEnumConstants()
-//                    .forEach(newFileParseResults.typeDeclaration.asEnumDeclaration()::addEntry);
-//        }
 
         // Look for super interfaces in the new file and merge into the existing file if they aren't present
 //        JavaMergeUtilities

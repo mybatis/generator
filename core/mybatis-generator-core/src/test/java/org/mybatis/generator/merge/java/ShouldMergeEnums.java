@@ -183,11 +183,11 @@ public class ShouldMergeEnums extends JavaMergeTestCase {
 
                 public enum NameType implements Serializable {
 
+                    MIDDLE_NAME("middle name"),
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     FIRST_NAME("first name"),
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    LAST_NAME("last name"),
-                    MIDDLE_NAME("middle name");
+                    LAST_NAME("last name");
 
                     private static final long serialVersionUID = 1L;
 

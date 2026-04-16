@@ -57,7 +57,15 @@ public class ShouldMergeInputsCorrectly extends JavaMergeTestCase {
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> """
+            case "Eclipse" -> expectedEclipseContent();
+            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedEclipseContent() {
+        return """
                 package com.example;
 
                 import java.sql.Connection;
@@ -80,7 +88,10 @@ public class ShouldMergeInputsCorrectly extends JavaMergeTestCase {
                     }
                 }
                 """;
-            case "LexicalPreserving" -> """
+    }
+
+    private String expectedLexicalPreservingContent() {
+        return """
                 package com.example;
 
                 import java.util.List;
@@ -101,8 +112,32 @@ public class ShouldMergeInputsCorrectly extends JavaMergeTestCase {
                     public void customMethod() {}
                 }
                 """;
-            default -> throw new IllegalStateException("Unexpected value: " + id);
-        };
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package com.example;
+
+                import java.sql.Connection;
+                import java.sql.PreparedStatement;
+                import java.util.Date;
+                import java.util.List;
+                import java.util.Map;
+                import java.util.Set;
+
+                public class TestMapper {
+
+                    public void customMethod() {
+                    }
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public Map<String, Object> getMap() {
+                        return null;
+                    }
+                }
+                """;
     }
 
     @Override
@@ -115,7 +150,12 @@ public class ShouldMergeInputsCorrectly extends JavaMergeTestCase {
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

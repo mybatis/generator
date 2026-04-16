@@ -42,19 +42,27 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
                 """
                 package foo;
 
-                public record Name(int id, String firstName, String lastName) {}
+                public record Name(int id, String firstName, String lastName, String middleName) {}
                 """;
     }
 
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> """
+            case "Eclipse" -> expectedEclipseContent();
+            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedEclipseContent() {
+        return """
                 package foo;
 
                 import java.io.Serializable;
 
-                public record Name(int id, String firstName, String lastName) implements Serializable {
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
 
                     private static final long serialVersionUID = 1L;
 
@@ -63,12 +71,15 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
                     }
                 }
                 """;
-            case "LexicalPreserving" -> """
+    }
+
+    private String expectedLexicalPreservingContent() {
+        return """
                 package foo;
                 import java.io.Serializable;
 
 
-                public record Name(int id, String firstName, String lastName) implements Serializable {
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
                     private static final long serialVersionUID = 1L;
                    \s
                     public String fullName() {
@@ -76,8 +87,23 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
                     }
                 }
                 """;
-            default -> throw new IllegalStateException("Unexpected value: " + id);
-        };
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
+
+                    private static final long serialVersionUID = 1L;
+
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
     }
 
     @Override
@@ -90,7 +116,12 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

@@ -152,6 +152,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
         return switch (id) {
             case "Eclipse" -> expectedEclipseContent();
             case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
@@ -257,6 +258,59 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
               """;
     }
 
+    private String expectedMergeIntoOldContent() {
+        return """
+              package mbg.test.mb3.generated.flat.model;
+
+              import java.util.List;
+
+              public class PkfieldsExample {
+
+                  /**
+                   * @mbg.generated do_not_delete_during_merge (existing)
+                   */
+                  protected int id;
+
+                  public void customMethod() {
+                  }
+
+                  /**
+                   * @mbg.generated do_not_delete_during_merge
+                   */
+                  public int getId() {
+                      // existing
+                      return id;
+                  }
+
+                  /**
+                   * @mbg.generated do_not_delete_during_merge
+                   */
+                  public static class Criteria extends GeneratedCriteria {
+
+                      protected Criteria() {
+                          super();
+                      }
+
+                      public boolean isValid() {
+                          return true;
+                      }
+                  }
+
+                  /**
+                   * @mbg.generated
+                   */
+                  public void reset() {
+                  }
+
+                  /**
+                   * @mbg.generated
+                   */
+                  protected abstract static class GeneratedCriteria {
+                  }
+              }
+              """;
+    }
+
     @Override
     public List<MergeConfigurationAndId> mergeConfigurations() {
         MergeConfiguration eclipse = new MergeConfiguration.Builder()
@@ -267,7 +321,12 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

@@ -72,6 +72,7 @@ public class ShouldPreserveMultipleCustomMethodsWhenMerging extends JavaMergeTes
         return switch (id) {
             case "Eclipse" -> expectedEclipseContent();
             case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
@@ -140,6 +141,38 @@ public class ShouldPreserveMultipleCustomMethodsWhenMerging extends JavaMergeTes
                 """;
     }
 
+    private String expectedMergeIntoOldContent() {
+        return """
+                package com.example;
+
+                public class TestMapper {
+
+                    public void customMethod1() {
+                        System.out.println("Custom method 1");
+                    }
+
+                    public void customMethod2() {
+                        System.out.println("Custom method 2");
+                    }
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public int generatedMethod() {
+                        // Updated
+                        return 1;
+                    }
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public int newGeneratedMethod() {
+                        return 0;
+                    }
+                }
+                """;
+    }
+
     @Override
     public List<MergeConfigurationAndId> mergeConfigurations() {
         MergeConfiguration eclipse = new MergeConfiguration.Builder()
@@ -150,7 +183,12 @@ public class ShouldPreserveMultipleCustomMethodsWhenMerging extends JavaMergeTes
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

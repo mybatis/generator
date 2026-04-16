@@ -50,7 +50,15 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-        case "Eclipse" -> """
+            case "Eclipse" -> expectedEclipseContent();
+            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedEclipseContent() {
+        return """
             package com.example;
 
             public class TestMapper {
@@ -67,7 +75,10 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
                 }
             }
             """;
-        case "LexicalPreserving" -> """
+    }
+
+    private String expectedLexicalPreservingContent() {
+        return """
             package com.example;
 
             public class TestMapper {
@@ -83,8 +94,26 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
                 }
             }
             """;
-        default -> throw new IllegalArgumentException("Unknown id: " + id);
-        };
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+            package com.example;
+
+            public class TestMapper {
+
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+
+                /**
+                 * @mbg.generated
+                 */
+                public int insert(Object record) {
+                    return 0;
+                }
+            }
+            """;
     }
 
     @Override
@@ -97,7 +126,12 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

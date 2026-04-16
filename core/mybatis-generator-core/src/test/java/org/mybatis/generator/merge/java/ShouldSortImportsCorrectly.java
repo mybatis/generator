@@ -62,38 +62,50 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> """
-                package com.example;
+            case "Eclipse" -> expectedEclipseContent();
+            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
 
+    private String expectedEclipseContent() {
+        return """
+                package com.example;
+                
                 import static java.util.Collections.emptySet;
                 import static java.util.Collections.sort;
-
+                
                 import java.sql.Connection;
                 import java.sql.PreparedStatement;
                 import java.util.Date;
                 import java.util.List;
                 import java.util.Map;
                 import java.util.Set;
-
+                
                 import bar.Foo;
                 import foo.Bar;
-
+                
                 public class TestMapper {
-
+                
                     /**
                      * @mbg.generated
                      */
                     public Map<String, Object> getMap() {
                         return null;
                     }
-
+                
                     public void customMethod() {
                     }
                 }
                 """;
-            case "LexicalPreserving" -> """
-                package com.example;
+    }
 
+    private String expectedLexicalPreservingContent() {
+        // the lexical preserving printer does not sort imports
+        return """
+                package com.example;
+                
                 import java.util.List;
                 import java.util.Map;
                 import static java.util.Collections.sort;
@@ -104,7 +116,7 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                 import bar.Foo;
                 import java.sql.Connection;
                 import static java.util.Collections.emptySet;
-
+                
                 public class TestMapper {
                     /**
                      * @mbg.generated
@@ -116,8 +128,38 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                     public void customMethod() {}
                 }
                 """;
-            default -> throw new IllegalStateException("Unexpected value: " + id);
-        };
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package com.example;
+                
+                import static java.util.Collections.emptySet;
+                import static java.util.Collections.sort;
+                
+                import java.sql.Connection;
+                import java.sql.PreparedStatement;
+                import java.util.Date;
+                import java.util.List;
+                import java.util.Map;
+                import java.util.Set;
+                
+                import bar.Foo;
+                import foo.Bar;
+                
+                public class TestMapper {
+                
+                    public void customMethod() {
+                    }
+                
+                    /**
+                     * @mbg.generated
+                     */
+                    public Map<String, Object> getMap() {
+                        return null;
+                    }
+                }
+                """;
     }
 
     @Override
@@ -130,7 +172,12 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

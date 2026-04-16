@@ -80,12 +80,76 @@ public class ShouldRetainComments extends JavaMergeTestCase {
         return switch (id) {
             case "Eclipse" -> expectedEclipseContent();
             case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
     private String expectedEclipseContent() {
-        // TODO - this isn't great. The regular comment ends up in a weird place
+        // TODO - the comments are completely lost
+        return """
+            package fr.cncc.aglae.portail.domaine;
+
+            import jakarta.annotation.Generated;
+            import lombok.AllArgsConstructor;
+            import lombok.Builder;
+            import lombok.Data;
+            import lombok.NoArgsConstructor;
+
+            @Data
+            @AllArgsConstructor
+            @NoArgsConstructor
+            @Builder
+            public class ApplicationScriptSql {
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "Source field: APPLICATION_SCRIPT_SQL.ASS_COMMENTAIRE")
+                private String commentaire;
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "Source field: APPLICATION_SCRIPT_SQL.ASS_FILE_NAME")
+                private String fileName;
+
+                public final static int STATUT_EN_COURS = 0;
+
+                public boolean isEnCours() {
+                    return getStatut() == STATUT_EN_COURS;
+                }
+            }
+            """;
+    }
+
+    private String expectedLexicalPreservingContent() {
+        // TODO - the comments are completely lost
+        return """
+            package fr.cncc.aglae.portail.domaine;
+
+            import jakarta.annotation.Generated;
+            import lombok.AllArgsConstructor;
+            import lombok.Builder;
+            import lombok.Data;
+            import lombok.NoArgsConstructor;
+
+            @Data
+            @AllArgsConstructor
+            @NoArgsConstructor
+            @Builder
+            public class ApplicationScriptSql {
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "Source field: APPLICATION_SCRIPT_SQL.ASS_COMMENTAIRE")
+                private String commentaire;
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "Source field: APPLICATION_SCRIPT_SQL.ASS_FILE_NAME")
+                private String fileName;
+               \s
+                public final static int STATUT_EN_COURS = 0;
+               \s
+                public boolean isEnCours() {
+                    return getStatut() == STATUT_EN_COURS;
+                }
+            }
+            """;
+    }
+
+    private String expectedMergeIntoOldContent() {
+        // TODO - this isn't great. The regular comment ends up in a weird place. But it is acceptable.
         return """
             package fr.cncc.aglae.portail.domaine;
 
@@ -120,52 +184,22 @@ public class ShouldRetainComments extends JavaMergeTestCase {
             """;
     }
 
-    private String expectedLexicalPreservingContent() {
-        return """
-            package fr.cncc.aglae.portail.domaine;
-
-            import jakarta.annotation.Generated;
-            import lombok.AllArgsConstructor;
-            import lombok.Builder;
-            import lombok.Data;
-            import lombok.NoArgsConstructor;
-
-            @Data
-            @AllArgsConstructor
-            @NoArgsConstructor
-            @Builder
-            public class ApplicationScriptSql {
-                // this kind of comment is destroyed at generation
-                /** this this kind of comment is also destroyed at generation **/
-
-                public final static int STATUT_EN_COURS = 0;
-
-                public boolean isEnCours() {
-                    return getStatut() == STATUT_EN_COURS;
-                }
-               \s
-                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "Source field: APPLICATION_SCRIPT_SQL.ASS_COMMENTAIRE")
-                private String commentaire;
-               \s
-                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "Source field: APPLICATION_SCRIPT_SQL.ASS_FILE_NAME")
-                private String fileName;
-            }
-            """;
-    }
-
     @Override
     public List<MergeConfigurationAndId> mergeConfigurations() {
         MergeConfiguration eclipse = new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
                 .build();
 
         MergeConfiguration lexicalPreserving = new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

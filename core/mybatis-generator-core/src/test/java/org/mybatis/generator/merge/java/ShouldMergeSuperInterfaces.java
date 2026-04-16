@@ -46,7 +46,7 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
 
                 import javax.annotation.Generated;
 
-                public class Foo {
+                public class Foo implements Cloneable {
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     public String hello() {
                         return "hello";
@@ -58,14 +58,22 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> """
+            case "Eclipse" -> expectedEclipseContent();
+            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedEclipseContent() {
+        return """
                 package foo;
 
                 import java.io.Serializable;
 
                 import javax.annotation.Generated;
 
-                public class Foo implements Serializable {
+                public class Foo implements Cloneable, Serializable {
 
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     public String hello() {
@@ -75,13 +83,16 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
                     private static final long serialVersionUID = 1L;
                 }
                 """;
-            case "LexicalPreserving" -> """
+    }
+
+    private String expectedLexicalPreservingContent() {
+        return """
                 package foo;
 
                 import javax.annotation.Generated;
                 import java.io.Serializable;
 
-                public class Foo implements Serializable {
+                public class Foo implements Cloneable, Serializable {
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     public String hello() {
                         return "hello";
@@ -90,8 +101,26 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
                     private static final long serialVersionUID = 1L;
                 }
                 """;
-            default -> throw new IllegalStateException("Unexpected value: " + id);
-        };
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+
+                import javax.annotation.Generated;
+
+                public class Foo implements Cloneable, Serializable {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String hello() {
+                        return "hello";
+                    }
+                }
+                """;
     }
 
     @Override
@@ -104,7 +133,12 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

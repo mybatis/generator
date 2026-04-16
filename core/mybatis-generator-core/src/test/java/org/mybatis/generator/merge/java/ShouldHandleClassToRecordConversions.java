@@ -90,40 +90,69 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-        case "Eclipse" -> """
-            package foo;
-
-            import java.io.Serializable;
-
-            import javax.annotation.Generated;
-
-            @Generated("org.mybatis.generator.api.MyBatisGenerator")
-            public record Name(int id, String firstName, String lastName) implements Serializable {
-
-                private static final long serialVersionUID = 1L;
-
-                public String fullName() {
-                    return firstName + " " + lastName;
-                }
-            }
-            """;
-        case "LexicalPreserving" -> """
-            package foo;
-
-            import javax.annotation.Generated;
-            import java.io.Serializable;
-
-            @Generated("org.mybatis.generator.api.MyBatisGenerator")
-            public record Name(int id, String firstName, String lastName) implements Serializable {
-                private static final long serialVersionUID = 1L;
-               \s
-                public String fullName() {
-                    return firstName + " " + lastName;
-                }
-            }
-            """;
+        case "Eclipse" -> expectedEclipseContent();
+        case "LexicalPreserving" -> expectedLexicalPreservingContent();
+        case "MergeIntoOld" -> expectedMergeIntoOldContent();
         default -> throw new IllegalStateException("Unexpected value: " + id);
         };
+    }
+
+    private String expectedLexicalPreservingContent() {
+        return """
+                package foo;
+
+                import javax.annotation.Generated;
+                import java.io.Serializable;
+
+                @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                public record Name(int id, String firstName, String lastName) implements Serializable {
+                    private static final long serialVersionUID = 1L;
+                   \s
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
+    }
+
+    private String expectedEclipseContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+
+                import javax.annotation.Generated;
+
+                @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                public record Name(int id, String firstName, String lastName) implements Serializable {
+
+                    private static final long serialVersionUID = 1L;
+
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+
+                import javax.annotation.Generated;
+
+                @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                public record Name(int id, String firstName, String lastName) implements Serializable {
+
+                    private static final long serialVersionUID = 1L;
+
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
     }
 
     @Override
@@ -136,7 +165,12 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

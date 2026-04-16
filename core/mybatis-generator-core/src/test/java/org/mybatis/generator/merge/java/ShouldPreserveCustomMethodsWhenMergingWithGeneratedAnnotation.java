@@ -37,7 +37,7 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                         return 0;
                     }
 
-                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V1")
                     public int deleteByPrimaryKey(Integer id) {
                         return 0;
                     }
@@ -59,13 +59,13 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
                 public class TestMapper {
 
-                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
                     public int deleteByPrimaryKey(Integer id) {
                         // Updated implementation
                         return 1;
                     }
 
-                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
                     public int insert(Object record) {
                         return 0;
                     }
@@ -78,6 +78,7 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
         return switch (id) {
             case "Eclipse" -> expectedEclipseContent(parameter);
             case "LexicalPreserving" -> expectedLexicalPreservingContent(parameter);
+            case "MergeIntoOld" -> expectedMergeIntoOldContent(parameter);
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
@@ -90,13 +91,13 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
             public class TestMapper {
 
-                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "Source field: awful table.first name")
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "V2")
                 public int deleteByPrimaryKey(Integer id) {
                     // Updated implementation
                     return 1;
                 }
 
-                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "Source field: awful table.first name")
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "V2")
                 public int insert(Object record) {
                     return 0;
                 }
@@ -118,13 +119,13 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
                 public class TestMapper {
 
-                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
                     public int deleteByPrimaryKey(Integer id) {
                         // Updated implementation
                         return 1;
                     }
 
-                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
                     public int insert(Object record) {
                         return 0;
                     }
@@ -134,6 +135,33 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                     }
                 }
                 """, parameter);
+    }
+
+    private String expectedMergeIntoOldContent(String parameter) {
+        return String.format("""
+            package com.example;
+
+            import %s;
+
+            public class TestMapper {
+
+                // This is a custom method that should be preserved
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "V2")
+                public int deleteByPrimaryKey(Integer id) {
+                    // Updated implementation
+                    return 1;
+                }
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "V2")
+                public int insert(Object record) {
+                    return 0;
+                }
+            }
+            """, parameter);
     }
 
     @Override
@@ -151,7 +179,12 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

@@ -53,7 +53,7 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                 import java.util.stream.IntStream;
                 import javax.annotation.Generated;
 
-                public record Name(int id, String firstName, String lastName) {
+                public record Name(int id, String firstName, String lastName, String middleName) {
 
                   @Generated("org.mybatis.generator.api.MyBatisGenerator")
                   public static class SomeClass {
@@ -71,7 +71,15 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> """
+            case "Eclipse" -> expectedEclipseContent();
+            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedEclipseContent() {
+        return """
                 package foo;
 
                 import java.io.Serializable;
@@ -79,7 +87,7 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
 
                 import javax.annotation.Generated;
 
-                public record Name(int id, String firstName, String lastName) implements Serializable {
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
 
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     public static class SomeClass {
@@ -96,14 +104,17 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                     }
                 }
                 """;
-            case "LexicalPreserving" -> """
+    }
+
+    private String expectedLexicalPreservingContent() {
+        return """
                 package foo;
 
                 import java.util.stream.IntStream;
                 import javax.annotation.Generated;
                 import java.io.Serializable;
 
-                public record Name(int id, String firstName, String lastName) implements Serializable {
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
 
                   @Generated("org.mybatis.generator.api.MyBatisGenerator")
                   public static class SomeClass {
@@ -122,8 +133,34 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                   }
                 }
                 """;
-            default -> throw new IllegalStateException("Unexpected value: " + id);
-        };
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+                import java.util.stream.IntStream;
+
+                import javax.annotation.Generated;
+
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
+
+                    private static final long serialVersionUID = 1L;
+
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public static class SomeClass {
+
+                        public int method2() {
+                            return IntStream.range(0, 10).filter(i -> i % 2 == 0).map(i -> i * 2).reduce(Integer::sum);
+                        }
+                    }
+                }
+                """;
     }
 
     @Override
@@ -136,7 +173,12 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

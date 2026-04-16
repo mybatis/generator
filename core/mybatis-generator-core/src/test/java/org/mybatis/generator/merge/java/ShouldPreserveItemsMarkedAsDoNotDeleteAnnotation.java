@@ -126,6 +126,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
         return switch (id) {
             case "Eclipse" -> expectedEclipseContent();
             case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
@@ -217,6 +218,51 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
               """;
     }
 
+    private String expectedMergeIntoOldContent() {
+        return """
+              package mbg.test.mb3.generated.flat.model;
+
+              import java.util.List;
+
+              import jakarta.annotation.Generated;
+
+              public class PkfieldsExample {
+
+                  @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "do_not_delete_during_merge (existing)")
+                  protected int id;
+
+                  public void customMethod() {
+                  }
+
+                  @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "do_not_delete_during_merge")
+                  public int getId() {
+                      // existing
+                      return id;
+                  }
+
+                  @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "do_not_delete_during_merge")
+                  public static class Criteria extends GeneratedCriteria {
+
+                      protected Criteria() {
+                          super();
+                      }
+
+                      public boolean isValid() {
+                          return true;
+                      }
+                  }
+
+                  @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                  public void reset() {
+                  }
+
+                  @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                  protected abstract static class GeneratedCriteria {
+                  }
+              }
+              """;
+    }
+
     @Override
     public List<MergeConfigurationAndId> mergeConfigurations() {
         MergeConfiguration eclipse = new MergeConfiguration.Builder()
@@ -227,7 +273,12 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
                 .isLexicalPreserving(true)
                 .build();
 
+        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build();
+
         return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
+                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

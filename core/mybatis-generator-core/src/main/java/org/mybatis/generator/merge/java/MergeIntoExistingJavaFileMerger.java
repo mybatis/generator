@@ -152,7 +152,7 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
 
         // add members from the new file to the existing file
         for (BodyDeclaration<?> member : newFileParseResults.typeDeclaration().getMembers()) {
-            existingFileParseResults.typeDeclaration().getMembers().add(member);
+            existingFileParseResults.typeDeclaration().addMember(member);
         }
 
         // add any enum constants from the new file to the existing file

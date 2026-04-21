@@ -26,7 +26,7 @@ public class MergeConfiguration {
 
     private static final IndentType DEFAULT_INDENT_TYPE = IndentType.SPACE;
     private static final ImportSortType DEFAULT_IMPORT_SORT_TYPE = ImportSortType.ECLIPSE;
-    public static final MergeStrategy DEFAULT_MERGE_STRATEGY = MergeStrategy.MERGE_INTO_NEW;
+    public static final MergeStrategy DEFAULT_MERGE_STRATEGY = MergeStrategy.MERGE_INTO_EXISTING;
 
     private MergeConfiguration(Builder builder) {
         isLexicalPreserving = builder.isLexicalPreserving;
@@ -82,7 +82,7 @@ public class MergeConfiguration {
     }
 
     public static MergeConfiguration defaultMergeConfiguration() {
-        return new MergeConfiguration.Builder().build();
+        return new Builder().build();
     }
 
     public static class Builder {

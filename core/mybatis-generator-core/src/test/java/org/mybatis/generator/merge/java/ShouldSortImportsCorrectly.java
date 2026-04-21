@@ -21,6 +21,14 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                 .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
                 .build());
 
+        addMergeConfiguration("IntelliJ", new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.INTELLIJ)
+                .build());
+
+        addMergeConfiguration("DefaultSort", new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.DEFAULT)
+                .build());
+
         addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
                 .build());
@@ -75,6 +83,8 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
             case "Eclipse" -> expectedEclipseContent();
+            case "IntelliJ" -> expectedIntelliJContent();
+            case "DefaultSort" -> expectedDefaultSortContent();
             case "LexicalPreserving" -> expectedLexicalPreservingContent();
             case "MergeIntoOld" -> expectedMergeIntoOldContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
@@ -97,6 +107,68 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
 
                 import bar.Foo;
                 import foo.Bar;
+
+                public class TestMapper {
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public Map<String, Object> getMap() {
+                        return null;
+                    }
+
+                    public void customMethod() {
+                    }
+                }
+                """;
+    }
+
+    private String expectedIntelliJContent() {
+        return """
+                package com.example;
+
+                import bar.Foo;
+                import foo.Bar;
+
+                import java.sql.Connection;
+                import java.sql.PreparedStatement;
+                import java.util.Date;
+                import java.util.List;
+                import java.util.Map;
+                import java.util.Set;
+
+                import static java.util.Collections.emptySet;
+                import static java.util.Collections.sort;
+
+                public class TestMapper {
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public Map<String, Object> getMap() {
+                        return null;
+                    }
+
+                    public void customMethod() {
+                    }
+                }
+                """;
+    }
+
+    private String expectedDefaultSortContent() {
+        return """
+                package com.example;
+
+                import static java.util.Collections.emptySet;
+                import static java.util.Collections.sort;
+                import bar.Foo;
+                import foo.Bar;
+                import java.sql.Connection;
+                import java.sql.PreparedStatement;
+                import java.util.Date;
+                import java.util.List;
+                import java.util.Map;
+                import java.util.Set;
 
                 public class TestMapper {
 

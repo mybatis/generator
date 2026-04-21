@@ -17,19 +17,20 @@ package org.mybatis.generator.merge.java;
 
 public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaMergeTestCase {
     public ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag() {
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
 
-        addMergeConfiguration("MergeIntoOldLp", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
@@ -67,15 +68,15 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> expectedEclipseContent();
-            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
             case "MergeIntoOld" -> expectedMergeIntoOldContent();
-            case "MergeIntoOldLp" -> expectedMergeIntoOldLpContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
-    private String expectedEclipseContent() {
+    private String expectedMergeIntoNewContent() {
         return """
             package com.example;
 
@@ -95,7 +96,7 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
             """;
     }
 
-    private String expectedLexicalPreservingContent() {
+    private String expectedMergeIntoNewLPContent() {
         return """
             package com.example;
 
@@ -134,7 +135,7 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
             """;
     }
 
-    private String expectedMergeIntoOldLpContent() {
+    private String expectedMergeIntoOldLPContent() {
         return """
             package com.example;
 
@@ -142,7 +143,7 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
                 public void customMethod() {
                     System.out.println("Custom method");
                 }
-
+               \s
                 /**
                  * @mbg.generated
                  */

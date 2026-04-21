@@ -17,15 +17,21 @@ package org.mybatis.generator.merge.java;
 
 public class ShouldPreserveMultipleCustomMethodsWhenMerging extends JavaMergeTestCase {
     public ShouldPreserveMultipleCustomMethodsWhenMerging() {
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
@@ -82,14 +88,15 @@ public class ShouldPreserveMultipleCustomMethodsWhenMerging extends JavaMergeTes
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> expectedEclipseContent();
-            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
             case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
-    private String expectedEclipseContent() {
+    private String expectedMergeIntoNewContent() {
         return """
                 package com.example;
 
@@ -121,7 +128,7 @@ public class ShouldPreserveMultipleCustomMethodsWhenMerging extends JavaMergeTes
                 """;
     }
 
-    private String expectedLexicalPreservingContent() {
+    private String expectedMergeIntoNewLPContent() {
         // TODO - this is wrong. The comment in generatedMethod was moved
         return """
                 package com.example;
@@ -175,6 +182,39 @@ public class ShouldPreserveMultipleCustomMethodsWhenMerging extends JavaMergeTes
                         return 1;
                     }
 
+                    /**
+                     * @mbg.generated
+                     */
+                    public int newGeneratedMethod() {
+                        return 0;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        return """
+                package com.example;
+
+                public class TestMapper {
+
+
+                    public void customMethod1() {
+                        System.out.println("Custom method 1");
+                    }
+
+                    public void customMethod2() {
+                        System.out.println("Custom method 2");
+                    }
+                   \s
+                    /**
+                     * @mbg.generated
+                     */
+                    public int generatedMethod() {
+                        // Updated
+                        return 1;
+                    }
+                   \s
                     /**
                      * @mbg.generated
                      */

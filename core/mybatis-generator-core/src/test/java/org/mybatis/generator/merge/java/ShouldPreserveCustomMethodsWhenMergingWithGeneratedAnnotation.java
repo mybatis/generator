@@ -19,15 +19,21 @@ import java.util.List;
 
 public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation extends JavaMergeTestCase {
     public ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation() {
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
@@ -90,14 +96,15 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> expectedEclipseContent(parameter);
-            case "LexicalPreserving" -> expectedLexicalPreservingContent(parameter);
+            case "MergeIntoNew" -> expectedMergeIntoNewContent(parameter);
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent(parameter);
             case "MergeIntoOld" -> expectedMergeIntoOldContent(parameter);
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent(parameter);
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
-    private String expectedEclipseContent(String parameter) {
+    private String expectedMergeIntoNewContent(String parameter) {
         return String.format("""
             package com.example;
 
@@ -124,8 +131,8 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
             """, parameter);
     }
 
-    private String expectedLexicalPreservingContent(String parameter) {
-        // TODO - this is wrong, the customMethod comment was dropped
+    private String expectedMergeIntoNewLPContent(String parameter) {
+        // This is a documented case of something that doesn't work with the LP printer: comments are not merged
         return String.format("""
                 package com.example;
 
@@ -171,6 +178,33 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                 }
 
                 @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "V2")
+                public int insert(Object record) {
+                    return 0;
+                }
+            }
+            """, parameter);
+    }
+
+    private String expectedMergeIntoOldLPContent(String parameter) {
+        return String.format("""
+            package com.example;
+
+            import %s;
+
+            public class TestMapper {
+
+                // This is a custom method that should be preserved
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+               \s
+                @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
+                public int deleteByPrimaryKey(Integer id) {
+                    // Updated implementation
+                    return 1;
+                }
+               \s
+                @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
                 public int insert(Object record) {
                     return 0;
                 }

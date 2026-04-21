@@ -18,12 +18,13 @@ package org.mybatis.generator.merge.java;
 public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
     public ShouldHandleClassToRecordConversions () {
         // this use case is not supported with the merge into existing strategy
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
     }
 
@@ -99,13 +100,13 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-        case "Eclipse" -> expectedEclipseContent();
-        case "LexicalPreserving" -> expectedLexicalPreservingContent();
+        case "MergeIntoNew" -> expectedMergeIntoNewContent();
+        case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
         default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
-    private String expectedEclipseContent() {
+    private String expectedMergeIntoNewContent() {
         return """
                 package foo;
 
@@ -125,7 +126,7 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
                 """;
     }
 
-    private String expectedLexicalPreservingContent() {
+    private String expectedMergeIntoNewLPContent() {
         return """
                 package foo;
 

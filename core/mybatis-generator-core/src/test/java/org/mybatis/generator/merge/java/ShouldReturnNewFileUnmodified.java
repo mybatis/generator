@@ -17,15 +17,21 @@ package org.mybatis.generator.merge.java;
 
 public class ShouldReturnNewFileUnmodified extends JavaMergeTestCase {
     public ShouldReturnNewFileUnmodified() {
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }

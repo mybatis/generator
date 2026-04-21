@@ -17,15 +17,21 @@ package org.mybatis.generator.merge.java;
 
 public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
     public ShouldMergeRecordsWithInnerClasses() {
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
@@ -83,14 +89,15 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> expectedEclipseContent();
-            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
             case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
-    private String expectedEclipseContent() {
+    private String expectedMergeIntoNewContent() {
         return """
                 package foo;
 
@@ -118,7 +125,7 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                 """;
     }
 
-    private String expectedLexicalPreservingContent() {
+    private String expectedMergeIntoNewLPContent() {
         return """
                 package foo;
 
@@ -171,6 +178,34 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                             return IntStream.range(0, 10).filter(i -> i % 2 == 0).map(i -> i * 2).reduce(Integer::sum);
                         }
                     }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+                import javax.annotation.Generated;
+                import java.util.stream.IntStream;
+
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
+                  private static final long serialVersionUID = 1L;
+
+                  public String fullName() {
+                    return firstName + " " + lastName;
+                  }
+                 \s
+                  @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                  public static class SomeClass {
+                    public int method2() {
+                      return IntStream.range(0, 10)
+                          .filter(i -> i % 2 == 0)
+                          .map(i -> i * 2)
+                          .reduce(Integer::sum);
+                    }
+                  }
                 }
                 """;
     }

@@ -22,15 +22,21 @@ package org.mybatis.generator.merge.java;
  */
 public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeTestCase {
     public ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation() {
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
@@ -136,14 +142,15 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> expectedEclipseContent();
-            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
             case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
-    private String expectedEclipseContent() {
+    private String expectedMergeIntoNewContent() {
         return """
               package mbg.test.mb3.generated.flat.model;
 
@@ -188,7 +195,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
               """;
     }
 
-    private String expectedLexicalPreservingContent() {
+    private String expectedMergeIntoNewLPContent() {
         return """
               package mbg.test.mb3.generated.flat.model;
 
@@ -268,6 +275,48 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeT
                   public void reset() {
                   }
 
+                  @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                  protected abstract static class GeneratedCriteria {
+                  }
+              }
+              """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        return """
+              package mbg.test.mb3.generated.flat.model;
+
+              import jakarta.annotation.Generated;
+              import java.util.List;
+
+              public class PkfieldsExample {
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="do_not_delete_during_merge (existing)")
+                  protected int id;
+
+                  public void customMethod() {
+                  }
+
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="do_not_delete_during_merge")
+                  public int getId() {
+                      // existing
+                      return id;
+                  }
+
+                  @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="do_not_delete_during_merge")
+                  public static class Criteria extends GeneratedCriteria {
+                      protected Criteria() {
+                          super();
+                      }
+
+                      public boolean isValid() {
+                          return true;
+                      }
+                  }
+                 \s
+                  @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                  public void reset() {
+                  }
+                 \s
                   @Generated("org.mybatis.generator.api.MyBatisGenerator")
                   protected abstract static class GeneratedCriteria {
                   }

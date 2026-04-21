@@ -17,15 +17,21 @@ package org.mybatis.generator.merge.java;
 
 public class ShouldRetainComments extends JavaMergeTestCase {
     public ShouldRetainComments() {
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
@@ -89,14 +95,15 @@ public class ShouldRetainComments extends JavaMergeTestCase {
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> expectedEclipseContent();
-            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
             case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
-    private String expectedEclipseContent() {
+    private String expectedMergeIntoNewContent() {
         // TODO - the comments are completely lost
         return """
             package fr.cncc.aglae.portail.domaine;
@@ -128,7 +135,7 @@ public class ShouldRetainComments extends JavaMergeTestCase {
             """;
     }
 
-    private String expectedLexicalPreservingContent() {
+    private String expectedMergeIntoNewLPContent() {
         // TODO - the comments are completely lost
         return """
             package fr.cncc.aglae.portail.domaine;
@@ -189,6 +196,40 @@ public class ShouldRetainComments extends JavaMergeTestCase {
                 private String commentaire;
 
                 // this kind of comment is destroyed at generation
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "Source field: APPLICATION_SCRIPT_SQL.ASS_FILE_NAME")
+                private String fileName;
+            }
+            """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        // TODO - check this
+        return """
+            package fr.cncc.aglae.portail.domaine;
+
+            import jakarta.annotation.Generated;
+            import lombok.AllArgsConstructor;
+            import lombok.Builder;
+            import lombok.Data;
+            import lombok.NoArgsConstructor;
+
+            @Data
+            @AllArgsConstructor
+            @NoArgsConstructor
+            @Builder
+            public class ApplicationScriptSql {
+                // this kind of comment is destroyed at generation
+                /** this this kind of comment is also destroyed at generation **/
+
+                public final static int STATUT_EN_COURS = 0;
+
+                public boolean isEnCours() {
+                    return getStatut() == STATUT_EN_COURS;
+                }
+               \s
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "Source field: APPLICATION_SCRIPT_SQL.ASS_COMMENTAIRE")
+                private String commentaire;
+               \s
                 @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", comments = "Source field: APPLICATION_SCRIPT_SQL.ASS_FILE_NAME")
                 private String fileName;
             }

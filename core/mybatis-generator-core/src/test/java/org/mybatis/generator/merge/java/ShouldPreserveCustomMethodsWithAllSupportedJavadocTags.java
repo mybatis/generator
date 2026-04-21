@@ -22,15 +22,21 @@ import org.mybatis.generator.config.MergeConstants;
 
 public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends JavaMergeTestCase {
     public ShouldPreserveCustomMethodsWithAllSupportedJavadocTags() {
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
@@ -76,14 +82,15 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> expectedEclipseContent();
-            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
             case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
-    private String expectedEclipseContent() {
+    private String expectedMergeIntoNewContent() {
         return """
                 package com.example;
 
@@ -103,7 +110,7 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
                 """;
     }
 
-    private String expectedLexicalPreservingContent() {
+    private String expectedMergeIntoNewLPContent() {
         return """
                 package com.example;
 
@@ -133,6 +140,28 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
                         System.out.println("Custom method");
                     }
 
+                    /**
+                     * @mbg.generated
+                     */
+                    public int newGeneratedMethod() {
+                        return 1;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        // TODO - this is broken, merge JavaDoc is lost
+        return """
+                package com.example;
+
+                public class TestMapper {
+
+
+                    public void customMethod() {
+                        System.out.println("Custom method");
+                    }
+                   \s
                     /**
                      * @mbg.generated
                      */

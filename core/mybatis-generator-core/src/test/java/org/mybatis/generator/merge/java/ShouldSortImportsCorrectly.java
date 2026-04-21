@@ -17,25 +17,34 @@ package org.mybatis.generator.merge.java;
 
 public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
     public ShouldSortImportsCorrectly() {
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewEclipseSort", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
                 .build());
 
-        addMergeConfiguration("IntelliJ", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewIntelliJSort", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .withImportSortType(MergeConfiguration.ImportSortType.INTELLIJ)
                 .withIndentSize(2)
                 .build());
 
-        addMergeConfiguration("DefaultSort", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewDefaultSort", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .withImportSortType(MergeConfiguration.ImportSortType.DEFAULT)
                 .withIndentType(MergeConfiguration.IndentType.TAB)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
@@ -84,16 +93,17 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> expectedEclipseContent();
-            case "IntelliJ" -> expectedIntelliJContent();
-            case "DefaultSort" -> expectedDefaultSortContent();
-            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoNewEclipseSort" -> expectedMergeIntoNewEclipseSortContent();
+            case "MergeIntoNewIntelliJSort" -> expectedMergeIntoNewIntelliJSortContent();
+            case "MergeIntoNewDefaultSort" -> expectedMergeIntoNewDefaultSortContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
             case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
-    private String expectedEclipseContent() {
+    private String expectedMergeIntoNewEclipseSortContent() {
         return """
                 package com.example;
 
@@ -125,7 +135,7 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                 """;
     }
 
-    private String expectedIntelliJContent() {
+    private String expectedMergeIntoNewIntelliJSortContent() {
         return """
                 package com.example;
 
@@ -157,7 +167,7 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                 """;
     }
 
-    private String expectedDefaultSortContent() {
+    private String expectedMergeIntoNewDefaultSortContent() {
         return """
                 package com.example;
 
@@ -187,7 +197,7 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                 """;
     }
 
-    private String expectedLexicalPreservingContent() {
+    private String expectedMergeIntoNewLPContent() {
         // the lexical preserving printer does not sort imports
         return """
                 package com.example;
@@ -238,6 +248,35 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                     public void customMethod() {
                     }
 
+                    /**
+                     * @mbg.generated
+                     */
+                    public Map<String, Object> getMap() {
+                        return null;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        return """
+                package com.example;
+
+                import foo.Bar;
+                import java.util.Set;
+                import java.util.Date;
+                import bar.Foo;
+                import java.sql.Connection;
+
+                import static java.util.Collections.emptySet;
+                import java.util.List;
+                import java.util.Map;
+                import static java.util.Collections.sort;
+                import java.sql.PreparedStatement;
+
+                public class TestMapper {
+                    public void customMethod() {}
+                   \s
                     /**
                      * @mbg.generated
                      */

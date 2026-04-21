@@ -17,15 +17,21 @@ package org.mybatis.generator.merge.java;
 
 public class ShouldMergeEnums extends JavaMergeTestCase {
     public ShouldMergeEnums() {
-        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
@@ -102,14 +108,15 @@ public class ShouldMergeEnums extends JavaMergeTestCase {
     @Override
     public String expectedContentAfterMerge(String parameter, String id) {
         return switch (id) {
-            case "Eclipse" -> expectedEclipseContent();
-            case "LexicalPreserving" -> expectedLexicalPreservingContent();
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
             case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
 
-    private String expectedEclipseContent() {
+    private String expectedMergeIntoNewContent() {
         return """
                 package foo;
 
@@ -148,7 +155,7 @@ public class ShouldMergeEnums extends JavaMergeTestCase {
                 """;
     }
 
-    private String expectedLexicalPreservingContent() {
+    private String expectedMergeIntoNewLPContent() {
         return """
                 package foo;
 
@@ -215,6 +222,43 @@ public class ShouldMergeEnums extends JavaMergeTestCase {
                         this.displayText = displayText;
                     }
 
+                    @Override
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String toString() {
+                        return displayText;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+                import javax.annotation.Generated;
+
+                public enum NameType implements Serializable {
+                    MIDDLE_NAME("middle name"),
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    FIRST_NAME("first name"),
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    LAST_NAME("last name");
+
+                    private static final long serialVersionUID = 1L;
+
+                    public boolean isFirstName() {
+                        return this == FIRST_NAME;
+                    }
+                   \s
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    private String displayText;
+                   \s
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    NameType(String displayText) {
+                        this.displayText = displayText;
+                    }
+                   \s
                     @Override
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     public String toString() {

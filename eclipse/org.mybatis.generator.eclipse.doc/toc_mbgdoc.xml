@@ -80,6 +80,7 @@
       <topic href="html/mbgdoc/usage/postgresql.html" label="PostgreSQL"/>
    </topic>
    <topic href="html/mbgdoc/reference/intro.html" label="Other Reference Information">
+      <topic href="html/mbgdoc/reference/javaMergeReference.html" label="Java Merge Reference"/>
       <topic href="html/mbgdoc/reference/building.html" label="Building From Source"/>
       <topic href="html/mbgdoc/reference/extending.html" label="Extending MyBatis Generator"/>
       <topic href="html/mbgdoc/reference/pluggingIn.html" label="Implementing Plugins"/>

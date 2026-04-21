@@ -15,9 +15,26 @@
  */
 package org.mybatis.generator.merge.java;
 
-import java.util.List;
-
 public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaMergeTestCase {
+    public ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag() {
+        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+                .build());
+
+        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLp", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return """
@@ -53,6 +70,7 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
             case "Eclipse" -> expectedEclipseContent();
             case "LexicalPreserving" -> expectedLexicalPreservingContent();
             case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLp" -> expectedMergeIntoOldLpContent();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
@@ -116,22 +134,22 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
             """;
     }
 
-    @Override
-    public List<MergeConfigurationAndId> mergeConfigurations() {
-        MergeConfiguration eclipse = new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
-                .build();
+    private String expectedMergeIntoOldLpContent() {
+        return """
+            package com.example;
 
-        MergeConfiguration lexicalPreserving = new MergeConfiguration.Builder()
-                .isLexicalPreserving(true)
-                .build();
+            public class TestMapper {
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
 
-        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
-                .build();
-
-        return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
-                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
+                /**
+                 * @mbg.generated
+                 */
+                public int insert(Object record) {
+                    return 0;
+                }
+            }
+            """;
     }
 }

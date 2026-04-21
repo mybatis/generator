@@ -15,9 +15,18 @@
  */
 package org.mybatis.generator.merge.java;
 
-import java.util.List;
-
 public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
+    public ShouldHandleClassToRecordConversions () {
+        // this use case is not supported with the merge into existing strategy
+        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+                .build());
+
+        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return
@@ -96,24 +105,6 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
         };
     }
 
-    private String expectedLexicalPreservingContent() {
-        return """
-                package foo;
-
-                import javax.annotation.Generated;
-                import java.io.Serializable;
-
-                @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                public record Name(int id, String firstName, String lastName) implements Serializable {
-                    private static final long serialVersionUID = 1L;
-                   \s
-                    public String fullName() {
-                        return firstName + " " + lastName;
-                    }
-                }
-                """;
-    }
-
     private String expectedEclipseContent() {
         return """
                 package foo;
@@ -134,18 +125,21 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
                 """;
     }
 
-    @Override
-    public List<MergeConfigurationAndId> mergeConfigurations() {
-        MergeConfiguration eclipse = new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
-                .build();
+    private String expectedLexicalPreservingContent() {
+        return """
+                package foo;
 
-        MergeConfiguration lexicalPreserving = new MergeConfiguration.Builder()
-                .isLexicalPreserving(true)
-                .build();
+                import javax.annotation.Generated;
+                import java.io.Serializable;
 
-        // this use case is not supported with the merge into existing strategy
-        return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving));
+                @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                public record Name(int id, String firstName, String lastName) implements Serializable {
+                    private static final long serialVersionUID = 1L;
+                   \s
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
     }
 }

@@ -21,7 +21,13 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.stream.Stream;
 
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParserConfiguration;
+import com.github.javaparser.printer.DefaultPrettyPrinter;
+import com.github.javaparser.printer.Printer;
+import com.github.javaparser.printer.lexicalpreservation.DefaultLexicalPreservingPrinter;
 import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -33,14 +39,13 @@ class JavaFileMergerTest {
     @MethodSource("mergeTestCases")
     void mergeTestCases(JavaMergeTestCase testCase, String parameter,
                         JavaMergeTestCase.MergeConfigurationAndId mergeConfigurationAndId) throws Exception {
-        if (testCase.disabled()) {
-            return;
+        if (testCase.enabled()) {
+            JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(mergeConfigurationAndId.mergeConfiguration());
+            var actual = javaFileMerger.getMergedSource(testCase.newContent(parameter),
+                    testCase.existingContent(parameter));
+            assertThat(actual).isEqualToNormalizingNewlines(
+                    testCase.expectedContentAfterMerge(parameter, mergeConfigurationAndId.id()));
         }
-
-        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(mergeConfigurationAndId.mergeConfiguration());
-        var actual = javaFileMerger.getMergedSource(testCase.newContent(parameter),
-                testCase.existingContent(parameter));
-        assertThat(actual).isEqualToNormalizingNewlines(testCase.expectedContentAfterMerge(parameter, mergeConfigurationAndId.id()));
     }
 
     static Stream<Arguments> mergeTestCases() {
@@ -80,5 +85,133 @@ class JavaFileMergerTest {
         assertThatExceptionOfType(MergeException.class).isThrownBy(() ->
                         javaFileMerger.getMergedSource(existingFileNoTypes, existingFileNoTypes))
                 .withMessage(getString("RuntimeError.29", "existing Java file"));
+    }
+
+    @Test
+    @Disabled("This test is disabled because of bugs in the LexicalPreservingPrinter")
+    void testCommentMergingWithLexicalPreservationEnabled() {
+        ParserConfiguration parserConfiguration = new ParserConfiguration();
+        parserConfiguration.setLexicalPreservationEnabled(true);
+        JavaParser javaParser = new JavaParser(parserConfiguration);
+
+        var existingClassParseResults = javaParser.parse("""
+                package foo;
+                
+                public class Bar {
+                    private int bar;
+                }
+                """);
+
+        existingClassParseResults.ifSuccessful(existingCu -> {
+            var newClassParseResults = javaParser.parse("""
+                package foo;
+                
+                public class Bar {
+                    /**
+                     * Javadoc Comment on field
+                     */
+                    int foo;
+
+                    /**
+                     * Javadoc Comment on method
+                     */
+                    public int getFoo() {
+                        // some comment
+                        return foo;
+                    }
+                }
+                """);
+
+            newClassParseResults.ifSuccessful(newCu -> {
+                existingCu.getType(0).addMember(newCu.getType(0).getMember(0));
+                existingCu.getType(0).addMember(newCu.getType(0).getMember(1));
+
+                Printer pp = new DefaultLexicalPreservingPrinter();
+                assertThat(pp.print(existingCu)).isEqualToNormalizingNewlines("""
+                    package foo;
+            
+                    public class Bar {
+                        private int bar;
+
+                        /**
+                         * Javadoc Comment on field
+                         */
+                        int foo;
+
+                        /**
+                         * Javadoc Comment on method
+                         */
+                        public int getFoo() {
+                            // some comment
+                            return foo;
+                        }
+                    }
+                    """);
+            });
+        });
+    }
+
+    @Test
+    void testCommentMergingWithoutLexicalPreservation() {
+        ParserConfiguration parserConfiguration = new ParserConfiguration();
+        parserConfiguration.setLexicalPreservationEnabled(false);
+        JavaParser javaParser = new JavaParser(parserConfiguration);
+
+        var existingClassParseResults = javaParser.parse("""
+                package foo;
+                
+                public class Bar {
+                    private int bar;
+                }
+                """);
+
+        existingClassParseResults.ifSuccessful(existingCu -> {
+            var newClassParseResults = javaParser.parse("""
+                package foo;
+                
+                public class Bar {
+                    /**
+                     * Javadoc Comment on field
+                     */
+                    int foo;
+
+                    /**
+                     * Javadoc Comment on method
+                     */
+                    public int getFoo() {
+                        // some comment
+                        return foo;
+                    }
+                }
+                """);
+
+            newClassParseResults.ifSuccessful(newCu -> {
+                existingCu.getType(0).addMember(newCu.getType(0).getMember(0));
+                existingCu.getType(0).addMember(newCu.getType(0).getMember(1));
+
+                Printer pp = new DefaultPrettyPrinter();
+                assertThat(pp.print(existingCu)).isEqualToNormalizingNewlines("""
+                    package foo;
+            
+                    public class Bar {
+
+                        private int bar;
+
+                        /**
+                         * Javadoc Comment on field
+                         */
+                        int foo;
+
+                        /**
+                         * Javadoc Comment on method
+                         */
+                        public int getFoo() {
+                            // some comment
+                            return foo;
+                        }
+                    }
+                    """);
+            });
+        });
     }
 }

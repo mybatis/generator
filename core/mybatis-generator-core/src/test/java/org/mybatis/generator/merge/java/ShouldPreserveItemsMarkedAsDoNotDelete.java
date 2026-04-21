@@ -15,14 +15,26 @@
  */
 package org.mybatis.generator.merge.java;
 
-import java.util.List;
-
 /**
  * This test case verifies that generated items with the special text
  * "do_not_delete_during_merge" survive the merge. This is something
  * supported in the legacy example classes.
  */
 public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
+    public ShouldPreserveItemsMarkedAsDoNotDelete() {
+        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+                .build());
+
+        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return """
@@ -309,24 +321,5 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   }
               }
               """;
-    }
-
-    @Override
-    public List<MergeConfigurationAndId> mergeConfigurations() {
-        MergeConfiguration eclipse = new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
-                .build();
-
-        MergeConfiguration lexicalPreserving = new MergeConfiguration.Builder()
-                .isLexicalPreserving(true)
-                .build();
-
-        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
-                .build();
-
-        return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
-                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

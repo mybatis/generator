@@ -18,6 +18,20 @@ package org.mybatis.generator.merge.java;
 import java.util.List;
 
 public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation extends JavaMergeTestCase {
+    public ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation() {
+        addMergeConfiguration("Eclipse", new MergeConfiguration.Builder()
+                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
+                .build());
+
+        addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
+                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return String.format("""
@@ -167,24 +181,5 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
     @Override
     public List<String> parameterVariants() {
         return List.of("javax.annotation.Generated", "jakarta.annotation.Generated");
-    }
-
-    @Override
-    public List<MergeConfigurationAndId> mergeConfigurations() {
-        MergeConfiguration eclipse = new MergeConfiguration.Builder()
-                .withImportSortType(MergeConfiguration.ImportSortType.ECLIPSE)
-                .build();
-
-        MergeConfiguration lexicalPreserving = new MergeConfiguration.Builder()
-                .isLexicalPreserving(true)
-                .build();
-
-        MergeConfiguration mergeIntoOld = new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
-                .build();
-
-        return List.of(new MergeConfigurationAndId("Eclipse", eclipse),
-                new MergeConfigurationAndId("LexicalPreserving", lexicalPreserving),
-                new MergeConfigurationAndId("MergeIntoOld", mergeIntoOld));
     }
 }

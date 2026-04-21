@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.merge.java;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -29,13 +30,20 @@ import org.reflections.util.ConfigurationBuilder;
 public abstract class JavaMergeTestCase extends MergeTestCase {
     private static final Log LOG = LogFactory.getLog(JavaMergeTestCase.class);
 
-    public boolean disabled() {
-        return false;
+    private final List<MergeConfigurationAndId> mergeConfigurations = new ArrayList<>();
+
+    public boolean enabled() {
+        return true;
     }
 
-    public record MergeConfigurationAndId(String id, MergeConfiguration mergeConfiguration) {}
+    protected void addMergeConfiguration(String id, MergeConfiguration mergeConfiguration) {
+        mergeConfigurations.add(new MergeConfigurationAndId(id, mergeConfiguration));
+    }
 
-    public abstract List<MergeConfigurationAndId> mergeConfigurations();
+    public List<MergeConfigurationAndId> mergeConfigurations() {
+        return mergeConfigurations;
+    }
+
     public abstract String expectedContentAfterMerge(String parameter, String mergeConfigurationId);
 
     public static Stream<Arguments> javaMergeTestCases(String searchedPackage) {
@@ -78,4 +86,6 @@ public abstract class JavaMergeTestCase extends MergeTestCase {
                             .map(pc -> Arguments.argumentSet(String.format(name, pv, pc.id), this, pv, pc)));
         }
     }
+
+    public record MergeConfigurationAndId(String id, MergeConfiguration mergeConfiguration) {}
 }

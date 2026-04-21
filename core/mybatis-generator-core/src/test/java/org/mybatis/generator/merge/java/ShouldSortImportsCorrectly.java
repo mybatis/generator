@@ -23,10 +23,12 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
 
         addMergeConfiguration("IntelliJ", new MergeConfiguration.Builder()
                 .withImportSortType(MergeConfiguration.ImportSortType.INTELLIJ)
+                .withIndentSize(2)
                 .build());
 
         addMergeConfiguration("DefaultSort", new MergeConfiguration.Builder()
                 .withImportSortType(MergeConfiguration.ImportSortType.DEFAULT)
+                .withIndentType(MergeConfiguration.IndentType.TAB)
                 .build());
 
         addMergeConfiguration("LexicalPreserving", new MergeConfiguration.Builder()
@@ -142,15 +144,15 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
 
                 public class TestMapper {
 
-                    /**
-                     * @mbg.generated
-                     */
-                    public Map<String, Object> getMap() {
-                        return null;
-                    }
+                  /**
+                   * @mbg.generated
+                   */
+                  public Map<String, Object> getMap() {
+                    return null;
+                  }
 
-                    public void customMethod() {
-                    }
+                  public void customMethod() {
+                  }
                 }
                 """;
     }
@@ -172,15 +174,15 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
 
                 public class TestMapper {
 
-                    /**
-                     * @mbg.generated
-                     */
-                    public Map<String, Object> getMap() {
-                        return null;
-                    }
+                \t/**
+                \t * @mbg.generated
+                \t */
+                \tpublic Map<String, Object> getMap() {
+                \t\treturn null;
+                \t}
 
-                    public void customMethod() {
-                    }
+                \tpublic void customMethod() {
+                \t}
                 }
                 """;
     }

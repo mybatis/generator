@@ -96,7 +96,7 @@ class JavaFileMergerTest {
 
         var existingClassParseResults = javaParser.parse("""
                 package foo;
-                
+
                 public class Bar {
                     private int bar;
                 }
@@ -105,7 +105,7 @@ class JavaFileMergerTest {
         existingClassParseResults.ifSuccessful(existingCu -> {
             var newClassParseResults = javaParser.parse("""
                 package foo;
-                
+
                 public class Bar {
                     /**
                      * Javadoc Comment on field
@@ -129,7 +129,7 @@ class JavaFileMergerTest {
                 Printer pp = new DefaultLexicalPreservingPrinter();
                 assertThat(pp.print(existingCu)).isEqualToNormalizingNewlines("""
                     package foo;
-            
+
                     public class Bar {
                         private int bar;
 
@@ -159,7 +159,7 @@ class JavaFileMergerTest {
 
         var existingClassParseResults = javaParser.parse("""
                 package foo;
-                
+
                 public class Bar {
                     private int bar;
                 }
@@ -168,7 +168,7 @@ class JavaFileMergerTest {
         existingClassParseResults.ifSuccessful(existingCu -> {
             var newClassParseResults = javaParser.parse("""
                 package foo;
-                
+
                 public class Bar {
                     /**
                      * Javadoc Comment on field
@@ -192,7 +192,7 @@ class JavaFileMergerTest {
                 Printer pp = new DefaultPrettyPrinter();
                 assertThat(pp.print(existingCu)).isEqualToNormalizingNewlines("""
                     package foo;
-            
+
                     public class Bar {
 
                         private int bar;

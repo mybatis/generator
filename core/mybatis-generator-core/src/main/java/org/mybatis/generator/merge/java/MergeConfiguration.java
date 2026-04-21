@@ -24,9 +24,16 @@ public class MergeConfiguration {
     private final ImportSortType importSortType;
     private final MergeStrategy mergeStrategy;
 
+    private static final IndentType DEFAULT_INDENT_TYPE = IndentType.SPACE;
+    private static final ImportSortType DEFAULT_IMPORT_SORT_TYPE = ImportSortType.ECLIPSE;
+    public static final MergeStrategy DEFAULT_MERGE_STRATEGY = MergeStrategy.MERGE_INTO_NEW;
+
     private MergeConfiguration(Builder builder) {
         isLexicalPreserving = builder.isLexicalPreserving;
-        indentType = builder.indentType == null ? IndentType.SPACE : builder.indentType;
+        indentType = builder.indentType == null ? DEFAULT_INDENT_TYPE : builder.indentType;
+        importSortType = builder.importSortType == null ? DEFAULT_IMPORT_SORT_TYPE : builder.importSortType;
+        mergeStrategy = builder.mergeStrategy == null ? DEFAULT_MERGE_STRATEGY : builder.mergeStrategy;
+
         if (builder.indentSize == null) {
             if (indentType == IndentType.TAB) {
                 indentSize = 1;
@@ -36,8 +43,6 @@ public class MergeConfiguration {
         } else {
             indentSize = builder.indentSize;
         }
-        importSortType = builder.importSortType == null ? ImportSortType.ECLIPSE : builder.importSortType;
-        mergeStrategy = builder.mergeStrategy == null ? MergeStrategy.MERGE_INTO_NEW : builder.mergeStrategy;
     }
 
     public boolean isLexicalPreserving() {

@@ -32,12 +32,12 @@ public abstract class JavaMergeTestCase extends MergeTestCase {
 
     private final List<MergeConfigurationAndId> mergeConfigurations = new ArrayList<>();
 
-    public boolean enabled() {
-        return true;
+    protected void addMergeConfiguration(String id, MergeConfiguration mergeConfiguration) {
+        addMergeConfiguration(true, id, mergeConfiguration);
     }
 
-    protected void addMergeConfiguration(String id, MergeConfiguration mergeConfiguration) {
-        mergeConfigurations.add(new MergeConfigurationAndId(id, mergeConfiguration));
+    protected void addMergeConfiguration(boolean enabled, String id, MergeConfiguration mergeConfiguration) {
+        mergeConfigurations.add(new MergeConfigurationAndId(enabled, id, mergeConfiguration));
     }
 
     public List<MergeConfigurationAndId> mergeConfigurations() {
@@ -87,5 +87,5 @@ public abstract class JavaMergeTestCase extends MergeTestCase {
         }
     }
 
-    public record MergeConfigurationAndId(String id, MergeConfiguration mergeConfiguration) {}
+    public record MergeConfigurationAndId(boolean enabled, String id, MergeConfiguration mergeConfiguration) {}
 }

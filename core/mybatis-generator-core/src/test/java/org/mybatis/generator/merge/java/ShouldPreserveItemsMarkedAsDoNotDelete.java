@@ -26,7 +26,8 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
+        // disabled because of an issue with the lexical preserving printer - JavaDoc comments are garbled
+        addMergeConfiguration(false, "MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
@@ -35,7 +36,8 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
 
-        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+        // disabled because of an issue with the lexical preserving printer - JavaDoc comments are lost
+        addMergeConfiguration(false, "MergeIntoOldLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
@@ -55,12 +57,12 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   protected int id;
 
                   /**
-                   * @mbg.generated
+                   * @mbg.generated (1)
                    */
                   protected List<Criteria> oredCriteria;
 
                   /**
-                   * @mbg.generated
+                   * @mbg.generated (2)
                    */
                   public PkfieldsExample() {
                       oredCriteria = new ArrayList<>();
@@ -70,7 +72,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (3)
                    */
                   public int getId() {
                       // existing
@@ -78,28 +80,28 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   }
 
                   /**
-                   * @mbg.generated
+                   * @mbg.generated (4)
                    */
                   public List<Criteria> getOredCriteria() {
                       return oredCriteria;
                   }
 
                   /**
-                   * @mbg.generated
+                   * @mbg.generated (5)
                    */
                   public void clear() {
                       oredCriteria.clear();
                   }
 
                   /**
-                   * @mbg.generated
+                   * @mbg.generated (6)
                    */
                   protected abstract static class GeneratedCriteria {
                       protected List<Criterion> allCriteria;
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (7)
                    */
                   public static class Criteria extends GeneratedCriteria {
                       protected Criteria() {
@@ -112,7 +114,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   }
 
                   /**
-                   * @mbg.generated
+                   * @mbg.generated (8)
                    */
                   public static class Criterion {
                       private String condition;
@@ -205,7 +207,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   protected int id;
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (3)
                    */
                   public int getId() {
                       // existing
@@ -213,7 +215,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (7)
                    */
                   public static class Criteria extends GeneratedCriteria {
 
@@ -230,7 +232,6 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
     }
 
     private String expectedMergeIntoNewLPContent() {
-        // TODO - this is completely wrong. The javadoc should be preserved, but is lost or relocated
         return """
               package mbg.test.mb3.generated.flat.model;
 
@@ -258,7 +259,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   protected int id;
                  \s
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (3)
                    */
                   public int getId() {
                       // existing
@@ -266,7 +267,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   }
                  \s
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (7)
                    */
                   public static class Criteria extends GeneratedCriteria {
                       protected Criteria() {
@@ -300,7 +301,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (3)
                    */
                   public int getId() {
                       // existing
@@ -308,7 +309,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (7)
                    */
                   public static class Criteria extends GeneratedCriteria {
 
@@ -337,7 +338,6 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
     }
 
     private String expectedMergeIntoOldLPContent() {
-        // TODO - this is broken, merge JavaDoc is lost
         return """
               package mbg.test.mb3.generated.flat.model;
 
@@ -355,7 +355,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (3)
                    */
                   public int getId() {
                       // existing
@@ -366,7 +366,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
 
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (7)
                    */
                   public static class Criteria extends GeneratedCriteria {
                       protected Criteria() {
@@ -381,6 +381,9 @@ public class ShouldPreserveItemsMarkedAsDoNotDelete extends JavaMergeTestCase {
                   public void reset() {
                   }
                  \s
+                  /**
+                   * @mbg.generated
+                   */
                   protected abstract static class GeneratedCriteria {
                   }
 

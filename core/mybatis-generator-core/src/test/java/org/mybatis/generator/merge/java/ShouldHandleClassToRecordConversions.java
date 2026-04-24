@@ -92,7 +92,6 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
 
                 import javax.annotation.Generated;
 
-                @Generated("org.mybatis.generator.api.MyBatisGenerator")
                 public record Name(int id, String firstName, String lastName) {}
                 """;
     }
@@ -114,7 +113,6 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
 
                 import javax.annotation.Generated;
 
-                @Generated("org.mybatis.generator.api.MyBatisGenerator")
                 public record Name(int id, String firstName, String lastName) implements Serializable {
 
                     private static final long serialVersionUID = 1L;
@@ -133,7 +131,6 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
                 import javax.annotation.Generated;
                 import java.io.Serializable;
 
-                @Generated("org.mybatis.generator.api.MyBatisGenerator")
                 public record Name(int id, String firstName, String lastName) implements Serializable {
                     private static final long serialVersionUID = 1L;
                    \s

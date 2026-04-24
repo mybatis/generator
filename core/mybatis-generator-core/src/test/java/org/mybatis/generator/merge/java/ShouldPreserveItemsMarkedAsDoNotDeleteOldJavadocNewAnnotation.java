@@ -26,7 +26,8 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
+        // disabled because of an issue with the lexical preserving printer - JavaDoc comments are garbled
+        addMergeConfiguration(false, "MergeIntoNewLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
@@ -70,7 +71,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (1)
                    */
                   public int getId() {
                       // existing
@@ -99,7 +100,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (2)
                    */
                   public static class Criteria extends GeneratedCriteria {
                       protected Criteria() {
@@ -194,7 +195,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
                   protected int id;
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (1)
                    */
                   public int getId() {
                       // existing
@@ -202,7 +203,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (2)
                    */
                   public static class Criteria extends GeneratedCriteria {
 
@@ -219,7 +220,6 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
     }
 
     private String expectedMergeIntoNewLPContent() {
-        // TODO - completely wrong. Javadoc dropped on merge
         return """
               package mbg.test.mb3.generated.flat.model;
 
@@ -238,13 +238,22 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
                   public void customMethod() {
                   }
                  \s
+                  /**
+                   * @mbg.generated do_not_delete_during_merge (existing)
+                   */
                   protected int id;
                  \s
+                  /**
+                   * @mbg.generated do_not_delete_during_merge (1)
+                   */
                   public int getId() {
                       // existing
                       return id;
                   }
                  \s
+                  /**
+                   * @mbg.generated do_not_delete_during_merge (2)
+                   */
                   public static class Criteria extends GeneratedCriteria {
                       protected Criteria() {
                           super();
@@ -277,7 +286,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (1)
                    */
                   public int getId() {
                       // existing
@@ -285,7 +294,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (2)
                    */
                   public static class Criteria extends GeneratedCriteria {
 
@@ -328,7 +337,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
                   }
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (1)
                    */
                   public int getId() {
                       // existing
@@ -339,7 +348,7 @@ public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation exten
 
 
                   /**
-                   * @mbg.generated do_not_delete_during_merge
+                   * @mbg.generated do_not_delete_during_merge (2)
                    */
                   public static class Criteria extends GeneratedCriteria {
                       protected Criteria() {

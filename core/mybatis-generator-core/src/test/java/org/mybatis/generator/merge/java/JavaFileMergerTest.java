@@ -26,6 +26,8 @@ import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.printer.DefaultPrettyPrinter;
 import com.github.javaparser.printer.Printer;
 import com.github.javaparser.printer.lexicalpreservation.DefaultLexicalPreservingPrinter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -35,16 +37,21 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.exception.MergeException;
 
 class JavaFileMergerTest {
+    private static final boolean FORCE_DISABLED_TESTS = false;
+    private static final Log log = LogFactory.getLog(JavaFileMergerTest.class);
+
     @ParameterizedTest
     @MethodSource("mergeTestCases")
     void mergeTestCases(JavaMergeTestCase testCase, String parameter,
                         JavaMergeTestCase.MergeConfigurationAndId mergeConfigurationAndId) throws Exception {
-        if (testCase.enabled()) {
+        if (mergeConfigurationAndId.enabled() || FORCE_DISABLED_TESTS) {
             JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(mergeConfigurationAndId.mergeConfiguration());
             var actual = javaFileMerger.getMergedSource(testCase.newContent(parameter),
                     testCase.existingContent(parameter));
             assertThat(actual).isEqualToNormalizingNewlines(
                     testCase.expectedContentAfterMerge(parameter, mergeConfigurationAndId.id()));
+        } else {
+            log.debug(String.format("Test disabled: %s (%s)", testCase.getClass().getSimpleName(), mergeConfigurationAndId.id()));
         }
     }
 

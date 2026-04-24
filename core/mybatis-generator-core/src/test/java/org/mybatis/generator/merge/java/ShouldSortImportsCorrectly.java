@@ -43,7 +43,8 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
 
-        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+        // disabled because of an issue with the lexical preserving printer - JavaDoc comments are lost
+        addMergeConfiguration(false, "MergeIntoOldLP", new MergeConfiguration.Builder()
                 .isLexicalPreserving(true)
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());

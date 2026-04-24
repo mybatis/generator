@@ -50,6 +50,7 @@
 
 <p>We will cover these in order.</p>
 
+<h2>Recommendations</h2>
 <p>The default merge configuration is:</p>
 <ol>
   <li>Lexical preservation disabled</li>
@@ -57,6 +58,17 @@
   <li>Import sorting: ECLIPSE</li>
   <li>Indentation: 4 spaces</li>
 </ol>
+
+<p>In most cases, the default configurtion will work. The limitations of the default configuration are:</p>
+<ul>
+  <li>Because lexical preservation is disabled, existing code may be reformatred.</li>
+  <li>Class/Interface to record merges are not supported</li>
+</ul>
+
+<p>JavaParser has the most trouble with comments. Non-JavaDoc comments will be completely lost if you use the "merge
+  into new" strategy. If you wish to have the code formatting benefits of the lexical preserving printer, then you
+  should be very cautious with commnets (both Javadoc and non-Javadoc comments).
+</p>
 
 <h2>Lexical Preservation</h2>
 <p>Lexical preservation is a function of JavaParser whereby the formatter (or "Printer") of the merged code attempts
@@ -119,6 +131,7 @@ public int sumOfEvens(int n) {
 <ol>
   <li>Copy custom items from an existing file into the new file</li>
   <li>Return the (merged) new file</li>
+  <li>This strategy will NOT copy non-Javadoc comments from existing files into a new file</li>
 </ol>
 
 <p>In many cases the outcomes will be the same regardless of strategy. The differences are detailed below:</p>

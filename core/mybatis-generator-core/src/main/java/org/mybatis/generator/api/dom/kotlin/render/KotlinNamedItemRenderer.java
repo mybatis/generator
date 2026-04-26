@@ -16,7 +16,9 @@
 package org.mybatis.generator.api.dom.kotlin.render;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.api.dom.kotlin.KotlinNamedItem;
 import org.mybatis.generator.api.dom.kotlin.KotlinNamedItemVisitor;
@@ -24,6 +26,11 @@ import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
 
 public class KotlinNamedItemRenderer implements KotlinNamedItemVisitor<List<String>> {
+    private final Indenter indenter;
+
+    public KotlinNamedItemRenderer(Indenter indenter) {
+        this.indenter = Objects.requireNonNull(indenter);
+    }
 
     public List<String> render(KotlinNamedItem namedItem) {
         return namedItem.accept(this);
@@ -31,7 +38,7 @@ public class KotlinNamedItemRenderer implements KotlinNamedItemVisitor<List<Stri
 
     @Override
     public List<String> visit(KotlinType kotlinType) {
-        return new KotlinTypeRenderer().render(kotlinType);
+        return new KotlinTypeRenderer(indenter).render(kotlinType);
     }
 
     @Override
@@ -41,6 +48,6 @@ public class KotlinNamedItemRenderer implements KotlinNamedItemVisitor<List<Stri
 
     @Override
     public List<String> visit(KotlinFunction kotlinFunction) {
-        return new KotlinFunctionRenderer().render(kotlinFunction);
+        return new KotlinFunctionRenderer(indenter).render(kotlinFunction);
     }
 }

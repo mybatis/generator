@@ -17,6 +17,7 @@ package org.mybatis.generator.api.dom.kotlin.render
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mybatis.generator.api.dom.Indenter
 import org.mybatis.generator.api.dom.kotlin.KotlinFile
 
 class KotlinFileRendererTest {
@@ -33,7 +34,7 @@ class KotlinFileRendererTest {
         kf.addImport("org.junit.jupiter.api.Test")
         kf.addImport("org.mybatis.generator.api.dom.kotlin.KotlinFile")
 
-        val renderedKf = KotlinFileRenderer().render(kf)
+        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
                 |/*
@@ -57,7 +58,7 @@ class KotlinFileRendererTest {
         kf.addImport("org.junit.jupiter.api.Test")
         kf.addImport("org.mybatis.generator.api.dom.kotlin.KotlinFile")
 
-        val renderedKf = KotlinFileRenderer().render(kf)
+        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
                 |/*
@@ -77,7 +78,7 @@ class KotlinFileRendererTest {
 
         kf.setPackage("com.foo.bar")
 
-        val renderedKf = KotlinFileRenderer().render(kf)
+        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
                 |/*
@@ -95,7 +96,7 @@ class KotlinFileRendererTest {
         kf.addImport("org.junit.jupiter.api.Test")
         kf.addImport("org.mybatis.generator.api.dom.kotlin.KotlinFile")
 
-        val renderedKf = KotlinFileRenderer().render(kf)
+        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
                 |package com.foo.bar
@@ -112,7 +113,7 @@ class KotlinFileRendererTest {
         kf.addFileCommentLine(" * some comment")
         kf.addFileCommentLine(" */")
 
-        val renderedKf = KotlinFileRenderer().render(kf)
+        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
                 |/*
@@ -126,7 +127,7 @@ class KotlinFileRendererTest {
         val kf = KotlinFile("TestFile")
         kf.setPackage("com.foo.bar")
 
-        val renderedKf = KotlinFileRenderer().render(kf)
+        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
                 |package com.foo.bar
@@ -140,7 +141,7 @@ class KotlinFileRendererTest {
         kf.addImport("org.junit.jupiter.api.Test")
         kf.addImport("org.mybatis.generator.api.dom.kotlin.KotlinFile")
 
-        val renderedKf = KotlinFileRenderer().render(kf)
+        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
                 |import org.junit.jupiter.api.Test
@@ -152,7 +153,7 @@ class KotlinFileRendererTest {
     fun testEmpty() {
         val kf = KotlinFile("TestFile.kt")
 
-        val renderedKf = KotlinFileRenderer().render(kf)
+        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
 
         assertThat(renderedKf).isEqualTo("")
         assertThat(kf.fileName).isEqualTo("TestFile.kt")

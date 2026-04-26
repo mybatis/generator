@@ -16,9 +16,10 @@
 package org.mybatis.generator.api.dom.xml.render;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.stream.Stream;
 
-import org.mybatis.generator.api.dom.OutputUtilities;
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.ElementVisitor;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -29,6 +30,11 @@ import org.mybatis.generator.internal.util.CustomCollectors;
 public class ElementRenderer implements ElementVisitor<Stream<String>> {
 
     private final AttributeRenderer attributeRenderer = new AttributeRenderer();
+    private final Indenter indenter;
+
+    public ElementRenderer(Indenter indenter) {
+        this.indenter = Objects.requireNonNull(indenter);
+    }
 
     @Override
     public Stream<String> visit(TextElement element) {
@@ -81,7 +87,7 @@ public class ElementRenderer implements ElementVisitor<Stream<String>> {
     }
 
     private String indent(String s) {
-        return OutputUtilities.xmlIndent(1) + s;
+        return indenter.xmlIndent(1) + s;
     }
 
     private Stream<String> renderClose(XmlElement element) {

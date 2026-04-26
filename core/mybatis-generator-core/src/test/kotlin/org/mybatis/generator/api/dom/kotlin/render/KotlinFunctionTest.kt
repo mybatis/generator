@@ -17,6 +17,7 @@ package org.mybatis.generator.api.dom.kotlin.render
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mybatis.generator.api.dom.Indenter
 import org.mybatis.generator.api.dom.kotlin.KotlinArg
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction
 import java.util.stream.Collectors
@@ -32,7 +33,7 @@ class KotlinFunctionTest {
                 .withCodeLine("return answer")
                 .build()
 
-        val renderedFunction = KotlinFunctionRenderer().render(kf).stream()
+        val renderedFunction = KotlinFunctionRenderer(Indenter.defaultIndenter()).render(kf).stream()
                 .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedFunction).isEqualToNormalizingNewlines("""
@@ -53,7 +54,7 @@ class KotlinFunctionTest {
                 .withCodeLine("return answer")
                 .build()
 
-        val renderedFunction = KotlinFunctionRenderer().render(kf).stream()
+        val renderedFunction = KotlinFunctionRenderer(Indenter.defaultIndenter()).render(kf).stream()
                 .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedFunction).isEqualToNormalizingNewlines("""
@@ -76,7 +77,7 @@ class KotlinFunctionTest {
                 .withCodeLine("return answer")
                 .build()
 
-        val renderedFunction = KotlinFunctionRenderer().render(kf).stream()
+        val renderedFunction = KotlinFunctionRenderer(Indenter.defaultIndenter()).render(kf).stream()
                 .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedFunction).isEqualToNormalizingNewlines("""

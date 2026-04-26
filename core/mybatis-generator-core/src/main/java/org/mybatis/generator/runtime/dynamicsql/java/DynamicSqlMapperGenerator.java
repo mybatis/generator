@@ -80,6 +80,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaGenerator {
                 .useSnakeCase(useSnakeCase)
                 .withRecordType(recordType)
                 .withCommentGenerator(commentGenerator)
+                .withIndenter(indenter)
                 .build();
 
         hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();

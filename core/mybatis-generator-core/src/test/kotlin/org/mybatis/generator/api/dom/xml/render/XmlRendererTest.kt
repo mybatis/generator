@@ -19,6 +19,7 @@ import org.assertj.core.api.Assertions.assertThat
 
 import org.junit.jupiter.api.Test
 import org.mybatis.generator.api.dom.DefaultXmlFormatter
+import org.mybatis.generator.api.dom.Indenter
 import org.mybatis.generator.api.dom.xml.Attribute
 import org.mybatis.generator.api.dom.xml.Document
 import org.mybatis.generator.api.dom.xml.TextElement
@@ -37,6 +38,7 @@ class XmlRendererTest {
                 |<root />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
+        formatter.setIndenter(Indenter.defaultIndenter())
         assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 
@@ -51,6 +53,7 @@ class XmlRendererTest {
                 |<root />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
+        formatter.setIndenter(Indenter.defaultIndenter())
         assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 
@@ -65,6 +68,7 @@ class XmlRendererTest {
                 |<root />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
+        formatter.setIndenter(Indenter.defaultIndenter())
         assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 
@@ -80,6 +84,7 @@ class XmlRendererTest {
                 |<root name="fred" />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
+        formatter.setIndenter(Indenter.defaultIndenter())
         assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 
@@ -96,6 +101,7 @@ class XmlRendererTest {
                 |<root firstName="Fred" lastName="Flintstone" />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
+        formatter.setIndenter(Indenter.defaultIndenter())
         assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 
@@ -117,6 +123,7 @@ class XmlRendererTest {
                 |</root>""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
+        formatter.setIndenter(Indenter.defaultIndenter())
         assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 
@@ -163,6 +170,7 @@ class XmlRendererTest {
                 |</root>""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
+        formatter.setIndenter(Indenter.defaultIndenter())
         assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 }

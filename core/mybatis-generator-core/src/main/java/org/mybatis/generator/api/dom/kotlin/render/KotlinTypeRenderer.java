@@ -18,7 +18,9 @@ package org.mybatis.generator.api.dom.kotlin.render;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.render.RenderingUtilities;
 import org.mybatis.generator.api.dom.kotlin.KotlinNamedItem;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
@@ -26,9 +28,14 @@ import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class KotlinTypeRenderer {
+    private final Indenter indenter;
+
+    public KotlinTypeRenderer(Indenter indenter) {
+        this.indenter = Objects.requireNonNull(indenter);
+    }
 
     public List<String> render(KotlinType kotlinType) {
-        KotlinNamedItemRenderer renderer = new KotlinNamedItemRenderer();
+        KotlinNamedItemRenderer renderer = new KotlinNamedItemRenderer(indenter);
 
         List<String> answer = new ArrayList<>(kotlinType.getAnnotations());
 
@@ -66,7 +73,7 @@ public class KotlinTypeRenderer {
         }
 
         for (KotlinNamedItem namedItem : kotlinType.getNamedItems()) {
-            answer.addAll(renderer.render(namedItem).stream().map(KotlinRenderingUtilities::kotlinIndent)
+            answer.addAll(renderer.render(namedItem).stream().map(this::indent)
                     .toList());
             answer.add(""); //$NON-NLS-1$
         }
@@ -86,7 +93,7 @@ public class KotlinTypeRenderer {
 
         Iterator<KotlinProperty> iter = kotlinType.getConstructorProperties().iterator();
         while (iter.hasNext()) {
-            lines.addAll(renderer.render(iter.next()).stream().map(KotlinRenderingUtilities::kotlinIndent)
+            lines.addAll(renderer.render(iter.next()).stream().map(this::indent)
                     .toList());
             if (iter.hasNext()) {
                 lines.set(lines.size() - 1,
@@ -95,5 +102,9 @@ public class KotlinTypeRenderer {
         }
 
         return lines;
+    }
+
+    private String indent(String in) {
+        return KotlinRenderingUtilities.kotlinIndent(indenter, in);
     }
 }

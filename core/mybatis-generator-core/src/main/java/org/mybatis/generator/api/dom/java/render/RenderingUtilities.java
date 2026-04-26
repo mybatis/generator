@@ -26,7 +26,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.mybatis.generator.api.dom.OutputUtilities;
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -45,12 +45,6 @@ public class RenderingUtilities {
 
     private static final TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();
     private static final FieldRenderer fieldRenderer = new FieldRenderer();
-    private static final InitializationBlockRenderer initializationBlockRenderer = new InitializationBlockRenderer();
-    private static final MethodRenderer methodRenderer = new MethodRenderer();
-    private static final InnerClassRenderer innerClassRenderer = new InnerClassRenderer();
-    private static final InnerInterfaceRenderer innerInterfaceRenderer = new InnerInterfaceRenderer();
-    private static final InnerEnumRenderer innerEnumRenderer = new InnerEnumRenderer();
-    private static final InnerRecordRenderer innerRecordRenderer = new InnerRecordRenderer();
 
     // should return an empty string if no type parameters
     public static String renderTypeParameters(List<TypeParameter> typeParameters, CompilationUnit compilationUnit) {
@@ -59,43 +53,50 @@ public class RenderingUtilities {
                 .collect(CustomCollectors.joining(", ", "<", "> ")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
-    public static List<String> renderFields(List<Field> fields, CompilationUnit compilationUnit) {
+    public static List<String> renderFields(Indenter indenter, List<Field> fields, CompilationUnit compilationUnit) {
         return fields.stream()
-                .flatMap(f -> renderField(f, compilationUnit))
+                .flatMap(f -> renderField(indenter, f, compilationUnit))
                 .toList();
     }
 
-    private static Stream<String> renderField(Field field, CompilationUnit compilationUnit) {
+    private static Stream<String> renderField(Indenter indenter, Field field, CompilationUnit compilationUnit) {
         return addEmptyLine(fieldRenderer.render(field, compilationUnit).stream()
-                .map(RenderingUtilities::javaIndent));
+                .map(s -> RenderingUtilities.javaIndent(indenter, s)));
     }
 
-    public static List<String> renderInitializationBlocks(List<InitializationBlock> initializationBlocks) {
+    public static List<String> renderInitializationBlocks(Indenter indenter,
+                                                          List<InitializationBlock> initializationBlocks) {
         return initializationBlocks.stream()
-                .flatMap(RenderingUtilities::renderInitializationBlock)
+                .flatMap(ib -> renderInitializationBlock(indenter, ib))
                 .toList();
     }
 
-    private static Stream<String> renderInitializationBlock(InitializationBlock initializationBlock) {
+    private static Stream<String> renderInitializationBlock(Indenter indenter,
+                                                            InitializationBlock initializationBlock) {
+        InitializationBlockRenderer initializationBlockRenderer = new InitializationBlockRenderer(indenter);
         return addEmptyLine(initializationBlockRenderer.render(initializationBlock).stream()
-                .map(RenderingUtilities::javaIndent));
+                .map(s -> RenderingUtilities.javaIndent(indenter, s)));
     }
 
-    public static List<String> renderClassOrEnumMethods(List<Method> methods, CompilationUnit compilationUnit) {
+    public static List<String> renderClassOrEnumMethods(Indenter indenter, List<Method> methods,
+                                                        CompilationUnit compilationUnit) {
         return methods.stream()
-                .flatMap(m -> renderMethod(m, false, compilationUnit))
+                .flatMap(m -> renderMethod(indenter, m, false, compilationUnit))
                 .toList();
     }
 
-    public static List<String> renderInterfaceMethods(List<Method> methods, CompilationUnit compilationUnit) {
+    public static List<String> renderInterfaceMethods(Indenter indenter, List<Method> methods,
+                                                      CompilationUnit compilationUnit) {
         return methods.stream()
-                .flatMap(m -> renderMethod(m, true, compilationUnit))
+                .flatMap(m -> renderMethod(indenter, m, true, compilationUnit))
                 .toList();
     }
 
-    private static Stream<String> renderMethod(Method method, boolean inInterface, CompilationUnit compilationUnit) {
+    private static Stream<String> renderMethod(Indenter indenter, Method method, boolean inInterface,
+                                               CompilationUnit compilationUnit) {
+        MethodRenderer methodRenderer = new MethodRenderer(indenter);
         return addEmptyLine(methodRenderer.render(method, inInterface, compilationUnit).stream()
-                .map(RenderingUtilities::javaIndent));
+                .map(s -> RenderingUtilities.javaIndent(indenter, s)));
     }
 
     private static Stream<String> addEmptyLine(Stream<String> in) {
@@ -103,66 +104,83 @@ public class RenderingUtilities {
                 .flatMap(Function.identity());
     }
 
-    public static List<String> renderInnerClasses(List<InnerClass> innerClasses, CompilationUnit compilationUnit) {
+    public static List<String> renderInnerClasses(Indenter indenter, List<InnerClass> innerClasses,
+                                                  CompilationUnit compilationUnit) {
         return innerClasses.stream()
-                .flatMap(ic -> renderInnerClass(ic, compilationUnit))
+                .flatMap(ic -> renderInnerClass(indenter, ic, compilationUnit))
                 .toList();
     }
 
-    public static List<String> renderInnerClassNoIndent(InnerClass innerClass, CompilationUnit compilationUnit) {
+    public static List<String> renderInnerClassNoIndent(Indenter indenter, InnerClass innerClass,
+                                                        CompilationUnit compilationUnit) {
+        InnerClassRenderer innerClassRenderer = new InnerClassRenderer(indenter);
         return innerClassRenderer.render(innerClass, compilationUnit);
     }
 
-    private static Stream<String> renderInnerClass(InnerClass innerClass, CompilationUnit compilationUnit) {
+    private static Stream<String> renderInnerClass(Indenter indenter, InnerClass innerClass,
+                                                   CompilationUnit compilationUnit) {
+        InnerClassRenderer innerClassRenderer = new InnerClassRenderer(indenter);
         return addEmptyLine(innerClassRenderer.render(innerClass, compilationUnit).stream()
-                .map(RenderingUtilities::javaIndent));
+                .map(s -> RenderingUtilities.javaIndent(indenter, s)));
     }
 
-    public static List<String> renderInnerInterfaces(List<InnerInterface> innerInterfaces,
+    public static List<String> renderInnerInterfaces(Indenter indenter, List<InnerInterface> innerInterfaces,
             CompilationUnit compilationUnit) {
         return innerInterfaces.stream()
-                .flatMap(ii -> renderInnerInterface(ii, compilationUnit))
+                .flatMap(ii -> renderInnerInterface(indenter, ii, compilationUnit))
                 .toList();
     }
 
-    public static List<String> renderInnerInterfaceNoIndent(InnerInterface innerInterface,
+    public static List<String> renderInnerInterfaceNoIndent(Indenter indenter, InnerInterface innerInterface,
             CompilationUnit compilationUnit) {
+        InnerInterfaceRenderer innerInterfaceRenderer = new InnerInterfaceRenderer(indenter);
         return innerInterfaceRenderer.render(innerInterface, compilationUnit);
     }
 
-    private static Stream<String> renderInnerInterface(InnerInterface innerInterface, CompilationUnit compilationUnit) {
+    private static Stream<String> renderInnerInterface(Indenter indenter, InnerInterface innerInterface,
+                                                       CompilationUnit compilationUnit) {
+        InnerInterfaceRenderer innerInterfaceRenderer = new InnerInterfaceRenderer(indenter);
         return addEmptyLine(innerInterfaceRenderer.render(innerInterface, compilationUnit).stream()
-                .map(RenderingUtilities::javaIndent));
+                .map(s -> RenderingUtilities.javaIndent(indenter, s)));
     }
 
-    public static List<String> renderInnerEnums(List<InnerEnum> innerEnums, CompilationUnit compilationUnit) {
+    public static List<String> renderInnerEnums(Indenter indenter, List<InnerEnum> innerEnums,
+                                                CompilationUnit compilationUnit) {
         return innerEnums.stream()
-                .flatMap(ie -> renderInnerEnum(ie, compilationUnit))
+                .flatMap(ie -> renderInnerEnum(indenter, ie, compilationUnit))
                 .toList();
     }
 
-    public static List<String> renderInnerEnumNoIndent(InnerEnum innerEnum, CompilationUnit compilationUnit) {
+    public static List<String> renderInnerEnumNoIndent(Indenter indenter, InnerEnum innerEnum, CompilationUnit compilationUnit) {
+        InnerEnumRenderer innerEnumRenderer = new InnerEnumRenderer(indenter);
         return innerEnumRenderer.render(innerEnum, compilationUnit);
     }
 
-    private static Stream<String> renderInnerEnum(InnerEnum innerEnum, CompilationUnit compilationUnit) {
+    private static Stream<String> renderInnerEnum(Indenter indenter, InnerEnum innerEnum,
+                                                  CompilationUnit compilationUnit) {
+        InnerEnumRenderer innerEnumRenderer = new InnerEnumRenderer(indenter);
         return addEmptyLine(innerEnumRenderer.render(innerEnum, compilationUnit).stream()
-                .map(RenderingUtilities::javaIndent));
+                .map(s -> RenderingUtilities.javaIndent(indenter, s)));
     }
 
-    public static List<String> renderInnerRecordNoIndent(InnerRecord innerRecord, CompilationUnit compilationUnit) {
+    public static List<String> renderInnerRecordNoIndent(Indenter indenter, InnerRecord innerRecord,
+                                                         CompilationUnit compilationUnit) {
+        InnerRecordRenderer innerRecordRenderer = new InnerRecordRenderer(indenter);
         return innerRecordRenderer.render(innerRecord, compilationUnit);
     }
 
-    public static List<String> renderInnerRecords(List<InnerRecord> innerRecords, CompilationUnit compilationUnit) {
+    public static List<String> renderInnerRecords(Indenter indenter, List<InnerRecord> innerRecords,
+                                                  CompilationUnit compilationUnit) {
         return innerRecords.stream()
-                .flatMap(ir -> renderInnerRecord(ir, compilationUnit))
+                .flatMap(ir -> renderInnerRecord(indenter, ir, compilationUnit))
                 .toList();
     }
 
-    private static Stream<String> renderInnerRecord(InnerRecord innerRecord, CompilationUnit compilationUnit) {
+    private static Stream<String> renderInnerRecord(Indenter indenter, InnerRecord innerRecord,
+                                                    CompilationUnit compilationUnit) {
+        InnerRecordRenderer innerRecordRenderer = new InnerRecordRenderer(indenter);
         return addEmptyLine(innerRecordRenderer.render(innerRecord, compilationUnit).stream()
-                .map(RenderingUtilities::javaIndent));
+                .map(s -> RenderingUtilities.javaIndent(indenter, s)));
     }
 
     public static List<String> renderPackage(CompilationUnit compilationUnit) {
@@ -209,12 +227,12 @@ public class RenderingUtilities {
     }
 
 
-    private static String javaIndent(String in) {
+    private static String javaIndent(Indenter indenter, String in) {
         if (in.isEmpty()) {
             return in; // don't indent empty lines
         }
 
-        return OutputUtilities.javaIndent(1) + in;
+        return indenter.javaIndent(1) + in;
     }
 
     public static List<String> removeLastEmptyLine(List<String> lines) {

@@ -15,8 +15,6 @@
  */
 package org.mybatis.generator.runtime.dynamicsql.java.elements;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -29,6 +27,7 @@ import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
@@ -46,6 +45,7 @@ public class FragmentGenerator {
     protected final boolean useSnakeCase;
     private final FullyQualifiedJavaType recordType;
     private final CommentGenerator commentGenerator;
+    private final Indenter indenter;
 
     private FragmentGenerator(Builder builder) {
         this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);
@@ -54,6 +54,7 @@ public class FragmentGenerator {
         useSnakeCase = builder.useSnakeCase;
         recordType = Objects.requireNonNull(builder.recordType);
         commentGenerator = Objects.requireNonNull(builder.commentGenerator);
+        indenter = Objects.requireNonNull(builder.indenter);
     }
 
     public String calculateFieldName(String tableFieldName, IntrospectedColumn column) {
@@ -89,12 +90,12 @@ public class FragmentGenerator {
             builder.withImport(column.getFullyQualifiedJavaType());
             builder.withParameter(new Parameter(column.getFullyQualifiedJavaType(), parameterName));
             if (first) {
-                builder.withBodyLine(javaIndent(1) + "c.where(" + fieldName //$NON-NLS-1$
+                builder.withBodyLine(indenter.javaIndent(1) + "c.where(" + fieldName //$NON-NLS-1$
                         + ", isEqualTo(" + parameterName //$NON-NLS-1$
                         + "))"); //$NON-NLS-1$
                 first = false;
             } else {
-                builder.withBodyLine(javaIndent(1) + ".and(" + fieldName //$NON-NLS-1$
+                builder.withBodyLine(indenter.javaIndent(1) + ".and(" + fieldName //$NON-NLS-1$
                         + ", isEqualTo(" + parameterName //$NON-NLS-1$
                         + "))"); //$NON-NLS-1$
             }
@@ -164,7 +165,7 @@ public class FragmentGenerator {
         while (iterPk.hasNext()) {
             IntrospectedColumn introspectedColumn = iterPk.next();
             sb.setLength(0);
-            javaIndent(sb, 1);
+            indenter.javaIndent(sb, 1);
             sb.append(getResultAnnotation(imports, introspectedColumn, true));
 
             if (iterPk.hasNext() || iterNonPk.hasNext()) {
@@ -177,7 +178,7 @@ public class FragmentGenerator {
         while (iterNonPk.hasNext()) {
             IntrospectedColumn introspectedColumn = iterNonPk.next();
             sb.setLength(0);
-            javaIndent(sb, 1);
+            indenter.javaIndent(sb, 1);
             sb.append(getResultAnnotation(imports, introspectedColumn, false));
 
             if (iterNonPk.hasNext()) {
@@ -337,6 +338,7 @@ public class FragmentGenerator {
         private boolean useSnakeCase;
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable CommentGenerator commentGenerator;
+        private @Nullable Indenter indenter;
 
         public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
             this.introspectedTable = introspectedTable;
@@ -365,6 +367,11 @@ public class FragmentGenerator {
 
         public Builder withCommentGenerator(CommentGenerator commentGenerator) {
             this.commentGenerator = commentGenerator;
+            return this;
+        }
+
+        public Builder withIndenter(Indenter indenter) {
+            this.indenter = indenter;
             return this;
         }
 

@@ -17,18 +17,26 @@ package org.mybatis.generator.api.dom.kotlin.render;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class KotlinFunctionRenderer {
+    private final Indenter indenter;
+
+    public KotlinFunctionRenderer(Indenter indenter) {
+        this.indenter = Objects.requireNonNull(indenter);
+    }
+
     public List<String> render(KotlinFunction function) {
 
         List<String> answer = new ArrayList<>(function.getAnnotations());
 
         answer.add(renderFirstLine(function));
 
-        answer.addAll(function.getCodeLines().stream().map(KotlinRenderingUtilities::kotlinIndent)
+        answer.addAll(function.getCodeLines().stream().map(this::indent)
                         .toList());
 
         if (!function.getCodeLines().isEmpty() && !function.isOneLineFunction()) {
@@ -71,5 +79,9 @@ public class KotlinFunctionRenderer {
         return function.getExplicitReturnType()
                 .map(s -> ": " + s) //$NON-NLS-1$
                 .orElse(""); //$NON-NLS-1$
+    }
+
+    private String indent(String in) {
+        return KotlinRenderingUtilities.kotlinIndent(indenter, in);
     }
 }

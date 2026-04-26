@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -104,6 +105,7 @@ public interface Plugin {
 
     void setKnownRuntime(KnownRuntime knownRuntime);
 
+    void setIndenter(Indenter indenter);
     /**
      * This method is called just before the getGeneratedXXXFiles methods are called on the introspected table. Plugins
      * can implement this method to override any of the default attributes, or change the results of database

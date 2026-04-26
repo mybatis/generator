@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.render.ParameterRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
 
@@ -282,7 +283,7 @@ class FullyQualifiedJavaTypeTest {
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         interfaze.addMethod(method);
 
-        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
+        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer(Indenter.defaultIndenter());
         String out = renderer.render(interfaze);
 
         assertThat(out).isEqualToNormalizingNewlines(
@@ -308,7 +309,7 @@ class FullyQualifiedJavaTypeTest {
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         interfaze.addMethod(method);
 
-        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
+        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer(Indenter.defaultIndenter());
         String out = renderer.render(interfaze);
 
         assertThat(out).isEqualToNormalizingNewlines(
@@ -335,7 +336,7 @@ class FullyQualifiedJavaTypeTest {
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         interfaze.addMethod(method);
 
-        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
+        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer(Indenter.defaultIndenter());
         String out = renderer.render(interfaze);
 
         assertThat(out).isEqualToNormalizingNewlines(

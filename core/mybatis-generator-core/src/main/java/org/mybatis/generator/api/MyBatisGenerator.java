@@ -37,6 +37,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.codegen.CalculatedContextValues;
 import org.mybatis.generator.codegen.GenerationEngine;
 import org.mybatis.generator.codegen.GenerationResults;
@@ -76,6 +77,7 @@ public class MyBatisGenerator {
     private final JavaFileMerger javaFileMerger;
     private final boolean isOverwriteEnabled;
     private final boolean isJavaFileMergeEnabled;
+    private final Indenter indenter;
 
     private final List<GenerationResults> generationResultsList = new ArrayList<>();
 
@@ -85,6 +87,8 @@ public class MyBatisGenerator {
         progressCallback = Objects.requireNonNullElseGet(builder.progressCallback, () -> new ProgressCallback() {});
         fullyQualifiedTableNames = builder.fullyQualifiedTableNames;
         contextIds = builder.contextIds;
+        // TODO - make this configurable
+        indenter = Indenter.defaultIndenter();
 
         if (builder.isJavaFileMergeEnabled) {
             isJavaFileMergeEnabled = true;
@@ -111,7 +115,8 @@ public class MyBatisGenerator {
      * @throws InvalidConfigurationException
      *             if the specified configuration is invalid
      */
-    public List<String> generateOnly() throws SQLException, InterruptedException, InvalidConfigurationException {
+    public List<String> generateOnly() throws SQLException, InterruptedException,
+            InvalidConfigurationException {
         List<String> warnings = new ArrayList<>();
         generateFiles(warnings);
         progressCallback.done();
@@ -187,6 +192,7 @@ public class MyBatisGenerator {
         return new CalculatedContextValues.Builder()
                 .withContext(context)
                 .withWarnings(warnings)
+                .withIndenter(indenter)
                 .build();
     }
 

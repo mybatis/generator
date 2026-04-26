@@ -27,6 +27,7 @@ import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.KotlinFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.XmlFormatter;
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.Defaults;
 import org.mybatis.generator.config.PropertyRegistry;
@@ -47,13 +48,15 @@ public class CalculatedContextValues {
     private final PluginAggregator pluginAggregator;
     private final KnownRuntime knownRuntime;
     private final String runtimeBuilderClassName;
+    private final Indenter indenter;
 
     protected CalculatedContextValues(Builder builder) {
         context = Objects.requireNonNull(builder.context);
-        javaFormatter = ObjectFactory.createJavaFormatter(context);
-        kotlinFormatter = ObjectFactory.createKotlinFormatter(context);
-        xmlFormatter = ObjectFactory.createXmlFormatter(context);
-        commentGenerator = ObjectFactory.createCommentGenerator(context);
+        indenter = Objects.requireNonNull(builder.indenter);
+        javaFormatter = ObjectFactory.createJavaFormatter(context, indenter);
+        kotlinFormatter = ObjectFactory.createKotlinFormatter(context, indenter);
+        xmlFormatter = ObjectFactory.createXmlFormatter(context, indenter);
+        commentGenerator = ObjectFactory.createCommentGenerator(context, indenter);
         javaFileEncoding = context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING);
         kotlinFileEncoding = context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FILE_ENCODING);
         Objects.requireNonNull(builder.warnings);
@@ -65,7 +68,8 @@ public class CalculatedContextValues {
 
         pluginAggregator = new PluginAggregator();
         context.pluginConfigurations().forEach(pluginConfiguration -> {
-            Plugin plugin = ObjectFactory.createPlugin(context, pluginConfiguration, commentGenerator, knownRuntime);
+            Plugin plugin = ObjectFactory.createPlugin(context, pluginConfiguration, commentGenerator, knownRuntime,
+                    indenter);
             if (plugin.validate(builder.warnings)) {
                 pluginAggregator.addPlugin(plugin);
             } else {
@@ -122,9 +126,14 @@ public class CalculatedContextValues {
         return runtimeBuilderClassName;
     }
 
+    public Indenter indenter() {
+        return indenter;
+    }
+
     public static class Builder {
         private @Nullable Context context;
         private @Nullable List<String> warnings;
+        private @Nullable Indenter indenter;
 
         public Builder withContext(Context context) {
             this.context = context;
@@ -133,6 +142,11 @@ public class CalculatedContextValues {
 
         public Builder withWarnings(List<String> warnings) {
             this.warnings = warnings;
+            return this;
+        }
+
+        public Builder withIndenter(Indenter indenter) {
+            this.indenter = indenter;
             return this;
         }
 

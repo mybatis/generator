@@ -18,6 +18,7 @@ package org.mybatis.generator.api;
 import java.util.Properties;
 import java.util.Set;
 
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -50,6 +51,8 @@ public interface CommentGenerator {
      *            All properties from the configuration
      */
     void addConfigurationProperties(Properties properties);
+
+    void setIndenter(Indenter indenter);
 
     /**
      * Adds a comment for a model class.  The Java code merger should

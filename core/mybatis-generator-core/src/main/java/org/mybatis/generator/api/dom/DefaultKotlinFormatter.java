@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.api.dom;
 
+import java.util.Objects;
+
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.KotlinFormatter;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
@@ -28,14 +30,20 @@ import org.mybatis.generator.config.Context;
  */
 public class DefaultKotlinFormatter implements KotlinFormatter {
     protected @Nullable Context context;
+    protected @Nullable Indenter indenter;
 
     @Override
     public String getFormattedContent(KotlinFile kotlinFile) {
-        return new KotlinFileRenderer().render(kotlinFile);
+        return new KotlinFileRenderer(Objects.requireNonNull(indenter)).render(kotlinFile);
     }
 
     @Override
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    @Override
+    public void setIndenter(Indenter indenter) {
+        this.indenter = indenter;
     }
 }

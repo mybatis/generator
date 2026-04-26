@@ -68,6 +68,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withResultMapId(resultMapId)
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withTableFieldName(supportClassGenerator.getTablePropertyName())
+                .withIndenter(indenter)
                 .build();
 
         hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();

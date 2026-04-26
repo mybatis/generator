@@ -32,6 +32,7 @@ import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.KotlinFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.XmlFormatter;
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
@@ -192,16 +193,18 @@ public class ObjectFactory {
     }
 
     public static Plugin createPlugin(Context context, PluginConfiguration pluginConfiguration,
-                                      CommentGenerator commentGenerator, KnownRuntime knownRuntime) {
+                                      CommentGenerator commentGenerator, KnownRuntime knownRuntime,
+                                      Indenter indenter) {
         Plugin plugin = createInternalObject(pluginConfiguration.getConfigurationType().orElseThrow());
         plugin.setContext(context);
         plugin.setProperties(pluginConfiguration.getProperties());
         plugin.setCommentGenerator(commentGenerator);
         plugin.setKnownRuntime(knownRuntime);
+        plugin.setIndenter(indenter);
         return plugin;
     }
 
-    public static CommentGenerator createCommentGenerator(Context context) {
+    public static CommentGenerator createCommentGenerator(Context context, Indenter indenter) {
         CommentGenerator answer;
 
         String type = context.getCommentGeneratorConfiguration()
@@ -209,6 +212,7 @@ public class ObjectFactory {
                 .orElse(Defaults.DEFAULT_COMMENT_GENERATOR);
 
         answer = createInternalObject(type);
+        answer.setIndenter(indenter);
 
         context.getCommentGeneratorConfiguration()
                 .ifPresent(c -> answer.addConfigurationProperties(c.getProperties()));
@@ -227,32 +231,35 @@ public class ObjectFactory {
         return answer;
     }
 
-    public static JavaFormatter createJavaFormatter(Context context) {
+    public static JavaFormatter createJavaFormatter(Context context, Indenter indenter) {
         String type = stringValueOrElse(context.getProperty(PropertyRegistry.CONTEXT_JAVA_FORMATTER),
                 Defaults.DEFAULT_JAVA_FORMATTER);
         JavaFormatter answer = createInternalObject(type);
 
         answer.setContext(context);
+        answer.setIndenter(indenter);
 
         return answer;
     }
 
-    public static KotlinFormatter createKotlinFormatter(Context context) {
+    public static KotlinFormatter createKotlinFormatter(Context context, Indenter indenter) {
         String type = stringValueOrElse(context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FORMATTER),
                 Defaults.DEFAULT_KOTLIN_FORMATTER);
         KotlinFormatter answer = createInternalObject(type);
 
         answer.setContext(context);
+        answer.setIndenter(indenter);
 
         return answer;
     }
 
-    public static XmlFormatter createXmlFormatter(Context context) {
+    public static XmlFormatter createXmlFormatter(Context context, Indenter indenter) {
         String type = stringValueOrElse(context.getProperty(PropertyRegistry.CONTEXT_XML_FORMATTER),
                 Defaults.DEFAULT_XML_FORMATTER);
         XmlFormatter answer = createInternalObject(type);
 
         answer.setContext(context);
+        answer.setIndenter(indenter);
 
         return answer;
     }

@@ -17,16 +17,22 @@ package org.mybatis.generator.api.dom.java.render;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.InnerRecord;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class InnerRecordRenderer {
-
+    private final Indenter indenter;
     private final ParameterRenderer parameterRenderer = new ParameterRenderer();
+
+    public InnerRecordRenderer(Indenter indenter) {
+        this.indenter = Objects.requireNonNull(indenter);
+    }
 
     public List<String> render(InnerRecord innerRecord, CompilationUnit compilationUnit) {
         List<String> lines = new ArrayList<>();
@@ -34,13 +40,14 @@ public class InnerRecordRenderer {
         lines.addAll(innerRecord.getJavaDocLines());
         lines.addAll(innerRecord.getAnnotations());
         lines.add(renderFirstLine(innerRecord, compilationUnit));
-        lines.addAll(RenderingUtilities.renderFields(innerRecord.getFields(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInitializationBlocks(innerRecord.getInitializationBlocks()));
-        lines.addAll(RenderingUtilities.renderClassOrEnumMethods(innerRecord.getMethods(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerClasses(innerRecord.getInnerClasses(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerInterfaces(innerRecord.getInnerInterfaces(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerEnums(innerRecord.getInnerEnums(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerRecords(innerRecord.getInnerRecords(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderFields(indenter, innerRecord.getFields(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInitializationBlocks(indenter, innerRecord.getInitializationBlocks()));
+        lines.addAll(RenderingUtilities.renderClassOrEnumMethods(indenter, innerRecord.getMethods(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerClasses(indenter, innerRecord.getInnerClasses(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerInterfaces(indenter, innerRecord.getInnerInterfaces(),
+                compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerEnums(indenter, innerRecord.getInnerEnums(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerRecords(indenter, innerRecord.getInnerRecords(), compilationUnit));
 
         lines = RenderingUtilities.removeLastEmptyLine(lines);
 

@@ -18,10 +18,16 @@ package org.mybatis.generator.api.dom.java.render;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
-import org.mybatis.generator.api.dom.OutputUtilities;
+import org.mybatis.generator.api.dom.Indenter;
 
 public class BodyLineRenderer {
+    private final Indenter indenter;
+
+    public BodyLineRenderer(Indenter indenter) {
+        this.indenter = Objects.requireNonNull(indenter);
+    }
 
     public List<String> render(List<String> bodyLines) {
         List<String> lines = new ArrayList<>();
@@ -36,7 +42,7 @@ public class BodyLineRenderer {
                 indentLevel--;
             }
 
-            OutputUtilities.javaIndent(sb, indentLevel);
+            indenter.javaIndent(sb, indentLevel);
             sb.append(line);
             lines.add(sb.toString());
 

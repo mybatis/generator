@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.api.dom;
 
+import java.util.Objects;
+
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.XmlFormatter;
 import org.mybatis.generator.api.dom.xml.Document;
@@ -28,14 +30,20 @@ import org.mybatis.generator.config.Context;
  */
 public class DefaultXmlFormatter implements XmlFormatter {
     protected @Nullable Context context;
+    protected @Nullable Indenter indenter;
 
     @Override
     public String getFormattedContent(Document document) {
-        return new DocumentRenderer().render(document);
+        return new DocumentRenderer(Objects.requireNonNull(indenter)).render(document);
     }
 
     @Override
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    @Override
+    public void setIndenter(Indenter indenter) {
+        this.indenter = indenter;
     }
 }

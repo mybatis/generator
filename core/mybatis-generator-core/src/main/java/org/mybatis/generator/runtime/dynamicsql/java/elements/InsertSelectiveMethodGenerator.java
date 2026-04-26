@@ -23,7 +23,6 @@ import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -67,25 +66,25 @@ public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodG
             String fieldName = fragmentGenerator.calculateFieldName(tableFieldName, column);
             if (column.isSequenceColumn()) {
                 if (first) {
-                    method.addBodyLine(OutputUtilities.javaIndent(1) + "c.withMappedColumn(" //$NON-NLS-1$
+                    method.addBodyLine(indenter.javaIndent(1) + "c.withMappedColumn(" //$NON-NLS-1$
                             + fieldName
                             + ")"); //$NON-NLS-1$
                     first = false;
                 } else {
-                    method.addBodyLine(OutputUtilities.javaIndent(1) + ".withMappedColumn(" //$NON-NLS-1$
+                    method.addBodyLine(indenter.javaIndent(1) + ".withMappedColumn(" //$NON-NLS-1$
                             + fieldName
                             + ")"); //$NON-NLS-1$
                 }
             } else {
                 String methodName = JavaBeansUtil.getCallingGetterMethodName(column);
                 if (first) {
-                    method.addBodyLine(OutputUtilities.javaIndent(1) + "c.withMappedColumnWhenPresent(" //$NON-NLS-1$
+                    method.addBodyLine(indenter.javaIndent(1) + "c.withMappedColumnWhenPresent(" //$NON-NLS-1$
                             + fieldName
                             + ", row::" + methodName //$NON-NLS-1$
                             + ")"); //$NON-NLS-1$
                     first = false;
                 } else {
-                    method.addBodyLine(OutputUtilities.javaIndent(1) + ".withMappedColumnWhenPresent(" //$NON-NLS-1$
+                    method.addBodyLine(indenter.javaIndent(1) + ".withMappedColumnWhenPresent(" //$NON-NLS-1$
                             + fieldName
                             + ", row::" + methodName //$NON-NLS-1$
                             + ")"); //$NON-NLS-1$

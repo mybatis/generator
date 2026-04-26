@@ -22,11 +22,18 @@ import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.rende
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.TopLevelRecord;
 
 public class TopLevelRecordRenderer {
+    private final Indenter indenter;
+
+    public TopLevelRecordRenderer(Indenter indenter) {
+        this.indenter = Objects.requireNonNull(indenter);
+    }
 
     public String render(TopLevelRecord topLevelRecord) {
         List<String> lines = new ArrayList<>();
@@ -35,7 +42,7 @@ public class TopLevelRecordRenderer {
         lines.addAll(renderPackage(topLevelRecord));
         lines.addAll(renderStaticImports(topLevelRecord));
         lines.addAll(renderImports(topLevelRecord));
-        lines.addAll(renderInnerRecordNoIndent(topLevelRecord, topLevelRecord));
+        lines.addAll(renderInnerRecordNoIndent(indenter, topLevelRecord, topLevelRecord));
 
         return lines.stream().collect(Collectors.joining(System.lineSeparator()));
     }

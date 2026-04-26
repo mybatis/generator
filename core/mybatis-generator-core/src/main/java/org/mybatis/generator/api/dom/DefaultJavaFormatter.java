@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.api.dom;
 
+import java.util.Objects;
+
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -36,6 +38,7 @@ import org.mybatis.generator.config.Context;
  */
 public class DefaultJavaFormatter implements JavaFormatter, CompilationUnitVisitor<String> {
     protected @Nullable Context context;
+    protected @Nullable Indenter indenter;
 
     @Override
     public String getFormattedContent(CompilationUnit compilationUnit) {
@@ -48,22 +51,27 @@ public class DefaultJavaFormatter implements JavaFormatter, CompilationUnitVisit
     }
 
     @Override
+    public void setIndenter(Indenter indenter) {
+        this.indenter = indenter;
+    }
+
+    @Override
     public String visit(TopLevelClass topLevelClass) {
-        return new TopLevelClassRenderer().render(topLevelClass);
+        return new TopLevelClassRenderer(Objects.requireNonNull(indenter)).render(topLevelClass);
     }
 
     @Override
     public String visit(TopLevelEnumeration topLevelEnumeration) {
-        return new TopLevelEnumerationRenderer().render(topLevelEnumeration);
+        return new TopLevelEnumerationRenderer(Objects.requireNonNull(indenter)).render(topLevelEnumeration);
     }
 
     @Override
     public String visit(Interface topLevelInterface) {
-        return new TopLevelInterfaceRenderer().render(topLevelInterface);
+        return new TopLevelInterfaceRenderer(Objects.requireNonNull(indenter)).render(topLevelInterface);
     }
 
     @Override
     public String visit(TopLevelRecord topLevelRecord) {
-        return new TopLevelRecordRenderer().render(topLevelRecord);
+        return new TopLevelRecordRenderer(Objects.requireNonNull(indenter)).render(topLevelRecord);
     }
 }

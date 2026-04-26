@@ -53,6 +53,7 @@ public class GenerationEngine {
                     .withPluginAggregator(contextValues.pluginAggregator())
                     .withProgressCallback(progressCallback)
                     .withWarnings(warnings)
+                    .withIndenter(contextValues.indenter())
                     .build();
         }).toList();
     }

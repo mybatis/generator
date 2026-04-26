@@ -34,6 +34,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.XmlFormatter;
 import org.mybatis.generator.api.dom.DefaultXmlFormatter;
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -105,6 +106,7 @@ class GeneratorAntTaskTest {
         root.addElement(context);
         Document doc = new Document(root);
         XmlFormatter formatter = new DefaultXmlFormatter();
+        formatter.setIndenter(Indenter.defaultIndenter());
 
         Path configFile = tempDir.resolve("generatorConfig.xml");
         Files.writeString(configFile, formatter.getFormattedContent(doc));
@@ -147,6 +149,7 @@ class GeneratorAntTaskTest {
         Document doc = new Document(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID,
                 XmlConstants.MYBATIS_GENERATOR_CONFIG_SYSTEM_ID, root);
         XmlFormatter formatter = new DefaultXmlFormatter();
+        formatter.setIndenter(Indenter.defaultIndenter());
 
         Path configFile = tempDir.resolve("generatorConfig.xml");
         Files.writeString(configFile, formatter.getFormattedContent(doc));
@@ -186,6 +189,7 @@ class GeneratorAntTaskTest {
         Document doc = new Document(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID,
                 XmlConstants.MYBATIS_GENERATOR_CONFIG_SYSTEM_ID, root);
         XmlFormatter formatter = new DefaultXmlFormatter();
+        formatter.setIndenter(Indenter.defaultIndenter());
 
         Path configFile = tempDir.resolve("generatorConfig.xml");
         Files.writeString(configFile, formatter.getFormattedContent(doc));
@@ -229,6 +233,7 @@ class GeneratorAntTaskTest {
         Document doc = new Document(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID,
                 XmlConstants.MYBATIS_GENERATOR_CONFIG_SYSTEM_ID, root);
         XmlFormatter formatter = new DefaultXmlFormatter();
+        formatter.setIndenter(Indenter.defaultIndenter());
 
         Path configFile = tempDir.resolve("generatorConfig.xml");
         Files.writeString(configFile, formatter.getFormattedContent(doc));

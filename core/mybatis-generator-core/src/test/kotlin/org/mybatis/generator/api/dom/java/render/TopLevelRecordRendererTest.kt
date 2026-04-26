@@ -18,13 +18,16 @@ package org.mybatis.generator.api.dom.java.render
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mybatis.generator.api.dom.DefaultJavaFormatter
+import org.mybatis.generator.api.dom.Indenter
 import org.mybatis.generator.api.dom.java.RecordGenerator
 
 class TopLevelRecordRendererTest {
     @Test
     fun testComplexRecord() {
         val cu = RecordGenerator.complexRecord()
-        val renderedRecord = DefaultJavaFormatter().getFormattedContent(cu)
+        val formatter = DefaultJavaFormatter()
+        formatter.setIndenter(Indenter.defaultIndenter())
+        val renderedRecord = formatter.getFormattedContent(cu)
         assertThat(renderedRecord).isEqualToNormalizingNewlines("""
             |/**
             | * A complex record

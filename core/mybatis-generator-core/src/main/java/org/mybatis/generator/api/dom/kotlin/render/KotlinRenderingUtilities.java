@@ -17,7 +17,7 @@ package org.mybatis.generator.api.dom.kotlin.render;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.OutputUtilities;
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.kotlin.KotlinModifier;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
@@ -31,11 +31,11 @@ public class KotlinRenderingUtilities {
                 .collect(CustomCollectors.joining(" ", "", " ")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
-    public static String kotlinIndent(String in) {
+    public static String kotlinIndent(Indenter indenter, String in) {
         if (in.isEmpty()) {
             return in; // don't indent empty lines
         }
 
-        return OutputUtilities.kotlinIndent(1) + in;
+        return indenter.kotlinIndent(1) + in;
     }
 }

@@ -17,6 +17,7 @@ package org.mybatis.generator.api.dom.java.render
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mybatis.generator.api.dom.Indenter
 import org.mybatis.generator.api.dom.java.InitializationBlock
 
 class InitializationBlockRendererTest {
@@ -59,6 +60,7 @@ class InitializationBlockRendererTest {
                 """.trimMargin())
     }
 
-    private fun toString(b: InitializationBlock) = InitializationBlockRenderer().render(b)
-                .joinToString(System.lineSeparator())
+    private fun toString(b: InitializationBlock) = InitializationBlockRenderer(Indenter.defaultIndenter())
+        .render(b)
+        .joinToString(System.lineSeparator())
 }

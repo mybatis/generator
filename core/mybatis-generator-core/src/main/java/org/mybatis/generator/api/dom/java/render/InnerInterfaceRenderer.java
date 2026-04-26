@@ -17,13 +17,20 @@ package org.mybatis.generator.api.dom.java.render;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.InnerInterface;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class InnerInterfaceRenderer {
+    private final Indenter indenter;
+
+    public InnerInterfaceRenderer(Indenter indenter) {
+        this.indenter = Objects.requireNonNull(indenter);
+    }
 
     public List<String> render(InnerInterface innerInterface, CompilationUnit compilationUnit) {
         List<String> lines = new ArrayList<>();
@@ -31,12 +38,16 @@ public class InnerInterfaceRenderer {
         lines.addAll(innerInterface.getJavaDocLines());
         lines.addAll(innerInterface.getAnnotations());
         lines.add(renderFirstLine(innerInterface, compilationUnit));
-        lines.addAll(RenderingUtilities.renderFields(innerInterface.getFields(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInterfaceMethods(innerInterface.getMethods(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerClasses(innerInterface.getInnerClasses(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerInterfaces(innerInterface.getInnerInterfaces(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerEnums(innerInterface.getInnerEnums(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerRecords(innerInterface.getInnerRecords(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderFields(indenter, innerInterface.getFields(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInterfaceMethods(indenter, innerInterface.getMethods(),
+                compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerClasses(indenter, innerInterface.getInnerClasses(),
+                compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerInterfaces(indenter, innerInterface.getInnerInterfaces(),
+                compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerEnums(indenter, innerInterface.getInnerEnums(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerRecords(indenter, innerInterface.getInnerRecords(),
+                compilationUnit));
 
         lines = RenderingUtilities.removeLastEmptyLine(lines);
 

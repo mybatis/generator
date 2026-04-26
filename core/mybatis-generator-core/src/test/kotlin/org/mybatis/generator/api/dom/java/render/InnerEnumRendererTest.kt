@@ -17,6 +17,7 @@ package org.mybatis.generator.api.dom.java.render
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mybatis.generator.api.dom.Indenter
 import org.mybatis.generator.api.dom.java.Field
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType
 import org.mybatis.generator.api.dom.java.InnerClass
@@ -36,7 +37,8 @@ class InnerEnumRendererTest {
         outerEnum.addEnumConstant("TWO")
         outerEnum.addEnumConstant("THREE")
 
-        assertThat(TopLevelEnumerationRenderer().render(outerEnum)).isEqualToNormalizingNewlines("""
+        assertThat(TopLevelEnumerationRenderer(Indenter.defaultIndenter()).render(outerEnum))
+            .isEqualToNormalizingNewlines("""
             |package com.foo;
             |
             |public enum Bar {
@@ -96,7 +98,8 @@ class InnerEnumRendererTest {
         innerInterface.addMethod(method)
         outerEnum.addInnerInterface(innerInterface)
 
-        assertThat(TopLevelEnumerationRenderer().render(outerEnum)).isEqualToNormalizingNewlines("""
+        assertThat(TopLevelEnumerationRenderer(Indenter.defaultIndenter()).render(outerEnum))
+            .isEqualToNormalizingNewlines("""
             |package com.foo;
             |
             |public enum Bar {

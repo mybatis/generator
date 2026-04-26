@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.api;
 
+import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.config.Context;
 
@@ -31,6 +32,6 @@ import org.mybatis.generator.config.Context;
  */
 public interface JavaFormatter {
     void setContext(Context context);
-
+    void setIndenter(Indenter indenter);
     String getFormattedContent(CompilationUnit compilationUnit);
 }

@@ -34,13 +34,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.dom.DefaultJavaFormatter;
+import org.mybatis.generator.api.dom.Indenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class GeneratedClassCompileTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneratedClassCompileTest.class);
-    private final DefaultJavaFormatter javaFormatter = new DefaultJavaFormatter();
 
     @ParameterizedTest
     @MethodSource("testVariations")
@@ -77,6 +77,8 @@ class GeneratedClassCompileTest {
     }
 
     private StringBasedJavaFileObject toJavaFileObject(CompilationUnit compilationUnit) {
+        DefaultJavaFormatter javaFormatter = new DefaultJavaFormatter();
+        javaFormatter.setIndenter(Indenter.defaultIndenter());
         String source = javaFormatter.getFormattedContent(compilationUnit);
         return new StringBasedJavaFileObject(compilationUnit.getType().getFullyQualifiedNameWithoutTypeParameters(), source);
     }

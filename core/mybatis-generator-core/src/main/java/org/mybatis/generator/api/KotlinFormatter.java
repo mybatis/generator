@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.api;
 
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.config.Context;
 
@@ -32,7 +31,6 @@ import org.mybatis.generator.config.Context;
  */
 public interface KotlinFormatter {
     void setContext(Context context);
-    void setIndenter(Indenter indenter);
 
     String getFormattedContent(KotlinFile kotlinFile);
 }

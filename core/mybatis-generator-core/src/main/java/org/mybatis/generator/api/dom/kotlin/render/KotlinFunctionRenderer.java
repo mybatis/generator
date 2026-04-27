@@ -17,19 +17,11 @@ package org.mybatis.generator.api.dom.kotlin.render;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class KotlinFunctionRenderer {
-    private final Indenter indenter;
-
-    public KotlinFunctionRenderer(Indenter indenter) {
-        this.indenter = Objects.requireNonNull(indenter);
-    }
-
     public List<String> render(KotlinFunction function) {
 
         List<String> answer = new ArrayList<>(function.getAnnotations());
@@ -82,6 +74,6 @@ public class KotlinFunctionRenderer {
     }
 
     private String indent(String in) {
-        return KotlinRenderingUtilities.kotlinIndent(indenter, in);
+        return KotlinRenderingUtilities.kotlinIndent(in);
     }
 }

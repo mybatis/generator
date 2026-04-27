@@ -18,9 +18,7 @@ package org.mybatis.generator.api.dom.kotlin.render;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.render.RenderingUtilities;
 import org.mybatis.generator.api.dom.kotlin.KotlinNamedItem;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
@@ -28,14 +26,8 @@ import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class KotlinTypeRenderer {
-    private final Indenter indenter;
-
-    public KotlinTypeRenderer(Indenter indenter) {
-        this.indenter = Objects.requireNonNull(indenter);
-    }
-
     public List<String> render(KotlinType kotlinType) {
-        KotlinNamedItemRenderer renderer = new KotlinNamedItemRenderer(indenter);
+        KotlinNamedItemRenderer renderer = new KotlinNamedItemRenderer();
 
         List<String> answer = new ArrayList<>(kotlinType.getAnnotations());
 
@@ -105,6 +97,6 @@ public class KotlinTypeRenderer {
     }
 
     private String indent(String in) {
-        return KotlinRenderingUtilities.kotlinIndent(indenter, in);
+        return KotlinRenderingUtilities.kotlinIndent(in);
     }
 }

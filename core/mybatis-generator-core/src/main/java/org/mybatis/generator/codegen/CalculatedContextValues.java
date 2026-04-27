@@ -54,7 +54,7 @@ public class CalculatedContextValues {
         context = Objects.requireNonNull(builder.context);
         indenter = Objects.requireNonNull(builder.indenter);
         javaFormatter = ObjectFactory.createJavaFormatter(context, indenter);
-        kotlinFormatter = ObjectFactory.createKotlinFormatter(context, indenter);
+        kotlinFormatter = ObjectFactory.createKotlinFormatter(context);
         xmlFormatter = ObjectFactory.createXmlFormatter(context, indenter);
         commentGenerator = ObjectFactory.createCommentGenerator(context, indenter);
         javaFileEncoding = context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING);

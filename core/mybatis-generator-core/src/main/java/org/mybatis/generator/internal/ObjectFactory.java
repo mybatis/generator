@@ -242,13 +242,12 @@ public class ObjectFactory {
         return answer;
     }
 
-    public static KotlinFormatter createKotlinFormatter(Context context, Indenter indenter) {
+    public static KotlinFormatter createKotlinFormatter(Context context) {
         String type = stringValueOrElse(context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FORMATTER),
                 Defaults.DEFAULT_KOTLIN_FORMATTER);
         KotlinFormatter answer = createInternalObject(type);
 
         answer.setContext(context);
-        answer.setIndenter(indenter);
 
         return answer;
     }

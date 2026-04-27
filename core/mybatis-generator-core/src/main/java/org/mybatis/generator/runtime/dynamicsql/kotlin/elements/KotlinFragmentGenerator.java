@@ -43,7 +43,6 @@ public class KotlinFragmentGenerator {
     private final String supportObjectImport;
     private final String tableFieldName;
     private final boolean useSnakeCase;
-    private final Indenter indenter;
 
     private KotlinFragmentGenerator(Builder builder) {
         introspectedTable = Objects.requireNonNull(builder.introspectedTable);
@@ -52,7 +51,6 @@ public class KotlinFragmentGenerator {
         tableFieldName = Objects.requireNonNull(builder.tableFieldName);
         useSnakeCase = introspectedTable
                 .findTableOrClientGeneratorPropertyAsBoolean(PropertyRegistry.ANY_USE_SNAKE_CASE_IDENTIFIERS);
-        indenter = Objects.requireNonNull(builder.indenter);
     }
 
     public KotlinFunctionParts getPrimaryKeyWhereClauseAndParameters(boolean forUpdate) {
@@ -89,7 +87,7 @@ public class KotlinFragmentGenerator {
                 builder.withCodeLine(singleColumnWhere(fieldNameAndImport.fieldName(), argName));
                 first = false;
             } else if (first) {
-                builder.withCodeLine(indenter.kotlinIndent(1) + "where {"); //$NON-NLS-1$
+                builder.withCodeLine(Indenter.kotlinIndent(1) + "where {"); //$NON-NLS-1$
                 builder.withCodeLine(multiColumnWhere(fieldNameAndImport.fieldName(), argName));
                 first = false;
             } else {
@@ -97,7 +95,7 @@ public class KotlinFragmentGenerator {
             }
         }
         if (columnCount > 1) {
-            builder.withCodeLine(indenter.kotlinIndent(1) + "}"); //$NON-NLS-1$
+            builder.withCodeLine(Indenter.kotlinIndent(1) + "}"); //$NON-NLS-1$
         }
 
         builder.withCodeLine("}"); //$NON-NLS-1$
@@ -106,16 +104,16 @@ public class KotlinFragmentGenerator {
     }
 
     private String singleColumnWhere(String columName, String property) {
-        return indenter.kotlinIndent(1) + "where { " //$NON-NLS-1$
+        return Indenter.kotlinIndent(1) + "where { " //$NON-NLS-1$
                 + composeIsEqualTo(columName, property)  + " }"; //$NON-NLS-1$
     }
 
     private String multiColumnWhere(String columName, String property) {
-        return indenter.kotlinIndent(2) + composeIsEqualTo(columName, property); //$NON-NLS-1$
+        return Indenter.kotlinIndent(2) + composeIsEqualTo(columName, property); //$NON-NLS-1$
     }
 
     private String multiColumnAnd(String columName, String property) {
-        return indenter.kotlinIndent(2) + "and { " //$NON-NLS-1$
+        return Indenter.kotlinIndent(2) + "and { " //$NON-NLS-1$
                 + composeIsEqualTo(columName, property)  + " }"; //$NON-NLS-1$
     }
 
@@ -224,15 +222,15 @@ public class KotlinFragmentGenerator {
 
             if (column.isIdentity()) {
                 // identity columns are always generated as nullable
-                builder.withCodeLine(indenter.kotlinIndent(1) + "set(" //$NON-NLS-1$
+                builder.withCodeLine(Indenter.kotlinIndent(1) + "set(" //$NON-NLS-1$
                         + fieldNameAndImport.fieldName()
                         + ") equalTo row." + column.getJavaProperty() + "!!"); //$NON-NLS-1$ //$NON-NLS-2$
             } else if (introspectedTable.generateKotlinV1Model() || column.isNullable()) {
-                builder.withCodeLine(indenter.kotlinIndent(1) + "set(" //$NON-NLS-1$
+                builder.withCodeLine(Indenter.kotlinIndent(1) + "set(" //$NON-NLS-1$
                         + fieldNameAndImport.fieldName()
                         + ") equalToOrNull row::" + column.getJavaProperty()); //$NON-NLS-1$
             } else {
-                builder.withCodeLine(indenter.kotlinIndent(1) + "set(" //$NON-NLS-1$
+                builder.withCodeLine(Indenter.kotlinIndent(1) + "set(" //$NON-NLS-1$
                         + fieldNameAndImport.fieldName()
                         + ") equalTo row::" + column.getJavaProperty()); //$NON-NLS-1$
 
@@ -258,7 +256,7 @@ public class KotlinFragmentGenerator {
                             column);
                     builder.withImport(fieldNameAndImport.importString());
 
-                    builder.withCodeLine(indenter.kotlinIndent(1) + "set(" //$NON-NLS-1$
+                    builder.withCodeLine(Indenter.kotlinIndent(1) + "set(" //$NON-NLS-1$
                             + fieldNameAndImport.fieldName()
                             + ") equalToWhenPresent row::" + column.getJavaProperty()); //$NON-NLS-1$
                 });
@@ -316,7 +314,7 @@ public class KotlinFragmentGenerator {
                     calculateFieldNameAndImport(tableFieldName, supportObjectImport, column);
             builder.withImport(fieldNameAndImport.importString());
 
-            builder.withCodeLine(indenter.kotlinIndent(1) + "withMappedColumn("  //$NON-NLS-1$
+            builder.withCodeLine(Indenter.kotlinIndent(1) + "withMappedColumn("  //$NON-NLS-1$
                     + fieldNameAndImport.fieldName()
                     + ")"); //$NON-NLS-1$
         }
@@ -330,7 +328,6 @@ public class KotlinFragmentGenerator {
         private @Nullable String resultMapId;
         private @Nullable String supportObjectImport;
         private @Nullable String tableFieldName;
-        private @Nullable Indenter indenter;
 
         public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
             this.introspectedTable = introspectedTable;
@@ -349,11 +346,6 @@ public class KotlinFragmentGenerator {
 
         public Builder withTableFieldName(String tableFieldName) {
             this.tableFieldName = tableFieldName;
-            return this;
-        }
-
-        public Builder withIndenter(Indenter indenter) {
-            this.indenter = indenter;
             return this;
         }
 

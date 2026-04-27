@@ -31,11 +31,11 @@ public class KotlinRenderingUtilities {
                 .collect(CustomCollectors.joining(" ", "", " ")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
-    public static String kotlinIndent(Indenter indenter, String in) {
+    public static String kotlinIndent(String in) {
         if (in.isEmpty()) {
             return in; // don't indent empty lines
         }
 
-        return indenter.kotlinIndent(1) + in;
+        return Indenter.kotlinIndent(1) + in;
     }
 }

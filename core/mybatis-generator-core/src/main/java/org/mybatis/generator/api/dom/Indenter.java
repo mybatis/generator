@@ -21,13 +21,11 @@ import org.jspecify.annotations.Nullable;
 
 public class Indenter {
     private final String javaIndent;
-    private final String kotlinIndent;
     private final String xmlIndent;
 
     private Indenter(Builder builder) {
-        javaIndent = calculateIndent(builder.javaIndentType, builder.javaIndentAmount, 4);
-        kotlinIndent = calculateIndent(builder.kotlinIndentType, builder.kotlinIndentAmount, 4);
-        xmlIndent = calculateIndent(builder.xmlIndentType, builder.xmlIndentAmount, 2);
+        javaIndent = calculateIndent(builder.indentType, builder.javaIndentAmount, 4);
+        xmlIndent = calculateIndent(builder.indentType, builder.xmlIndentAmount, 2);
     }
 
     private String calculateIndent(@Nullable IndentType indentType, @Nullable Integer amount, int defaultSpaces) {
@@ -69,12 +67,13 @@ public class Indenter {
      * @param indentLevel
      *            the required indent level
      */
-    public void kotlinIndent(StringBuilder sb, int indentLevel) {
+    public static void kotlinIndent(StringBuilder sb, int indentLevel) {
         sb.append(kotlinIndent(indentLevel));
     }
 
-    public String kotlinIndent(int indentLevel) {
-        return kotlinIndent.repeat(indentLevel);
+    public static String kotlinIndent(int indentLevel) {
+        // Kotlin indents are always four spaces per level (from the published Kotlin code conventions)
+        return "    ".repeat(indentLevel); //$NON-NLS-1$
     }
 
     /**
@@ -99,16 +98,32 @@ public class Indenter {
     }
 
     public static Indenter defaultIndenter() {
-        return new Indenter.Builder().build();
+        return new Indenter.Builder()
+                .withIndentType(IndentType.SPACES)
+                .withJavaIndentAmount(4)
+                .withXmlIndentAmount(2)
+                .build();
     }
 
     public static class Builder {
-        private @Nullable IndentType javaIndentType;
-        private @Nullable IndentType kotlinIndentType;
-        private @Nullable IndentType xmlIndentType;
+        private @Nullable IndentType indentType;
         private @Nullable Integer javaIndentAmount;
-        private @Nullable Integer kotlinIndentAmount;
         private @Nullable Integer xmlIndentAmount;
+
+        public Builder withIndentType(IndentType indentType) {
+            this.indentType = indentType;
+            return this;
+        }
+
+        public Builder withJavaIndentAmount(Integer javaIndentAmount) {
+            this.javaIndentAmount = javaIndentAmount;
+            return this;
+        }
+
+        public Builder withXmlIndentAmount(Integer xmlIndentAmount) {
+            this.xmlIndentAmount = xmlIndentAmount;
+            return this;
+        }
 
         public Indenter build() {
             return new Indenter(this);

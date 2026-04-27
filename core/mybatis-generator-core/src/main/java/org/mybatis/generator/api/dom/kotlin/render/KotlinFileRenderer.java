@@ -17,25 +17,17 @@ package org.mybatis.generator.api.dom.kotlin.render;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinNamedItem;
 
 public class KotlinFileRenderer {
-    private final Indenter indenter;
-
-    public KotlinFileRenderer(Indenter indenter) {
-        this.indenter = Objects.requireNonNull(indenter);
-    }
-
     public String render(KotlinFile kotlinFile) {
         List<String> lines = new ArrayList<>();
-        KotlinNamedItemRenderer renderer = new KotlinNamedItemRenderer(indenter);
+        KotlinNamedItemRenderer renderer = new KotlinNamedItemRenderer();
 
         kotlinFile.getPackage().ifPresent(p -> lines.add("package " + p)); //$NON-NLS-1$
 

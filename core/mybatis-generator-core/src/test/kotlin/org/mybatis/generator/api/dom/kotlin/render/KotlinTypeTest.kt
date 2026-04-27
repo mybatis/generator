@@ -45,7 +45,7 @@ class KotlinTypeTest {
         kf.setPackage("com.foo.bar")
         kf.addNamedItem(obj)
 
-        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
+        val renderedKf = KotlinFileRenderer().render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
             |package com.foo.bar
@@ -77,7 +77,7 @@ class KotlinTypeTest {
         kf.addNamedItem(obj)
         kf.addImport("java.io.Serializable")
 
-        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
+        val renderedKf = KotlinFileRenderer().render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
             |package com.foo.bar
@@ -118,7 +118,7 @@ class KotlinTypeTest {
         kf.addImport("org.mybatis.dynamic.sql.SqlTable")
         kf.addImport("java.sql.JDBCType")
 
-        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
+        val renderedKf = KotlinFileRenderer().render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
             |package examples.kotlin.mybatis3.canonical
@@ -171,7 +171,7 @@ class KotlinTypeTest {
                 .build()
         kf.addNamedItem(interfaze)
 
-        val renderedKf = KotlinFileRenderer(Indenter.defaultIndenter()).render(kf)
+        val renderedKf = KotlinFileRenderer().render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
             |package examples.kotlin.mybatis3.canonical
@@ -212,19 +212,17 @@ class KotlinTypeTest {
                 .withCodeLine("countFrom(this::count, Person, completer)")
                 .build())
 
-        val indenter = Indenter.defaultIndenter()
-
         kf.addNamedItem(KotlinFunction.newOneLineFunction("PersonMapper.insert")
                 .withArgument(KotlinArg.newArg("record")
                         .withDataType("PersonRecord")
                         .build())
                 .withCodeLine("insert(this::insert, record, Person) {")
-                .withCodeLine(indenter.kotlinIndent(1) + "map(id).toProperty(\"id\")")
-                .withCodeLine(indenter.kotlinIndent(1) + "map(firstName).toProperty(\"firstName\")")
+                .withCodeLine(Indenter.kotlinIndent(1) + "map(id).toProperty(\"id\")")
+                .withCodeLine(Indenter.kotlinIndent(1) + "map(firstName).toProperty(\"firstName\")")
                 .withCodeLine("}")
                 .build())
 
-        val renderedKf = KotlinFileRenderer(indenter).render(kf)
+        val renderedKf = KotlinFileRenderer().render(kf)
 
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
             |package examples.kotlin.mybatis3.canonical
@@ -260,7 +258,7 @@ class KotlinTypeTest {
                         .build())
                 .build()
 
-        val renderedType = KotlinTypeRenderer(Indenter.defaultIndenter()).render(obj).stream()
+        val renderedType = KotlinTypeRenderer().render(obj).stream()
                 .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
@@ -289,7 +287,7 @@ class KotlinTypeTest {
             .withSuperType("Serializable")
             .build()
 
-        val renderedType = KotlinTypeRenderer(Indenter.defaultIndenter()).render(obj).stream()
+        val renderedType = KotlinTypeRenderer().render(obj).stream()
             .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
@@ -308,7 +306,7 @@ class KotlinTypeTest {
         val obj = KotlinType.newClass("Adder")
                 .build()
 
-        val renderedType = KotlinTypeRenderer(Indenter.defaultIndenter()).render(obj).stream()
+        val renderedType = KotlinTypeRenderer().render(obj).stream()
                 .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
@@ -322,7 +320,7 @@ class KotlinTypeTest {
             .withSuperType("Serializable")
             .build()
 
-        val renderedType = KotlinTypeRenderer(Indenter.defaultIndenter()).render(obj).stream()
+        val renderedType = KotlinTypeRenderer().render(obj).stream()
             .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
@@ -355,7 +353,7 @@ class KotlinTypeTest {
             )
             .build()
 
-        val renderedType = KotlinTypeRenderer(Indenter.defaultIndenter()).render(obj).stream()
+        val renderedType = KotlinTypeRenderer().render(obj).stream()
             .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
@@ -399,7 +397,7 @@ class KotlinTypeTest {
             )
             .build()
 
-        val renderedType = KotlinTypeRenderer(Indenter.defaultIndenter()).render(obj).stream()
+        val renderedType = KotlinTypeRenderer().render(obj).stream()
             .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
@@ -444,7 +442,7 @@ class KotlinTypeTest {
             )
             .build()
 
-        val renderedType = KotlinTypeRenderer(Indenter.defaultIndenter()).render(obj).stream()
+        val renderedType = KotlinTypeRenderer().render(obj).stream()
             .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""

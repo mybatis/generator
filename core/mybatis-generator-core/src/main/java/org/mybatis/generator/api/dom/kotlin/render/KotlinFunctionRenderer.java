@@ -28,7 +28,7 @@ public class KotlinFunctionRenderer {
 
         answer.add(renderFirstLine(function));
 
-        answer.addAll(function.getCodeLines().stream().map(this::indent)
+        answer.addAll(function.getCodeLines().stream().map(KotlinRenderingUtilities::kotlinIndent)
                         .toList());
 
         if (!function.getCodeLines().isEmpty() && !function.isOneLineFunction()) {
@@ -71,9 +71,5 @@ public class KotlinFunctionRenderer {
         return function.getExplicitReturnType()
                 .map(s -> ": " + s) //$NON-NLS-1$
                 .orElse(""); //$NON-NLS-1$
-    }
-
-    private String indent(String in) {
-        return KotlinRenderingUtilities.kotlinIndent(in);
     }
 }

@@ -65,7 +65,7 @@ public class KotlinTypeRenderer {
         }
 
         for (KotlinNamedItem namedItem : kotlinType.getNamedItems()) {
-            answer.addAll(renderer.render(namedItem).stream().map(this::indent)
+            answer.addAll(renderer.render(namedItem).stream().map(KotlinRenderingUtilities::kotlinIndent)
                     .toList());
             answer.add(""); //$NON-NLS-1$
         }
@@ -85,7 +85,7 @@ public class KotlinTypeRenderer {
 
         Iterator<KotlinProperty> iter = kotlinType.getConstructorProperties().iterator();
         while (iter.hasNext()) {
-            lines.addAll(renderer.render(iter.next()).stream().map(this::indent)
+            lines.addAll(renderer.render(iter.next()).stream().map(KotlinRenderingUtilities::kotlinIndent)
                     .toList());
             if (iter.hasNext()) {
                 lines.set(lines.size() - 1,
@@ -94,9 +94,5 @@ public class KotlinTypeRenderer {
         }
 
         return lines;
-    }
-
-    private String indent(String in) {
-        return KotlinRenderingUtilities.kotlinIndent(in);
     }
 }

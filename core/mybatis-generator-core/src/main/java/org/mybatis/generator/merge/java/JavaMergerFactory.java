@@ -27,8 +27,10 @@ import com.github.javaparser.printer.lexicalpreservation.DefaultLexicalPreservin
 public class JavaMergerFactory {
     public static JavaFileMerger getMerger(MergeConfiguration mergeConfiguration) {
         return switch (mergeConfiguration.mergeStrategy()) {
-            case MERGE_INTO_NEW -> new MergeIntoNewJavaFileMerger(getPrinter(mergeConfiguration));
-            case MERGE_INTO_EXISTING -> new MergeIntoExistingJavaFileMerger(getPrinter(mergeConfiguration));
+            case MERGE_INTO_NEW -> new MergeIntoNewJavaFileMerger(getPrinter(mergeConfiguration),
+                    mergeConfiguration.isLexicalPreserving());
+            case MERGE_INTO_EXISTING -> new MergeIntoExistingJavaFileMerger(getPrinter(mergeConfiguration),
+                    mergeConfiguration.isLexicalPreserving());
         };
     }
 

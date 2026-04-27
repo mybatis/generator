@@ -22,7 +22,7 @@ import com.github.javaparser.printer.lexicalpreservation.DefaultLexicalPreservin
 import org.mybatis.generator.exception.MergeException;
 
 /**
- * This class handles the task of merging changes into an existing Java file using JavaParser.
+ * This class handles the task of merging changes into a new Java file using JavaParser.
  * It supports merging by removing methods and fields that have specific Javadoc tags or annotations.
  *
  * <p>Given an existing source file and a newly generated file of the same name, the merger will:
@@ -75,9 +75,9 @@ public class MergeIntoNewJavaFileMerger implements JavaFileMerger {
     private final Printer printer;
     private final boolean isLexicalPreserving;
 
-    public MergeIntoNewJavaFileMerger(Printer printer) {
+    public MergeIntoNewJavaFileMerger(Printer printer, boolean isLexicalPreserving) {
         this.printer = printer;
-        isLexicalPreserving = printer instanceof DefaultLexicalPreservingPrinter;
+        this.isLexicalPreserving = isLexicalPreserving;
     }
 
     /**

@@ -72,14 +72,15 @@ import org.mybatis.generator.exception.MergeException;
  *     </li>
  * </ol>
  *
- * @author Freeman (original)
- * @author Jeff Butler (refactoring and enhancements)
+ * @author Jeff Butler
  */
 public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
     private final Printer printer;
+    private final boolean isLexicalPreserving;
 
-    public MergeIntoExistingJavaFileMerger(Printer printer) {
+    public MergeIntoExistingJavaFileMerger(Printer printer, boolean isLexicalPreserving) {
         this.printer = printer;
+        this.isLexicalPreserving = isLexicalPreserving;
     }
 
     /**
@@ -94,7 +95,10 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
     public String getMergedSource(String newFileContent, String existingFileContent) throws MergeException {
         ParserConfiguration parserConfiguration = new ParserConfiguration();
         parserConfiguration.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_25);
-        parserConfiguration.setLexicalPreservationEnabled(true);
+        if (isLexicalPreserving) {
+            parserConfiguration.setLexicalPreservationEnabled(true);
+        }
+
         JavaParser javaParser = new JavaParser(parserConfiguration);
 
         ParseResults existingFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser, existingFileContent,

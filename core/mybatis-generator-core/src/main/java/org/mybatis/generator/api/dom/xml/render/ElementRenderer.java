@@ -19,7 +19,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.ElementVisitor;
 import org.mybatis.generator.api.dom.xml.TextElement;

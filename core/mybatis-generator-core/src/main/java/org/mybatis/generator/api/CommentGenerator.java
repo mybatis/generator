@@ -18,7 +18,6 @@ package org.mybatis.generator.api;
 import java.util.Properties;
 import java.util.Set;
 
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;

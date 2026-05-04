@@ -26,10 +26,10 @@ import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;

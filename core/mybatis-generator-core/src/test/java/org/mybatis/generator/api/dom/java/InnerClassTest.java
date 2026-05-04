@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer;
 
 class InnerClassTest {

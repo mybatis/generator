@@ -34,7 +34,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.XmlFormatter;
 import org.mybatis.generator.api.dom.DefaultXmlFormatter;
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;

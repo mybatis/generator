@@ -17,7 +17,7 @@ package org.mybatis.generator.api.dom.kotlin.render
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mybatis.generator.api.dom.Indenter
+import org.mybatis.generator.api.Indenter
 import org.mybatis.generator.api.dom.kotlin.KotlinArg
 import org.mybatis.generator.api.dom.kotlin.KotlinFile
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;

@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer;
 
 class MethodTest {

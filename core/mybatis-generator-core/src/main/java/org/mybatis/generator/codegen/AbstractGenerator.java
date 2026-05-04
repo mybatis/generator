@@ -20,9 +20,9 @@ import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.internal.PluginAggregator;
 

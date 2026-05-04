@@ -26,7 +26,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -151,7 +151,8 @@ public class RenderingUtilities {
                 .toList();
     }
 
-    public static List<String> renderInnerEnumNoIndent(Indenter indenter, InnerEnum innerEnum, CompilationUnit compilationUnit) {
+    public static List<String> renderInnerEnumNoIndent(Indenter indenter, InnerEnum innerEnum,
+                                                       CompilationUnit compilationUnit) {
         InnerEnumRenderer innerEnumRenderer = new InnerEnumRenderer(indenter);
         return innerEnumRenderer.render(innerEnum, compilationUnit);
     }

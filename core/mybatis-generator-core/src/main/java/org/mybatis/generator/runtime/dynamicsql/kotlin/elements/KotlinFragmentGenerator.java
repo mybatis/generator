@@ -24,9 +24,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;

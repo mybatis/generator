@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 
 public class BodyLineRenderer {
     private final Indenter indenter;

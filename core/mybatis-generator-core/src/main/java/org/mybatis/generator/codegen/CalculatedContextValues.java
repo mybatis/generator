@@ -22,12 +22,12 @@ import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.KotlinFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.XmlFormatter;
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.Defaults;
 import org.mybatis.generator.config.PropertyRegistry;

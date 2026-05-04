@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.InnerEnum;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;

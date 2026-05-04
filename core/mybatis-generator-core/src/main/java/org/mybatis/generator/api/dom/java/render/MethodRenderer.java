@@ -17,10 +17,9 @@ package org.mybatis.generator.api.dom.java.render;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.api.dom.java.JavaVisibility;

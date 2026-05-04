@@ -25,6 +25,7 @@ import java.util.Optional;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.ConnectionFactory;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.JavaTypeResolver;
@@ -32,7 +33,6 @@ import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.KotlinFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.XmlFormatter;
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;

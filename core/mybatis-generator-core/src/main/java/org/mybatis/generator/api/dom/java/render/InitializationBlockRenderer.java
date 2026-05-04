@@ -18,7 +18,7 @@ package org.mybatis.generator.api.dom.java.render;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.InitializationBlock;
 
 public class InitializationBlockRenderer {

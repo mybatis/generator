@@ -34,7 +34,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.dom.DefaultJavaFormatter;
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

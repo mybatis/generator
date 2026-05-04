@@ -61,7 +61,6 @@ class MyBatisGeneratorTest {
 
     @Test
     void testGenerateInvalidConfigWithNoConnectionSources() {
-        Configuration config = new Configuration();
         Context context = new Context.Builder()
                 .withId("MyContext")
                 .withDefaultModelType(ModelType.FLAT)
@@ -71,7 +70,7 @@ class MyBatisGeneratorTest {
                         .withTargetProject("MyProject")
                         .build())
                 .build();
-        config.addContext(context);
+        Configuration config = new Configuration.Builder().withContext(context).build();
 
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)
@@ -86,7 +85,6 @@ class MyBatisGeneratorTest {
 
     @Test
     void testGenerateInvalidConfigWithTwoConnectionSources() {
-        Configuration config = new Configuration();
         Context context = new Context.Builder()
                 .withId("MyContext")
                 .withDefaultModelType(ModelType.FLAT)
@@ -98,7 +96,7 @@ class MyBatisGeneratorTest {
                         .withTargetProject("MyProject")
                         .build())
                 .build();
-        config.addContext(context);
+        Configuration config = new Configuration.Builder().withContext(context).build();
 
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)

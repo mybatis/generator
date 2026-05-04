@@ -22,9 +22,9 @@ import java.util.Properties;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.CompositePlugin;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.Plugin;
-import org.mybatis.generator.api.dom.Indenter;
 import org.mybatis.generator.config.Context;
 
 /**

@@ -30,7 +30,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.dom.DefaultJavaFormatter;
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;

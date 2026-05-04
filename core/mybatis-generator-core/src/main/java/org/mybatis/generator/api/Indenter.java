@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.api.dom;
+package org.mybatis.generator.api;
 
 import java.util.Objects;
 
@@ -24,8 +24,8 @@ public class Indenter {
     private final String xmlIndent;
 
     private Indenter(Builder builder) {
-        javaIndent = calculateIndent(builder.indentType, builder.javaIndentAmount, 4);
-        xmlIndent = calculateIndent(builder.indentType, builder.xmlIndentAmount, 2);
+        javaIndent = calculateIndent(builder.javaIndentType, builder.javaIndentAmount, 4);
+        xmlIndent = calculateIndent(builder.xmlIndentType, builder.xmlIndentAmount, 2);
     }
 
     private String calculateIndent(@Nullable IndentType indentType, @Nullable Integer amount, int defaultSpaces) {
@@ -93,34 +93,37 @@ public class Indenter {
         return xmlIndent.repeat(indentLevel);
     }
 
-    public enum IndentType {
-        SPACES, TABS
-    }
-
     public static Indenter defaultIndenter() {
         return new Indenter.Builder()
-                .withIndentType(IndentType.SPACES)
+                .withJavaIndentType(IndentType.SPACES)
                 .withJavaIndentAmount(4)
+                .withXmlIndentType(IndentType.SPACES)
                 .withXmlIndentAmount(2)
                 .build();
     }
 
     public static class Builder {
-        private @Nullable IndentType indentType;
+        private @Nullable IndentType javaIndentType;
         private @Nullable Integer javaIndentAmount;
+        private @Nullable IndentType xmlIndentType;
         private @Nullable Integer xmlIndentAmount;
 
-        public Builder withIndentType(IndentType indentType) {
-            this.indentType = indentType;
+        public Builder withJavaIndentType(@Nullable IndentType javaIndentType) {
+            this.javaIndentType = javaIndentType;
             return this;
         }
 
-        public Builder withJavaIndentAmount(Integer javaIndentAmount) {
+        public Builder withJavaIndentAmount(@Nullable Integer javaIndentAmount) {
             this.javaIndentAmount = javaIndentAmount;
             return this;
         }
 
-        public Builder withXmlIndentAmount(Integer xmlIndentAmount) {
+        public Builder withXmlIndentType(@Nullable IndentType xmlIndentType) {
+            this.xmlIndentType = xmlIndentType;
+            return this;
+        }
+
+        public Builder withXmlIndentAmount(@Nullable Integer xmlIndentAmount) {
             this.xmlIndentAmount = xmlIndentAmount;
             return this;
         }

@@ -17,7 +17,7 @@ package org.mybatis.generator.api.dom.kotlin.render;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.kotlin.KotlinModifier;
 import org.mybatis.generator.internal.util.CustomCollectors;
 

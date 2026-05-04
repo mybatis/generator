@@ -18,6 +18,7 @@ package org.mybatis.generator.api.dom;
 import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.CompilationUnitVisitor;

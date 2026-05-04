@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.mybatis.generator.api.dom.Indenter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.TopLevelEnumeration;
 
 public class TopLevelEnumerationRenderer {

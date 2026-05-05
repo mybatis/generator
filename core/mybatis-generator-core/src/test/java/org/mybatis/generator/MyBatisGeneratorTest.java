@@ -47,6 +47,8 @@ class MyBatisGeneratorTest {
         assert is != null;
         Configuration config = cp.parseConfiguration(is);
 
+        assertThat(cp.getWarnings()).hasSize(21);
+
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)
                 .withShellCallback(new DefaultShellCallback())
@@ -56,7 +58,7 @@ class MyBatisGeneratorTest {
         InvalidConfigurationException e =
                 assertThrows(InvalidConfigurationException.class, myBatisGenerator::generateOnly);
 
-        assertEquals(6, e.getExtraMessages().size());
+        assertThat(e.getExtraMessages()).hasSize(6);
     }
 
     @Test

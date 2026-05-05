@@ -24,6 +24,8 @@
   <properties resource="database.properties"/>
 
   <context id="FlatJava5" defaultModelType="flat" targetRuntime="MyBatis3">
+    <indentation xmlIndentType="tabs" javaIndentType="tabs"/>
+
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
     <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
@@ -79,6 +81,8 @@
   </context>
 
   <context id="HierarchicalJava5" targetRuntime="MyBatis3" defaultModelType="hierarchical">
+    <indentation xmlIndentType="spaces" xmlIndentAmount="4" javaIndentType="spaces" javaIndentAmount="2"/>
+
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 
     <commentGenerator>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2026 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The &lt;indentation&gt; Element</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>The &lt;indentation&gt; Element</h1>
+<p>The &lt;indentation&gt; element is used to define indentation specifications for generated code. By default, the generator
+  produces code with the following indentation specifications:
+</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Source Code Type</th>
+    <th>Indentation Specifications</th>
+  </tr>
+  <tr>
+    <td>Java</td>
+    <td>4 Spaces per indent level</td>
+  </tr>
+  <tr>
+    <td>Kotlin</td>
+    <td>4 Spaces per indent level</td>
+  </tr>
+  <tr>
+    <td>XML</td>
+    <td>2 Spaces per indent level</td>
+  </tr>
+</table>
+<p>This element allows you to change these defaults.
+  This element is an optional child element of the <a href="context.html">&lt;context&gt;</a> element,
+  and the <a href="generatorConfiguration.html">&lt;generatorConfiguration&gt;</a> element. If specified at the
+  &lt;generatorConfiguration&gt; level, the specifications will apply to all contexts unless overridden by specifying a
+  configuration at the &lt;context&gt; level. It is also possible to supply an indentation configuration through the
+  Java API for the generator. This is primarily supported for environments like Eclipse where indentation can be
+  configured in an IDE. Any configuration specified with the Java API will NOT override settings in a configuration
+  file, but will only be applied if no configurations are specified through XML configuration.
+</p>
+<p><b>Important Note: </b>Kotlin code is always formatted with four spaces per indent level as the Kotlin language
+  specification suggests.
+</p>
+
+<h2>Optional Attributes</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td valign="top">javaIndentType</td>
+    <td>This can be either "Tabs" or "Spaces". "Spaces" is the default.</td>
+  </tr>
+  <tr>
+    <td valign="top">javaIndentAmount</td>
+    <td>This should be a positive integer. If "javaIndentType" is spaces, the default is "4".
+      If "javaIndentType" is "Tabs", the default is "1".
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">xmlIndentType</td>
+    <td>This can be either "Tabs" or "Spaces". "Spaces" is the default.</td>
+  </tr>
+  <tr>
+    <td valign="top">xmlIndentAmount</td>
+    <td>This should be a positive integer. If "xmlIndentType" is spaces, the default is "2".
+      If "xmlIndentType" is "Tabs", the default is "1".
+    </td>
+  </tr>
+</table>
+
+<h2>Child Elements</h2>
+<p>None.</p>
+
+<h2>Example</h2>
+<p>This element specifies that we want to use tabs for spacing with both Java and XML:</p>
+<pre>
+&lt;indentation javaIndentType="Tabs" xmlIndentType="Tabs" /&gt;
+</pre>
+
+<p>This element specifies that we want to use two spaces for both Java and XML:</p>
+<pre>
+&lt;indentation javaIndentAmount="2" /&gt;
+</pre>
+</body>
+</html>

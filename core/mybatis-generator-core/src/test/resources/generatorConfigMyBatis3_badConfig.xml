@@ -21,6 +21,8 @@
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
+  <indentation javaIndentAmount="w" javaIndentType="l" xmlIndentAmount="s" xmlIndentType="q" />
+
   <!-- This should cause an error because sqlMapGenerator is required
        if there is no clientGenerator -->
   <context id="MyBatis3NoClient" targetRuntime="MyBatis3" defaultModelType="flat">

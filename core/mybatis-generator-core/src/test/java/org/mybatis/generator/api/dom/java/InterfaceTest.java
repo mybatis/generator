@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
 
 class InterfaceTest {
@@ -118,7 +119,7 @@ class InterfaceTest {
                     String ONE = "one";
                 }""";
 
-        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
+        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer(Indenter.defaultIndenter());
         assertThat(renderer.render(interfaze)).isEqualToNormalizingNewlines(expected);
     }
 }

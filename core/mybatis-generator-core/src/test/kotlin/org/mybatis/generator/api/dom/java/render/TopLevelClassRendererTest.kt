@@ -17,6 +17,7 @@ package org.mybatis.generator.api.dom.java.render
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mybatis.generator.api.Indenter
 import org.mybatis.generator.api.dom.java.Field
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType
 import org.mybatis.generator.api.dom.java.JavaVisibility
@@ -34,7 +35,7 @@ class TopLevelClassRendererTest {
         field.visibility = JavaVisibility.PRIVATE
         topLevelClass.addField(field)
 
-        val renderedTlc = TopLevelClassRenderer().render(topLevelClass)
+        val renderedTlc = TopLevelClassRenderer(Indenter.defaultIndenter()).render(topLevelClass)
         assertThat(renderedTlc).isEqualToNormalizingNewlines("""
                 |package com.test;
                 |

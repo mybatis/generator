@@ -15,18 +15,24 @@
  */
 package org.mybatis.generator.api.dom.java.render;
 
+import static org.mybatis.generator.internal.util.StringUtility.removeLastEmptyLine;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.InnerRecord;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
-public class InnerRecordRenderer {
-
+public class InnerRecordRenderer extends AbstractJavaRenderer {
     private final ParameterRenderer parameterRenderer = new ParameterRenderer();
+
+    public InnerRecordRenderer(Indenter indenter) {
+        super(indenter);
+    }
 
     public List<String> render(InnerRecord innerRecord, CompilationUnit compilationUnit) {
         List<String> lines = new ArrayList<>();
@@ -34,15 +40,11 @@ public class InnerRecordRenderer {
         lines.addAll(innerRecord.getJavaDocLines());
         lines.addAll(innerRecord.getAnnotations());
         lines.add(renderFirstLine(innerRecord, compilationUnit));
-        lines.addAll(RenderingUtilities.renderFields(innerRecord.getFields(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInitializationBlocks(innerRecord.getInitializationBlocks()));
-        lines.addAll(RenderingUtilities.renderClassOrEnumMethods(innerRecord.getMethods(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerClasses(innerRecord.getInnerClasses(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerInterfaces(innerRecord.getInnerInterfaces(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerEnums(innerRecord.getInnerEnums(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerRecords(innerRecord.getInnerRecords(), compilationUnit));
-
-        lines = RenderingUtilities.removeLastEmptyLine(lines);
+        lines.addAll(renderFields(innerRecord.getFields(), compilationUnit));
+        lines.addAll(renderInitializationBlocks(innerRecord.getInitializationBlocks()));
+        lines.addAll(renderClassOrEnumMethods(innerRecord.getMethods(), compilationUnit));
+        lines.addAll(renderInnerTypes(innerRecord, compilationUnit));
+        lines = removeLastEmptyLine(lines);
 
         lines.add("}"); //$NON-NLS-1$
 
@@ -50,20 +52,15 @@ public class InnerRecordRenderer {
     }
 
     private String renderFirstLine(InnerRecord innerRecord, CompilationUnit compilationUnit) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(innerRecord.getVisibility().getValue());
-
-        sb.append("record "); //$NON-NLS-1$
-        sb.append(innerRecord.getType().getShortName());
-        sb.append(RenderingUtilities.renderTypeParameters(innerRecord.getTypeParameters(), compilationUnit));
-        sb.append(innerRecord.getParameters().stream()
-                .map(parameter -> parameterRenderer.render(parameter, compilationUnit))
-                .collect(Collectors.joining(", ", "(", ")"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        sb.append(renderSuperInterfaces(innerRecord, compilationUnit));
-        sb.append(" {"); //$NON-NLS-1$
-
-        return sb.toString();
+        return innerRecord.getVisibility().getValue()
+                + "record " //$NON-NLS-1$
+                + innerRecord.getType().getShortName()
+                + renderTypeParameters(innerRecord.getTypeParameters(), compilationUnit)
+                + innerRecord.getParameters().stream()
+                        .map(parameter -> parameterRenderer.render(parameter, compilationUnit))
+                        .collect(Collectors.joining(", ", "(", ")")) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                + renderSuperInterfaces(innerRecord, compilationUnit)
+                + " {"; //$NON-NLS-1$
     }
 
     // should return an empty string if no super interfaces

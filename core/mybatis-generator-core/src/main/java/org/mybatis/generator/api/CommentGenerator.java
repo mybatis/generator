@@ -51,6 +51,8 @@ public interface CommentGenerator {
      */
     void addConfigurationProperties(Properties properties);
 
+    void setIndenter(Indenter indenter);
+
     /**
      * Adds a comment for a model class.  The Java code merger should
      * be notified not to delete the entire class in case any manual

@@ -44,6 +44,7 @@ import org.mybatis.generator.codegen.IntrospectionEngine;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.IndentationConfiguration;
 import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.MergeException;
@@ -77,6 +78,7 @@ public class MyBatisGenerator {
     private final JavaFileMerger javaFileMerger;
     private final boolean isOverwriteEnabled;
     private final boolean isJavaFileMergeEnabled;
+    private final Indenter defaultIndenter;
 
     private final List<GenerationResults> generationResultsList = new ArrayList<>();
 
@@ -97,6 +99,7 @@ public class MyBatisGenerator {
         }
 
         isOverwriteEnabled = builder.isOverwriteEnabled;
+        defaultIndenter = Objects.requireNonNullElseGet(builder.indenter, Indenter::defaultIndenter);
     }
 
     /**
@@ -113,7 +116,8 @@ public class MyBatisGenerator {
      * @throws InvalidConfigurationException
      *             if the specified configuration is invalid
      */
-    public List<String> generateOnly() throws SQLException, InterruptedException, InvalidConfigurationException {
+    public List<String> generateOnly() throws SQLException, InterruptedException,
+            InvalidConfigurationException {
         List<String> warnings = new ArrayList<>();
         generateFiles(warnings);
         progressCallback.done();
@@ -151,9 +155,14 @@ public class MyBatisGenerator {
         ObjectFactory.reset();
         RootClassInfo.reset();
 
+        Indenter globalIndenter = configuration.getIndentationConfiguration()
+                .map(IndentationConfiguration::getIndenter)
+                .orElse(defaultIndenter);
+
         setupCustomClassloader();
         List<Context> contextsToRun = calculateContextsToRun();
-        List<CalculatedContextValues> contextValuesList = calculateContextValues(contextsToRun, warnings);
+        List<CalculatedContextValues> contextValuesList = calculateContextValues(contextsToRun, globalIndenter,
+                warnings);
         List<ContextValuesAndTables> contextValuesAndTablesList = runAllIntrospections(contextValuesList, warnings);
         List<GenerationEngine> generationEngines = createGenerationEngines(contextValuesAndTablesList, warnings);
         runGenerationEngines(generationEngines);
@@ -179,16 +188,21 @@ public class MyBatisGenerator {
         return contextsToRun;
     }
 
-    private List<CalculatedContextValues> calculateContextValues(List<Context> contextsToRun, List<String> warnings) {
+    private List<CalculatedContextValues> calculateContextValues(List<Context> contextsToRun, Indenter globalIndenter,
+                                                                 List<String> warnings) {
         return contextsToRun.stream()
-                .map(c -> createContextValues(c, warnings))
+                .map(c -> createContextValues(c, globalIndenter, warnings))
                 .toList();
     }
 
-    private CalculatedContextValues createContextValues(Context context, List<String> warnings) {
+    private CalculatedContextValues createContextValues(Context context, Indenter globalIndenter,
+                                                        List<String> warnings) {
         return new CalculatedContextValues.Builder()
                 .withContext(context)
                 .withWarnings(warnings)
+                .withIndenter(context.getIndentationConfiguration()
+                        .map(IndentationConfiguration::getIndenter)
+                        .orElse(globalIndenter))
                 .build();
     }
 
@@ -479,6 +493,7 @@ public class MyBatisGenerator {
         private final Set<String> fullyQualifiedTableNames = new HashSet<>();
         private boolean isOverwriteEnabled = false;
         private boolean isJavaFileMergeEnabled = false;
+        private @Nullable Indenter indenter;
 
         public Builder withConfiguration(Configuration configuration) {
             this.configuration = configuration;
@@ -550,6 +565,19 @@ public class MyBatisGenerator {
          */
         public Builder withJavaFileMergeEnabled(boolean javaFileMergeEnabled) {
             this.isJavaFileMergeEnabled = javaFileMergeEnabled;
+            return this;
+        }
+
+        /**
+         * Specify an indenter to use if no indenters are configured in the configuration.
+         * If not specified, then the library will use the default indenter.
+         *
+         * @param indenter an indenter to use if no indenters are configured. This indenter will not override
+         *                 indenters specified in a configuration.
+         * @return this builder
+         */
+        public Builder withIndenter(Indenter indenter) {
+            this.indenter = indenter;
             return this;
         }
 

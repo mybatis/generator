@@ -20,6 +20,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.exception.InvalidConfigurationException;
@@ -27,20 +28,24 @@ import org.mybatis.generator.exception.InvalidConfigurationException;
 public class Configuration {
     private final List<Context> contexts;
     private final List<String> classPathEntries;
+    private final @Nullable IndentationConfiguration indentationConfiguration;
 
-    public Configuration() {
-        contexts = new ArrayList<>();
-        classPathEntries = new ArrayList<>();
-    }
-
-    public void addClasspathEntry(@Nullable String entry) {
-        if (entry != null) {
-            classPathEntries.add(entry);
-        }
+    private Configuration(Builder builder) {
+        contexts = builder.contexts;
+        classPathEntries = builder.classPathEntries;
+        indentationConfiguration = builder.indentationConfiguration;
     }
 
     public List<String> getClassPathEntries() {
         return classPathEntries;
+    }
+
+    public List<Context> getContexts() {
+        return contexts;
+    }
+
+    public Optional<IndentationConfiguration> getIndentationConfiguration() {
+        return Optional.ofNullable(indentationConfiguration);
     }
 
     /**
@@ -75,11 +80,30 @@ public class Configuration {
         }
     }
 
-    public List<Context> getContexts() {
-        return contexts;
-    }
+    public static class Builder {
+        private final List<Context> contexts = new ArrayList<>();
+        private final List<String> classPathEntries = new ArrayList<>();
+        private @Nullable IndentationConfiguration indentationConfiguration;
 
-    public void addContext(Context context) {
-        contexts.add(context);
+        public Builder withContext(Context context) {
+            contexts.add(context);
+            return this;
+        }
+
+        public Builder withClassPathEntry(@Nullable  String classPathEntry) {
+            if (classPathEntry != null) {
+                classPathEntries.add(classPathEntry);
+            }
+            return this;
+        }
+
+        public Builder withIndentationConfiguration(IndentationConfiguration indentationConfiguration) {
+            this.indentationConfiguration = indentationConfiguration;
+            return this;
+        }
+
+        public Configuration build() {
+            return new Configuration(this);
+        }
     }
 }

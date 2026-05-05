@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -296,7 +295,7 @@ public abstract class AbstractXmlMapperElementGenerator extends AbstractXmlEleme
             // set up for the next column
             if (iter.hasNext()) {
                 sb.setLength(0);
-                OutputUtilities.xmlIndent(sb, 1);
+                indenter.xmlIndent(sb, 1);
             }
         }
 
@@ -339,7 +338,7 @@ public abstract class AbstractXmlMapperElementGenerator extends AbstractXmlEleme
             // set up for the next column
             if (iter.hasNext()) {
                 sb.setLength(0);
-                OutputUtilities.xmlIndent(sb, 1);
+                indenter.xmlIndent(sb, 1);
             }
         }
 

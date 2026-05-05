@@ -25,7 +25,6 @@ import java.util.Properties;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
-import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -132,7 +131,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                 .getObjectInstance(), "that")); //$NON-NLS-1$
         method.addAnnotation("@Override"); //$NON-NLS-1$
 
-        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
+        getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
 
         method.addBodyLine("if (this == that) {"); //$NON-NLS-1$
         method.addBodyLine("return true;"); //$NON-NLS-1$
@@ -170,7 +169,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                 sb.append("return ("); //$NON-NLS-1$
                 first = false;
             } else {
-                OutputUtilities.javaIndent(sb, 1);
+                getIndenter().javaIndent(sb, 1);
                 sb.append("&& ("); //$NON-NLS-1$
             }
 
@@ -237,7 +236,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addAnnotation("@Override"); //$NON-NLS-1$
 
-        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
+        getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
 
         method.addBodyLine("final int prime = 31;"); //$NON-NLS-1$
         method.addBodyLine("int result = 1;"); //$NON-NLS-1$

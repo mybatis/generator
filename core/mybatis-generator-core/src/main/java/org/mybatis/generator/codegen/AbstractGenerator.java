@@ -20,6 +20,7 @@ import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.config.Context;
@@ -32,6 +33,7 @@ public abstract class AbstractGenerator {
     protected final ProgressCallback progressCallback;
     protected final CommentGenerator commentGenerator;
     protected final PluginAggregator pluginAggregator;
+    protected final Indenter indenter;
 
     protected AbstractGenerator(AbstractGeneratorBuilder<?> builder) {
         this.context = Objects.requireNonNull(builder.context);
@@ -40,6 +42,7 @@ public abstract class AbstractGenerator {
         this.progressCallback = Objects.requireNonNull(builder.progressCallback);
         this.commentGenerator = Objects.requireNonNull(builder.commentGenerator);
         this.pluginAggregator = Objects.requireNonNull(builder.pluginAggregator);
+        this.indenter = Objects.requireNonNull(builder.indenter);
     }
 
     protected <T extends AbstractGeneratorBuilder<T>> T initializeSubBuilder(T builder) {
@@ -48,7 +51,8 @@ public abstract class AbstractGenerator {
                 .withWarnings(warnings)
                 .withProgressCallback(progressCallback)
                 .withCommentGenerator(commentGenerator)
-                .withPluginAggregator(pluginAggregator);
+                .withPluginAggregator(pluginAggregator)
+                .withIndenter(indenter);
     }
 
     public abstract static class AbstractGeneratorBuilder<T extends AbstractGeneratorBuilder<T>> {
@@ -58,6 +62,7 @@ public abstract class AbstractGenerator {
         private @Nullable ProgressCallback progressCallback;
         private @Nullable CommentGenerator commentGenerator;
         private @Nullable PluginAggregator pluginAggregator;
+        private @Nullable Indenter indenter;
 
         public T withContext(Context context) {
             this.context = context;
@@ -86,6 +91,11 @@ public abstract class AbstractGenerator {
 
         public T withPluginAggregator(PluginAggregator pluginAggregator) {
             this.pluginAggregator = pluginAggregator;
+            return getThis();
+        }
+
+        public T withIndenter(Indenter indenter) {
+            this.indenter = indenter;
             return getThis();
         }
 

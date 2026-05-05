@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
@@ -43,7 +42,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
         builder.withAnnotations(buildInitialSelectAnnotationStrings());
 
         StringBuilder sb = new StringBuilder();
-        sb.append(javaIndent(1));
+        sb.append(indenter.javaIndent(1));
         sb.append("\"from "); //$NON-NLS-1$
         sb.append(escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName()));
         sb.append('\"');
@@ -58,7 +57,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
         builder.withAnnotation(sb.toString());
 
         if (hasOrderBy) {
-            String orderByPhrase = javaIndent(1)
+            String orderByPhrase = indenter.javaIndent(1)
                     + "\"order by " //$NON-NLS-1$
                     + orderByClause
                     + '\"';

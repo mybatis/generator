@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
@@ -55,8 +54,8 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
         StringBuilder insertClause = new StringBuilder();
         StringBuilder valuesClause = new StringBuilder();
 
-        javaIndent(insertClause, 1);
-        javaIndent(valuesClause, 1);
+        indenter.javaIndent(insertClause, 1);
+        indenter.javaIndent(valuesClause, 1);
 
         insertClause.append("\"insert into "); //$NON-NLS-1$
         insertClause.append(escapeStringForJava(introspectedTable
@@ -94,12 +93,12 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
 
                 builder.withAnnotation(insertClause.toString());
                 insertClause.setLength(0);
-                javaIndent(insertClause, 1);
+                indenter.javaIndent(insertClause, 1);
                 insertClause.append('\"');
 
                 valuesClauses.add(valuesClause.toString());
                 valuesClause.setLength(0);
-                javaIndent(valuesClause, 1);
+                indenter.javaIndent(valuesClause, 1);
                 valuesClause.append('\"');
                 hasFields = false;
             }

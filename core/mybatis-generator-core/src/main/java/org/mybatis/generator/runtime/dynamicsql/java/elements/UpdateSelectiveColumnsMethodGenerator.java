@@ -21,7 +21,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -59,7 +58,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractJavaInterface
 
         method.addBodyLines(fragmentGenerator.getSetEqualWhenPresentLinesForUpdateStatement(
                 introspectedTable.getAllColumns(),
-                "return dsl", OutputUtilities.javaIndent(2), true)); //$NON-NLS-1$
+                "return dsl", indenter.javaIndent(2), true)); //$NON-NLS-1$
 
         JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
                 .withImports(imports)

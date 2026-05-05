@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -43,7 +42,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
     private void addAnnotations(JavaMethodParts.Builder builder) {
         builder.withAnnotations(buildInitialSelectAnnotationStrings());
 
-        String annotation = javaIndent(1)
+        String annotation = indenter.javaIndent(1)
                 + "\"from " //$NON-NLS-1$
                 + escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName())
                 + "\","; //$NON-NLS-1$

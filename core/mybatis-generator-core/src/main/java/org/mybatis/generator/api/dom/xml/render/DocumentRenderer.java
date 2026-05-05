@@ -15,14 +15,21 @@
  */
 package org.mybatis.generator.api.dom.xml.render;
 
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.xml.DocType;
 import org.mybatis.generator.api.dom.xml.Document;
 
 public class DocumentRenderer {
+    private final Indenter indenter;
+
+    public DocumentRenderer(Indenter indenter) {
+        this.indenter = Objects.requireNonNull(indenter);
+    }
 
     public String render(Document document) {
         return Stream.of(renderXmlHeader(),
@@ -48,6 +55,6 @@ public class DocumentRenderer {
     }
 
     private Stream<String> renderRootElement(Document document) {
-        return document.getRootElement().accept(new ElementRenderer());
+        return document.getRootElement().accept(new ElementRenderer(indenter));
     }
 }

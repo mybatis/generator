@@ -32,5 +32,7 @@ import org.mybatis.generator.config.Context;
 public interface XmlFormatter {
     void setContext(Context context);
 
+    void setIndenter(Indenter indenter);
+
     String getFormattedContent(Document document);
 }

@@ -24,7 +24,6 @@ import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
 
 public class KotlinNamedItemRenderer implements KotlinNamedItemVisitor<List<String>> {
-
     public List<String> render(KotlinNamedItem namedItem) {
         return namedItem.accept(this);
     }

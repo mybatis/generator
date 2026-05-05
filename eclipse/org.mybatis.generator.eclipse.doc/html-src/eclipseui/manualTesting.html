@@ -140,6 +140,19 @@ tests build on items created in previous tests.</p>
     &lt;clientGenerator targetPackage="gen.src.mapper" targetProject="MBGTest/generatedsrc" /&gt;
     &lt;table schema="mbgtest" tableName="%" /&gt;
   &lt;/context&gt;
+  
+  &lt;context id="context3" targetRuntime="MyBatis3" &gt;
+    &lt;connectionFactory type="DEFAULT" &gt;
+        &lt;property name="driverClass" value="org.hsqldb.jdbcDriver" /&gt;
+        &lt;property name="connectionURL" value="jdbc:hsqldb:mem:aname" /&gt;
+        &lt;property name="userId" value="sa" /&gt;
+    &lt;/connectionFactory&gt;
+    &lt;modelGenerator targetPackage="gen.legacy.model" targetProject="MBGTest/generatedsrc" /&gt;
+    &lt;sqlMapGenerator targetPackage="gen.legacy.xml" targetProject="MBGTest/generatedsrc" /&gt;
+    &lt;clientGenerator type="XMLMAPPER" targetPackage="gen.legacy.mapper" targetProject="MBGTest/generatedsrc" /&gt;
+    &lt;table schema="mbgtest" tableName="%" /&gt;
+  &lt;/context&gt;
+  
 &lt;/generatorConfiguration&gt;
     </pre></li>
     <li>Save the file</li>
@@ -243,6 +256,20 @@ create table mbgtest.j (id int not null, description varchar(50), primary key(id
       workspace.  Also, verify that the field <code>mergetest</code> and its
       associated getter and setter still exist, and that the id field and its
       getter and setter are back in the class.</li>
+</ol>
+
+<h3>Formatting</h3>
+<p>This test case verifies that Eclipse preference for Java and XML indentation are picked up by the generator.
+   Java indentation preferences are in Java-Code Style-Formatter.
+   XML indentatio preferences are in XML-XML Files-Editor.
+</p> 
+<ol>
+  <li>Delete all files in the "generatedsrc" Source Folder</li>
+  <li>In preferences, change XML indentation to 2 spaces, Java indentation to spaces onl with 4 spaces<li>
+  <li>Run the generator. Verify that XML and Java are formatted correctly.</li>
+  <li>Delete all files in the "generatedsrc" Source Folder</li>
+  <li>In preferences, change XML indentation to 1 tab, Java indentation to tabs only<li>
+  <li>Run the generator. Verify that XML and Java are formatted correctly.</li>
 </ol>
 
 <h3>Ant Build</h3>

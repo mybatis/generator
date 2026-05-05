@@ -30,6 +30,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.dom.DefaultJavaFormatter;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -40,6 +41,7 @@ class JavaCodeGenerationTest {
     @MethodSource("javaFileGenerator")
     void testJavaParse(GeneratedJavaFile generatedJavaFile) {
         DefaultJavaFormatter formatter = new DefaultJavaFormatter();
+        formatter.setIndenter(Indenter.defaultIndenter());
 
         String content = formatter.getFormattedContent(generatedJavaFile.getCompilationUnit());
         try {

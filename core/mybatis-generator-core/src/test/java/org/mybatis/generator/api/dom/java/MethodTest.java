@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer;
 
 class MethodTest {
@@ -242,7 +243,7 @@ class MethodTest {
                     }
                 }""";
 
-        TopLevelClassRenderer renderer = new TopLevelClassRenderer();
+        TopLevelClassRenderer renderer = new TopLevelClassRenderer(Indenter.defaultIndenter());
         String rendered = renderer.render(topLevelClass);
         assertThat(rendered).isEqualToNormalizingNewlines(expected);
     }

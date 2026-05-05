@@ -60,7 +60,7 @@ jobs:
           EOF
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@c10b8064de6f491fea524254123dbe5e09572f13 # v4
+        uses: github/codeql-action/init@e46ed2cbd01164d986452f91f178727624ae40d7 # v4
         with:
           queries: +security-and-quality
 
@@ -73,4 +73,4 @@ jobs:
         run: ./mvnw clean install -DskipTests
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@c10b8064de6f491fea524254123dbe5e09572f13 # v4
+        uses: github/codeql-action/analyze@e46ed2cbd01164d986452f91f178727624ae40d7 # v4

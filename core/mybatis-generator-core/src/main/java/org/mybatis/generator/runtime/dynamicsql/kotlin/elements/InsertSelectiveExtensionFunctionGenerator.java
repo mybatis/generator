@@ -22,8 +22,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
@@ -82,11 +82,11 @@ public class InsertSelectiveExtensionFunctionGenerator extends AbstractKotlinMap
             builder.withImport(fieldNameAndImport.importString());
 
             if (generateNonNullMethod(column)) {
-                builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "withMappedColumn(" //$NON-NLS-1$
+                builder.withCodeLine(Indenter.kotlinIndent(1) + "withMappedColumn(" //$NON-NLS-1$
                         + fieldNameAndImport.fieldName()
                         + ")"); //$NON-NLS-1$
             } else {
-                builder.withCodeLine(OutputUtilities.kotlinIndent(1) + "withMappedColumnWhenPresent(" //$NON-NLS-1$
+                builder.withCodeLine(Indenter.kotlinIndent(1) + "withMappedColumnWhenPresent(" //$NON-NLS-1$
                         + fieldNameAndImport.fieldName()
                         + ", row::" //$NON-NLS-1$
                         + column.getJavaProperty() + ")"); //$NON-NLS-1$

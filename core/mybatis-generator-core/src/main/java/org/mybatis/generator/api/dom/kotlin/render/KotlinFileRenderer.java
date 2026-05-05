@@ -25,7 +25,6 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinNamedItem;
 
 public class KotlinFileRenderer {
-
     public String render(KotlinFile kotlinFile) {
         List<String> lines = new ArrayList<>();
         KotlinNamedItemRenderer renderer = new KotlinNamedItemRenderer();

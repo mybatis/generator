@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -348,7 +347,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine(sb.toString());
         while (strIter.hasNext()) {
             sb.setLength(0);
-            OutputUtilities.javaIndent(sb, 1);
+            indenter.javaIndent(sb, 1);
             sb.append("|| "); //$NON-NLS-1$
             sb.append(strIter.next());
             sb.append(".size() > 0"); //$NON-NLS-1$

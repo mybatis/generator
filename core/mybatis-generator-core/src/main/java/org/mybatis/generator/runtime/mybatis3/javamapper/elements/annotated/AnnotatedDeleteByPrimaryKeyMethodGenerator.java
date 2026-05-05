@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -30,7 +29,7 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends DeleteByPrimaryK
 
     @Override
     protected JavaMethodParts extraMethodParts() {
-        String deleteStatement = javaIndent(1)
+        String deleteStatement = indenter.javaIndent(1)
                 + "\"delete from " //$NON-NLS-1$
                 + escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())
                 + "\","; //$NON-NLS-1$

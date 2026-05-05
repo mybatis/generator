@@ -17,6 +17,7 @@ package org.mybatis.generator.api.dom.java.render
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mybatis.generator.api.Indenter
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType
 import org.mybatis.generator.api.dom.java.Interface
 import org.mybatis.generator.api.dom.java.JavaVisibility
@@ -303,7 +304,7 @@ class MethodRendererTest {
             TopLevelClass("MyClass")
         }
 
-        return MethodRenderer().render(m, inInterface, cu)
+        return MethodRenderer(Indenter.defaultIndenter()).render(m, inInterface, cu)
             .joinToString(System.lineSeparator())
     }
 }

@@ -17,7 +17,7 @@ package org.mybatis.generator.api.dom.kotlin.render
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mybatis.generator.api.dom.OutputUtilities
+import org.mybatis.generator.api.Indenter
 import org.mybatis.generator.api.dom.kotlin.KotlinArg
 import org.mybatis.generator.api.dom.kotlin.KotlinFile
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction
@@ -217,8 +217,8 @@ class KotlinTypeTest {
                         .withDataType("PersonRecord")
                         .build())
                 .withCodeLine("insert(this::insert, record, Person) {")
-                .withCodeLine(OutputUtilities.kotlinIndent(1) + "map(id).toProperty(\"id\")")
-                .withCodeLine(OutputUtilities.kotlinIndent(1) + "map(firstName).toProperty(\"firstName\")")
+                .withCodeLine(Indenter.kotlinIndent(1) + "map(id).toProperty(\"id\")")
+                .withCodeLine(Indenter.kotlinIndent(1) + "map(firstName).toProperty(\"firstName\")")
                 .withCodeLine("}")
                 .build())
 

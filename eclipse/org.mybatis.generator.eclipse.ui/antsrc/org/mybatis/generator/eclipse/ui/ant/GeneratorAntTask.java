@@ -221,7 +221,7 @@ public class GeneratorAntTask extends Task {
             // so if tabSize is 8 and indentation size is 4, then spaces are used for first level, tabs for second level, etc.
             // we don't have a match for this, so if it is mixed, we will use spaces
             String indentationSize = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_INDENTATION_SIZE);
-            builder.withJavaIndentAmount(Integer.valueOf(indentationSize)).build();
+            builder.withJavaIndentAmount(parseInteger(indentationSize, 4)).build();
         }
         
         IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode("org.eclipse.wst.xml.core"); //$NON-NLS-1$
@@ -232,9 +232,17 @@ public class GeneratorAntTask extends Task {
         }
         
         String xmlIndentationSize = preferences.get("indentationSize", "1"); //$NON-NLS-1$ //$NON-NLS-2$
-        builder.withXmlIndentAmount(Integer.valueOf(xmlIndentationSize));
+        builder.withXmlIndentAmount(parseInteger(xmlIndentationSize, 1));
         
         return builder.build();
         
+    }
+    
+    private int parseInteger(String in, int defautlValue) {
+        try {
+            return Integer.parseInt(in);
+        } catch (NumberFormatException e) {
+            return defautlValue;
+        }
     }
 }

@@ -17,6 +17,7 @@ package org.mybatis.generator.internal.util;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.function.Consumer;
@@ -201,6 +202,14 @@ public class StringUtility {
         } else {
             // if all upper case, then return the string as is
             return in;
+        }
+    }
+
+    public static List<String> removeLastEmptyLine(List<String> lines) {
+        if (lines.get(lines.size() - 1).isEmpty()) {
+            return lines.subList(0, lines.size() - 1);
+        } else {
+            return lines;
         }
     }
 }

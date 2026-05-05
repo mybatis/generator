@@ -15,10 +15,11 @@
  */
 package org.mybatis.generator.api.dom.java.render;
 
+import static org.mybatis.generator.internal.util.StringUtility.removeLastEmptyLine;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -26,11 +27,10 @@ import org.mybatis.generator.api.dom.java.InnerEnum;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
-public class InnerEnumRenderer {
-    private final Indenter indenter;
+public class InnerEnumRenderer extends AbstractJavaRenderer {
 
     public InnerEnumRenderer(Indenter indenter) {
-        this.indenter = Objects.requireNonNull(indenter);
+        super(indenter);
     }
 
     public List<String> render(InnerEnum innerEnum, CompilationUnit compilationUnit) {
@@ -40,16 +40,11 @@ public class InnerEnumRenderer {
         lines.addAll(innerEnum.getAnnotations());
         lines.add(renderFirstLine(innerEnum, compilationUnit));
         lines.addAll(renderEnumConstants(innerEnum));
-        lines.addAll(RenderingUtilities.renderFields(indenter, innerEnum.getFields(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInitializationBlocks(indenter, innerEnum.getInitializationBlocks()));
-        lines.addAll(RenderingUtilities.renderClassOrEnumMethods(indenter, innerEnum.getMethods(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerClasses(indenter, innerEnum.getInnerClasses(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerInterfaces(indenter, innerEnum.getInnerInterfaces(),
-                compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerEnums(indenter, innerEnum.getInnerEnums(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerRecords(indenter, innerEnum.getInnerRecords(), compilationUnit));
-
-        lines = RenderingUtilities.removeLastEmptyLine(lines);
+        lines.addAll(renderFields(innerEnum.getFields(), compilationUnit));
+        lines.addAll(renderInitializationBlocks(innerEnum.getInitializationBlocks()));
+        lines.addAll(renderClassOrEnumMethods(innerEnum.getMethods(), compilationUnit));
+        lines.addAll(renderInnerTypes(innerEnum, compilationUnit));
+        lines = removeLastEmptyLine(lines);
 
         lines.add("}"); //$NON-NLS-1$
 

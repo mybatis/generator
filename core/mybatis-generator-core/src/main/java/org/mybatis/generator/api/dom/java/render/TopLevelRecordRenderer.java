@@ -15,24 +15,16 @@
  */
 package org.mybatis.generator.api.dom.java.render;
 
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderImports;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderInnerRecordNoIndent;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderPackage;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderStaticImports;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.TopLevelRecord;
 
-public class TopLevelRecordRenderer {
-    private final Indenter indenter;
-
+public class TopLevelRecordRenderer extends InnerRecordRenderer {
     public TopLevelRecordRenderer(Indenter indenter) {
-        this.indenter = Objects.requireNonNull(indenter);
+        super(indenter);
     }
 
     public String render(TopLevelRecord topLevelRecord) {
@@ -42,7 +34,7 @@ public class TopLevelRecordRenderer {
         lines.addAll(renderPackage(topLevelRecord));
         lines.addAll(renderStaticImports(topLevelRecord));
         lines.addAll(renderImports(topLevelRecord));
-        lines.addAll(renderInnerRecordNoIndent(indenter, topLevelRecord, topLevelRecord));
+        lines.addAll(render(topLevelRecord, topLevelRecord));
 
         return lines.stream().collect(Collectors.joining(System.lineSeparator()));
     }

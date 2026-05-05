@@ -15,9 +15,10 @@
  */
 package org.mybatis.generator.api.dom.java.render;
 
+import static org.mybatis.generator.internal.util.StringUtility.removeLastEmptyLine;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -25,11 +26,9 @@ import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
-public class InnerClassRenderer {
-    private final Indenter indenter;
-
+public class InnerClassRenderer extends AbstractJavaRenderer {
     public InnerClassRenderer(Indenter indenter) {
-        this.indenter = Objects.requireNonNull(indenter);
+        super(indenter);
     }
 
     public List<String> render(InnerClass innerClass, CompilationUnit compilationUnit) {
@@ -38,16 +37,11 @@ public class InnerClassRenderer {
         lines.addAll(innerClass.getJavaDocLines());
         lines.addAll(innerClass.getAnnotations());
         lines.add(renderFirstLine(innerClass, compilationUnit));
-        lines.addAll(RenderingUtilities.renderFields(indenter, innerClass.getFields(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInitializationBlocks(indenter, innerClass.getInitializationBlocks()));
-        lines.addAll(RenderingUtilities.renderClassOrEnumMethods(indenter, innerClass.getMethods(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerClasses(indenter, innerClass.getInnerClasses(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerInterfaces(indenter, innerClass.getInnerInterfaces(),
-                compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerEnums(indenter, innerClass.getInnerEnums(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerRecords(indenter, innerClass.getInnerRecords(), compilationUnit));
-
-        lines = RenderingUtilities.removeLastEmptyLine(lines);
+        lines.addAll(renderFields(innerClass.getFields(), compilationUnit));
+        lines.addAll(renderInitializationBlocks(innerClass.getInitializationBlocks()));
+        lines.addAll(renderClassOrEnumMethods(innerClass.getMethods(), compilationUnit));
+        lines.addAll(renderInnerTypes(innerClass, compilationUnit));
+        lines = removeLastEmptyLine(lines);
 
         lines.add("}"); //$NON-NLS-1$
 
@@ -73,7 +67,7 @@ public class InnerClassRenderer {
 
         sb.append("class "); //$NON-NLS-1$
         sb.append(innerClass.getType().getShortName());
-        sb.append(RenderingUtilities.renderTypeParameters(innerClass.getTypeParameters(), compilationUnit));
+        sb.append(renderTypeParameters(innerClass.getTypeParameters(), compilationUnit));
         sb.append(renderSuperClass(innerClass, compilationUnit));
         sb.append(renderSuperInterfaces(innerClass, compilationUnit));
         sb.append(" {"); //$NON-NLS-1$

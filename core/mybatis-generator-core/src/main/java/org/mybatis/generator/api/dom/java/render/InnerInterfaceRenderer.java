@@ -15,9 +15,10 @@
  */
 package org.mybatis.generator.api.dom.java.render;
 
+import static org.mybatis.generator.internal.util.StringUtility.removeLastEmptyLine;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -25,11 +26,9 @@ import org.mybatis.generator.api.dom.java.InnerInterface;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
-public class InnerInterfaceRenderer {
-    private final Indenter indenter;
-
+public class InnerInterfaceRenderer extends AbstractJavaRenderer {
     public InnerInterfaceRenderer(Indenter indenter) {
-        this.indenter = Objects.requireNonNull(indenter);
+        super(indenter);
     }
 
     public List<String> render(InnerInterface innerInterface, CompilationUnit compilationUnit) {
@@ -38,18 +37,10 @@ public class InnerInterfaceRenderer {
         lines.addAll(innerInterface.getJavaDocLines());
         lines.addAll(innerInterface.getAnnotations());
         lines.add(renderFirstLine(innerInterface, compilationUnit));
-        lines.addAll(RenderingUtilities.renderFields(indenter, innerInterface.getFields(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInterfaceMethods(indenter, innerInterface.getMethods(),
-                compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerClasses(indenter, innerInterface.getInnerClasses(),
-                compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerInterfaces(indenter, innerInterface.getInnerInterfaces(),
-                compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerEnums(indenter, innerInterface.getInnerEnums(), compilationUnit));
-        lines.addAll(RenderingUtilities.renderInnerRecords(indenter, innerInterface.getInnerRecords(),
-                compilationUnit));
-
-        lines = RenderingUtilities.removeLastEmptyLine(lines);
+        lines.addAll(renderFields(innerInterface.getFields(), compilationUnit));
+        lines.addAll(renderInterfaceMethods(innerInterface.getMethods(), compilationUnit));
+        lines.addAll(renderInnerTypes(innerInterface, compilationUnit));
+        lines = removeLastEmptyLine(lines);
 
         lines.add("}"); //$NON-NLS-1$
 
@@ -67,7 +58,7 @@ public class InnerInterfaceRenderer {
 
         sb.append("interface "); //$NON-NLS-1$
         sb.append(innerInterface.getType().getShortName());
-        sb.append(RenderingUtilities.renderTypeParameters(innerInterface.getTypeParameters(), compilationUnit));
+        sb.append(renderTypeParameters(innerInterface.getTypeParameters(), compilationUnit));
         sb.append(renderSuperInterfaces(innerInterface, compilationUnit));
         sb.append(" {"); //$NON-NLS-1$
 

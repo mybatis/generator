@@ -15,11 +15,12 @@
  */
 package org.mybatis.generator.api.dom.kotlin.render;
 
+import static org.mybatis.generator.internal.util.StringUtility.removeLastEmptyLine;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.mybatis.generator.api.dom.java.render.RenderingUtilities;
 import org.mybatis.generator.api.dom.kotlin.KotlinNamedItem;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
@@ -70,7 +71,7 @@ public class KotlinTypeRenderer {
             answer.add(""); //$NON-NLS-1$
         }
 
-        answer = RenderingUtilities.removeLastEmptyLine(answer);
+        answer = removeLastEmptyLine(answer);
 
         if (!kotlinType.getNamedItems().isEmpty()) {
             answer.add("}"); //$NON-NLS-1$

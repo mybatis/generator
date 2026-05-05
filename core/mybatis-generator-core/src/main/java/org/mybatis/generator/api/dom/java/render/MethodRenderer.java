@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -28,7 +29,11 @@ import org.mybatis.generator.internal.util.CustomCollectors;
 public class MethodRenderer {
     private final TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();
     private final ParameterRenderer parameterRenderer = new ParameterRenderer();
-    private final BodyLineRenderer bodyLineRenderer = new BodyLineRenderer();
+    private final BodyLineRenderer bodyLineRenderer;
+
+    public MethodRenderer(Indenter indenter) {
+        bodyLineRenderer = new BodyLineRenderer(indenter);
+    }
 
     public List<String> render(Method method, boolean inInterface, CompilationUnit compilationUnit) {
         List<String> lines = new ArrayList<>();

@@ -17,7 +17,6 @@ package org.mybatis.generator.api;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.Interface;
@@ -30,7 +29,6 @@ import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.config.Context;
 
 /**
  * This class implements a composite plugin. It contains a list of plugins for the
@@ -49,34 +47,6 @@ public abstract class CompositePlugin implements Plugin {
 
     public void addPlugin(Plugin plugin) {
         plugins.add(plugin);
-    }
-
-    @Override
-    public void setContext(Context context) {
-        for (Plugin plugin : plugins) {
-            plugin.setContext(context);
-        }
-    }
-
-    @Override
-    public void setProperties(Properties properties) {
-        for (Plugin plugin : plugins) {
-            plugin.setProperties(properties);
-        }
-    }
-
-    @Override
-    public void setCommentGenerator(CommentGenerator commentGenerator) {
-        for (Plugin plugin : plugins) {
-            plugin.setCommentGenerator(commentGenerator);
-        }
-    }
-
-    @Override
-    public void setKnownRuntime(KnownRuntime knownRuntime) {
-        for (Plugin plugin : plugins) {
-            plugin.setKnownRuntime(knownRuntime);
-        }
     }
 
     @Override

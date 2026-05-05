@@ -18,7 +18,10 @@ package org.mybatis.generator.internal;
 import java.util.List;
 import java.util.Properties;
 
+import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.CompositePlugin;
+import org.mybatis.generator.api.Indenter;
+import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.config.Context;
 
 /**
@@ -46,6 +49,21 @@ public final class PluginAggregator extends CompositePlugin {
 
     @Override
     public boolean validate(List<String> warnings) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setCommentGenerator(CommentGenerator commentGenerator) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setKnownRuntime(KnownRuntime knownRuntime) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setIndenter(Indenter indenter) {
         throw new UnsupportedOperationException();
     }
 }

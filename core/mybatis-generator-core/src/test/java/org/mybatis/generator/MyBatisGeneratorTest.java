@@ -47,6 +47,8 @@ class MyBatisGeneratorTest {
         assert is != null;
         Configuration config = cp.parseConfiguration(is);
 
+        assertThat(cp.getWarnings()).hasSize(21);
+
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)
                 .withShellCallback(new DefaultShellCallback())
@@ -56,12 +58,11 @@ class MyBatisGeneratorTest {
         InvalidConfigurationException e =
                 assertThrows(InvalidConfigurationException.class, myBatisGenerator::generateOnly);
 
-        assertEquals(6, e.getExtraMessages().size());
+        assertThat(e.getExtraMessages()).hasSize(6);
     }
 
     @Test
     void testGenerateInvalidConfigWithNoConnectionSources() {
-        Configuration config = new Configuration();
         Context context = new Context.Builder()
                 .withId("MyContext")
                 .withDefaultModelType(ModelType.FLAT)
@@ -71,7 +72,7 @@ class MyBatisGeneratorTest {
                         .withTargetProject("MyProject")
                         .build())
                 .build();
-        config.addContext(context);
+        Configuration config = new Configuration.Builder().withContext(context).build();
 
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)
@@ -86,7 +87,6 @@ class MyBatisGeneratorTest {
 
     @Test
     void testGenerateInvalidConfigWithTwoConnectionSources() {
-        Configuration config = new Configuration();
         Context context = new Context.Builder()
                 .withId("MyContext")
                 .withDefaultModelType(ModelType.FLAT)
@@ -98,7 +98,7 @@ class MyBatisGeneratorTest {
                         .withTargetProject("MyProject")
                         .build())
                 .build();
-        config.addContext(context);
+        Configuration config = new Configuration.Builder().withContext(context).build();
 
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)

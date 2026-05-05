@@ -18,11 +18,16 @@ package org.mybatis.generator.api.dom.java.render;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.java.InitializationBlock;
 
 public class InitializationBlockRenderer {
 
-    private final BodyLineRenderer bodyLineRenderer = new BodyLineRenderer();
+    private final BodyLineRenderer bodyLineRenderer;
+
+    public InitializationBlockRenderer(Indenter indenter) {
+        bodyLineRenderer = new BodyLineRenderer(indenter);
+    }
 
     public List<String> render(InitializationBlock initializationBlock) {
 

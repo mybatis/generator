@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
@@ -116,7 +115,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
         Iterator<IntrospectedColumn> iter = introspectedTable.getPrimaryKeyColumns().iterator();
         while (iter.hasNext()) {
             sb.setLength(0);
-            javaIndent(sb, 1);
+            indenter.javaIndent(sb, 1);
             if (and) {
                 sb.append("  \"and "); //$NON-NLS-1$
             } else {
@@ -143,7 +142,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
         answer.add("@Update({"); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
-        javaIndent(sb, 1);
+        indenter.javaIndent(sb, 1);
         sb.append("\"update "); //$NON-NLS-1$
         sb.append(escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime()));
         sb.append("\","); //$NON-NLS-1$
@@ -151,7 +150,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
 
         // set up for first column
         sb.setLength(0);
-        javaIndent(sb, 1);
+        indenter.javaIndent(sb, 1);
         sb.append("\"set "); //$NON-NLS-1$
 
         Iterator<IntrospectedColumn> iter = ListUtilities.filterColumnsForUpdate(columnList).iterator();
@@ -172,7 +171,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
             // set up for the next column
             if (iter.hasNext()) {
                 sb.setLength(0);
-                javaIndent(sb, 1);
+                indenter.javaIndent(sb, 1);
                 sb.append("  \""); //$NON-NLS-1$
             }
         }
@@ -253,13 +252,13 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
         annotations.addAll(introspectedTable.getPrimaryKeyColumns()
                 .stream()
                 .map(c -> getResultAnnotation(c, true))
-                .map(s -> javaIndent(1) + s + ",") //$NON-NLS-1$
+                .map(s -> indenter.javaIndent(1) + s + ",") //$NON-NLS-1$
                 .toList());
         annotations.addAll(
                 (includeBlobColumns ? introspectedTable.getNonPrimaryKeyColumns() : introspectedTable.getBaseColumns())
                 .stream()
                 .map(c -> getResultAnnotation(c, false))
-                .map(s -> javaIndent(1) + s + ",") //$NON-NLS-1$
+                .map(s -> indenter.javaIndent(1) + s + ",") //$NON-NLS-1$
                 .toList());
 
         // remove comma from last element...
@@ -299,12 +298,12 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
         List<String> answer = new ArrayList<>();
         answer.add("@Select({"); //$NON-NLS-1$
         StringBuilder sb = new StringBuilder();
-        javaIndent(sb, 1);
+        indenter.javaIndent(sb, 1);
         sb.append("\"select\","); //$NON-NLS-1$
         answer.add(sb.toString());
 
         sb.setLength(0);
-        javaIndent(sb, 1);
+        indenter.javaIndent(sb, 1);
         sb.append('"');
         boolean hasColumns = false;
         Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
@@ -321,7 +320,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
                 answer.add(sb.toString());
 
                 sb.setLength(0);
-                javaIndent(sb, 1);
+                indenter.javaIndent(sb, 1);
                 sb.append('"');
                 hasColumns = false;
             }

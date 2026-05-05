@@ -22,19 +22,19 @@
   
   <!DOCTYPE generatorConfiguration PUBLIC
     "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-    "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+    "https://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
   
   Please see the documentation included with MyBatis generator for details on each option
   in the DTD.  You may also view documentation on-line here:
   
-  http://www.mybatis.org/generator/
+  https://www.mybatis.org/generator/
   
 -->
 
 <!--
   The generatorConfiguration element is the root element for configurations.
 -->
-<!ELEMENT generatorConfiguration (properties?, classPathEntry*, context+)>
+<!ELEMENT generatorConfiguration (properties?, indentation?, classPathEntry*, context+)>
                         
 <!--
   The properties element is used to define a standard Java properties file
@@ -45,13 +45,21 @@
 <!ATTLIST properties
   resource CDATA #IMPLIED
   url CDATA #IMPLIED>
-  
+
+<!ELEMENT indentation EMPTY>
+<!ATTLIST indentation
+  javaIndentType CDATA #IMPLIED
+  javaIndentAmount CDATA #IMPLIED
+  xmlIndentType CDATA #IMPLIED
+  xmlIndentAmount CDATA #IMPLIED>
+
 <!--
   The context element is used to describe a context for generating files, and the source
   tables.
 -->
-<!ELEMENT context (property*, plugin*, commentGenerator?, (connectionFactory | jdbcConnection), javaTypeResolver?,
-    (modelGenerator | javaModelGenerator), sqlMapGenerator?, (clientGenerator | javaClientGenerator)?, table+)>
+<!ELEMENT context (property*, indentation?, plugin*, commentGenerator?, (connectionFactory | jdbcConnection),
+    javaTypeResolver?, (modelGenerator | javaModelGenerator), sqlMapGenerator?,
+    (clientGenerator | javaClientGenerator)?, table+)>
 <!ATTLIST context id ID #REQUIRED
   defaultModelType CDATA #IMPLIED
   targetRuntime CDATA #IMPLIED
@@ -59,7 +67,7 @@
 
 <!--
   The connectionFactory element is used to describe the connection factory used
-  for connecting to the database for introspection.  Either connectionFacoty
+  for connecting to the database for introspection.  Either connectionFactory
   or jdbcConnection must be specified, but not both.
 -->
 <!ELEMENT connectionFactory (property*)>
@@ -229,7 +237,7 @@
 
 <!--
   The except element is used to identify an exception to the ignoreColumnsByRegex rule.
-  If a column matches the regex rule, but also matches the exception, then the
+  If a column matches the regex rule but also matches the exception, then the
   column will be included in the generated objects.
 -->
 <!ELEMENT except EMPTY>

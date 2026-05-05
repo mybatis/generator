@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.IndentType;
 import org.mybatis.generator.config.ClientGeneratorConfiguration;
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.ColumnRenamingRule;
@@ -43,6 +44,7 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.IgnoredColumn;
 import org.mybatis.generator.config.IgnoredColumnException;
 import org.mybatis.generator.config.IgnoredColumnPattern;
+import org.mybatis.generator.config.IndentationConfiguration;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.ModelGeneratorConfiguration;
@@ -76,7 +78,7 @@ public class MyBatisGeneratorConfigurationParser {
     }
 
     public Configuration parseConfiguration(Element rootNode) throws XMLParserException {
-        Configuration configuration = new Configuration();
+        Configuration.Builder configurationBuilder = new Configuration.Builder();
 
         NodeList nodeList = rootNode.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -87,19 +89,22 @@ public class MyBatisGeneratorConfigurationParser {
             }
 
             switch (childNode.getNodeName()) {
-            case "properties" ->  //$NON-NLS-1$
+            case "properties" -> //$NON-NLS-1$
                     parsePropertiesElement(childNode);
-            case "classPathEntry" ->  //$NON-NLS-1$
-                    configuration.addClasspathEntry(parseClassPathEntry(childNode));
-            case "context" ->  //$NON-NLS-1$
-                    configuration.addContext(parseContext(childNode));
+            case "classPathEntry" -> //$NON-NLS-1$
+                    configurationBuilder.withClassPathEntry(parseClassPathEntry(childNode));
+            case "context" -> //$NON-NLS-1$
+                    configurationBuilder.withContext(parseContext(childNode));
+            case "indentation" -> //$NON-NLS-1$
+                    configurationBuilder.withIndentationConfiguration(
+                            parseIndentation(childNode, "global")); //$NON-NLS-1$
             default -> {
                 // Ignore unrecognized elements
             }
             }
         }
 
-        return configuration;
+        return configurationBuilder.build();
     }
 
     protected void parsePropertiesElement(Node node) throws XMLParserException {
@@ -198,6 +203,8 @@ public class MyBatisGeneratorConfigurationParser {
             }
             case "table" ->  //$NON-NLS-1$
                     builder.withTableConfiguration(parseTable(childNode));
+            case "indentation" -> //$NON-NLS-1$
+                    builder.withIndentationConfiguration(parseIndentation(childNode, id));
             default -> {
                 // Ignore unrecognized elements
             }
@@ -509,6 +516,53 @@ public class MyBatisGeneratorConfigurationParser {
         } else {
             return Optional.of(new Property(name, value));
         }
+    }
+
+    protected IndentationConfiguration parseIndentation(Node node, String contextId) {
+        NullableProperties attributes = parseAttributes(node);
+        IndentationConfiguration.Builder builder = new IndentationConfiguration.Builder();
+
+        String javaIndentType = attributes.getProperty("javaIndentType"); //$NON-NLS-1$
+        if (javaIndentType != null) {
+            IndentType indentType = IndentType.getByAlias(javaIndentType);
+            if (indentType == null) {
+                warnings.add(getString("ValidationError.33", "Java", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+            } else {
+                builder.withJavaIndentType(indentType);
+            }
+        }
+
+        String javaIndentAmount = attributes.getProperty("javaIndentAmount"); //$NON-NLS-1$
+        if (javaIndentAmount != null) {
+            try {
+                Integer indentAmount = Integer.valueOf(javaIndentAmount);
+                builder.withJavaIndentAmount(indentAmount);
+            } catch (NumberFormatException e) {
+                warnings.add(getString("ValidationError.34", "Java", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+            }
+        }
+
+        String xmlIndentType = attributes.getProperty("xmlIndentType"); //$NON-NLS-1$
+        if (xmlIndentType != null) {
+            IndentType indentType = IndentType.getByAlias(xmlIndentType);
+            if (indentType == null) {
+                warnings.add(getString("ValidationError.33", "XML", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+            } else {
+                builder.withXmlIndentType(indentType);
+            }
+        }
+
+        String xmlIndentAmount = attributes.getProperty("xmlIndentAmount"); //$NON-NLS-1$
+        if (xmlIndentAmount != null) {
+            try {
+                Integer indentAmount = Integer.valueOf(xmlIndentAmount);
+                builder.withXmlIndentAmount(indentAmount);
+            } catch (NumberFormatException e) {
+                warnings.add(getString("ValidationError.34", "XML", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+            }
+        }
+
+        return builder.build();
     }
 
     /**

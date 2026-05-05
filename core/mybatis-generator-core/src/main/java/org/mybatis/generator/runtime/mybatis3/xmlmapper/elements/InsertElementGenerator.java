@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -75,11 +74,11 @@ public class InsertElementGenerator extends AbstractXmlMapperElementGenerator {
             if (valuesClause.length() > 80) {
                 answer.addElement(new TextElement(insertClause.toString()));
                 insertClause.setLength(0);
-                OutputUtilities.xmlIndent(insertClause, 1);
+                indenter.xmlIndent(insertClause, 1);
 
                 valuesClauses.add(valuesClause.toString());
                 valuesClause.setLength(0);
-                OutputUtilities.xmlIndent(valuesClause, 1);
+                indenter.xmlIndent(valuesClause, 1);
             }
         }
 

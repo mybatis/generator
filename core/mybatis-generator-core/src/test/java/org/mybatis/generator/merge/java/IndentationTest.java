@@ -60,7 +60,7 @@ class IndentationTest {
 
         String source = dpp.print(parseResult.getResult().orElseThrow());
 
-        assertThat(source).isEqualTo(expectedResult);
+        assertThat(source).isEqualToNormalizingNewlines(expectedResult);
     }
 
     public static Stream<Arguments> indentationTestDataProvider() {
@@ -118,7 +118,7 @@ class IndentationTest {
 
         String source = dpp.print(parseResult.getResult().orElseThrow());
 
-        assertThat(source).isEqualTo("""
+        assertThat(source).isEqualToNormalizingNewlines("""
             public class TestClass {
 
             \tpublic int sumIt() {
@@ -170,7 +170,7 @@ class IndentationTest {
 
         String source = dpp.print(parseResult.getResult().orElseThrow());
 
-        assertThat(source).isEqualTo("""
+        assertThat(source).isEqualToNormalizingNewlines("""
             public class TestClass {
 
             \tpublic int sumIt() {

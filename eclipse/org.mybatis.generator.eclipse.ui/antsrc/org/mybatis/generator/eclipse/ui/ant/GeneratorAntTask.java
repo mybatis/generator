@@ -34,6 +34,12 @@ import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
+import org.mybatis.generator.api.IndentType;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
@@ -129,6 +135,7 @@ public class GeneratorAntTask extends Task {
             		.withFullyQualifiedTableNames(fullyqualifiedTables)
             		.withJavaFileMergeEnabled(true)
             		.withOverwriteEnabled(false)
+            		.withIndenter(calculateIndenter())
             		.build();
 
             warnings.addAll(generator.generateAndWrite());
@@ -144,6 +151,10 @@ public class GeneratorAntTask extends Task {
         } catch (IOException e) {
             throw new BuildException(e.getMessage(), e);
         } catch (InvalidConfigurationException e) {
+            for (String error : e.getExtraMessages()) {
+                log(error, Project.MSG_ERR);
+            }
+
             throw new BuildException(e.getMessage(), e);
         } catch (InterruptedException e) {
             throw new BuildException("Cancelled by user");
@@ -193,5 +204,37 @@ public class GeneratorAntTask extends Task {
 
     public void setFullyQualifiedTableNames(String fullyQualifiedTableNames) {
         this.fullyQualifiedTableNames = fullyQualifiedTableNames;
+    }
+    
+    private Indenter calculateIndenter() {
+        Indenter.Builder builder = new Indenter.Builder();
+        
+        // TAB, SPACE, MIXED
+        String javaTabCharacter = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_TAB_CHAR);
+        if ("tab".equalsIgnoreCase(javaTabCharacter)) { //$NON-NLS-1$
+            builder.withJavaIndentType(IndentType.TABS).build();
+        } else {
+            // String tabSize =  JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_TAB_SIZE);
+
+            // only used in "mixed" or "spaces" - number of characters that represent a level.
+            // "mixed" means uses spaces if the indent level is less than the indentation size.
+            // so if tabSize is 8 and indentation size is 4, then spaces are used for first level, tabs for second level, etc.
+            // we don't have a match for this, so if it is mixed, we will use spaces
+            String indentationSize = JavaCore.getOption(DefaultCodeFormatterConstants.FORMATTER_INDENTATION_SIZE);
+            builder.withJavaIndentAmount(Integer.valueOf(indentationSize)).build();
+        }
+        
+        IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode("org.eclipse.wst.xml.core"); //$NON-NLS-1$
+        // eclipse defaults are 1 tab character. If nothing is set, that's what is in use
+        String xmlIndentationCharacter = preferences.get("indentationChar", "tab"); //$NON-NLS-1$ //$NON-NLS-2$
+        if ("tab".equalsIgnoreCase(xmlIndentationCharacter)) {
+            builder.withXmlIndentType(IndentType.TABS);
+        }
+        
+        String xmlIndentationSize = preferences.get("indentationSize", "1"); //$NON-NLS-1$ //$NON-NLS-2$
+        builder.withXmlIndentAmount(Integer.valueOf(xmlIndentationSize));
+        
+        return builder.build();
+        
     }
 }

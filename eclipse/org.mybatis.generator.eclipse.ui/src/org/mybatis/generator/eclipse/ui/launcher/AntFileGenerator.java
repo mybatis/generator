@@ -21,6 +21,7 @@ import static org.mybatis.generator.eclipse.ui.launcher.tabs.LauncherUtils.getTe
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.mybatis.generator.api.Indenter;
 import org.mybatis.generator.api.dom.DefaultXmlFormatter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
@@ -46,7 +47,10 @@ public class AntFileGenerator implements GeneratorLaunchConstants {
 
         Document document = new Document(getProjectElement());
 
-        return new DefaultXmlFormatter().getFormattedContent(document);
+        DefaultXmlFormatter xmlFormatter = new DefaultXmlFormatter();
+        xmlFormatter.setIndenter(Indenter.defaultIndenter());
+        
+        return xmlFormatter.getFormattedContent(document);
     }
 
     private XmlElement getProjectElement() {

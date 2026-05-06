@@ -25,7 +25,6 @@ import org.mybatis.generator.config.ModelGeneratorConfiguration;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.exception.InternalException;
-import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
 
@@ -436,7 +435,6 @@ class CodeGenerationAttributesTest {
 
         return new IntrospectedTable.Builder()
                 .withContext(context)
-                .withPluginAggregator(new PluginAggregator())
                 .withKnownRuntime(KnownRuntime.MYBATIS3)
                 .withFullyQualifiedTable(fullyQualifiedTable)
                 .withTableConfiguration(tableConfiguration)
@@ -471,7 +469,6 @@ class CodeGenerationAttributesTest {
 
         return new IntrospectedTable.Builder()
                 .withContext(context)
-                .withPluginAggregator(new PluginAggregator())
                 .withKnownRuntime(KnownRuntime.MYBATIS3)
                 .withFullyQualifiedTable(fullyQualifiedTable)
                 .withTableConfiguration(tableConfiguration)
@@ -512,7 +509,6 @@ class CodeGenerationAttributesTest {
 
         return new IntrospectedTable.Builder()
                 .withContext(context)
-                .withPluginAggregator(new PluginAggregator())
                 .withKnownRuntime(KnownRuntime.MYBATIS3)
                 .withFullyQualifiedTable(fullyQualifiedTable)
                 .withTableConfiguration(tableConfiguration)

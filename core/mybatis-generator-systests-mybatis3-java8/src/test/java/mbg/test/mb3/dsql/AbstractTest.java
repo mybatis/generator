@@ -17,6 +17,7 @@ package mbg.test.mb3.dsql;
 
 import static mbg.test.common.util.TestUtilities.createDatabase;
 
+import mbg.test.mb3.generated.dsql.mapper.VirtualprimarykeyMapper;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -61,6 +62,7 @@ public abstract class AbstractTest {
         config.addMapper(PkonlyMapper.class);
         config.addMapper(TranslationMapper.class);
         config.addMapper(IdMapper.class);
+        config.addMapper(VirtualprimarykeyMapper.class);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(config);
     }
 }

@@ -150,7 +150,8 @@ public abstract class AbstractJavaRenderer {
     }
 
     private Stream<String> renderInnerRecord(InnerRecord innerRecord, CompilationUnit compilationUnit) {
-        innerRecordRenderer = Objects.requireNonNullElseGet(innerRecordRenderer, () -> new InnerRecordRenderer(indenter));
+        innerRecordRenderer =
+                Objects.requireNonNullElseGet(innerRecordRenderer, () -> new InnerRecordRenderer(indenter));
         return addEmptyLine(innerRecordRenderer.render(innerRecord, compilationUnit).stream()
                 .map(this::javaIndent));
     }

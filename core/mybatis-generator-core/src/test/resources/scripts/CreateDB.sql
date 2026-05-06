@@ -38,6 +38,7 @@ drop sequence TestSequence if exists;
 drop table suffix_rename if exists;
 drop table Person if exists;
 drop table Address if exists;
+drop table VirtualPrimaryKey if exists;
 
 create sequence TestSequence as integer start with 1;
 
@@ -243,3 +244,7 @@ create table Address (
   primary key(id)
 );
 
+create table VirtualPrimaryKey (
+  id int not null,
+  description varchar(30)
+);

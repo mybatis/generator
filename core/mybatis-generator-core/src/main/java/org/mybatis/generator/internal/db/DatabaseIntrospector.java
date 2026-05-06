@@ -51,7 +51,6 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.ObjectFactory;
-import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class DatabaseIntrospector {
@@ -136,8 +135,8 @@ public class DatabaseIntrospector {
      * @throws SQLException
      *             if any errors in introspection
      */
-    public List<IntrospectedTable> introspectTables(TableConfiguration tc, KnownRuntime knownRuntime,
-                                                    PluginAggregator pluginAggregator) throws SQLException {
+    public List<IntrospectedTable> introspectTables(TableConfiguration tc, KnownRuntime knownRuntime)
+            throws SQLException {
         // get the raw columns from the DB
         Map<ActualTableName, List<IntrospectedColumn>> columns = getColumns(tc);
 
@@ -154,8 +153,7 @@ public class DatabaseIntrospector {
         applyColumnOverrides(tc, columns);
         calculateIdentityColumns(tc, columns);
 
-        List<IntrospectedTable> introspectedTables =
-                calculateIntrospectedTables(tc, columns, knownRuntime, pluginAggregator);
+        List<IntrospectedTable> introspectedTables = calculateIntrospectedTables(tc, columns, knownRuntime);
 
         // now introspectedTables has all the columns from all the
         // tables in the configuration. Do some validation...
@@ -464,7 +462,7 @@ public class DatabaseIntrospector {
     }
 
     private List<IntrospectedTable> calculateIntrospectedTables(TableConfiguration tc, Map<ActualTableName,
-            List<IntrospectedColumn>> columns, KnownRuntime knownRuntime, PluginAggregator pluginAggregator) {
+            List<IntrospectedColumn>> columns, KnownRuntime knownRuntime) {
         boolean delimitIdentifiers = tc.isDelimitIdentifiers()
                 || stringContainsSpace(tc.getCatalog())
                 || stringContainsSpace(tc.getSchema())
@@ -503,7 +501,6 @@ public class DatabaseIntrospector {
                     .withFullyQualifiedTable(table)
                     .withContext(context)
                     .withKnownRuntime(knownRuntime)
-                    .withPluginAggregator(pluginAggregator)
                     .build();
 
             for (IntrospectedColumn introspectedColumn : entry.getValue()) {

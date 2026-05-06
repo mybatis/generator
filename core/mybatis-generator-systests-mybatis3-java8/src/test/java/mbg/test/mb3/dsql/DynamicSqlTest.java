@@ -40,6 +40,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import mbg.test.mb3.generated.dsql.mapper.VirtualprimarykeyMapper;
+import mbg.test.mb3.generated.dsql.model.Virtualprimarykey;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 
@@ -3080,6 +3082,23 @@ public class DynamicSqlTest extends AbstractTest {
 
             List<Id> allIds = mapper.select(SelectDSLCompleter.allRows());
             assertThat(allIds).containsExactlyInAnyOrder(idSpanish, idItalian);
+        }
+    }
+
+    @Test
+    public void testVirtualPrimaryKey() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            VirtualprimarykeyMapper mapper = sqlSession.getMapper(VirtualprimarykeyMapper.class);
+            Virtualprimarykey record = new Virtualprimarykey();
+            record.setId(1);
+            record.setDescription("Description");
+            mapper.insert(record);
+
+            Optional<Virtualprimarykey> returnedRecord = mapper.selectByPrimaryKey(1);
+            assertThat(returnedRecord).hasValueSatisfying(rr -> {
+                assertThat(rr).hasFieldOrPropertyWithValue("id", 1);
+                assertThat(rr).hasFieldOrPropertyWithValue("description", "Description");
+            });
         }
     }
 

@@ -28,8 +28,11 @@
 <h2>Version 2.1.0</h2>
 <p>This is a minor release for the generator with the following updates:</p>
 <ul>
-  <li>Indentation specifications for generated code can now be configured. See the
+  <li>Enhancement - Indentation specifications for generated code can now be configured. See the
     <a href="configreference/indentation.html">Indentation Configuration Page</a> for further details.
+  </li>
+  <li>Bug Fix – The plugin "initialized" method was being called too early – before the IntrospectedTable was completely
+    initialized. This would break plugins that relied on the IntrospectedTable being fully initialized.
   </li>
 </ul>
 

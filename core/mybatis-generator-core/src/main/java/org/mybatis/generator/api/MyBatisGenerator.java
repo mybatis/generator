@@ -226,13 +226,17 @@ public class MyBatisGenerator {
                                                             CalculatedContextValues contextValues,
                                                             List<String> warnings)
             throws SQLException, InterruptedException {
-        return new IntrospectionEngine.Builder()
+        List<IntrospectedTable> answer = new IntrospectionEngine.Builder()
                 .withContextValues(contextValues)
                 .withFullyQualifiedTableNames(fullyQualifiedTableNames)
                 .withWarnings(warnings)
                 .withProgressCallback(progressCallback)
                 .build()
                 .introspectTables();
+
+        answer.forEach(t -> contextValues.pluginAggregator().initialized(t));
+
+        return answer;
     }
 
     private List<GenerationEngine> createGenerationEngines(List<ContextValuesAndTables> contextValuesAndTablesListList,

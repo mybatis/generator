@@ -26,6 +26,7 @@
     <plugin type="org.mybatis.generator.plugins.RecordWithMethodsPlugin" >
         <property name="fieldCountTrigger" value="2"/>
     </plugin>
+    <plugin type="org.mybatis.generator.plugins.VirtualPrimaryKeyPlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
@@ -75,6 +76,9 @@
     <table schema="mbgtest" tableName="Ids" domainObjectName="Id" modelType="record">
       <property name="dynamicSqlSupportClassName" value="sub.IdDSQLSupport"/>
       <property name="useSnakeCaseIdentifiers" value="true"/>
+    </table>
+    <table tableName="VirtualPrimaryKey">
+      <property name="virtualKeyColumns" value="ID" />
     </table>
   </context>
 

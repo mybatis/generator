@@ -163,7 +163,6 @@ class DefaultCommentGeneratorTest {
                                 .withTargetProject("test-project")
                                 .build())
                         .build())
-                .withPluginAggregator(new PluginAggregator())
                 .build();
         answer.setRemarks("Database table remarks");
 

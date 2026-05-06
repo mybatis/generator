@@ -24,7 +24,6 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
 import org.mybatis.generator.internal.rules.HierarchicalModelRules;
@@ -56,8 +55,6 @@ public class IntrospectedTable extends CodeGenerationAttributes {
 
     protected IntrospectedTable(Builder builder) {
         super(builder);
-        Objects.requireNonNull(builder.pluginAggregator);
-        builder.pluginAggregator.initialized(this);
     }
 
     public Optional<IntrospectedColumn> getColumn(String columnName) {
@@ -239,13 +236,6 @@ public class IntrospectedTable extends CodeGenerationAttributes {
     }
 
     public static class Builder extends AbstractBuilder<Builder> {
-        private @Nullable PluginAggregator pluginAggregator;
-
-        public Builder withPluginAggregator(PluginAggregator pluginAggregator) {
-            this.pluginAggregator = pluginAggregator;
-            return this;
-        }
-
         public IntrospectedTable build() {
             return new IntrospectedTable(this);
         }

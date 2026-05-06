@@ -78,7 +78,7 @@ public class IntrospectionEngine {
 
                 progressCallback.startTask(getString("Progress.1", tc.getFullyQualifiedName())); //$NON-NLS-1$
                 List<IntrospectedTable> tables = databaseIntrospector
-                        .introspectTables(tc, contextValues.knownRuntime(), contextValues.pluginAggregator());
+                        .introspectTables(tc, contextValues.knownRuntime());
                 introspectedTables.addAll(tables);
 
                 progressCallback.checkCancel();

@@ -30,6 +30,7 @@ import java.util.Properties;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.KnownRuntime;
+import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.internal.util.messages.Messages;
 
 public class TableConfiguration extends PropertyHolder {
@@ -45,7 +46,7 @@ public class TableConfiguration extends PropertyHolder {
     // this is a Map for validation purposes. Initially, all items will be FALSE. When accessed, an item will
     // be made TRUE. This allows us to generate warning for columns configured to be ignored but not found.
     private final Map<IgnoredColumn, Boolean> ignoredColumns;
-    private final @Nullable GeneratedKey generatedKey;
+    private @Nullable GeneratedKey generatedKey;
     private final @Nullable String catalog;
     private final @Nullable String schema;
     private final String tableName;
@@ -271,20 +272,7 @@ public class TableConfiguration extends PropertyHolder {
         }
 
         if (generatedKey != null) {
-            // if the model type is immutable or record, then we cannot have generated keys
-            ModelType mt = getModelType().orElseGet(context::getDefaultModelType);
-            if (mt == ModelType.RECORD) {
-                errors.add(Messages.getString("ValidationError.30", fullyQualifiedName, context.getId(), //$NON-NLS-1$
-                        "record")); //$NON-NLS-1$
-            }
-
-            // we're going to allow generated keys for Kotlin even if the rest of the model is immutable
-            if (isImmutable(context) && knownRuntime != KnownRuntime.MYBATIS3_KOTLIN) {
-                errors.add(Messages.getString("ValidationError.30", fullyQualifiedName, context.getId(), //$NON-NLS-1$
-                        "immutable")); //$NON-NLS-1$
-            }
-
-            generatedKey.validate(errors, fullyQualifiedName, context.getId());
+            errors.addAll(validateGeneratedKey(generatedKey, context, knownRuntime));
         }
 
         if (domainObjectRenamingRule != null) {
@@ -305,6 +293,41 @@ public class TableConfiguration extends PropertyHolder {
 
         for (IgnoredColumnPattern ignoredColumnPattern : ignoredColumnPatterns) {
             ignoredColumnPattern.validate(errors, fullyQualifiedName);
+        }
+    }
+
+    private List<String> validateGeneratedKey(GeneratedKey generatedKey, Context context, KnownRuntime knownRuntime) {
+        List<String> errors = new ArrayList<>();
+
+        // if the model type is immutable or record, then we cannot have generated keys
+        ModelType mt = getModelType().orElseGet(context::getDefaultModelType);
+        if (mt == ModelType.RECORD) {
+            errors.add(Messages.getString("ValidationError.30", fullyQualifiedName, context.getId(), //$NON-NLS-1$
+                    "record")); //$NON-NLS-1$
+        }
+
+        // we're going to allow generated keys for Kotlin even if the rest of the model is immutable
+        if (isImmutable(context) && knownRuntime != KnownRuntime.MYBATIS3_KOTLIN) {
+            errors.add(Messages.getString("ValidationError.30", fullyQualifiedName, context.getId(), //$NON-NLS-1$
+                    "immutable")); //$NON-NLS-1$
+        }
+
+        generatedKey.validate(errors, fullyQualifiedName, context.getId());
+
+        return errors;
+
+    }
+
+    public void setGeneratedKey(GeneratedKey generatedKey, Context context, KnownRuntime knownRuntime)
+            throws InvalidConfigurationException {
+        List<String> errors = validateGeneratedKey(generatedKey, context, knownRuntime);
+
+        if (errors.isEmpty()) {
+            this.generatedKey = generatedKey;
+        } else {
+            // TODO - externalize
+            throw new InvalidConfigurationException("Updating the GeneratedKey would create an invalid configuration",
+                    errors);
         }
     }
 

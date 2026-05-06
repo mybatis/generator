@@ -29,22 +29,25 @@ import com.github.javaparser.printer.lexicalpreservation.DefaultLexicalPreservin
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.exception.MergeException;
 
 class JavaFileMergerTest {
-    private static final boolean FORCE_DISABLED_TESTS = false;
     private static final Log log = LogFactory.getLog(JavaFileMergerTest.class);
+
+    private boolean forceDisabledTests() {
+        return false;
+    }
 
     @ParameterizedTest
     @MethodSource("mergeTestCases")
     void mergeTestCases(JavaMergeTestCase testCase, String parameter,
                         JavaMergeTestCase.MergeConfigurationAndId mergeConfigurationAndId) throws Exception {
-        if (mergeConfigurationAndId.enabled() || FORCE_DISABLED_TESTS) {
+        if (mergeConfigurationAndId.enabled() || forceDisabledTests()) {
             JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(mergeConfigurationAndId.mergeConfiguration());
             var actual = javaFileMerger.getMergedSource(testCase.newContent(parameter),
                     testCase.existingContent(parameter));
@@ -95,7 +98,7 @@ class JavaFileMergerTest {
     }
 
     @Test
-    @Disabled("This test is disabled because of bugs in the LexicalPreservingPrinter")
+    @EnabledIf(value = "forceDisabledTests", disabledReason = "This test is disabled because of bugs in the LexicalPreservingPrinter")
     void testCommentMergingWithLexicalPreservationEnabled() {
         ParserConfiguration parserConfiguration = new ParserConfiguration();
         parserConfiguration.setLexicalPreservationEnabled(true);

@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.api.IndentType;
+
 public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
     public ShouldSortImportsCorrectly() {
         addMergeConfiguration("MergeIntoNewEclipseSort", new MergeConfiguration.Builder()
@@ -31,7 +33,7 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
         addMergeConfiguration("MergeIntoNewDefaultSort", new MergeConfiguration.Builder()
                 .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .withImportSortType(MergeConfiguration.ImportSortType.DEFAULT)
-                .withIndentType(MergeConfiguration.IndentType.TAB)
+                .withIndentType(IndentType.TABS)
                 .build());
 
         addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()

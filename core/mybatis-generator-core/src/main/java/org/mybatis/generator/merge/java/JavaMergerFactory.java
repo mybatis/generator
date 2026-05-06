@@ -51,8 +51,8 @@ public class JavaMergerFactory {
         ios.setSortImportsAlphabetically(true);
 
         Indentation indentation = switch (mergeConfiguration.indentType()) {
-            case TAB -> new Indentation(Indentation.IndentType.TABS, mergeConfiguration.indentSize());
-            case SPACE -> new Indentation(Indentation.IndentType.SPACES, mergeConfiguration.indentSize());
+            case TABS -> new Indentation(Indentation.IndentType.TABS, mergeConfiguration.indentSize());
+            case SPACES -> new Indentation(Indentation.IndentType.SPACES, mergeConfiguration.indentSize());
         };
 
         return new CustomPrinterConfiguration.Builder()

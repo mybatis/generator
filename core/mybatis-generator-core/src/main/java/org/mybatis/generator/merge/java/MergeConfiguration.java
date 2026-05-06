@@ -16,6 +16,7 @@
 package org.mybatis.generator.merge.java;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.IndentType;
 
 public class MergeConfiguration {
     private final boolean isLexicalPreserving;
@@ -24,7 +25,7 @@ public class MergeConfiguration {
     private final ImportSortType importSortType;
     private final MergeStrategy mergeStrategy;
 
-    private static final IndentType DEFAULT_INDENT_TYPE = IndentType.SPACE;
+    private static final IndentType DEFAULT_INDENT_TYPE = IndentType.SPACES;
     private static final ImportSortType DEFAULT_IMPORT_SORT_TYPE = ImportSortType.ECLIPSE;
     public static final MergeStrategy DEFAULT_MERGE_STRATEGY = MergeStrategy.MERGE_INTO_EXISTING;
 
@@ -35,7 +36,7 @@ public class MergeConfiguration {
         mergeStrategy = builder.mergeStrategy == null ? DEFAULT_MERGE_STRATEGY : builder.mergeStrategy;
 
         if (builder.indentSize == null) {
-            if (indentType == IndentType.TAB) {
+            if (indentType == IndentType.TABS) {
                 indentSize = 1;
             } else {
                 indentSize = 4;
@@ -63,11 +64,6 @@ public class MergeConfiguration {
 
     public ImportSortType importSortType() {
         return importSortType;
-    }
-
-    public enum IndentType {
-        TAB,
-        SPACE
     }
 
     public enum ImportSortType {

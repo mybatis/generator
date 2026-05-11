@@ -25,32 +25,26 @@ import org.jspecify.annotations.Nullable;
 
 public class CustomPrinterConfiguration extends DefaultPrinterConfiguration {
     private CustomPrinterConfiguration(Builder builder) {
-        addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.ORDER_IMPORTS, true));
-        addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.SORT_IMPORTS_STRATEGY, Objects.requireNonNull(builder.ios)));
-        addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.PRINT_COMMENTS, Boolean.TRUE));
-        addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.PRINT_JAVADOC, Boolean.TRUE));
-        addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.SPACE_AROUND_OPERATORS, Boolean.TRUE));
-        addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.INDENT_CASE_IN_SWITCH, false));
-        addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.MAX_ENUM_CONSTANTS_TO_ALIGN_HORIZONTALLY, -1));
-        addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.INDENTATION, Objects.requireNonNull(builder.indentation)));
-        addOption(new DefaultConfigurationOption(
-                DefaultPrinterConfiguration.ConfigOption.INDENT_PRINT_ARRAYS_OF_ANNOTATIONS, true));
+        addOption(new DefaultConfigurationOption(ConfigOption.ORDER_IMPORTS, true));
+        addOption(new DefaultConfigurationOption(ConfigOption.SORT_IMPORTS_STRATEGY,
+                Objects.requireNonNull(builder.importOrderingStrategy)));
+        addOption(new DefaultConfigurationOption(ConfigOption.PRINT_COMMENTS, Boolean.TRUE));
+        addOption(new DefaultConfigurationOption(ConfigOption.PRINT_JAVADOC, Boolean.TRUE));
+        addOption(new DefaultConfigurationOption(ConfigOption.SPACE_AROUND_OPERATORS, Boolean.TRUE));
+        addOption(new DefaultConfigurationOption(ConfigOption.INDENT_CASE_IN_SWITCH, false));
+        addOption(new DefaultConfigurationOption(ConfigOption.MAX_ENUM_CONSTANTS_TO_ALIGN_HORIZONTALLY, -1));
+        addOption(new DefaultConfigurationOption(ConfigOption.INDENTATION,
+                Objects.requireNonNull(builder.indentation)));
+        addOption(new DefaultConfigurationOption(ConfigOption.INDENT_PRINT_ARRAYS_OF_ANNOTATIONS, true));
+        addOption(new DefaultConfigurationOption(ConfigOption.COLUMN_ALIGN_FIRST_METHOD_CHAIN, true));
     }
 
     public static class Builder {
-        private @Nullable ImportOrderingStrategy ios;
+        private @Nullable ImportOrderingStrategy importOrderingStrategy;
         private @Nullable Indentation indentation;
 
-        public Builder withImportOrderingStrategy(ImportOrderingStrategy ios) {
-            this.ios = ios;
+        public Builder withImportOrderingStrategy(ImportOrderingStrategy importOrderingStrategy) {
+            this.importOrderingStrategy = importOrderingStrategy;
             return this;
         }
 

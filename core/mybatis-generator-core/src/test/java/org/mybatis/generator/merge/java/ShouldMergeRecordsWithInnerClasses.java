@@ -112,7 +112,10 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                     public static class SomeClass {
 
                         public int method2() {
-                            return IntStream.range(0, 10).filter(i -> i % 2 == 0).map(i -> i * 2).reduce(Integer::sum);
+                            return IntStream.range(0, 10)
+                                            .filter(i -> i % 2 == 0)
+                                            .map(i -> i * 2)
+                                            .reduce(Integer::sum);
                         }
                     }
 
@@ -175,7 +178,10 @@ public class ShouldMergeRecordsWithInnerClasses extends JavaMergeTestCase {
                     public static class SomeClass {
 
                         public int method2() {
-                            return IntStream.range(0, 10).filter(i -> i % 2 == 0).map(i -> i * 2).reduce(Integer::sum);
+                            return IntStream.range(0, 10)
+                                            .filter(i -> i % 2 == 0)
+                                            .map(i -> i * 2)
+                                            .reduce(Integer::sum);
                         }
                     }
                 }

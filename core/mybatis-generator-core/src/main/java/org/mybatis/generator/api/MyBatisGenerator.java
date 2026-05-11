@@ -200,9 +200,7 @@ public class MyBatisGenerator {
         return new CalculatedContextValues.Builder()
                 .withContext(context)
                 .withWarnings(warnings)
-                .withIndenter(context.getIndentationConfiguration()
-                        .map(IndentationConfiguration::getIndenter)
-                        .orElse(globalIndenter))
+                .withIndenter(globalIndenter)
                 .build();
     }
 

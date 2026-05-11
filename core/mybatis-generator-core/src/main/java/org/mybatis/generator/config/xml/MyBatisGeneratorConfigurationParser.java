@@ -97,7 +97,7 @@ public class MyBatisGeneratorConfigurationParser {
                     configurationBuilder.withContext(parseContext(childNode));
             case "indentation" -> //$NON-NLS-1$
                     configurationBuilder.withIndentationConfiguration(
-                            parseIndentation(childNode, "global")); //$NON-NLS-1$
+                            parseIndentation(childNode));
             default -> {
                 // Ignore unrecognized elements
             }
@@ -203,8 +203,6 @@ public class MyBatisGeneratorConfigurationParser {
             }
             case "table" ->  //$NON-NLS-1$
                     builder.withTableConfiguration(parseTable(childNode));
-            case "indentation" -> //$NON-NLS-1$
-                    builder.withIndentationConfiguration(parseIndentation(childNode, id));
             default -> {
                 // Ignore unrecognized elements
             }
@@ -518,7 +516,7 @@ public class MyBatisGeneratorConfigurationParser {
         }
     }
 
-    protected IndentationConfiguration parseIndentation(Node node, String contextId) {
+    protected IndentationConfiguration parseIndentation(Node node) {
         NullableProperties attributes = parseAttributes(node);
         IndentationConfiguration.Builder builder = new IndentationConfiguration.Builder();
 
@@ -526,7 +524,7 @@ public class MyBatisGeneratorConfigurationParser {
         if (javaIndentType != null) {
             IndentType indentType = IndentType.getByAlias(javaIndentType);
             if (indentType == null) {
-                warnings.add(getString("ValidationError.33", "Java", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+                warnings.add(getString("ValidationError.33", "Java")); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
                 builder.withJavaIndentType(indentType);
             }
@@ -538,7 +536,7 @@ public class MyBatisGeneratorConfigurationParser {
                 Integer indentAmount = Integer.valueOf(javaIndentAmount);
                 builder.withJavaIndentAmount(indentAmount);
             } catch (NumberFormatException e) {
-                warnings.add(getString("ValidationError.34", "Java", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+                warnings.add(getString("ValidationError.34", "Java")); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
 
@@ -546,7 +544,7 @@ public class MyBatisGeneratorConfigurationParser {
         if (xmlIndentType != null) {
             IndentType indentType = IndentType.getByAlias(xmlIndentType);
             if (indentType == null) {
-                warnings.add(getString("ValidationError.33", "XML", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+                warnings.add(getString("ValidationError.33", "XML")); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
                 builder.withXmlIndentType(indentType);
             }
@@ -558,7 +556,7 @@ public class MyBatisGeneratorConfigurationParser {
                 Integer indentAmount = Integer.valueOf(xmlIndentAmount);
                 builder.withXmlIndentAmount(indentAmount);
             } catch (NumberFormatException e) {
-                warnings.add(getString("ValidationError.34", "XML", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+                warnings.add(getString("ValidationError.34", "XML")); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
 

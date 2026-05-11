@@ -46,7 +46,6 @@ public class Context extends PropertyHolder {
     private final List<PluginConfiguration> pluginConfigurations;
     private final @Nullable String targetRuntime;
     private final @Nullable String introspectedColumnImpl;
-    private final @Nullable IndentationConfiguration indentationConfiguration;
 
     protected Context(Builder builder) {
         super(builder);
@@ -74,8 +73,6 @@ public class Context extends PropertyHolder {
 
         property = getProperty(PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS);
         autoDelimitKeywords = isTrue(property);
-
-        indentationConfiguration = builder.indentationConfiguration;
     }
 
     private ModelType calculateDefaultModelType(@Nullable String targetRuntime) {
@@ -105,10 +102,6 @@ public class Context extends PropertyHolder {
 
     public Optional<SqlMapGeneratorConfiguration> getSqlMapGeneratorConfiguration() {
         return Optional.ofNullable(sqlMapGeneratorConfiguration);
-    }
-
-    public Optional<IndentationConfiguration> getIndentationConfiguration() {
-        return Optional.ofNullable(indentationConfiguration);
     }
 
     /**
@@ -251,7 +244,6 @@ public class Context extends PropertyHolder {
         private @Nullable JavaTypeResolverConfiguration javaTypeResolverConfiguration;
         private @Nullable ModelGeneratorConfiguration modelGeneratorConfiguration;
         private @Nullable ClientGeneratorConfiguration clientGeneratorConfiguration;
-        private @Nullable IndentationConfiguration indentationConfiguration;
 
         @Override
         protected Builder getThis() {
@@ -333,11 +325,6 @@ public class Context extends PropertyHolder {
         @SuppressWarnings("UnusedReturnValue")
         public Builder withClientGeneratorConfiguration(ClientGeneratorConfiguration clientGeneratorConfiguration) {
             this.clientGeneratorConfiguration = clientGeneratorConfiguration;
-            return this;
-        }
-
-        public Builder withIndentationConfiguration(IndentationConfiguration indentationConfiguration) {
-            this.indentationConfiguration = indentationConfiguration;
             return this;
         }
     }

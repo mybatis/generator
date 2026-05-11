@@ -328,9 +328,7 @@ public class TableConfiguration extends PropertyHolder {
             this.generatedKey = generatedKey;
             introspectedColumn.acceptGeneratedKey(generatedKey);
         } else {
-            // TODO - externalize
-            throw new InvalidConfigurationException("Updating the GeneratedKey would create an invalid configuration",
-                    errors);
+            throw new InvalidConfigurationException(Messages.getString("ValidationError.35"), errors); //$NON-NLS-1$
         }
     }
 

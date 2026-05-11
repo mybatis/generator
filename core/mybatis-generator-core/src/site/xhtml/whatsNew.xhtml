@@ -31,9 +31,13 @@
   <li>Enhancement - Indentation specifications for generated code can now be configured. See the
     <a href="configreference/indentation.html">Indentation Configuration Page</a> for further details.
   </li>
+  <li>Enhancement - add InferredGeneratedKeyPlugin that will automatically calculate a generated key configuration
+    for a table if it has one primary key column, and the column value is generated.
+  </li>
   <li>Bug Fix – The plugin "initialized" method was being called too early – before the IntrospectedTable was completely
     initialized. This would break plugins that relied on the IntrospectedTable being fully initialized.
   </li>
+
 </ul>
 
 <h2>Version 2.0.0</h2>

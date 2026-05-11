@@ -125,6 +125,19 @@ The plugin will create the additional Methods:
     a wildcard to select many tables and views, but don't want to generate code for the views.
 </p>
 
+<h2>org.mybatis.generator.plugins.InferredGeneratedKeyPlugin</h2>
+<p>This plugin will calculate a &lt;generatedKey&gt; configuration for any table that meets the following
+  requirements:
+</p>
+<ol>
+  <li>The table must have one, and only one, primary key column</li>
+  <li>The primary key column must be a generated value or autoincrement column</li>
+  <li>The table configuration must not have a manually defined &lt;generatedKey&gt; configuration</li>
+</ol>
+<p>This plugin is helpful if you have specified a wild card value for a table name. The plugin can add generated
+  key configuration to multiple tables that meet the above requirements.
+</p>
+
 <h2>org.mybatis.generator.plugins.JSpecifyPlugin</h2>
 <p>This plugin adds a JSpecify <code>@NullMarked</code> annotation to generated mappers and DSQL support classes.
   In addition, the plugin will add annotations to generated model classes and records as described below.

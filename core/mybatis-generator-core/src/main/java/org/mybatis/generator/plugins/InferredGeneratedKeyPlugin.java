@@ -15,8 +15,11 @@
  */
 package org.mybatis.generator.plugins;
 
+import java.text.MessageFormat;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
@@ -24,6 +27,7 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 
 public class InferredGeneratedKeyPlugin extends PluginAdapter {
+    private static final Log LOGGER = LogFactory.getLog(InferredGeneratedKeyPlugin.class);
 
     @Override
     public boolean validate(List<String> warnings) {
@@ -32,37 +36,42 @@ public class InferredGeneratedKeyPlugin extends PluginAdapter {
 
     @Override
     public void initialized(IntrospectedTable introspectedTable) {
-        boolean skipped = Boolean.parseBoolean(introspectedTable
-                .getTableConfigurationProperty("skipInferredGeneratedKeyPlugin")); //$NON-NLS-1$
-        if (skipped) {
-            return;
-        }
-
         // if there is already a generated key, do not override it
         if (introspectedTable.getGeneratedKey().isPresent()) {
+            LOGGER.info(MessageFormat.format(
+                    "Skipping InferredGeneratedKeyPlugin because table {0} already has a generated key configured",
+                            introspectedTable.getFullyQualifiedTable()));
             return;
         }
 
         // we only do this for single primary keys
         if (introspectedTable.getPrimaryKeyColumns().size() != 1) {
+            LOGGER.info(MessageFormat.format(
+                    "Skipping InferredGeneratedKeyPlugin because table {0} does not have a single column primary key",
+                    introspectedTable.getFullyQualifiedTable()));
             return;
         }
 
         var column = introspectedTable.getPrimaryKeyColumns().get(0);
 
         if (!columnsHasGeneratedValue(column)) {
+            LOGGER.info(MessageFormat.format(
+                    "Skipping InferredGeneratedKeyPlugin "
+                            + " because table {0} does not have a generated primary key column",
+                    introspectedTable.getFullyQualifiedTable()));
             return;
         }
 
         GeneratedKey generatedKey = new GeneratedKey(column.getActualColumnName(), "JDBC", true); //$NON-NLS-1$
 
         try {
-            introspectedTable.getTableConfiguration().setGeneratedKey(generatedKey, getContext(), getKnownRuntime());
-            column.setIdentity(true);
-            column.setSequenceColumn(false);
+            introspectedTable.getTableConfiguration().updateGeneratedKey(generatedKey, column, getContext(),
+                    getKnownRuntime());
         } catch (InvalidConfigurationException e) {
-            throw new RuntimeException("InvalidConfigurationException changing generated key for table "
-                    + introspectedTable.getFullyQualifiedTable(), e);
+            LOGGER.info(MessageFormat.format(
+                    "Skipping InferredGeneratedKeyPlugin on table {0} because of InvalidConfigurationException",
+                    introspectedTable.getFullyQualifiedTable()));
+            e.getExtraMessages().forEach(LOGGER::info);
         }
     }
 

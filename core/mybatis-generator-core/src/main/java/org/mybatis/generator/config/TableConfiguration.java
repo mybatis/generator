@@ -29,6 +29,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.internal.util.messages.Messages;
@@ -318,12 +319,14 @@ public class TableConfiguration extends PropertyHolder {
 
     }
 
-    public void setGeneratedKey(GeneratedKey generatedKey, Context context, KnownRuntime knownRuntime)
+    public void updateGeneratedKey(GeneratedKey generatedKey, IntrospectedColumn introspectedColumn, Context context,
+                                   KnownRuntime knownRuntime)
             throws InvalidConfigurationException {
         List<String> errors = validateGeneratedKey(generatedKey, context, knownRuntime);
 
         if (errors.isEmpty()) {
             this.generatedKey = generatedKey;
+            introspectedColumn.acceptGeneratedKey(generatedKey);
         } else {
             // TODO - externalize
             throw new InvalidConfigurationException("Updating the GeneratedKey would create an invalid configuration",

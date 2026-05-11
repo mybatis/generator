@@ -23,6 +23,7 @@ import java.util.Properties;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.internal.util.StringUtility;
 
 /**
@@ -174,10 +175,6 @@ public class IntrospectedColumn {
         return identity;
     }
 
-    public void setIdentity(boolean identity) {
-        this.identity = identity;
-    }
-
     public boolean isBLOBColumn() {
         String typeName = getJdbcTypeName();
 
@@ -313,10 +310,6 @@ public class IntrospectedColumn {
         return isSequenceColumn;
     }
 
-    public void setSequenceColumn(boolean isSequenceColumn) {
-        this.isSequenceColumn = isSequenceColumn;
-    }
-
     public boolean isAutoIncrement() {
         return isAutoIncrement;
     }
@@ -354,5 +347,15 @@ public class IntrospectedColumn {
 
     public void setActualTypeName(String actualTypeName) {
         this.actualTypeName = actualTypeName;
+    }
+
+    public void acceptGeneratedKey(GeneratedKey generatedKey) {
+        if (generatedKey.isIdentity() || generatedKey.isJdbcStandard()) {
+            identity = true;
+            isSequenceColumn = false;
+        } else {
+            identity = false;
+            isSequenceColumn = true;
+        }
     }
 }

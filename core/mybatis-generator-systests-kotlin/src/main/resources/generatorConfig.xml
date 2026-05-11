@@ -77,6 +77,8 @@
   </context>
 
   <context id="idiomatic-kotlin" targetRuntime="MyBatis3Kotlin">
+    <plugin type="org.mybatis.generator.plugins.InferredGeneratedKeyPlugin" />
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver" connectionURL="jdbc:hsqldb:mem:aname" userId="sa" />
 
     <modelGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.idiomatic.model" targetProject="MAVEN" />
@@ -97,7 +99,7 @@
     <table tableName="PKFieldsBlobs" />
     <table tableName="FieldsBlobs" />
     <table tableName="awful table" alias="A">
-      <generatedKey column="CuStOmEr iD" sqlStatement="JDBC" />
+      <!-- generatedKey is inferred by plugin -->
       <columnOverride column="first name" property="firstFirstName" />
       <columnOverride column="first_name" property="secondFirstName" />
       <columnOverride column="firstName" property="thirdFirstName" />

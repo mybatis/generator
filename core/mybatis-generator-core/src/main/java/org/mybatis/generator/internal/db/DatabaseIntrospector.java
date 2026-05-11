@@ -274,15 +274,7 @@ public class DatabaseIntrospector {
         tc.getGeneratedKey().ifPresent(gk -> columns.values().stream()
                 .flatMap(List::stream)
                 .filter(introspectedColumn -> isMatchedColumn(introspectedColumn, gk))
-                .forEach(introspectedColumn -> {
-                    if (gk.isIdentity() || gk.isJdbcStandard()) {
-                        introspectedColumn.setIdentity(true);
-                        introspectedColumn.setSequenceColumn(false);
-                    } else {
-                        introspectedColumn.setIdentity(false);
-                        introspectedColumn.setSequenceColumn(true);
-                    }
-                }));
+                .forEach(introspectedColumn -> introspectedColumn.acceptGeneratedKey(gk)));
     }
 
     private boolean isMatchedColumn(IntrospectedColumn introspectedColumn, GeneratedKey gk) {

@@ -634,7 +634,7 @@ public abstract class CodeGenerationAttributes {
     }
 
     public TableConfiguration getTableConfiguration() {
-        return Objects.requireNonNull(tableConfiguration);
+        return tableConfiguration;
     }
 
     public KnownRuntime getKnownRuntime() {

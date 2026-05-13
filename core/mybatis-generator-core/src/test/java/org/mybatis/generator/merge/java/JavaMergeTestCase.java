@@ -22,6 +22,8 @@ import java.util.stream.Stream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.params.provider.Arguments;
+import org.mybatis.generator.api.Indenter;
+import org.mybatis.generator.config.JavaMergeConfiguration;
 import org.mybatis.generator.merge.MergeTestCase;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -32,12 +34,21 @@ public abstract class JavaMergeTestCase extends MergeTestCase {
 
     private final List<MergeConfigurationAndId> mergeConfigurations = new ArrayList<>();
 
-    protected void addMergeConfiguration(String id, MergeConfiguration mergeConfiguration) {
-        addMergeConfiguration(true, id, mergeConfiguration);
+    protected void addMergeConfiguration(String id, JavaMergeConfiguration javaMergeConfiguration) {
+        addMergeConfiguration(true, id, javaMergeConfiguration, Indenter.defaultIndenter());
     }
 
-    protected void addMergeConfiguration(boolean enabled, String id, MergeConfiguration mergeConfiguration) {
-        mergeConfigurations.add(new MergeConfigurationAndId(enabled, id, mergeConfiguration));
+    protected void addMergeConfiguration(String id, JavaMergeConfiguration javaMergeConfiguration, Indenter indenter) {
+        addMergeConfiguration(true, id, javaMergeConfiguration, indenter);
+    }
+
+    protected void addMergeConfiguration(boolean enabled, String id, JavaMergeConfiguration javaMergeConfiguration) {
+        addMergeConfiguration(enabled, id, javaMergeConfiguration, Indenter.defaultIndenter());
+    }
+
+    protected void addMergeConfiguration(boolean enabled, String id, JavaMergeConfiguration javaMergeConfiguration,
+                                         Indenter indenter) {
+        mergeConfigurations.add(new MergeConfigurationAndId(enabled, id, javaMergeConfiguration, indenter));
     }
 
     public List<MergeConfigurationAndId> mergeConfigurations() {
@@ -87,5 +98,6 @@ public abstract class JavaMergeTestCase extends MergeTestCase {
         }
     }
 
-    public record MergeConfigurationAndId(boolean enabled, String id, MergeConfiguration mergeConfiguration) {}
+    public record MergeConfigurationAndId(boolean enabled, String id, JavaMergeConfiguration javaMergeConfiguration,
+                                          Indenter indenter) {}
 }

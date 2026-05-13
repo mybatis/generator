@@ -34,6 +34,8 @@ import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mybatis.generator.api.Indenter;
+import org.mybatis.generator.config.JavaMergeConfiguration;
 import org.mybatis.generator.exception.MergeException;
 
 class JavaFileMergerTest {
@@ -48,7 +50,8 @@ class JavaFileMergerTest {
     void mergeTestCases(JavaMergeTestCase testCase, String parameter,
                         JavaMergeTestCase.MergeConfigurationAndId mergeConfigurationAndId) throws Exception {
         if (mergeConfigurationAndId.enabled() || forceDisabledTests()) {
-            JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(mergeConfigurationAndId.mergeConfiguration());
+            JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(mergeConfigurationAndId.javaMergeConfiguration(),
+                    mergeConfigurationAndId.indenter());
             var actual = javaFileMerger.getMergedSource(testCase.newContent(parameter),
                     testCase.existingContent(parameter));
             assertThat(actual).isEqualToNormalizingNewlines(
@@ -64,7 +67,8 @@ class JavaFileMergerTest {
 
     @Test
     void testBadExistingFile() {
-        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(MergeConfiguration.defaultMergeConfiguration());
+        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(JavaMergeConfiguration.defaultMergeConfiguration(),
+                Indenter.defaultIndenter());
         String badExistingFile = "some random text";
 
         assertThatExceptionOfType(MergeException.class).isThrownBy(() ->
@@ -76,7 +80,8 @@ class JavaFileMergerTest {
 
     @Test
     void testBadNewFile() {
-        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(MergeConfiguration.defaultMergeConfiguration());
+        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(JavaMergeConfiguration.defaultMergeConfiguration(),
+                Indenter.defaultIndenter());
         String existingFile = "public class Foo { public int i; }";
         String badNewFile = "some random text";
 
@@ -89,7 +94,8 @@ class JavaFileMergerTest {
 
     @Test
     void testNoTypeInExistingFile() {
-        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(MergeConfiguration.defaultMergeConfiguration());
+        JavaFileMerger javaFileMerger = JavaMergerFactory.getMerger(JavaMergeConfiguration.defaultMergeConfiguration(),
+                Indenter.defaultIndenter());
         String existingFileNoTypes = "package foo.bar;";
 
         assertThatExceptionOfType(MergeException.class).isThrownBy(() ->

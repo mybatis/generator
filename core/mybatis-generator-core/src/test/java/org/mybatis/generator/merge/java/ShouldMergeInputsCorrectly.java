@@ -15,25 +15,27 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+
 public class ShouldMergeInputsCorrectly extends JavaMergeTestCase {
     public ShouldMergeInputsCorrectly() {
-        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+        addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
 
         // disabled because of an issue with the lexical preserving printer - JavaDoc comments are lost
-        addMergeConfiguration(false, "MergeIntoOldLP", new MergeConfiguration.Builder()
+        addMergeConfiguration(false, "MergeIntoOldLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
 

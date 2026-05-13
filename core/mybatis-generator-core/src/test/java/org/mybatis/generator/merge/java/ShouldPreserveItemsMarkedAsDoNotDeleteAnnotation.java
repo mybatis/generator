@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+
 /**
  * This test case verifies that generated items with the special text
  * "do_not_delete_during_merge" survive the merge. This is something
@@ -22,22 +24,22 @@ package org.mybatis.generator.merge.java;
  */
 public class ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation extends JavaMergeTestCase {
     public ShouldPreserveItemsMarkedAsDoNotDeleteAnnotation() {
-        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("MergeIntoOld", new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+        addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
 
-        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoOldLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
 

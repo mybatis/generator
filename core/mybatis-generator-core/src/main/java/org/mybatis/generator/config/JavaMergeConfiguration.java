@@ -13,37 +13,21 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.merge.java;
+package org.mybatis.generator.config;
+
+import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.IndentType;
 
-public class MergeConfiguration {
+public class JavaMergeConfiguration {
     private final boolean isLexicalPreserving;
-    private final int indentSize;
-    private final IndentType indentType;
     private final ImportSortType importSortType;
     private final MergeStrategy mergeStrategy;
 
-    private static final IndentType DEFAULT_INDENT_TYPE = IndentType.SPACES;
-    private static final ImportSortType DEFAULT_IMPORT_SORT_TYPE = ImportSortType.ECLIPSE;
-    public static final MergeStrategy DEFAULT_MERGE_STRATEGY = MergeStrategy.MERGE_INTO_EXISTING;
-
-    private MergeConfiguration(Builder builder) {
+    private JavaMergeConfiguration(Builder builder) {
         isLexicalPreserving = builder.isLexicalPreserving;
-        indentType = builder.indentType == null ? DEFAULT_INDENT_TYPE : builder.indentType;
-        importSortType = builder.importSortType == null ? DEFAULT_IMPORT_SORT_TYPE : builder.importSortType;
-        mergeStrategy = builder.mergeStrategy == null ? DEFAULT_MERGE_STRATEGY : builder.mergeStrategy;
-
-        if (builder.indentSize == null) {
-            if (indentType == IndentType.TABS) {
-                indentSize = 1;
-            } else {
-                indentSize = 4;
-            }
-        } else {
-            indentSize = builder.indentSize;
-        }
+        importSortType = Objects.requireNonNullElse(builder.importSortType, ImportSortType.ECLIPSE);
+        mergeStrategy = Objects.requireNonNullElse(builder.mergeStrategy, MergeStrategy.MERGE_INTO_EXISTING);
     }
 
     public boolean isLexicalPreserving() {
@@ -52,14 +36,6 @@ public class MergeConfiguration {
 
     public MergeStrategy mergeStrategy() {
         return mergeStrategy;
-    }
-
-    public int indentSize() {
-        return indentSize;
-    }
-
-    public IndentType indentType() {
-        return indentType;
     }
 
     public ImportSortType importSortType() {
@@ -77,29 +53,21 @@ public class MergeConfiguration {
         MERGE_INTO_NEW
     }
 
-    public static MergeConfiguration defaultMergeConfiguration() {
-        return new Builder().build();
+    public static JavaMergeConfiguration defaultMergeConfiguration() {
+        return new Builder()
+                .isLexicalPreserving(false)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .withImportSortType(ImportSortType.ECLIPSE)
+                .build();
     }
 
     public static class Builder {
         private boolean isLexicalPreserving;
-        private @Nullable Integer indentSize;
-        private @Nullable IndentType indentType;
         private @Nullable ImportSortType importSortType;
         private @Nullable MergeStrategy mergeStrategy;
 
         public Builder isLexicalPreserving(boolean isLexicalPreserving) {
             this.isLexicalPreserving = isLexicalPreserving;
-            return this;
-        }
-
-        public Builder withIndentSize(int indentSize) {
-            this.indentSize = indentSize;
-            return this;
-        }
-
-        public Builder withIndentType(@Nullable IndentType indentType) {
-            this.indentType = indentType;
             return this;
         }
 
@@ -113,8 +81,8 @@ public class MergeConfiguration {
             return this;
         }
 
-        public MergeConfiguration build() {
-            return new MergeConfiguration(this);
+        public JavaMergeConfiguration build() {
+            return new JavaMergeConfiguration(this);
         }
     }
 }

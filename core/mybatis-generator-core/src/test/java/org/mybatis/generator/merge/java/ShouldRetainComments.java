@@ -15,25 +15,27 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+
 public class ShouldRetainComments extends JavaMergeTestCase {
     public ShouldRetainComments() {
-        addMergeConfiguration("MergeIntoNew", new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
-        addMergeConfiguration("MergeIntoNewLP", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         // disabled - the non JavaDoc comment ends up in a weird place
-        addMergeConfiguration(false, "MergeIntoOld", new MergeConfiguration.Builder()
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+        addMergeConfiguration(false, "MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
 
-        addMergeConfiguration("MergeIntoOldLP", new MergeConfiguration.Builder()
+        addMergeConfiguration("MergeIntoOldLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(MergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
 

@@ -22,23 +22,41 @@ import org.jspecify.annotations.Nullable;
 public class Indenter {
     private final String javaIndent;
     private final String xmlIndent;
+    private final IndentType javaIndentType;
+    private final Integer javaIndentAmount;
+    private final IndentType xmlIndentType;
+    private final Integer xmlIndentAmount;
 
     private Indenter(Builder builder) {
-        javaIndent = calculateIndent(builder.javaIndentType, builder.javaIndentAmount, 4);
-        xmlIndent = calculateIndent(builder.xmlIndentType, builder.xmlIndentAmount, 2);
+        javaIndentType = Objects.requireNonNullElse(builder.javaIndentType, IndentType.SPACES);
+        javaIndentAmount = Objects.requireNonNullElseGet(builder.javaIndentAmount, () -> switch (javaIndentType) {
+            case SPACES -> 4;
+            case TABS -> 1;
+        });
+
+        xmlIndentType = Objects.requireNonNullElse(builder.xmlIndentType, IndentType.SPACES);
+        xmlIndentAmount = Objects.requireNonNullElseGet(builder.xmlIndentAmount, () -> switch (xmlIndentType) {
+            case SPACES -> 2;
+            case TABS -> 1;
+        });
+
+        javaIndent = calculateIndent(javaIndentType, javaIndentAmount);
+        xmlIndent = calculateIndent(xmlIndentType, xmlIndentAmount);
     }
 
-    private String calculateIndent(@Nullable IndentType indentType, @Nullable Integer amount, int defaultSpaces) {
-        return switch (Objects.requireNonNullElse(indentType, IndentType.SPACES)) {
-        case SPACES -> {
-            int amt = Objects.requireNonNullElse(amount, defaultSpaces);
-            yield " ".repeat(amt); //$NON-NLS-1$
-        }
-        case TABS -> {
-            int amt = Objects.requireNonNullElse(amount, 1);
-            yield "\t".repeat(amt); //$NON-NLS-1$
-        }
+    private String calculateIndent(IndentType indentType, Integer amount) {
+        return switch (indentType) {
+        case SPACES -> " ".repeat(amount); //$NON-NLS-1$
+        case TABS -> "\t".repeat(amount); //$NON-NLS-1$
         };
+    }
+
+    public IndentType javaIndentType() {
+        return javaIndentType;
+    }
+
+    public Integer javaIndentAmount() {
+        return javaIndentAmount;
     }
 
     /**

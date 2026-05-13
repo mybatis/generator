@@ -42,17 +42,6 @@ public class JavaMergeConfiguration {
         return importSortType;
     }
 
-    public enum ImportSortType {
-        ECLIPSE,
-        INTELLIJ,
-        DEFAULT
-    }
-
-    public enum MergeStrategy {
-        MERGE_INTO_EXISTING,
-        MERGE_INTO_NEW
-    }
-
     public static JavaMergeConfiguration defaultMergeConfiguration() {
         return new Builder()
                 .isLexicalPreserving(false)

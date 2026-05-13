@@ -29,11 +29,13 @@ public class Configuration {
     private final List<Context> contexts;
     private final List<String> classPathEntries;
     private final @Nullable IndentationConfiguration indentationConfiguration;
+    private final @Nullable JavaMergeConfiguration javaMergeConfiguration;
 
     private Configuration(Builder builder) {
         contexts = builder.contexts;
         classPathEntries = builder.classPathEntries;
         indentationConfiguration = builder.indentationConfiguration;
+        javaMergeConfiguration = builder.javaMergeConfiguration;
     }
 
     public List<String> getClassPathEntries() {
@@ -46,6 +48,10 @@ public class Configuration {
 
     public Optional<IndentationConfiguration> getIndentationConfiguration() {
         return Optional.ofNullable(indentationConfiguration);
+    }
+
+    public Optional<JavaMergeConfiguration> getJavaMergeConfiguration() {
+        return Optional.ofNullable(javaMergeConfiguration);
     }
 
     /**
@@ -84,6 +90,7 @@ public class Configuration {
         private final List<Context> contexts = new ArrayList<>();
         private final List<String> classPathEntries = new ArrayList<>();
         private @Nullable IndentationConfiguration indentationConfiguration;
+        private @Nullable JavaMergeConfiguration javaMergeConfiguration;
 
         public Builder withContext(Context context) {
             contexts.add(context);
@@ -99,6 +106,11 @@ public class Configuration {
 
         public Builder withIndentationConfiguration(IndentationConfiguration indentationConfiguration) {
             this.indentationConfiguration = indentationConfiguration;
+            return this;
+        }
+
+        public Builder withJavaMergeConfiguration(JavaMergeConfiguration javaMergeConfiguration) {
+            this.javaMergeConfiguration = javaMergeConfiguration;
             return this;
         }
 

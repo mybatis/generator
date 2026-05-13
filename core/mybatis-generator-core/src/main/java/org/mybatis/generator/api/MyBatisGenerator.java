@@ -94,8 +94,9 @@ public class MyBatisGenerator {
 
         if (builder.isJavaFileMergeEnabled) {
             isJavaFileMergeEnabled = true;
-            // TODO - make this configurable
-            javaFileMerger = JavaMergerFactory.getMerger(JavaMergeConfiguration.defaultMergeConfiguration(), indenter);
+            JavaMergeConfiguration javaMergeConfiguration = configuration.getJavaMergeConfiguration()
+                    .orElseGet(JavaMergeConfiguration::defaultMergeConfiguration);
+            javaFileMerger = JavaMergerFactory.getMerger(javaMergeConfiguration, indenter);
         } else {
             isJavaFileMergeEnabled = false;
             javaFileMerger = (newContent, existingContent) -> newContent;

@@ -16,6 +16,7 @@
 package org.mybatis.generator.merge.java;
 
 import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
 
 /**
  * This test case verifies that generated items with the special text
@@ -25,22 +26,22 @@ import org.mybatis.generator.config.JavaMergeConfiguration;
 public class ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation extends JavaMergeTestCase {
     public ShouldPreserveItemsMarkedAsDoNotDeleteOldJavadocNewAnnotation() {
         addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         // disabled because of an issue with the lexical preserving printer - JavaDoc comments are garbled
         addMergeConfiguration(false, "MergeIntoNewLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
 
         addMergeConfiguration("MergeIntoOldLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
 

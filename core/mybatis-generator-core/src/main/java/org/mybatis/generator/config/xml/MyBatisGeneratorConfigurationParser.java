@@ -44,9 +44,12 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.IgnoredColumn;
 import org.mybatis.generator.config.IgnoredColumnException;
 import org.mybatis.generator.config.IgnoredColumnPattern;
+import org.mybatis.generator.config.ImportSortType;
 import org.mybatis.generator.config.IndentationConfiguration;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
+import org.mybatis.generator.config.JavaMergeConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
 import org.mybatis.generator.config.ModelGeneratorConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.NullableProperties;
@@ -96,8 +99,9 @@ public class MyBatisGeneratorConfigurationParser {
             case "context" -> //$NON-NLS-1$
                     configurationBuilder.withContext(parseContext(childNode));
             case "indentation" -> //$NON-NLS-1$
-                    configurationBuilder.withIndentationConfiguration(
-                            parseIndentation(childNode));
+                    configurationBuilder.withIndentationConfiguration(parseIndentation(childNode));
+            case "javaMergeConfiguration" -> //$NON-NLS-1$
+                    configurationBuilder.withJavaMergeConfiguration(parseJavaMergeConfiguration(childNode));
             default -> {
                 // Ignore unrecognized elements
             }
@@ -557,6 +561,37 @@ public class MyBatisGeneratorConfigurationParser {
                 builder.withXmlIndentAmount(indentAmount);
             } catch (NumberFormatException e) {
                 warnings.add(getString("ValidationError.34", "XML")); //$NON-NLS-1$ //$NON-NLS-2$
+            }
+        }
+
+        return builder.build();
+    }
+
+    protected JavaMergeConfiguration parseJavaMergeConfiguration(Node node) {
+        NullableProperties attributes = parseAttributes(node);
+        String lexicalPreserving = attributes.getProperty("lexicalPreserving"); //$NON-NLS-1$
+        String sortType = attributes.getProperty("importSortType"); //$NON-NLS-1$
+        String mergeStrategy = attributes.getProperty("mergeStrategy"); //$NON-NLS-1$
+
+        JavaMergeConfiguration.Builder builder = new JavaMergeConfiguration.Builder();
+
+        builder.isLexicalPreserving(Boolean.TRUE.equals(parseNullableBoolean(lexicalPreserving)));
+
+        if (sortType != null) {
+            ImportSortType importSortType = ImportSortType.getByAlias(sortType);
+            if (importSortType == null) {
+                warnings.add(getString("ValidationError.36")); //$NON-NLS-1$
+            } else {
+                builder.withImportSortType(importSortType);
+            }
+        }
+
+        if (mergeStrategy != null) {
+            MergeStrategy ms = MergeStrategy.getByAlias(mergeStrategy);
+            if (ms == null) {
+                warnings.add(getString("ValidationError.37")); //$NON-NLS-1$
+            } else {
+                builder.withMergeStrategy(ms);
             }
         }
 

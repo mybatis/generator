@@ -18,25 +18,26 @@ package org.mybatis.generator.merge.java;
 import java.util.List;
 
 import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
 
 public class ShouldPreserveCustomMethodsFromOtherGenerators extends JavaMergeTestCase {
     public ShouldPreserveCustomMethodsFromOtherGenerators() {
         addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
 
         addMergeConfiguration("MergeIntoOldLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
 

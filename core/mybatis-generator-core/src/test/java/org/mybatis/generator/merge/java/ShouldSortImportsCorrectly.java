@@ -17,19 +17,21 @@ package org.mybatis.generator.merge.java;
 
 import org.mybatis.generator.api.IndentType;
 import org.mybatis.generator.api.Indenter;
+import org.mybatis.generator.config.ImportSortType;
 import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
 
 public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
     public ShouldSortImportsCorrectly() {
         addMergeConfiguration("MergeIntoNewEclipseSort", new JavaMergeConfiguration.Builder()
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
-                .withImportSortType(JavaMergeConfiguration.ImportSortType.ECLIPSE)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .withImportSortType(ImportSortType.ECLIPSE)
                 .build());
 
         addMergeConfiguration("MergeIntoNewIntelliJSort",
                 new JavaMergeConfiguration.Builder()
-                        .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
-                        .withImportSortType(JavaMergeConfiguration.ImportSortType.INTELLIJ)
+                        .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                        .withImportSortType(ImportSortType.INTELLIJ)
                         .build(),
                 new Indenter.Builder()
                         .withJavaIndentAmount(2)
@@ -38,8 +40,8 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
 
         addMergeConfiguration("MergeIntoNewDefaultSort",
                 new JavaMergeConfiguration.Builder()
-                        .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
-                        .withImportSortType(JavaMergeConfiguration.ImportSortType.DEFAULT)
+                        .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                        .withImportSortType(ImportSortType.DEFAULT)
                         .build(),
                 new Indenter.Builder()
                         .withJavaIndentType(IndentType.TABS)
@@ -48,17 +50,17 @@ public class ShouldSortImportsCorrectly extends JavaMergeTestCase {
 
         addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
 
         // disabled because of an issue with the lexical preserving printer - JavaDoc comments are lost
         addMergeConfiguration(false, "MergeIntoOldLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_EXISTING)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
                 .build());
     }
 

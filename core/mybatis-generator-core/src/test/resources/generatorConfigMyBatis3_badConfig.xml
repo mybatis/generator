@@ -23,6 +23,8 @@
 <generatorConfiguration>
   <indentation javaIndentAmount="w" javaIndentType="l" xmlIndentAmount="s" xmlIndentType="q" />
 
+  <javaMergeConfiguration importSortType="f" lexicalPreserving="false" mergeStrategy="f" />
+
   <!-- This should cause an error because sqlMapGenerator is required
        if there is no clientGenerator -->
   <context id="MyBatis3NoClient" targetRuntime="MyBatis3" defaultModelType="flat">

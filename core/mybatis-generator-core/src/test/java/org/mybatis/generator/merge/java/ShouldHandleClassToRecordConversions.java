@@ -16,17 +16,18 @@
 package org.mybatis.generator.merge.java;
 
 import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
 
 public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
     public ShouldHandleClassToRecordConversions () {
         // this use case is not supported with the merge into existing strategy
         addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
                 .build());
 
         addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
                 .isLexicalPreserving(true)
-                .withMergeStrategy(JavaMergeConfiguration.MergeStrategy.MERGE_INTO_NEW)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
                 .build());
     }
 

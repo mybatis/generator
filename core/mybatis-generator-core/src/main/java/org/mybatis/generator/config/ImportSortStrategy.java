@@ -17,21 +17,21 @@ package org.mybatis.generator.config;
 
 import org.jspecify.annotations.Nullable;
 
-public enum ImportSortType {
+public enum ImportSortStrategy {
     ECLIPSE("Eclipse"),
     INTELLIJ("IntelliJ"),
     DEFAULT("Default");
 
     private final String alias;
 
-    ImportSortType(String alias) {
+    ImportSortStrategy(String alias) {
         this.alias = alias;
     }
 
-    public static @Nullable ImportSortType getByAlias(String alias) {
-        for (ImportSortType importSortType : values()) {
-            if (importSortType.alias.equalsIgnoreCase(alias)) {
-                return importSortType;
+    public static @Nullable ImportSortStrategy getByAlias(String alias) {
+        for (ImportSortStrategy importSortStrategy : values()) {
+            if (importSortStrategy.alias.equalsIgnoreCase(alias)) {
+                return importSortStrategy;
             }
         }
 

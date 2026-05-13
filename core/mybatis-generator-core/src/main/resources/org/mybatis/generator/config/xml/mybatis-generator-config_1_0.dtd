@@ -56,7 +56,7 @@
 <!ELEMENT javaMergeConfiguration EMPTY>
 <!ATTLIST javaMergeConfiguration
   lexicalPreserving CDATA #IMPLIED
-  importSortType CDATA #IMPLIED
+  importSortStrategy CDATA #IMPLIED
   mergeStrategy CDATA #IMPLIED>
 
 <!--

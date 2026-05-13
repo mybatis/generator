@@ -21,12 +21,12 @@ import org.jspecify.annotations.Nullable;
 
 public class JavaMergeConfiguration {
     private final boolean isLexicalPreserving;
-    private final ImportSortType importSortType;
+    private final ImportSortStrategy importSortStrategy;
     private final MergeStrategy mergeStrategy;
 
     private JavaMergeConfiguration(Builder builder) {
         isLexicalPreserving = builder.isLexicalPreserving;
-        importSortType = Objects.requireNonNullElse(builder.importSortType, ImportSortType.ECLIPSE);
+        importSortStrategy = Objects.requireNonNullElse(builder.importSortStrategy, ImportSortStrategy.ECLIPSE);
         mergeStrategy = Objects.requireNonNullElse(builder.mergeStrategy, MergeStrategy.MERGE_INTO_EXISTING);
     }
 
@@ -38,21 +38,21 @@ public class JavaMergeConfiguration {
         return mergeStrategy;
     }
 
-    public ImportSortType importSortType() {
-        return importSortType;
+    public ImportSortStrategy importSortType() {
+        return importSortStrategy;
     }
 
     public static JavaMergeConfiguration defaultMergeConfiguration() {
         return new Builder()
                 .isLexicalPreserving(false)
                 .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
-                .withImportSortType(ImportSortType.ECLIPSE)
+                .withImportSortType(ImportSortStrategy.ECLIPSE)
                 .build();
     }
 
     public static class Builder {
         private boolean isLexicalPreserving;
-        private @Nullable ImportSortType importSortType;
+        private @Nullable ImportSortStrategy importSortStrategy;
         private @Nullable MergeStrategy mergeStrategy;
 
         public Builder isLexicalPreserving(boolean isLexicalPreserving) {
@@ -60,8 +60,8 @@ public class JavaMergeConfiguration {
             return this;
         }
 
-        public Builder withImportSortType(@Nullable ImportSortType importSortType) {
-            this.importSortType = importSortType;
+        public Builder withImportSortType(@Nullable ImportSortStrategy importSortStrategy) {
+            this.importSortStrategy = importSortStrategy;
             return this;
         }
 

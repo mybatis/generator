@@ -44,7 +44,7 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.IgnoredColumn;
 import org.mybatis.generator.config.IgnoredColumnException;
 import org.mybatis.generator.config.IgnoredColumnPattern;
-import org.mybatis.generator.config.ImportSortType;
+import org.mybatis.generator.config.ImportSortStrategy;
 import org.mybatis.generator.config.IndentationConfiguration;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.JavaMergeConfiguration;
@@ -570,28 +570,28 @@ public class MyBatisGeneratorConfigurationParser {
     protected JavaMergeConfiguration parseJavaMergeConfiguration(Node node) {
         NullableProperties attributes = parseAttributes(node);
         String lexicalPreserving = attributes.getProperty("lexicalPreserving"); //$NON-NLS-1$
-        String sortType = attributes.getProperty("importSortType"); //$NON-NLS-1$
-        String mergeStrategy = attributes.getProperty("mergeStrategy"); //$NON-NLS-1$
+        String sortType = attributes.getProperty("importSortStrategy"); //$NON-NLS-1$
+        String mergeType = attributes.getProperty("mergeStrategy"); //$NON-NLS-1$
 
         JavaMergeConfiguration.Builder builder = new JavaMergeConfiguration.Builder();
 
         builder.isLexicalPreserving(Boolean.TRUE.equals(parseNullableBoolean(lexicalPreserving)));
 
         if (sortType != null) {
-            ImportSortType importSortType = ImportSortType.getByAlias(sortType);
-            if (importSortType == null) {
+            ImportSortStrategy importSortStrategy = ImportSortStrategy.getByAlias(sortType);
+            if (importSortStrategy == null) {
                 warnings.add(getString("ValidationError.36")); //$NON-NLS-1$
             } else {
-                builder.withImportSortType(importSortType);
+                builder.withImportSortType(importSortStrategy);
             }
         }
 
-        if (mergeStrategy != null) {
-            MergeStrategy ms = MergeStrategy.getByAlias(mergeStrategy);
-            if (ms == null) {
+        if (mergeType != null) {
+            MergeStrategy mergeStrategy = MergeStrategy.getByAlias(mergeType);
+            if (mergeStrategy == null) {
                 warnings.add(getString("ValidationError.37")); //$NON-NLS-1$
             } else {
-                builder.withMergeStrategy(ms);
+                builder.withMergeStrategy(mergeStrategy);
             }
         }
 

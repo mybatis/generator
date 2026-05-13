@@ -45,6 +45,7 @@ import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.IndentationConfiguration;
+import org.mybatis.generator.config.JavaMergeConfiguration;
 import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.MergeException;
@@ -53,7 +54,6 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.merge.java.JavaFileMerger;
 import org.mybatis.generator.merge.java.JavaMergerFactory;
-import org.mybatis.generator.config.JavaMergeConfiguration;
 import org.mybatis.generator.merge.xml.XmlFileMergerJaxp;
 
 /**

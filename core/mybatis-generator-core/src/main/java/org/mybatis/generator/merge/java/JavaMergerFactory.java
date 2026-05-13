@@ -29,9 +29,9 @@ import org.mybatis.generator.config.JavaMergeConfiguration;
 public class JavaMergerFactory {
     public static JavaFileMerger getMerger(JavaMergeConfiguration javaMergeConfiguration, Indenter indenter) {
         return switch (javaMergeConfiguration.mergeStrategy()) {
-            case MERGE_INTO_NEW -> new MergeIntoNewJavaFileMerger(getPrinter(javaMergeConfiguration, indenter),
+        case MERGE_INTO_NEW -> new MergeIntoNewJavaFileMerger(getPrinter(javaMergeConfiguration, indenter),
                     javaMergeConfiguration.isLexicalPreserving());
-            case MERGE_INTO_EXISTING -> new MergeIntoExistingJavaFileMerger(getPrinter(javaMergeConfiguration, indenter),
+        case MERGE_INTO_EXISTING -> new MergeIntoExistingJavaFileMerger(getPrinter(javaMergeConfiguration, indenter),
                     javaMergeConfiguration.isLexicalPreserving());
         };
     }
@@ -44,18 +44,18 @@ public class JavaMergerFactory {
         return new DefaultPrettyPrinter(calculatePrinterConfiguration(javaMergeConfiguration, indenter));
     }
 
-    private static CustomPrinterConfiguration calculatePrinterConfiguration(JavaMergeConfiguration javaMergeConfiguration,
-                                                                            Indenter indenter) {
+    private static CustomPrinterConfiguration calculatePrinterConfiguration(
+            JavaMergeConfiguration javaMergeConfiguration, Indenter indenter) {
         ImportOrderingStrategy ios = switch (javaMergeConfiguration.importSortType()) {
-            case ECLIPSE -> new EclipseImportOrderingStrategy();
-            case INTELLIJ -> new IntelliJImportOrderingStrategy();
-            case DEFAULT -> new DefaultImportOrderingStrategy();
+        case ECLIPSE -> new EclipseImportOrderingStrategy();
+        case INTELLIJ -> new IntelliJImportOrderingStrategy();
+        case DEFAULT -> new DefaultImportOrderingStrategy();
         };
         ios.setSortImportsAlphabetically(true);
 
         Indentation indentation = switch (indenter.javaIndentType()) {
-            case TABS -> new Indentation(Indentation.IndentType.TABS, indenter.javaIndentAmount());
-            case SPACES -> new Indentation(Indentation.IndentType.SPACES, indenter.javaIndentAmount());
+        case TABS -> new Indentation(Indentation.IndentType.TABS, indenter.javaIndentAmount());
+        case SPACES -> new Indentation(Indentation.IndentType.SPACES, indenter.javaIndentAmount());
         };
 
         return new CustomPrinterConfiguration.Builder()

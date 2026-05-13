@@ -169,7 +169,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                 sb.append("return ("); //$NON-NLS-1$
                 first = false;
             } else {
-                getIndenter().javaIndent(sb, 1);
+                sb.append(getIndenter().javaIndent(1));
                 sb.append("&& ("); //$NON-NLS-1$
             }
 

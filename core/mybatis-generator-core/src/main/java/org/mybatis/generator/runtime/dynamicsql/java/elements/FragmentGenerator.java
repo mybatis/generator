@@ -165,7 +165,7 @@ public class FragmentGenerator {
         while (iterPk.hasNext()) {
             IntrospectedColumn introspectedColumn = iterPk.next();
             sb.setLength(0);
-            indenter.javaIndent(sb, 1);
+            sb.append(indenter.javaIndent(1));
             sb.append(getResultAnnotation(imports, introspectedColumn, true));
 
             if (iterPk.hasNext() || iterNonPk.hasNext()) {
@@ -178,7 +178,7 @@ public class FragmentGenerator {
         while (iterNonPk.hasNext()) {
             IntrospectedColumn introspectedColumn = iterNonPk.next();
             sb.setLength(0);
-            indenter.javaIndent(sb, 1);
+            sb.append(indenter.javaIndent(1));
             sb.append(getResultAnnotation(imports, introspectedColumn, false));
 
             if (iterNonPk.hasNext()) {

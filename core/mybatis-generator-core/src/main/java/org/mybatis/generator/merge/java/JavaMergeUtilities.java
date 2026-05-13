@@ -270,8 +270,8 @@ public class JavaMergeUtilities {
         return GeneratedType.NOT_GENERATED;
     }
 
-    private static TypeDeclaration<?> findMainTypeDeclaration(CompilationUnit compilationUnit, MergeFileType mergeFileType)
-            throws MergeException {
+    private static TypeDeclaration<?> findMainTypeDeclaration(CompilationUnit compilationUnit,
+                                                              MergeFileType mergeFileType) throws MergeException {
         // Return the first public type declaration, or the first type declaration if no public one exists
         TypeDeclaration<?> firstType = null;
         for (TypeDeclaration<?> typeDeclaration : compilationUnit.getTypes()) {
@@ -288,8 +288,8 @@ public class JavaMergeUtilities {
         return firstType;
     }
 
-    public static ParseResults parseAndFindMainTypeDeclaration(JavaParser javaParser, String source, MergeFileType mergeFileType)
-            throws MergeException {
+    public static ParseResults parseAndFindMainTypeDeclaration(JavaParser javaParser, String source,
+                                                               MergeFileType mergeFileType) throws MergeException {
         ParseResult<CompilationUnit> parseResult = javaParser.parse(source);
 
         // little hack to pull the result out of the lambda. This allows us to avoid "orElseThrow()" later on
@@ -303,12 +303,12 @@ public class JavaMergeUtilities {
             throw new MergeException(getString("RuntimeError.28", mergeFileType.toString()), details); //$NON-NLS-1$
         }
 
-        return new ParseResults(compilationUnits[0], JavaMergeUtilities.findMainTypeDeclaration(compilationUnits[0], mergeFileType));
+        return new ParseResults(compilationUnits[0], findMainTypeDeclaration(compilationUnits[0], mergeFileType));
     }
 
     public static void deleteDuplicateMemberIfExists(TypeDeclaration<?> newTypeDeclaration, BodyDeclaration<?> member) {
         newTypeDeclaration.getMembers().stream()
-                .filter(td -> JavaMergeUtilities.membersMatch(td, member))
+                .filter(td -> membersMatch(td, member))
                 .findFirst()
                 .ifPresent(newTypeDeclaration::remove);
     }

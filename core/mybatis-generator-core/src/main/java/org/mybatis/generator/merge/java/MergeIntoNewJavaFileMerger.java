@@ -18,7 +18,6 @@ package org.mybatis.generator.merge.java;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.printer.Printer;
-import com.github.javaparser.printer.lexicalpreservation.DefaultLexicalPreservingPrinter;
 import org.mybatis.generator.exception.MergeException;
 
 /**
@@ -97,22 +96,24 @@ public class MergeIntoNewJavaFileMerger implements JavaFileMerger {
         }
         JavaParser javaParser = new JavaParser(parserConfiguration);
 
-        ParseResults existingFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser, existingFileContent,
-                MergeFileType.EXISTING_FILE);
+        ParseResults existingFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser,
+                existingFileContent, MergeFileType.EXISTING_FILE);
 
         // Gather custom members from the existing file. If none, just return the new file as is
-        CustomMemberGatherer customMemberGatherer = new CustomMemberGatherer(existingFileParseResults.typeDeclaration());
+        CustomMemberGatherer customMemberGatherer =
+                new CustomMemberGatherer(existingFileParseResults.typeDeclaration());
         if (!customMemberGatherer.hasAnyMembersToMerge()) {
             return newFileContent;
         }
 
         // Custom members exist, need to merge...
-        ParseResults newFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser, newFileContent,
-                MergeFileType.NEW_FILE);
+        ParseResults newFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser,
+                newFileContent, MergeFileType.NEW_FILE);
 
         // Delete elements in the new file that match doNotDeleteMembers from the existing file
         customMemberGatherer.doNotDeleteBodyMembers()
-                .forEach(m -> JavaMergeUtilities.deleteDuplicateMemberIfExists(newFileParseResults.typeDeclaration(), m));
+                .forEach(m -> JavaMergeUtilities
+                        .deleteDuplicateMemberIfExists(newFileParseResults.typeDeclaration(), m));
 
         // Look for custom imports in the existing file and merge into the new file
         JavaMergeUtilities

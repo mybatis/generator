@@ -101,11 +101,12 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
 
         JavaParser javaParser = new JavaParser(parserConfiguration);
 
-        ParseResults existingFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser, existingFileContent,
-                MergeFileType.EXISTING_FILE);
+        ParseResults existingFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser,
+                existingFileContent, MergeFileType.EXISTING_FILE);
 
         // Gather custom members from the existing file. If none, just return the new file as is
-        CustomMemberGatherer customMemberGatherer = new CustomMemberGatherer(existingFileParseResults.typeDeclaration());
+        CustomMemberGatherer customMemberGatherer =
+                new CustomMemberGatherer(existingFileParseResults.typeDeclaration());
         if (!customMemberGatherer.hasAnyMembersToMerge()) {
             return newFileContent;
         }
@@ -129,7 +130,7 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
         // Remove generated enum constants
         if (existingFileParseResults.typeDeclaration().isEnumDeclaration()) {
             List<EnumConstantDeclaration> enumConstantsToDelete = new ArrayList<>();
-            existingFileParseResults.typeDeclaration().asEnumDeclaration().getEntries().forEach( enumDec -> {
+            existingFileParseResults.typeDeclaration().asEnumDeclaration().getEntries().forEach(enumDec -> {
                 GeneratedType generatedType = JavaMergeUtilities.checkForGeneratedAnnotation(enumDec);
                 if (generatedType == GeneratedType.GENERATED_REMOVE) {
                     enumConstantsToDelete.add(enumDec);
@@ -145,8 +146,8 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
         }
 
         // 2. Parse the new file, gather generated elements and add to the existing file
-        ParseResults newFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser, newFileContent,
-                MergeFileType.NEW_FILE);
+        ParseResults newFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser,
+                newFileContent, MergeFileType.NEW_FILE);
 
         // delete any members in the new file that match the old file members (this gets rid of new
         // do not delete members)
@@ -177,7 +178,8 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
 
         // merge records
         // TODO(?) this is not really a merge so much as a replace - should we do a merge?
-        if (existingFileParseResults.typeDeclaration().isRecordDeclaration() && newFileParseResults.typeDeclaration().isRecordDeclaration()) {
+        if (existingFileParseResults.typeDeclaration().isRecordDeclaration()
+                && newFileParseResults.typeDeclaration().isRecordDeclaration()) {
             // remove all record fields from the existing file and add from the new file
             existingFileParseResults.typeDeclaration().asRecordDeclaration().getParameters().clear();
             existingFileParseResults.typeDeclaration().asRecordDeclaration().getParameters().addAll(

@@ -295,7 +295,7 @@ public abstract class AbstractXmlMapperElementGenerator extends AbstractXmlEleme
             // set up for the next column
             if (iter.hasNext()) {
                 sb.setLength(0);
-                indenter.xmlIndent(sb, 1);
+                sb.append(indenter.xmlIndent(1));
             }
         }
 
@@ -338,7 +338,7 @@ public abstract class AbstractXmlMapperElementGenerator extends AbstractXmlEleme
             // set up for the next column
             if (iter.hasNext()) {
                 sb.setLength(0);
-                indenter.xmlIndent(sb, 1);
+                sb.append(indenter.xmlIndent(1));
             }
         }
 

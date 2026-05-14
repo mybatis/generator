@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2026 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The &lt;javaMergeConfiguration&gt; Element</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>The &lt;javaMergeConfiguration&gt; Element</h1>
+<p>The &lt;javaMergeConfiguration&gt; element is used to define the charcteristics of the Java merger. Please see the
+  <a href="../reference/javaMergeReference.html">Java Merge Reference</a> page for detailed information
+  about how the Java merger works and the different options for configuring it.
+  The default Java merger has the following characteristics:
+</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>Lexical Preserving</td>
+    <td>false</td>
+  </tr>
+  <tr>
+    <td>Import Sort Strategy</td>
+    <td>Eclipse</td>
+  </tr>
+  <tr>
+    <td>Merge Strategy</td>
+    <td>Merge_Into_Existing</td>
+  </tr>
+</table>
+<p>This element allows you to change these defaults.
+  This element is an optional child element of the <a href="generatorConfiguration.html">&lt;generatorConfiguration&gt;</a>
+  element.
+</p>
+<p><b>Important Note: </b>The Java merger will respect the settings of the
+  <a href="indentationConfiguration.html">&lt;indentationConfiguration&gt;</a> if the "lexicalPreserving" value is "false".
+</p>
+
+<h2>Optional Attributes</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td valign="top">lexicalPreserving</td>
+    <td>This can be either "True" or "False". "False" is the default.</td>
+  </tr>
+  <tr>
+    <td valign="top">importSortStrategy</td>
+    <td>This can be either "Eclipse", "IntelliJ", or "Default". The default value is "Eclipse".
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">mergeStrategy</td>
+    <td>This can be either "Merge_Into_Existing" or "Merge_Into_New". The default is "Merge_Into_Existing".
+    </td>
+  </tr>
+</table>
+
+<h2>Child Elements</h2>
+<p>None.</p>
+
+<h2>Example</h2>
+<p>This element specifies that we want to use the "IntelliJ" import sorting strategy:</p>
+<pre>
+&lt;javaMergeConfiguration importSortStrategy="IntelliJ" /&gt;
+</pre>
+
+</body>
+</html>

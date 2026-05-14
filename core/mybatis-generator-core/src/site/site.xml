@@ -50,8 +50,9 @@
         <item href="configreference/generatorConfiguration.html" name="&lt;generatorConfiguration&gt;" />
         <item href="configreference/ignoreColumn.html" name="&lt;ignoreColumn&gt;" />
         <item href="configreference/ignoreColumnsByRegex.html" name="&lt;ignoreColumnsByRegex&gt;" />
-        <item href="configreference/indentation.html" name="&lt;indentation&gt;" />
+        <item href="configreference/indentationConfiguration.html" name="&lt;indentationConfiguration&gt;" />
         <item href="configreference/javaClientGenerator.html" name="&lt;javaClientGenerator&gt;" />
+        <item href="configreference/javaMergeConfiguration.html" name="&lt;javaMergeConfiguration&gt;" />
         <item href="configreference/javaModelGenerator.html" name="&lt;javaModelGenerator&gt;" />
         <item href="configreference/javaTypeResolver.html" name="&lt;javaTypeResolver&gt;" />
         <item href="configreference/jdbcConnection.html" name="&lt;jdbcConnection&gt;" />
@@ -80,6 +81,7 @@
         <item href="usage/postgresql.html" name="PostgreSQL" />
       </item>
       <item href="reference/intro.html" name="Other Reference Information" collapse="true" >
+        <item href="reference/javaMergeReference.html" name="Java Merge Reference" />
         <item href="reference/building.html" name="Building from Source" />
         <item href="reference/extending.html" name="Extending MyBatis Generator" />
         <item href="reference/pluggingIn.html" name="Implementing Plugins" />

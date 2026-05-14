@@ -44,9 +44,12 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.IgnoredColumn;
 import org.mybatis.generator.config.IgnoredColumnException;
 import org.mybatis.generator.config.IgnoredColumnPattern;
+import org.mybatis.generator.config.ImportSortStrategy;
 import org.mybatis.generator.config.IndentationConfiguration;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
+import org.mybatis.generator.config.JavaMergeConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
 import org.mybatis.generator.config.ModelGeneratorConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.NullableProperties;
@@ -95,9 +98,10 @@ public class MyBatisGeneratorConfigurationParser {
                     configurationBuilder.withClassPathEntry(parseClassPathEntry(childNode));
             case "context" -> //$NON-NLS-1$
                     configurationBuilder.withContext(parseContext(childNode));
-            case "indentation" -> //$NON-NLS-1$
-                    configurationBuilder.withIndentationConfiguration(
-                            parseIndentation(childNode, "global")); //$NON-NLS-1$
+            case "indentationConfiguration" -> //$NON-NLS-1$
+                    configurationBuilder.withIndentationConfiguration(parseIndentationConfiguration(childNode));
+            case "javaMergeConfiguration" -> //$NON-NLS-1$
+                    configurationBuilder.withJavaMergeConfiguration(parseJavaMergeConfiguration(childNode));
             default -> {
                 // Ignore unrecognized elements
             }
@@ -203,8 +207,6 @@ public class MyBatisGeneratorConfigurationParser {
             }
             case "table" ->  //$NON-NLS-1$
                     builder.withTableConfiguration(parseTable(childNode));
-            case "indentation" -> //$NON-NLS-1$
-                    builder.withIndentationConfiguration(parseIndentation(childNode, id));
             default -> {
                 // Ignore unrecognized elements
             }
@@ -518,7 +520,7 @@ public class MyBatisGeneratorConfigurationParser {
         }
     }
 
-    protected IndentationConfiguration parseIndentation(Node node, String contextId) {
+    protected IndentationConfiguration parseIndentationConfiguration(Node node) {
         NullableProperties attributes = parseAttributes(node);
         IndentationConfiguration.Builder builder = new IndentationConfiguration.Builder();
 
@@ -526,7 +528,7 @@ public class MyBatisGeneratorConfigurationParser {
         if (javaIndentType != null) {
             IndentType indentType = IndentType.getByAlias(javaIndentType);
             if (indentType == null) {
-                warnings.add(getString("ValidationError.33", "Java", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+                warnings.add(getString("ValidationError.33", "Java")); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
                 builder.withJavaIndentType(indentType);
             }
@@ -538,7 +540,7 @@ public class MyBatisGeneratorConfigurationParser {
                 Integer indentAmount = Integer.valueOf(javaIndentAmount);
                 builder.withJavaIndentAmount(indentAmount);
             } catch (NumberFormatException e) {
-                warnings.add(getString("ValidationError.34", "Java", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+                warnings.add(getString("ValidationError.34", "Java")); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
 
@@ -546,7 +548,7 @@ public class MyBatisGeneratorConfigurationParser {
         if (xmlIndentType != null) {
             IndentType indentType = IndentType.getByAlias(xmlIndentType);
             if (indentType == null) {
-                warnings.add(getString("ValidationError.33", "XML", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+                warnings.add(getString("ValidationError.33", "XML")); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
                 builder.withXmlIndentType(indentType);
             }
@@ -558,7 +560,38 @@ public class MyBatisGeneratorConfigurationParser {
                 Integer indentAmount = Integer.valueOf(xmlIndentAmount);
                 builder.withXmlIndentAmount(indentAmount);
             } catch (NumberFormatException e) {
-                warnings.add(getString("ValidationError.34", "XML", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
+                warnings.add(getString("ValidationError.34", "XML")); //$NON-NLS-1$ //$NON-NLS-2$
+            }
+        }
+
+        return builder.build();
+    }
+
+    protected JavaMergeConfiguration parseJavaMergeConfiguration(Node node) {
+        NullableProperties attributes = parseAttributes(node);
+        String lexicalPreserving = attributes.getProperty("lexicalPreserving"); //$NON-NLS-1$
+        String sortType = attributes.getProperty("importSortStrategy"); //$NON-NLS-1$
+        String mergeType = attributes.getProperty("mergeStrategy"); //$NON-NLS-1$
+
+        JavaMergeConfiguration.Builder builder = new JavaMergeConfiguration.Builder();
+
+        builder.isLexicalPreserving(Boolean.TRUE.equals(parseNullableBoolean(lexicalPreserving)));
+
+        if (sortType != null) {
+            ImportSortStrategy importSortStrategy = ImportSortStrategy.getByAlias(sortType);
+            if (importSortStrategy == null) {
+                warnings.add(getString("ValidationError.36")); //$NON-NLS-1$
+            } else {
+                builder.withImportSortType(importSortStrategy);
+            }
+        }
+
+        if (mergeType != null) {
+            MergeStrategy mergeStrategy = MergeStrategy.getByAlias(mergeType);
+            if (mergeStrategy == null) {
+                warnings.add(getString("ValidationError.37")); //$NON-NLS-1$
+            } else {
+                builder.withMergeStrategy(mergeStrategy);
             }
         }
 

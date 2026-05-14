@@ -15,18 +15,33 @@
  */
 package org.mybatis.generator.merge.java;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseResult;
+import com.github.javaparser.Problem;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.comments.Comment;
+import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.MemberValuePair;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithSimpleName;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.config.MergeConstants;
+import org.mybatis.generator.exception.MergeException;
 
 public class JavaMergeUtilities {
     private JavaMergeUtilities() {
@@ -70,7 +85,7 @@ public class JavaMergeUtilities {
      * @param member2 the second member
      * @return true if the members are functionally equivalent
      */
-    public static boolean membersMatch(BodyDeclaration<?> member1, BodyDeclaration<?> member2) {
+    private static boolean membersMatch(BodyDeclaration<?> member1, BodyDeclaration<?> member2) {
         if (member1.isTypeDeclaration() && member2.isTypeDeclaration()) {
             return member1.asTypeDeclaration().getNameAsString()
                     .equals(member2.asTypeDeclaration().getNameAsString());
@@ -100,7 +115,7 @@ public class JavaMergeUtilities {
         return customSuperInterfaces;
     }
 
-    public static List<ClassOrInterfaceType> findSuperInterfaces(BodyDeclaration<?> bodyDeclaration) {
+    private static List<ClassOrInterfaceType> findSuperInterfaces(BodyDeclaration<?> bodyDeclaration) {
         if (bodyDeclaration.isClassOrInterfaceDeclaration()) {
             return bodyDeclaration.asClassOrInterfaceDeclaration().getImplementedTypes();
         } else if (bodyDeclaration.isEnumDeclaration()) {
@@ -128,7 +143,7 @@ public class JavaMergeUtilities {
      * @param importDeclaration the import declaration to stringify
      * @return string representation of the import (not a full import statement)
      */
-    public static String stringify(ImportDeclaration importDeclaration) {
+    private static String stringify(ImportDeclaration importDeclaration) {
         StringBuilder sb = new StringBuilder();
         if (importDeclaration.isStatic()) {
             sb.append("static "); //$NON-NLS-1$
@@ -144,15 +159,157 @@ public class JavaMergeUtilities {
         return sb.toString();
     }
 
-    public static String stringify(FieldDeclaration fieldDeclaration) {
+    private static String stringify(FieldDeclaration fieldDeclaration) {
         return fieldDeclaration.getVariables().stream()
                 .map(JavaMergeUtilities::stringify)
                 .collect(Collectors.joining(",")); //$NON-NLS-1$
     }
 
-    public static String stringify(VariableDeclarator variableDeclarator) {
+    private static String stringify(VariableDeclarator variableDeclarator) {
         return variableDeclarator.getType().toString()
                 + " " //$NON-NLS-1$
                 + variableDeclarator.getName().toString();
+    }
+
+    public static GeneratedType checkForGeneratedAnnotation(BodyDeclaration<?> member) {
+        return member.getAnnotations().stream()
+                .filter(JavaMergeUtilities::isOurGeneratedAnnotation)
+                .findFirst()
+                .map(a -> {
+                    if (hasDoNotDeleteComment(a)) {
+                        return GeneratedType.GENERATED_KEEP;
+                    } else {
+                        return GeneratedType.GENERATED_REMOVE;
+                    }
+                })
+                .orElse(GeneratedType.NOT_GENERATED);
+    }
+
+    private static boolean isOurGeneratedAnnotation(AnnotationExpr annotationExpr) {
+        if (!isGeneratedAnnotation(annotationExpr)) {
+            return false;
+        }
+
+        if (annotationExpr.isSingleMemberAnnotationExpr()) {
+            Expression value = annotationExpr.asSingleMemberAnnotationExpr().getMemberValue();
+            if (value.isStringLiteralExpr()) {
+                return annotationValueMatchesMyBatisGenerator(value.asStringLiteralExpr());
+            }
+        } else if (annotationExpr.isNormalAnnotationExpr()) {
+            return annotationExpr.asNormalAnnotationExpr().getPairs().stream()
+                    .filter(JavaMergeUtilities::isValuePair)
+                    .map(MemberValuePair::getValue)
+                    .filter(Expression::isStringLiteralExpr)
+                    .map(Expression::asStringLiteralExpr)
+                    .findFirst()
+                    .map(JavaMergeUtilities::annotationValueMatchesMyBatisGenerator)
+                    .orElse(false);
+        }
+
+        return false;
+    }
+
+    private static boolean hasDoNotDeleteComment(AnnotationExpr annotationExpr) {
+        // check the comments value for the do_not_delete marker string
+        if (annotationExpr.isSingleMemberAnnotationExpr()) {
+            // no comments in a single member annotation - only the single "value" member"
+            return false;
+        } else if (annotationExpr.isNormalAnnotationExpr()) {
+            return annotationExpr.asNormalAnnotationExpr().getPairs().stream()
+                    .filter(JavaMergeUtilities::isCommentsPair)
+                    .map(MemberValuePair::getValue)
+                    .filter(Expression::isStringLiteralExpr)
+                    .map(Expression::asStringLiteralExpr)
+                    .findFirst()
+                    .map(StringLiteralExpr::asString)
+                    .map(s -> s.contains(MergeConstants.DO_NOT_DELETE_DURING_MERGE))
+                    .orElse(false);
+        }
+
+        return false;
+    }
+
+    private static boolean isGeneratedAnnotation(AnnotationExpr annotationExpr) {
+        String annotationName = annotationExpr.getNameAsString();
+        // Check for @Generated annotation (both javax and jakarta packages)
+        return "Generated".equals(annotationName) //$NON-NLS-1$
+                || "javax.annotation.Generated".equals(annotationName) //$NON-NLS-1$
+                || "jakarta.annotation.Generated".equals(annotationName); //$NON-NLS-1$
+    }
+
+    private static boolean isValuePair(MemberValuePair pair) {
+        return pair.getName().asString().equals("value"); //$NON-NLS-1$
+    }
+
+    private static boolean isCommentsPair(MemberValuePair pair) {
+        return pair.getName().asString().equals("comments"); //$NON-NLS-1$
+    }
+
+    private static boolean annotationValueMatchesMyBatisGenerator(StringLiteralExpr expr) {
+        return expr.asString().equals(MyBatisGenerator.class.getName());
+    }
+
+    public static GeneratedType checkForGeneratedJavadocTag(BodyDeclaration<?> member) {
+        return member.getComment()
+                .map(Comment::getContent)
+                .map(JavaMergeUtilities::checkJavadocTag)
+                .orElse(GeneratedType.NOT_GENERATED);
+    }
+
+    // Check if the comment contains any of the javadoc tags
+    private static GeneratedType checkJavadocTag(String comment) {
+        for (String tag : MergeConstants.getOldElementTags()) {
+            if (comment.contains(tag)) {
+                if (comment.contains(MergeConstants.DO_NOT_DELETE_DURING_MERGE)) {
+                    return GeneratedType.GENERATED_KEEP;
+                } else {
+                    return GeneratedType.GENERATED_REMOVE;
+                }
+            }
+        }
+        return GeneratedType.NOT_GENERATED;
+    }
+
+    private static TypeDeclaration<?> findMainTypeDeclaration(CompilationUnit compilationUnit,
+                                                              MergeFileType mergeFileType) throws MergeException {
+        // Return the first public type declaration, or the first type declaration if no public one exists
+        TypeDeclaration<?> firstType = null;
+        for (TypeDeclaration<?> typeDeclaration : compilationUnit.getTypes()) {
+            if (firstType == null) {
+                firstType = typeDeclaration;
+            }
+            if (typeDeclaration.isPublic()) {
+                return typeDeclaration;
+            }
+        }
+        if (firstType == null) {
+            throw new MergeException(getString("RuntimeError.29", mergeFileType.toString())); //$NON-NLS-1$
+        }
+        return firstType;
+    }
+
+    public static ParseResults parseAndFindMainTypeDeclaration(JavaParser javaParser, String source,
+                                                               MergeFileType mergeFileType) throws MergeException {
+        ParseResult<CompilationUnit> parseResult = javaParser.parse(source);
+
+        // little hack to pull the result out of the lambda. This allows us to avoid "orElseThrow()" later on
+        @Nullable CompilationUnit[] compilationUnits = new CompilationUnit [1];
+        parseResult.ifSuccessful(cu -> compilationUnits[0] = cu);
+
+        if (compilationUnits[0] == null) {
+            List<String> details = parseResult.getProblems().stream()
+                    .map(Problem::toString)
+                    .toList();
+            throw new MergeException(getString("RuntimeError.28", mergeFileType.toString()), details); //$NON-NLS-1$
+        }
+
+        return new ParseResults(compilationUnits[0], findMainTypeDeclaration(compilationUnits[0], mergeFileType));
+    }
+
+    public static void deleteDuplicateMemberIfExists(TypeDeclaration<?> newTypeDeclaration, BodyDeclaration<?> member) {
+        newTypeDeclaration.getMembers().stream()
+                .filter(td -> membersMatch(td, member))
+                .findFirst()
+                .ifPresent(newTypeDeclaration::remove);
     }
 }

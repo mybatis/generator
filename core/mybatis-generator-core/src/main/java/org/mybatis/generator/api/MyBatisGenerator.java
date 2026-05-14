@@ -45,6 +45,7 @@ import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.IndentationConfiguration;
+import org.mybatis.generator.config.JavaMergeConfiguration;
 import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.MergeException;
@@ -77,7 +78,7 @@ public class MyBatisGenerator {
     private final JavaFileMerger javaFileMerger;
     private final boolean isOverwriteEnabled;
     private final boolean isJavaFileMergeEnabled;
-    private final Indenter defaultIndenter;
+    private final Indenter indenter;
 
     private final List<GenerationResults> generationResultsList = new ArrayList<>();
 
@@ -87,17 +88,21 @@ public class MyBatisGenerator {
         progressCallback = Objects.requireNonNullElseGet(builder.progressCallback, () -> new ProgressCallback() {});
         fullyQualifiedTableNames = builder.fullyQualifiedTableNames;
         contextIds = builder.contextIds;
+        indenter = configuration.getIndentationConfiguration()
+                .map(IndentationConfiguration::getIndenter)
+                .orElseGet(() -> Objects.requireNonNullElseGet(builder.indenter, Indenter::defaultIndenter));
 
         if (builder.isJavaFileMergeEnabled) {
             isJavaFileMergeEnabled = true;
-            javaFileMerger = JavaMergerFactory.getMerger(JavaMergerFactory.PrinterConfiguration.LEXICAL_PRESERVING);
+            JavaMergeConfiguration javaMergeConfiguration = configuration.getJavaMergeConfiguration()
+                    .orElseGet(JavaMergeConfiguration::defaultMergeConfiguration);
+            javaFileMerger = JavaMergerFactory.getMerger(javaMergeConfiguration, indenter);
         } else {
             isJavaFileMergeEnabled = false;
             javaFileMerger = (newContent, existingContent) -> newContent;
         }
 
         isOverwriteEnabled = builder.isOverwriteEnabled;
-        defaultIndenter = Objects.requireNonNullElseGet(builder.indenter, Indenter::defaultIndenter);
     }
 
     /**
@@ -153,13 +158,9 @@ public class MyBatisGenerator {
         ObjectFactory.reset();
         RootClassInfo.reset();
 
-        Indenter globalIndenter = configuration.getIndentationConfiguration()
-                .map(IndentationConfiguration::getIndenter)
-                .orElse(defaultIndenter);
-
         setupCustomClassloader();
         List<Context> contextsToRun = calculateContextsToRun();
-        List<CalculatedContextValues> contextValuesList = calculateContextValues(contextsToRun, globalIndenter,
+        List<CalculatedContextValues> contextValuesList = calculateContextValues(contextsToRun, indenter,
                 warnings);
         List<ContextValuesAndTables> contextValuesAndTablesList = runAllIntrospections(contextValuesList, warnings);
         List<GenerationEngine> generationEngines = createGenerationEngines(contextValuesAndTablesList, warnings);
@@ -186,21 +187,19 @@ public class MyBatisGenerator {
         return contextsToRun;
     }
 
-    private List<CalculatedContextValues> calculateContextValues(List<Context> contextsToRun, Indenter globalIndenter,
+    private List<CalculatedContextValues> calculateContextValues(List<Context> contextsToRun, Indenter indenter,
                                                                  List<String> warnings) {
         return contextsToRun.stream()
-                .map(c -> createContextValues(c, globalIndenter, warnings))
+                .map(c -> createContextValues(c, indenter, warnings))
                 .toList();
     }
 
-    private CalculatedContextValues createContextValues(Context context, Indenter globalIndenter,
+    private CalculatedContextValues createContextValues(Context context, Indenter indenter,
                                                         List<String> warnings) {
         return new CalculatedContextValues.Builder()
                 .withContext(context)
                 .withWarnings(warnings)
-                .withIndenter(context.getIndentationConfiguration()
-                        .map(IndentationConfiguration::getIndenter)
-                        .orElse(globalIndenter))
+                .withIndenter(indenter)
                 .build();
     }
 

@@ -20,13 +20,13 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>The &lt;indentation&gt; Element</title>
+  <title>The &lt;indentationConfiguration&gt; Element</title>
   <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
 </head>
 <body>
-<h1>The &lt;indentation&gt; Element</h1>
-<p>The &lt;indentation&gt; element is used to define indentation specifications for generated code. By default, the generator
-  produces code with the following indentation specifications:
+<h1>The &lt;indentationConfiguration&gt; Element</h1>
+<p>The &lt;indentationConfiguration&gt; element is used to define indentation specifications for generated code. By default,
+  the generator produces code with the following indentation specifications:
 </p>
 <table border="1" cellspacing="0" cellpadding="5">
   <tr>
@@ -47,10 +47,8 @@
   </tr>
 </table>
 <p>This element allows you to change these defaults.
-  This element is an optional child element of the <a href="context.html">&lt;context&gt;</a> element,
-  and the <a href="generatorConfiguration.html">&lt;generatorConfiguration&gt;</a> element. If specified at the
-  &lt;generatorConfiguration&gt; level, the specifications will apply to all contexts unless overridden by specifying a
-  configuration at the &lt;context&gt; level. It is also possible to supply an indentation configuration through the
+  This element is an optional child element of the <a href="generatorConfiguration.html">&lt;generatorConfiguration&gt;</a>
+  element. It is also possible to supply an indentation configuration through the
   Java API for the generator. This is primarily supported for environments like Eclipse where indentation can be
   configured in an IDE. Any configuration specified with the Java API will NOT override settings in a configuration
   file, but will only be applied if no configurations are specified through XML configuration.

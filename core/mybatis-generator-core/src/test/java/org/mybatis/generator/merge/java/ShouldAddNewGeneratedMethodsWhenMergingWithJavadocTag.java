@@ -15,7 +15,31 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
+
 public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaMergeTestCase {
+    public ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag() {
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        // disabled because of an issue with the lexical preserving printer - JavaDoc comments are lost
+        addMergeConfiguration(false, "MergeIntoOldLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return """
@@ -46,28 +70,91 @@ public class ShouldAddNewGeneratedMethodsWhenMergingWithJavadocTag extends JavaM
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
-        return """
-                package com.example;
-
-                public class TestMapper {
-
-                    /**
-                     * @mbg.generated
-                     */
-                    public int insert(Object record) {
-                        return 0;
-                    }
-
-                    public void customMethod() {
-                        System.out.println("Custom method");
-                    }
-                }
-                """;
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
     }
 
-    @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+    private String expectedMergeIntoNewContent() {
+        return """
+            package com.example;
+
+            public class TestMapper {
+
+                /**
+                 * @mbg.generated
+                 */
+                public int insert(Object record) {
+                    return 0;
+                }
+
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+            }
+            """;
+    }
+
+    private String expectedMergeIntoNewLPContent() {
+        return """
+            package com.example;
+
+            public class TestMapper {
+                /**
+                 * @mbg.generated
+                 */
+                public int insert(Object record) {
+                    return 0;
+                }
+               \s
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+            }
+            """;
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+            package com.example;
+
+            public class TestMapper {
+
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+
+                /**
+                 * @mbg.generated
+                 */
+                public int insert(Object record) {
+                    return 0;
+                }
+            }
+            """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        return """
+            package com.example;
+
+            public class TestMapper {
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+               \s
+                /**
+                 * @mbg.generated
+                 */
+                public int insert(Object record) {
+                    return 0;
+                }
+            }
+            """;
     }
 }

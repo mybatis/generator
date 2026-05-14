@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2026 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Java Merge Reference</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>Java Merge Reference</h1>
+<p>Java code merging is a complex operation and there are tradeoffs to consider.
+  The Java merger is highly configurable. This page will provide some details to help you decide
+  which configuration is best for your needs.
+</p>
+<p>The Java merger is built using the parser from
+  <a target="_blank" href="https://javaparser.org/">https://javaparser.org/</a>.
+  It is possible that future changes in that product may change some of what's written here. We will endeavor
+  to keep this page up to date as things change.
+</p>
+
+<p>Any configuration of the Java merger will preserve the function of the merged Java code.
+  Merge configuration is primarily concerned with formatting of the code after the merge operation
+</p>
+
+<p>Configuration options for the parser include the following broad topics:</p>
+
+<ul>
+  <li>Lexical Preservation</li>
+  <li>Merge Strategy</li>
+  <li>Import Sorting</li>
+  <li>Indentation Options</li>
+</ul>
+
+<p>We will cover these in order.</p>
+
+<h2>Recommendations</h2>
+<p>The default merge configuration is:</p>
+<ol>
+  <li>Lexical preservation: disabled</li>
+  <li>Merge strategy: Merge_Into_Existing</li>
+  <li>Import sorting strategy: Eclipse</li>
+  <li>Indentation is taken from the
+    <a href="../configreference/indentationConfiguration.html">&lt;indentationConfiguration&gt;</a>
+    (the default is four spaces)
+  </li>
+</ol>
+
+<p>In most cases, the default configuration will work. The limitations of the default configuration are:</p>
+<ul>
+  <li>Because lexical preservation is disabled, existing code may be reformatted.</li>
+  <li>Class/Interface to record merges are not supported</li>
+</ul>
+
+<p>All strategies have the most trouble with comments. Non-JavaDoc comments will be completely lost if you use the
+  "Merge_Into_New" strategy. If you wish to have the code formatting benefits of the lexical preserving printer, then
+  you should be very cautious with comments (both Javadoc and non-Javadoc comments).
+</p>
+
+<h2>Lexical Preservation</h2>
+<p>Lexical preservation is a function of JavaParser whereby the formatter (or "Printer") of the merged code attempts
+  to preserve the lexical structure and format of merged code. This is a highly complex process, and it does not
+  always work flawlessly. But it may be useful if you have added large amounts of custom code to a generated Java file,
+  and you wish to preserve the format of the custom code. A good example is when you have a method that uses stream
+  operations. Suppose you have a method like the following:</p>
+
+<pre>
+public int sumOfEvens(int n) {
+    return IntStream.of(0, n).filter(i -> i % 2 == 0).map(i -> i * 2).sum();
+}
+</pre>
+
+<p>The lexical preserving printer will keep the format of this code. If you don't use the lexical preserving printer,
+  then the code may end up like this:
+</p>
+
+<pre>
+public int sumOfEvens(int n) {
+    return IntStream.of(0, n)
+                    .filter(i -> i % 2 == 0)
+                    .map(i -> i * 2)
+                    .sum();
+}
+</pre>
+
+<h3>Limitations of the Lexical Preserving Printer</h3>
+<ul>
+  <li>If you choose lexical preservation, then any indentation option you configure will be ignored.
+    The lexical preserving printer attempts to match the indentation of the original code.
+  </li>
+  <li>If you choose lexical preservation, then any import sorting option you configure will be ignored.
+    The lexical preserving printer does not sort or change the order of imports.
+  </li>
+  <li>The lexical preserving printer has challenges with comments. In some cases, Javadoc comments are not
+    successfully merged.
+  </li>
+</ul>
+
+<h2>Merge Strategy</h2>
+<p>There are two possible merge strategies:</p>
+<ul>
+  <li>Merge newly generated code into existing code (Merge_Into_Existing)</li>
+  <li>Merge existing code into newly generated code (Merge_Into_New)</li>
+</ul>
+
+<p>The basic goal of the merger - in either case - is to preserve custom methods, fields, inner classes, etc. from
+  an existing Java file. The difference is the starting point.
+</p>
+
+<p>The Merge_Into_Existing strategy works like this:</p>
+<ol>
+  <li>Remove all generated items from an existing file</li>
+  <li>Copy generated items from a new file into the existing file</li>
+  <li>Return the (merged) existing file</li>
+</ol>
+
+<p>The Merge_Into_New strategy works like this:</p>
+<ol>
+  <li>Copy custom items from an existing file into the new file</li>
+  <li>Return the (merged) new file</li>
+  <li>This strategy will NOT copy non-Javadoc comments from existing files into a new file</li>
+</ol>
+
+<p>In many cases the outcomes will be the same regardless of strategy. The differences are detailed below:</p>
+
+<ul>
+  <li>The Merge_Into_New strategy will not copy non-JavaDoc comments from existing code.</li>
+  <li>The Merge_Into_New strategy will perform a Class or Interface to Record Conversion. This is because
+    the merger does not change the generated type (class, interface, record, etc.) to match the existing type.
+  </li>
+</ul>
+
+<h2>Import Sorting</h2>
+<p>Import sorting options are ignored if you chose the lexical preserving option.</p>
+
+<p>If you do not choose the lexical preserving option, then there are three options for soring imports.
+  These options are built in to JavaParser – we do not create any custom sort options. The options are as follows:
+</p>
+
+<dl>
+  <dt>ECLIPSE</dt>
+  <dd>Groups of static imports first, then java.*, then javax.*, then org.*, then com.*, others</dd>
+  <dt>INTELLIJ</dt>
+  <dd>Groups of other imports first, the java.* and javax.*, then static imports</dd>
+  <dt>DEFAULT</dt>
+  <dd>All imports in the same group</dd>
+</dl>
+
+<p>All groups are sorted alphabetically.</p>
+
+<h2>Indentation Options</h2>
+<p>The indentation options (tabs vs. spaces, and size) specified in the generator configuration are also used by
+  the merger – but only if you are not using the lexical preserving printer.
+</p>
+
+</body>
+</html>

@@ -15,7 +15,30 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
+
 public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
+    public ShouldMergeSuperInterfaces() {
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return
@@ -44,7 +67,7 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
 
                 import javax.annotation.Generated;
 
-                public class Foo {
+                public class Foo implements Cloneable {
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     public String hello() {
                         return "hello";
@@ -54,16 +77,25 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
-        return
-                """
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedMergeIntoNewContent() {
+        return """
                 package foo;
 
                 import java.io.Serializable;
 
                 import javax.annotation.Generated;
 
-                public class Foo implements Serializable {
+                public class Foo implements Cloneable, Serializable {
 
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     public String hello() {
@@ -75,8 +107,59 @@ public class ShouldMergeSuperInterfaces extends JavaMergeTestCase {
                 """;
     }
 
-    @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+    private String expectedMergeIntoNewLPContent() {
+        return """
+                package foo;
+
+                import javax.annotation.Generated;
+                import java.io.Serializable;
+
+                public class Foo implements Cloneable, Serializable {
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String hello() {
+                        return "hello";
+                    }
+                   \s
+                    private static final long serialVersionUID = 1L;
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+
+                import javax.annotation.Generated;
+
+                public class Foo implements Serializable, Cloneable {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String hello() {
+                        return "hello";
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+                import javax.annotation.Generated;
+
+                public class Foo implements Serializable, Cloneable {
+                    private static final long serialVersionUID = 1L;
+                   \s
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String hello() {
+                        return "hello";
+                    }
+                }
+                """;
     }
 }

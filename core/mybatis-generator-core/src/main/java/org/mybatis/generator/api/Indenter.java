@@ -20,73 +20,54 @@ import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 
 public class Indenter {
+    // Kotlin indents are always four spaces per level (from the published Kotlin code conventions)
+    private static final String kotlinIndent = "    "; //$NON-NLS-1$
+
     private final String javaIndent;
     private final String xmlIndent;
+    private final IndentType javaIndentType;
+    private final Integer javaIndentAmount;
+    private final IndentType xmlIndentType;
+    private final Integer xmlIndentAmount;
 
     private Indenter(Builder builder) {
-        javaIndent = calculateIndent(builder.javaIndentType, builder.javaIndentAmount, 4);
-        xmlIndent = calculateIndent(builder.xmlIndentType, builder.xmlIndentAmount, 2);
+        javaIndentType = Objects.requireNonNullElse(builder.javaIndentType, IndentType.SPACES);
+        javaIndentAmount = Objects.requireNonNullElseGet(builder.javaIndentAmount, () -> switch (javaIndentType) {
+        case SPACES -> 4;
+        case TABS -> 1;
+        });
+
+        xmlIndentType = Objects.requireNonNullElse(builder.xmlIndentType, IndentType.SPACES);
+        xmlIndentAmount = Objects.requireNonNullElseGet(builder.xmlIndentAmount, () -> switch (xmlIndentType) {
+        case SPACES -> 2;
+        case TABS -> 1;
+        });
+
+        javaIndent = calculateIndent(javaIndentType, javaIndentAmount);
+        xmlIndent = calculateIndent(xmlIndentType, xmlIndentAmount);
     }
 
-    private String calculateIndent(@Nullable IndentType indentType, @Nullable Integer amount, int defaultSpaces) {
-        return switch (Objects.requireNonNullElse(indentType, IndentType.SPACES)) {
-        case SPACES -> {
-            int amt = Objects.requireNonNullElse(amount, defaultSpaces);
-            yield " ".repeat(amt); //$NON-NLS-1$
-        }
-        case TABS -> {
-            int amt = Objects.requireNonNullElse(amount, 1);
-            yield "\t".repeat(amt); //$NON-NLS-1$
-        }
+    private String calculateIndent(IndentType indentType, Integer amount) {
+        return switch (indentType) {
+        case SPACES -> " ".repeat(amount); //$NON-NLS-1$
+        case TABS -> "\t".repeat(amount); //$NON-NLS-1$
         };
     }
 
-    /**
-     * Utility method that indents the buffer by the default amount for Java
-     * (four spaces per indent level).
-     *
-     * @param sb
-     *            a StringBuilder to append to
-     * @param indentLevel
-     *            the required indent level
-     */
-    public void javaIndent(StringBuilder sb, int indentLevel) {
-        sb.append(javaIndent(indentLevel));
+    public IndentType javaIndentType() {
+        return javaIndentType;
+    }
+
+    public Integer javaIndentAmount() {
+        return javaIndentAmount;
     }
 
     public String javaIndent(int indentLevel) {
         return javaIndent.repeat(indentLevel);
     }
 
-    /**
-     * Utility method that indents the buffer by the default amount for Kotlin
-     * (four spaces per indent level).
-     *
-     * @param sb
-     *            a StringBuilder to append to
-     * @param indentLevel
-     *            the required indent level
-     */
-    public static void kotlinIndent(StringBuilder sb, int indentLevel) {
-        sb.append(kotlinIndent(indentLevel));
-    }
-
     public static String kotlinIndent(int indentLevel) {
-        // Kotlin indents are always four spaces per level (from the published Kotlin code conventions)
-        return "    ".repeat(indentLevel); //$NON-NLS-1$
-    }
-
-    /**
-     * Utility method that indents the buffer by the default amount for XML (two
-     * spaces per indent level).
-     *
-     * @param sb
-     *            a StringBuilder to append to
-     * @param indentLevel
-     *            the required indent level
-     */
-    public void xmlIndent(StringBuilder sb, int indentLevel) {
-        sb.append(xmlIndent(indentLevel));
+        return kotlinIndent.repeat(indentLevel);
     }
 
     public String xmlIndent(int indentLevel) {

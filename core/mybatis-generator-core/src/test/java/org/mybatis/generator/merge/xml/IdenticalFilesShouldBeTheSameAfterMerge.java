@@ -15,15 +15,13 @@
  */
 package org.mybatis.generator.merge.xml;
 
-import org.mybatis.generator.merge.MergeTestCase;
-
 /**
  * This test is related to issue #87 where XML files are slightly different
  * after running through the XML merger.
  *
  * @author Jeff Butler
  */
-public class IdenticalFilesShouldBeTheSameAfterMerge extends MergeTestCase {
+public class IdenticalFilesShouldBeTheSameAfterMerge extends XmlMergeTestCase {
     @Override
     public String existingContent(String parameter) {
         return """

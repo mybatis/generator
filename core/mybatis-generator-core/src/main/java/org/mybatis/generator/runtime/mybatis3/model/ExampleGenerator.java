@@ -347,7 +347,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine(sb.toString());
         while (strIter.hasNext()) {
             sb.setLength(0);
-            indenter.javaIndent(sb, 1);
+            sb.append(indenter.javaIndent(1));
             sb.append("|| "); //$NON-NLS-1$
             sb.append(strIter.next());
             sb.append(".size() > 0"); //$NON-NLS-1$

@@ -51,8 +51,9 @@
       <topic href="html/mbgdoc/configreference/generatorConfiguration.html" label="&lt;generatorConfiguration&gt;"/>
       <topic href="html/mbgdoc/configreference/ignoreColumn.html" label="&lt;ignoreColumn&gt;"/>
       <topic href="html/mbgdoc/configreference/ignoreColumnsByRegex.html" label="&lt;ignoreColumnsByRegex&gt;"/>
-      <topic href="html/mbgdoc/configreference/indentation.html" label="&lt;indentation&gt;"/>
+      <topic href="html/mbgdoc/configreference/indentationConfiguration.html" label="&lt;indentationConfiguration&gt;"/>
       <topic href="html/mbgdoc/configreference/javaClientGenerator.html" label="&lt;javaClientGenerator&gt;"/>
+      <topic href="html/mbgdoc/configreference/javaMergeConfiguration.html" label="&lt;javaMergeConfiguration&gt;"/>
       <topic href="html/mbgdoc/configreference/javaModelGenerator.html" label="&lt;javaModelGenerator&gt;"/>
       <topic href="html/mbgdoc/configreference/javaTypeResolver.html" label="&lt;javaTypeResolver&gt;"/>
       <topic href="html/mbgdoc/configreference/jdbcConnection.html" label="&lt;jdbcConnection&gt;"/>
@@ -81,6 +82,7 @@
       <topic href="html/mbgdoc/usage/postgresql.html" label="PostgreSQL"/>
    </topic>
    <topic href="html/mbgdoc/reference/intro.html" label="Other Reference Information">
+      <topic href="html/mbgdoc/reference/javaMergeReference.html" label="Java Merge Reference"/>
       <topic href="html/mbgdoc/reference/building.html" label="Building From Source"/>
       <topic href="html/mbgdoc/reference/extending.html" label="Extending MyBatis Generator"/>
       <topic href="html/mbgdoc/reference/pluggingIn.html" label="Implementing Plugins"/>

@@ -15,13 +15,52 @@
  */
 package org.mybatis.generator.merge.java;
 
+import com.github.javaparser.printer.DefaultPrettyPrinter;
+import com.github.javaparser.printer.Printer;
+import com.github.javaparser.printer.configuration.ImportOrderingStrategy;
+import com.github.javaparser.printer.configuration.Indentation;
+import com.github.javaparser.printer.configuration.imports.DefaultImportOrderingStrategy;
+import com.github.javaparser.printer.configuration.imports.EclipseImportOrderingStrategy;
+import com.github.javaparser.printer.configuration.imports.IntelliJImportOrderingStrategy;
+import com.github.javaparser.printer.lexicalpreservation.DefaultLexicalPreservingPrinter;
+import org.mybatis.generator.api.Indenter;
+import org.mybatis.generator.config.JavaMergeConfiguration;
+
 public class JavaMergerFactory {
-    public static JavaFileMerger getMerger(PrinterConfiguration printerConfiguration) {
-        return new JavaFileMergerJavaParserImpl(printerConfiguration);
+    public static JavaFileMerger getMerger(JavaMergeConfiguration javaMergeConfiguration, Indenter indenter) {
+        return switch (javaMergeConfiguration.mergeStrategy()) {
+        case MERGE_INTO_NEW -> new MergeIntoNewJavaFileMerger(getPrinter(javaMergeConfiguration, indenter),
+                    javaMergeConfiguration.isLexicalPreserving());
+        case MERGE_INTO_EXISTING -> new MergeIntoExistingJavaFileMerger(getPrinter(javaMergeConfiguration, indenter),
+                    javaMergeConfiguration.isLexicalPreserving());
+        };
     }
 
-    public enum PrinterConfiguration {
-        ECLIPSE,
-        LEXICAL_PRESERVING;
+    private static Printer getPrinter(JavaMergeConfiguration javaMergeConfiguration, Indenter indenter) {
+        if (javaMergeConfiguration.isLexicalPreserving()) {
+            return new DefaultLexicalPreservingPrinter();
+        }
+
+        return new DefaultPrettyPrinter(calculatePrinterConfiguration(javaMergeConfiguration, indenter));
+    }
+
+    private static CustomPrinterConfiguration calculatePrinterConfiguration(
+            JavaMergeConfiguration javaMergeConfiguration, Indenter indenter) {
+        ImportOrderingStrategy ios = switch (javaMergeConfiguration.importSortType()) {
+        case ECLIPSE -> new EclipseImportOrderingStrategy();
+        case INTELLIJ -> new IntelliJImportOrderingStrategy();
+        case DEFAULT -> new DefaultImportOrderingStrategy();
+        };
+        ios.setSortImportsAlphabetically(true);
+
+        Indentation indentation = switch (indenter.javaIndentType()) {
+        case TABS -> new Indentation(Indentation.IndentType.TABS, indenter.javaIndentAmount());
+        case SPACES -> new Indentation(Indentation.IndentType.SPACES, indenter.javaIndentAmount());
+        };
+
+        return new CustomPrinterConfiguration.Builder()
+                .withImportOrderingStrategy(ios)
+                .withIndentation(indentation)
+                .build();
     }
 }

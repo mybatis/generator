@@ -47,7 +47,7 @@ class MyBatisGeneratorTest {
         assert is != null;
         Configuration config = cp.parseConfiguration(is);
 
-        assertThat(cp.getWarnings()).hasSize(21);
+        assertThat(cp.getWarnings()).hasSize(23);
 
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
                 .withConfiguration(config)

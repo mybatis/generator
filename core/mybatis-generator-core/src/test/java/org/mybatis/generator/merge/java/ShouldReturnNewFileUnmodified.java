@@ -15,7 +15,30 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
+
 public class ShouldReturnNewFileUnmodified extends JavaMergeTestCase {
+    public ShouldReturnNewFileUnmodified() {
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return
@@ -60,12 +83,7 @@ public class ShouldReturnNewFileUnmodified extends JavaMergeTestCase {
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
+    public String expectedContentAfterMerge(String parameter, String id) {
         return newContent(parameter);
-    }
-
-    @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
     }
 }

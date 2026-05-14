@@ -54,8 +54,8 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
         StringBuilder insertClause = new StringBuilder();
         StringBuilder valuesClause = new StringBuilder();
 
-        indenter.javaIndent(insertClause, 1);
-        indenter.javaIndent(valuesClause, 1);
+        insertClause.append(indenter.javaIndent(1));
+        valuesClause.append(indenter.javaIndent(1));
 
         insertClause.append("\"insert into "); //$NON-NLS-1$
         insertClause.append(escapeStringForJava(introspectedTable
@@ -93,12 +93,12 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
 
                 builder.withAnnotation(insertClause.toString());
                 insertClause.setLength(0);
-                indenter.javaIndent(insertClause, 1);
+                insertClause.append(indenter.javaIndent(1));
                 insertClause.append('\"');
 
                 valuesClauses.add(valuesClause.toString());
                 valuesClause.setLength(0);
-                indenter.javaIndent(valuesClause, 1);
+                valuesClause.append(indenter.javaIndent(1));
                 valuesClause.append('\"');
                 hasFields = false;
             }

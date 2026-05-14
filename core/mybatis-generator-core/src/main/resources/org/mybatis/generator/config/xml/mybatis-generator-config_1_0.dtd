@@ -34,8 +34,8 @@
 <!--
   The generatorConfiguration element is the root element for configurations.
 -->
-<!ELEMENT generatorConfiguration (properties?, indentation?, classPathEntry*, context+)>
-                        
+<!ELEMENT generatorConfiguration (properties?, indentationConfiguration?, javaMergeConfiguration?, classPathEntry*, context+)>
+
 <!--
   The properties element is used to define a standard Java properties file
   that contains placeholders for use in the remainder of the configuration
@@ -46,18 +46,24 @@
   resource CDATA #IMPLIED
   url CDATA #IMPLIED>
 
-<!ELEMENT indentation EMPTY>
-<!ATTLIST indentation
+<!ELEMENT indentationConfiguration EMPTY>
+<!ATTLIST indentationConfiguration
   javaIndentType CDATA #IMPLIED
   javaIndentAmount CDATA #IMPLIED
   xmlIndentType CDATA #IMPLIED
   xmlIndentAmount CDATA #IMPLIED>
 
+<!ELEMENT javaMergeConfiguration EMPTY>
+<!ATTLIST javaMergeConfiguration
+  lexicalPreserving CDATA #IMPLIED
+  importSortStrategy CDATA #IMPLIED
+  mergeStrategy CDATA #IMPLIED>
+
 <!--
   The context element is used to describe a context for generating files, and the source
   tables.
 -->
-<!ELEMENT context (property*, indentation?, plugin*, commentGenerator?, (connectionFactory | jdbcConnection),
+<!ELEMENT context (property*, plugin*, commentGenerator?, (connectionFactory | jdbcConnection),
     javaTypeResolver?, (modelGenerator | javaModelGenerator), sqlMapGenerator?,
     (clientGenerator | javaClientGenerator)?, table+)>
 <!ATTLIST context id ID #REQUIRED

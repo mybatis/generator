@@ -42,7 +42,7 @@ public class BodyLineRenderer {
                 indentLevel--;
             }
 
-            indenter.javaIndent(sb, indentLevel);
+            sb.append(indenter.javaIndent(indentLevel));
             sb.append(line);
             lines.add(sb.toString());
 

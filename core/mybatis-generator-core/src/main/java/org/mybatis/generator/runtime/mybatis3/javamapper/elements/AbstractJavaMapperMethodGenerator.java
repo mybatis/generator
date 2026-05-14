@@ -115,7 +115,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
         Iterator<IntrospectedColumn> iter = introspectedTable.getPrimaryKeyColumns().iterator();
         while (iter.hasNext()) {
             sb.setLength(0);
-            indenter.javaIndent(sb, 1);
+            sb.append(indenter.javaIndent(1));
             if (and) {
                 sb.append("  \"and "); //$NON-NLS-1$
             } else {
@@ -142,7 +142,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
         answer.add("@Update({"); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
-        indenter.javaIndent(sb, 1);
+        sb.append(indenter.javaIndent(1));
         sb.append("\"update "); //$NON-NLS-1$
         sb.append(escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime()));
         sb.append("\","); //$NON-NLS-1$
@@ -150,7 +150,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
 
         // set up for first column
         sb.setLength(0);
-        indenter.javaIndent(sb, 1);
+        sb.append(indenter.javaIndent(1));
         sb.append("\"set "); //$NON-NLS-1$
 
         Iterator<IntrospectedColumn> iter = ListUtilities.filterColumnsForUpdate(columnList).iterator();
@@ -171,7 +171,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
             // set up for the next column
             if (iter.hasNext()) {
                 sb.setLength(0);
-                indenter.javaIndent(sb, 1);
+                sb.append(indenter.javaIndent(1));
                 sb.append("  \""); //$NON-NLS-1$
             }
         }
@@ -298,12 +298,12 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
         List<String> answer = new ArrayList<>();
         answer.add("@Select({"); //$NON-NLS-1$
         StringBuilder sb = new StringBuilder();
-        indenter.javaIndent(sb, 1);
+        sb.append(indenter.javaIndent(1));
         sb.append("\"select\","); //$NON-NLS-1$
         answer.add(sb.toString());
 
         sb.setLength(0);
-        indenter.javaIndent(sb, 1);
+        sb.append(indenter.javaIndent(1));
         sb.append('"');
         boolean hasColumns = false;
         Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
@@ -320,7 +320,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInte
                 answer.add(sb.toString());
 
                 sb.setLength(0);
-                indenter.javaIndent(sb, 1);
+                sb.append(indenter.javaIndent(1));
                 sb.append('"');
                 hasColumns = false;
             }

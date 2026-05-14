@@ -15,7 +15,22 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
+
 public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
+    public ShouldHandleClassToRecordConversions () {
+        // this use case is not supported with the merge into existing strategy
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return
@@ -80,22 +95,27 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
 
                 import javax.annotation.Generated;
 
-                @Generated("org.mybatis.generator.api.MyBatisGenerator")
                 public record Name(int id, String firstName, String lastName) {}
                 """;
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
-        return
-                """
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+        case "MergeIntoNew" -> expectedMergeIntoNewContent();
+        case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
+        default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedMergeIntoNewContent() {
+        return """
                 package foo;
 
                 import java.io.Serializable;
 
                 import javax.annotation.Generated;
 
-                @Generated("org.mybatis.generator.api.MyBatisGenerator")
                 public record Name(int id, String firstName, String lastName) implements Serializable {
 
                     private static final long serialVersionUID = 1L;
@@ -107,8 +127,20 @@ public class ShouldHandleClassToRecordConversions extends JavaMergeTestCase {
                 """;
     }
 
-    @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+    private String expectedMergeIntoNewLPContent() {
+        return """
+                package foo;
+
+                import javax.annotation.Generated;
+                import java.io.Serializable;
+
+                public record Name(int id, String firstName, String lastName) implements Serializable {
+                    private static final long serialVersionUID = 1L;
+                   \s
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
     }
 }

@@ -15,7 +15,30 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
+
 public class ShouldMergeRecords extends JavaMergeTestCase {
+    public ShouldMergeRecords() {
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return
@@ -40,19 +63,28 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
                 """
                 package foo;
 
-                public record Name(int id, String firstName, String lastName) {}
+                public record Name(int id, String firstName, String lastName, String middleName) {}
                 """;
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
-        return
-                """
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedMergeIntoNewContent() {
+        return """
                 package foo;
 
                 import java.io.Serializable;
 
-                public record Name(int id, String firstName, String lastName) implements Serializable {
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
 
                     private static final long serialVersionUID = 1L;
 
@@ -63,8 +95,52 @@ public class ShouldMergeRecords extends JavaMergeTestCase {
                 """;
     }
 
-    @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+    private String expectedMergeIntoNewLPContent() {
+        return """
+                package foo;
+                import java.io.Serializable;
+
+
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
+                    private static final long serialVersionUID = 1L;
+                   \s
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
+
+                    private static final long serialVersionUID = 1L;
+
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+
+                public record Name(int id, String firstName, String lastName, String middleName) implements Serializable {
+                    private static final long serialVersionUID = 1L;
+
+                    public String fullName() {
+                        return firstName + " " + lastName;
+                    }
+                }
+                """;
     }
 }

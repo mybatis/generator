@@ -15,7 +15,31 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
+
 public class ShouldMergeInputsCorrectly extends JavaMergeTestCase {
+    public ShouldMergeInputsCorrectly() {
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        // disabled because of an issue with the lexical preserving printer - JavaDoc comments are lost
+        addMergeConfiguration(false, "MergeIntoOldLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return """
@@ -53,7 +77,17 @@ public class ShouldMergeInputsCorrectly extends JavaMergeTestCase {
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedMergeIntoNewContent() {
         return """
                 package com.example;
 
@@ -79,8 +113,77 @@ public class ShouldMergeInputsCorrectly extends JavaMergeTestCase {
                 """;
     }
 
-    @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+    private String expectedMergeIntoNewLPContent() {
+        return """
+                package com.example;
+
+                import java.util.List;
+                import java.util.Map;
+                import java.util.Date;
+                import java.sql.PreparedStatement;
+                import java.util.Set;
+                import java.sql.Connection;
+
+                public class TestMapper {
+                    /**
+                     * @mbg.generated
+                     */
+                    public Map<String, Object> getMap() {
+                        return null;
+                    }
+                   \s
+                    public void customMethod() {}
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package com.example;
+
+                import java.sql.Connection;
+                import java.sql.PreparedStatement;
+                import java.util.Date;
+                import java.util.List;
+                import java.util.Map;
+                import java.util.Set;
+
+                public class TestMapper {
+
+                    public void customMethod() {
+                    }
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public Map<String, Object> getMap() {
+                        return null;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        return """
+                package com.example;
+
+                import java.util.Set;
+                import java.util.Date;
+                import java.sql.Connection;
+                import java.util.List;
+                import java.util.Map;
+                import java.sql.PreparedStatement;
+
+                public class TestMapper {
+                    public void customMethod() {}
+                   \s
+                    /**
+                     * @mbg.generated
+                     */
+                    public Map<String, Object> getMap() {
+                        return null;
+                    }
+                }
+                """;
     }
 }

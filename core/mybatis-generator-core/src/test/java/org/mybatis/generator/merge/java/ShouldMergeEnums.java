@@ -15,7 +15,30 @@
  */
 package org.mybatis.generator.merge.java;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
+
 public class ShouldMergeEnums extends JavaMergeTestCase {
+    public ShouldMergeEnums() {
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return
@@ -28,8 +51,6 @@ public class ShouldMergeEnums extends JavaMergeTestCase {
                 public enum NameType implements Serializable {
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     FIRST_NAME("first name"),
-                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    LAST_NAME("last name"),
                     MIDDLE_NAME("middle name");
 
                     private static final long serialVersionUID = 1L;
@@ -88,9 +109,18 @@ public class ShouldMergeEnums extends JavaMergeTestCase {
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
-        return
-                """
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedMergeIntoNewContent() {
+        return """
                 package foo;
 
                 import java.io.Serializable;
@@ -100,8 +130,10 @@ public class ShouldMergeEnums extends JavaMergeTestCase {
                 public enum NameType implements Serializable {
 
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    FIRST_NAME("first name"), @Generated("org.mybatis.generator.api.MyBatisGenerator")
-                    LAST_NAME("last name"), MIDDLE_NAME("middle name");
+                    FIRST_NAME("first name"),
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    LAST_NAME("last name"),
+                    MIDDLE_NAME("middle name");
 
                     @Generated("org.mybatis.generator.api.MyBatisGenerator")
                     private String displayText;
@@ -126,8 +158,116 @@ public class ShouldMergeEnums extends JavaMergeTestCase {
                 """;
     }
 
-    @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+    private String expectedMergeIntoNewLPContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+                import javax.annotation.Generated;
+
+                public enum NameType implements Serializable {
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    FIRST_NAME("first name"),
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    LAST_NAME("last name"),
+                    MIDDLE_NAME("middle name");
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    private String displayText;
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    NameType(String displayText) {
+                        this.displayText = displayText;
+                    }
+
+                    @Override
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String toString() {
+                        return displayText;
+                    }
+                   \s
+                    private static final long serialVersionUID = 1L;
+                   \s
+                    public boolean isFirstName() {
+                        return this == FIRST_NAME;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+
+                import javax.annotation.Generated;
+
+                public enum NameType implements Serializable {
+
+                    MIDDLE_NAME("middle name"),
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    FIRST_NAME("first name"),
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    LAST_NAME("last name");
+
+                    private static final long serialVersionUID = 1L;
+
+                    public boolean isFirstName() {
+                        return this == FIRST_NAME;
+                    }
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    private String displayText;
+
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    NameType(String displayText) {
+                        this.displayText = displayText;
+                    }
+
+                    @Override
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String toString() {
+                        return displayText;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        return """
+                package foo;
+
+                import java.io.Serializable;
+                import javax.annotation.Generated;
+
+                public enum NameType implements Serializable {
+                    MIDDLE_NAME("middle name"),
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    FIRST_NAME("first name"),
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    LAST_NAME("last name");
+
+                    private static final long serialVersionUID = 1L;
+
+                    public boolean isFirstName() {
+                        return this == FIRST_NAME;
+                    }
+                   \s
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    private String displayText;
+                   \s
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    NameType(String displayText) {
+                        this.displayText = displayText;
+                    }
+                   \s
+                    @Override
+                    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+                    public String toString() {
+                        return displayText;
+                    }
+                }
+                """;
     }
 }

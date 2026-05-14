@@ -17,7 +17,30 @@ package org.mybatis.generator.merge.java;
 
 import java.util.List;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
+import org.mybatis.generator.config.MergeStrategy;
+
 public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation extends JavaMergeTestCase {
+    public ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation() {
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        addMergeConfiguration("MergeIntoOldLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return String.format("""
@@ -37,7 +60,7 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                         return 0;
                     }
 
-                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V1")
                     public int deleteByPrimaryKey(Integer id) {
                         return 0;
                     }
@@ -59,13 +82,13 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
                 public class TestMapper {
 
-                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
                     public int deleteByPrimaryKey(Integer id) {
                         // Updated implementation
                         return 1;
                     }
 
-                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="Source field: awful table.first name")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
                     public int insert(Object record) {
                         return 0;
                     }
@@ -74,7 +97,45 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "MergeIntoNew" -> expectedMergeIntoNewContent(parameter);
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent(parameter);
+            case "MergeIntoOld" -> expectedMergeIntoOldContent(parameter);
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent(parameter);
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedMergeIntoNewContent(String parameter) {
+        return String.format("""
+            package com.example;
+
+            import %s;
+
+            public class TestMapper {
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "V2")
+                public int deleteByPrimaryKey(Integer id) {
+                    // Updated implementation
+                    return 1;
+                }
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "V2")
+                public int insert(Object record) {
+                    return 0;
+                }
+
+                // This is a custom method that should be preserved
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+            }
+            """, parameter);
+    }
+
+    private String expectedMergeIntoNewLPContent(String parameter) {
+        // This is a documented case of something that doesn't work with the LP printer: comments are not merged
         return String.format("""
                 package com.example;
 
@@ -82,18 +143,17 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
                 public class TestMapper {
 
-                    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "Source field: awful table.first name")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
                     public int deleteByPrimaryKey(Integer id) {
                         // Updated implementation
                         return 1;
                     }
 
-                    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "Source field: awful table.first name")
+                    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
                     public int insert(Object record) {
                         return 0;
                     }
-
-                    // This is a custom method that should be preserved
+                   \s
                     public void customMethod() {
                         System.out.println("Custom method");
                     }
@@ -101,13 +161,62 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                 """, parameter);
     }
 
-    @Override
-    public List<String> parameterVariants() {
-        return List.of("javax.annotation.Generated", "jakarta.annotation.Generated");
+    private String expectedMergeIntoOldContent(String parameter) {
+        return String.format("""
+            package com.example;
+
+            import %s;
+
+            public class TestMapper {
+
+                // This is a custom method that should be preserved
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "V2")
+                public int deleteByPrimaryKey(Integer id) {
+                    // Updated implementation
+                    return 1;
+                }
+
+                @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2026-01-30T16:13:03.730861-05:00", comments = "V2")
+                public int insert(Object record) {
+                    return 0;
+                }
+            }
+            """, parameter);
+    }
+
+    private String expectedMergeIntoOldLPContent(String parameter) {
+        return String.format("""
+            package com.example;
+
+            import %s;
+
+            public class TestMapper {
+
+                // This is a custom method that should be preserved
+                public void customMethod() {
+                    System.out.println("Custom method");
+                }
+               \s
+                @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
+                public int deleteByPrimaryKey(Integer id) {
+                    // Updated implementation
+                    return 1;
+                }
+               \s
+                @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2026-01-30T16:13:03.730861-05:00", comments="V2")
+                public int insert(Object record) {
+                    return 0;
+                }
+            }
+            """, parameter);
     }
 
     @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+    public List<String> parameterVariants() {
+        return List.of("javax.annotation.Generated", "jakarta.annotation.Generated");
     }
 }

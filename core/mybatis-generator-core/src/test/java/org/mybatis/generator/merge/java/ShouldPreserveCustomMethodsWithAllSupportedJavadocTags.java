@@ -18,9 +18,32 @@ package org.mybatis.generator.merge.java;
 import java.util.Arrays;
 import java.util.List;
 
+import org.mybatis.generator.config.JavaMergeConfiguration;
 import org.mybatis.generator.config.MergeConstants;
+import org.mybatis.generator.config.MergeStrategy;
 
 public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends JavaMergeTestCase {
+    public ShouldPreserveCustomMethodsWithAllSupportedJavadocTags() {
+        addMergeConfiguration("MergeIntoNew", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoNewLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_NEW)
+                .build());
+
+        addMergeConfiguration("MergeIntoOld", new JavaMergeConfiguration.Builder()
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+
+        // disabled because of an issue with the lexical preserving printer - JavaDoc comments are lost
+        addMergeConfiguration(false, "MergeIntoOldLP", new JavaMergeConfiguration.Builder()
+                .isLexicalPreserving(true)
+                .withMergeStrategy(MergeStrategy.MERGE_INTO_EXISTING)
+                .build());
+    }
+
     @Override
     public String existingContent(String parameter) {
         return String.format("""
@@ -60,7 +83,17 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
     }
 
     @Override
-    public String expectedContentAfterMerge(String parameter) {
+    public String expectedContentAfterMerge(String parameter, String id) {
+        return switch (id) {
+            case "MergeIntoNew" -> expectedMergeIntoNewContent();
+            case "MergeIntoNewLP" -> expectedMergeIntoNewLPContent();
+            case "MergeIntoOld" -> expectedMergeIntoOldContent();
+            case "MergeIntoOldLP" -> expectedMergeIntoOldLPContent();
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    private String expectedMergeIntoNewContent() {
         return """
                 package com.example;
 
@@ -80,13 +113,70 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
                 """;
     }
 
-    @Override
-    public List<String> parameterVariants() {
-        return Arrays.stream(MergeConstants.getOldElementTags()).toList();
+    private String expectedMergeIntoNewLPContent() {
+        return """
+                package com.example;
+
+                public class TestMapper {
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public int newGeneratedMethod() {
+                        return 1;
+                    }
+                   \s
+                    public void customMethod() {
+                        System.out.println("Custom method");
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldContent() {
+        return """
+                package com.example;
+
+                public class TestMapper {
+
+                    public void customMethod() {
+                        System.out.println("Custom method");
+                    }
+
+                    /**
+                     * @mbg.generated
+                     */
+                    public int newGeneratedMethod() {
+                        return 1;
+                    }
+                }
+                """;
+    }
+
+    private String expectedMergeIntoOldLPContent() {
+        // TODO - this is broken, merge JavaDoc is lost
+        return """
+                package com.example;
+
+                public class TestMapper {
+
+
+                    public void customMethod() {
+                        System.out.println("Custom method");
+                    }
+                   \s
+                    /**
+                     * @mbg.generated
+                     */
+                    public int newGeneratedMethod() {
+                        return 1;
+                    }
+                }
+                """;
     }
 
     @Override
-    public JavaMergerFactory.PrinterConfiguration printerConfiguration() {
-        return JavaMergerFactory.PrinterConfiguration.ECLIPSE;
+    public List<String> parameterVariants() {
+        return Arrays.asList(MergeConstants.getOldElementTags());
     }
 }

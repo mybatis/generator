@@ -74,11 +74,11 @@ public class InsertElementGenerator extends AbstractXmlMapperElementGenerator {
             if (valuesClause.length() > 80) {
                 answer.addElement(new TextElement(insertClause.toString()));
                 insertClause.setLength(0);
-                indenter.xmlIndent(insertClause, 1);
+                insertClause.append(indenter.xmlIndent(1));
 
                 valuesClauses.add(valuesClause.toString());
                 valuesClause.setLength(0);
-                indenter.xmlIndent(valuesClause, 1);
+                valuesClause.append(indenter.xmlIndent(1));
             }
         }
 

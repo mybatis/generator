@@ -99,7 +99,7 @@ public class MyBatisGeneratorConfigurationParser {
             case "context" -> //$NON-NLS-1$
                     configurationBuilder.withContext(parseContext(childNode));
             case "indentationConfiguration" -> //$NON-NLS-1$
-                    configurationBuilder.withIndentationConfiguration(parseIndentation(childNode));
+                    configurationBuilder.withIndentationConfiguration(parseIndentationConfiguration(childNode));
             case "javaMergeConfiguration" -> //$NON-NLS-1$
                     configurationBuilder.withJavaMergeConfiguration(parseJavaMergeConfiguration(childNode));
             default -> {
@@ -520,7 +520,7 @@ public class MyBatisGeneratorConfigurationParser {
         }
     }
 
-    protected IndentationConfiguration parseIndentation(Node node) {
+    protected IndentationConfiguration parseIndentationConfiguration(Node node) {
         NullableProperties attributes = parseAttributes(node);
         IndentationConfiguration.Builder builder = new IndentationConfiguration.Builder();
 

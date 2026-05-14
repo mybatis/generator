@@ -34,7 +34,7 @@
 <!--
   The generatorConfiguration element is the root element for configurations.
 -->
-<!ELEMENT generatorConfiguration (properties?, indentation?, javaMergeConfiguration?, classPathEntry*, context+)>
+<!ELEMENT generatorConfiguration (properties?, indentationConfiguration?, javaMergeConfiguration?, classPathEntry*, context+)>
 
 <!--
   The properties element is used to define a standard Java properties file
@@ -46,8 +46,8 @@
   resource CDATA #IMPLIED
   url CDATA #IMPLIED>
 
-<!ELEMENT indentation EMPTY>
-<!ATTLIST indentation
+<!ELEMENT indentationConfiguration EMPTY>
+<!ATTLIST indentationConfiguration
   javaIndentType CDATA #IMPLIED
   javaIndentAmount CDATA #IMPLIED
   xmlIndentType CDATA #IMPLIED

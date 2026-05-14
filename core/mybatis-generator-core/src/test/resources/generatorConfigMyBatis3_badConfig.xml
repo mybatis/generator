@@ -21,7 +21,7 @@
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-  <indentation javaIndentAmount="w" javaIndentType="l" xmlIndentAmount="s" xmlIndentType="q" />
+  <indentationConfiguration javaIndentAmount="w" javaIndentType="l" xmlIndentAmount="s" xmlIndentType="q" />
 
   <javaMergeConfiguration importSortStrategy="f" lexicalPreserving="false" mergeStrategy="f" />
 

@@ -50,7 +50,7 @@
         <item href="configreference/generatorConfiguration.html" name="&lt;generatorConfiguration&gt;" />
         <item href="configreference/ignoreColumn.html" name="&lt;ignoreColumn&gt;" />
         <item href="configreference/ignoreColumnsByRegex.html" name="&lt;ignoreColumnsByRegex&gt;" />
-        <item href="configreference/indentation.html" name="&lt;indentation&gt;" />
+        <item href="configreference/indentationConfiguration.html" name="&lt;indentationConfiguration&gt;" />
         <item href="configreference/javaClientGenerator.html" name="&lt;javaClientGenerator&gt;" />
         <item href="configreference/javaMergeConfiguration.html" name="&lt;javaMergeConfiguration&gt;" />
         <item href="configreference/javaModelGenerator.html" name="&lt;javaModelGenerator&gt;" />

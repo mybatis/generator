@@ -98,7 +98,7 @@ public class MyBatisGeneratorConfigurationParser {
                     configurationBuilder.withClassPathEntry(parseClassPathEntry(childNode));
             case "context" -> //$NON-NLS-1$
                     configurationBuilder.withContext(parseContext(childNode));
-            case "indentation" -> //$NON-NLS-1$
+            case "indentationConfiguration" -> //$NON-NLS-1$
                     configurationBuilder.withIndentationConfiguration(parseIndentation(childNode));
             case "javaMergeConfiguration" -> //$NON-NLS-1$
                     configurationBuilder.withJavaMergeConfiguration(parseJavaMergeConfiguration(childNode));

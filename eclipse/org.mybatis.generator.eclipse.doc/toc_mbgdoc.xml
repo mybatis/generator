@@ -51,7 +51,7 @@
       <topic href="html/mbgdoc/configreference/generatorConfiguration.html" label="&lt;generatorConfiguration&gt;"/>
       <topic href="html/mbgdoc/configreference/ignoreColumn.html" label="&lt;ignoreColumn&gt;"/>
       <topic href="html/mbgdoc/configreference/ignoreColumnsByRegex.html" label="&lt;ignoreColumnsByRegex&gt;"/>
-      <topic href="html/mbgdoc/configreference/indentation.html" label="&lt;indentation&gt;"/>
+      <topic href="html/mbgdoc/configreference/indentationConfiguration.html" label="&lt;indentationConfiguration&gt;"/>
       <topic href="html/mbgdoc/configreference/javaClientGenerator.html" label="&lt;javaClientGenerator&gt;"/>
       <topic href="html/mbgdoc/configreference/javaMergeConfiguration.html" label="&lt;javaMergeConfiguration&gt;"/>
       <topic href="html/mbgdoc/configreference/javaModelGenerator.html" label="&lt;javaModelGenerator&gt;"/>

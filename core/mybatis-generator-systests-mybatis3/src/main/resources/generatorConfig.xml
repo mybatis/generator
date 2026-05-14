@@ -23,7 +23,7 @@
 <generatorConfiguration>
   <properties resource="database.properties"/>
 
-  <indentation xmlIndentType="tabs" javaIndentType="tabs"/>
+  <indentationConfiguration xmlIndentType="tabs" javaIndentType="tabs"/>
 
   <context id="FlatJava5" defaultModelType="flat" targetRuntime="MyBatis3">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />

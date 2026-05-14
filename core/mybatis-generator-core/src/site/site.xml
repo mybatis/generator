@@ -52,6 +52,7 @@
         <item href="configreference/ignoreColumnsByRegex.html" name="&lt;ignoreColumnsByRegex&gt;" />
         <item href="configreference/indentation.html" name="&lt;indentation&gt;" />
         <item href="configreference/javaClientGenerator.html" name="&lt;javaClientGenerator&gt;" />
+        <item href="configreference/javaMergeConfiguration.html" name="&lt;javaMergeConfiguration&gt;" />
         <item href="configreference/javaModelGenerator.html" name="&lt;javaModelGenerator&gt;" />
         <item href="configreference/javaTypeResolver.html" name="&lt;javaTypeResolver&gt;" />
         <item href="configreference/jdbcConnection.html" name="&lt;jdbcConnection&gt;" />

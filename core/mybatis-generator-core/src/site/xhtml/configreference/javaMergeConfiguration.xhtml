@@ -26,8 +26,8 @@
 <body>
 <h1>The &lt;javaMergeConfiguration&gt; Element</h1>
 <p>The &lt;javaMergeConfiguration&gt; element is used to define the charcteristics of the Java merger. Please see the
-  <a href="../reference/javaMergeReference.html">&lt;javaMergeReference&gt;</a> page for detailed information
-  about how the Java merger works and the differen options for configuring it.
+  <a href="../reference/javaMergeReference.html">Java Merge Reference</a> page for detailed information
+  about how the Java merger works and the different options for configuring it.
   The default Java merger has the following characteristics:
 </p>
 <table border="1" cellspacing="0" cellpadding="5">
@@ -45,7 +45,7 @@
   </tr>
   <tr>
     <td>Merge Strategy</td>
-    <td>Merge Into Existing</td>
+    <td>Merge_Into_Existing</td>
   </tr>
 </table>
 <p>This element allows you to change these defaults.
@@ -84,12 +84,8 @@
 <h2>Example</h2>
 <p>This element specifies that we want to use the "IntelliJ" import sorting strategy:</p>
 <pre>
-&lt;javaMergeStrategy importSortStrategy="IntelliJ" /&gt;
+&lt;javaMergeConfiguration importSortStrategy="IntelliJ" /&gt;
 </pre>
 
-<p>This element specifies that we want to use two spaces for both Java and XML:</p>
-<pre>
-&lt;indentation javaIndentAmount="2" /&gt;
-</pre>
 </body>
 </html>

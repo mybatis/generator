@@ -54,20 +54,20 @@
 <p>The default merge configuration is:</p>
 <ol>
   <li>Lexical preservation: disabled</li>
-  <li>Merge strategy: MERGE_INTO_EXISTING</li>
-  <li>Import sorting: ECLIPSE</li>
+  <li>Merge strategy: Merge_Into_Existing</li>
+  <li>Import sorting strategy: Eclipse</li>
   <li>Indentation: 4 spaces</li>
 </ol>
 
-<p>In most cases, the default configurtion will work. The limitations of the default configuration are:</p>
+<p>In most cases, the default configuration will work. The limitations of the default configuration are:</p>
 <ul>
   <li>Because lexical preservation is disabled, existing code may be reformatted.</li>
   <li>Class/Interface to record merges are not supported</li>
 </ul>
 
 <p>All strategies have the most trouble with comments. Non-JavaDoc comments will be completely lost if you use the
-  "merge into new" strategy. If you wish to have the code formatting benefits of the lexical preserving printer, then
-  you should be very cautious with commnets (both Javadoc and non-Javadoc comments).
+  "Merge_Into_New" strategy. If you wish to have the code formatting benefits of the lexical preserving printer, then
+  you should be very cautious with comments (both Javadoc and non-Javadoc comments).
 </p>
 
 <h2>Lexical Preservation</h2>
@@ -104,7 +104,7 @@ public int sumOfEvens(int n) {
   <li>If you choose lexical preservation, then any import sorting option you configure will be ignored.
     The lexical preserving printer does not sort or change the order of imports.
   </li>
-  <li>The lexical preserving printer has challenges with comments. In some cases, JavaDoc comments are not
+  <li>The lexical preserving printer has challenges with comments. In some cases, Javadoc comments are not
     successfully merged.
   </li>
 </ul>
@@ -112,22 +112,22 @@ public int sumOfEvens(int n) {
 <h2>Merge Strategy</h2>
 <p>There are two possible merge strategies:</p>
 <ul>
-  <li>Merge newly generated code into existing code (MERGE_INTO_EXISTING)</li>
-  <li>Merge existing code into newly generated code (MERGE_INTO_NEW)</li>
+  <li>Merge newly generated code into existing code (Merge_Into_Existing)</li>
+  <li>Merge existing code into newly generated code (Merge_Into_New)</li>
 </ul>
 
 <p>The basic goal of the merger - in either case - is to preserve custom methods, fields, inner classes, etc. from
   an existing Java file. The difference is the starting point.
 </p>
 
-<p>The MERGE_INTO_EXISTING strategy works like this:</p>
+<p>The Merge_Into_Existing strategy works like this:</p>
 <ol>
   <li>Remove all generated items from an existing file</li>
   <li>Copy generated items from a new file into the existing file</li>
   <li>Return the (merged) existing file</li>
 </ol>
 
-<p>The MERGE_INTO_NEW strategy works like this:</p>
+<p>The Merge_Into_New strategy works like this:</p>
 <ol>
   <li>Copy custom items from an existing file into the new file</li>
   <li>Return the (merged) new file</li>
@@ -137,8 +137,8 @@ public int sumOfEvens(int n) {
 <p>In many cases the outcomes will be the same regardless of strategy. The differences are detailed below:</p>
 
 <ul>
-  <li>The MERGE_INTO_NEW strategy will not copy non-JavaDoc comments from existing code.</li>
-  <li>The MERGE_INTO_NEW strategy will perform a Class or Interface to Record Conversion. This is because
+  <li>The Merge_Into_New strategy will not copy non-JavaDoc comments from existing code.</li>
+  <li>The Merge_Into_New strategy will perform a Class or Interface to Record Conversion. This is because
     the merger does not change the generated type (class, interface, record, etc.) to match the existing type.
   </li>
 </ul>
@@ -147,7 +147,7 @@ public int sumOfEvens(int n) {
 <p>Import sorting options are ignored if you chose the lexical preserving option.</p>
 
 <p>If you do not choose the lexical preserving option, then there are three options for soring imports.
-  These options are built in to JavaParser - we do not create any custom sort options. The options are as follows:
+  These options are built in to JavaParser – we do not create any custom sort options. The options are as follows:
 </p>
 
 <dl>
@@ -155,7 +155,7 @@ public int sumOfEvens(int n) {
   <dd>Groups of static imports first, then java.*, then javax.*, then org.*, then com.*, others</dd>
   <dt>INTELLIJ</dt>
   <dd>Groups of other imports first, the java.* and javax.*, then static imports</dd>
-  <dt>DEFAULt</dt>
+  <dt>DEFAULT</dt>
   <dd>All imports in the same group</dd>
 </dl>
 

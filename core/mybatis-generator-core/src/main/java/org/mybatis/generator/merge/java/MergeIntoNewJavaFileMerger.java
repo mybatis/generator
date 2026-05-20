@@ -15,10 +15,8 @@
  */
 package org.mybatis.generator.merge.java;
 
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ParserConfiguration;
+import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.printer.Printer;
-import org.mybatis.generator.exception.MergeException;
 
 /**
  * This class handles the task of merging changes into a new Java file using JavaParser.
@@ -70,70 +68,35 @@ import org.mybatis.generator.exception.MergeException;
  * @author Freeman (original)
  * @author Jeff Butler (refactoring and enhancements)
  */
-public class MergeIntoNewJavaFileMerger implements JavaFileMerger {
-    private final Printer printer;
-    private final boolean isLexicalPreserving;
+public class MergeIntoNewJavaFileMerger extends AbstractJavaMerger {
 
     public MergeIntoNewJavaFileMerger(Printer printer, boolean isLexicalPreserving) {
-        this.printer = printer;
-        this.isLexicalPreserving = isLexicalPreserving;
+        super(printer, isLexicalPreserving);
     }
 
-    /**
-     * Merge a newly generated Java file with existing Java file content.
-     *
-     * @param newFileContent the content of the newly generated Java file
-     * @param existingFileContent the content of the existing Java file
-     * @return the merged source, properly formatted
-     * @throws MergeException if the file cannot be merged for some reason
-     */
     @Override
-    public String getMergedSource(String newFileContent, String existingFileContent) throws MergeException {
-        ParserConfiguration parserConfiguration = new ParserConfiguration();
-        parserConfiguration.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_25);
-        if (isLexicalPreserving) {
-            parserConfiguration.setLexicalPreservationEnabled(true);
-        }
-        JavaParser javaParser = new JavaParser(parserConfiguration);
-
-        ParseResults existingFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser,
-                existingFileContent, MergeFileType.EXISTING_FILE);
-
-        // Gather custom members from the existing file. If none, just return the new file as is
-        CustomMemberGatherer customMemberGatherer =
-                new CustomMemberGatherer(existingFileParseResults.typeDeclaration());
-        if (!customMemberGatherer.hasAnyMembersToMerge()) {
-            return newFileContent;
-        }
-
-        // Custom members exist, need to merge...
-        ParseResults newFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser,
-                newFileContent, MergeFileType.NEW_FILE);
+    public String performMerge(CustomMemberGatherer customMemberGatherer, ParseResults existingFileParseResults,
+                               ParseResults newFileParseResults) {
+        TypeDeclaration<?> newType = newFileParseResults.typeDeclaration();
 
         // Delete elements in the new file that match doNotDeleteMembers from the existing file
         customMemberGatherer.doNotDeleteBodyMembers()
-                .forEach(m -> JavaMergeUtilities
-                        .deleteDuplicateMemberIfExists(newFileParseResults.typeDeclaration(), m));
+                .forEach(m -> JavaMergeUtilities.deleteDuplicateMemberIfExists(newType, m));
 
         // Look for custom imports in the existing file and merge into the new file
         JavaMergeUtilities
-                .findCustomImports(existingFileParseResults.compilationUnit(), newFileParseResults.compilationUnit())
-                .forEach(newFileParseResults.compilationUnit()::addImport);
+                .copyMissingImports(existingFileParseResults.compilationUnit(), newFileParseResults.compilationUnit());
 
         // Add custom body members from the existing file to the new file
-        customMemberGatherer.allCustomBodyMembers().forEach(newFileParseResults.typeDeclaration()::addMember);
+        customMemberGatherer.allCustomBodyMembers().forEach(newType::addMember);
 
         // Add custom enum constants from the existing file to the new file
-        if (newFileParseResults.typeDeclaration().isEnumDeclaration()) {
-            customMemberGatherer.customEnumConstants()
-                    .forEach(newFileParseResults.typeDeclaration().asEnumDeclaration()::addEntry);
+        if (newType.isEnumDeclaration()) {
+            customMemberGatherer.customEnumConstants().forEach(newType.asEnumDeclaration()::addEntry);
         }
 
         // Look for custom super interfaces in the existing file and merge into the new file
-        JavaMergeUtilities
-                .findCustomSuperInterfaces(existingFileParseResults.typeDeclaration(),
-                        newFileParseResults.typeDeclaration())
-                .forEach(t -> JavaMergeUtilities.addSuperInterface(newFileParseResults.typeDeclaration(), t));
+        JavaMergeUtilities.copyMissingSuperInterfaces(existingFileParseResults.typeDeclaration(), newType);
 
         // Return the new (merged) file
         return printer.print(newFileParseResults.compilationUnit());

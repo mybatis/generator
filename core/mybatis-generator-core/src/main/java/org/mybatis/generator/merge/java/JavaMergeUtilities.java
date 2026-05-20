@@ -17,7 +17,6 @@ package org.mybatis.generator.merge.java;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,28 +48,22 @@ public class JavaMergeUtilities {
     }
 
     /**
-     * Compare two compilation units and find imports that are in the existing file but not in the new file.
-     * We assume this means they are required for some custom method, so we will add them to the new
-     * file if there are other items to merge. This may create unused imports in the new file if the
+     * Compare two compilation units and find imports that are in the source file but not in the target file.
+     * We assume this means they are required for some custom method, so we will add them to the target
+     * file if there are other items to merge. This may create unused imports in the target file if the
      * initial assumption is incorrect, but better safe than sorry.
      *
-     * @param existingCompilationUnit compilation unit representing the existing file
-     * @param newCompilationUnit compilation unit representing the new file
+     * @param sourceCompilationUnit compilation unit representing the source file
+     * @param targetCompilationUnit compilation unit representing the target file
      */
-    public static List<ImportDeclaration> findCustomImports(CompilationUnit existingCompilationUnit,
-                                                            CompilationUnit newCompilationUnit) {
-        List<ImportDeclaration> customImports = new ArrayList<>();
-
-        List<String> newFileImports = newCompilationUnit.getImports().stream()
+    public static void copyMissingImports(CompilationUnit sourceCompilationUnit,
+                                          CompilationUnit targetCompilationUnit) {
+        List<String> newFileImports = targetCompilationUnit.getImports().stream()
                 .map(JavaMergeUtilities::stringify).toList();
 
-        for (ImportDeclaration id : existingCompilationUnit.getImports()) {
-            if (!newFileImports.contains(stringify(id))) {
-                customImports.add(id);
-            }
-        }
-
-        return customImports;
+        sourceCompilationUnit.getImports().stream()
+                .filter(im -> !newFileImports.contains(stringify(im)))
+                .forEach(targetCompilationUnit::addImport);
     }
 
     /**

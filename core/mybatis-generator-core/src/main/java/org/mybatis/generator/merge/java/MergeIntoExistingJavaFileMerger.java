@@ -82,14 +82,14 @@ public class MergeIntoExistingJavaFileMerger extends AbstractJavaMerger {
         // remove generated elements from the existing file
         existingType.getMembers().stream()
                 .filter(this::shouldDelete)
-                .toList()
+                .toList() // this avoids a concurrent modification problem
                 .forEach(existingType::remove);
 
         // Remove generated enum constants
         if (existingType.isEnumDeclaration()) {
             existingType.asEnumDeclaration().getEntries().stream()
                     .filter(this::shouldDelete)
-                    .toList()
+                    .toList() // this avoids a concurrent modification problem
                     .forEach(existingType::remove);
         }
 
@@ -112,8 +112,7 @@ public class MergeIntoExistingJavaFileMerger extends AbstractJavaMerger {
 
         // 3. Add imports to existing file from new file that are not in existing file
         JavaMergeUtilities
-                .findCustomImports(newFileParseResults.compilationUnit(), existingFileParseResults.compilationUnit())
-                .forEach(existingFileParseResults.compilationUnit()::addImport);
+                .copyMissingImports(newFileParseResults.compilationUnit(), existingFileParseResults.compilationUnit());
 
         // Look for super interfaces in the new file and merge into the existing file if they aren't present
         JavaMergeUtilities.copyMissingSuperInterfaces(newType, existingType);

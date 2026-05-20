@@ -86,8 +86,7 @@ public class MergeIntoNewJavaFileMerger extends AbstractJavaMerger {
 
         // Look for custom imports in the existing file and merge into the new file
         JavaMergeUtilities
-                .findCustomImports(existingFileParseResults.compilationUnit(), newFileParseResults.compilationUnit())
-                .forEach(newFileParseResults.compilationUnit()::addImport);
+                .copyMissingImports(existingFileParseResults.compilationUnit(), newFileParseResults.compilationUnit());
 
         // Add custom body members from the existing file to the new file
         customMemberGatherer.allCustomBodyMembers().forEach(newType::addMember);

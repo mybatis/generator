@@ -15,15 +15,9 @@
  */
 package org.mybatis.generator.merge.java;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.ast.body.BodyDeclaration;
-import com.github.javaparser.ast.body.EnumConstantDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.printer.Printer;
-import org.mybatis.generator.exception.MergeException;
 
 /**
  * This class handles the task of merging changes into an existing Java file using JavaParser.
@@ -74,96 +68,46 @@ import org.mybatis.generator.exception.MergeException;
  *
  * @author Jeff Butler
  */
-public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
-    private final Printer printer;
-    private final boolean isLexicalPreserving;
-
+public class MergeIntoExistingJavaFileMerger extends AbstractJavaMerger {
     public MergeIntoExistingJavaFileMerger(Printer printer, boolean isLexicalPreserving) {
-        this.printer = printer;
-        this.isLexicalPreserving = isLexicalPreserving;
+        super(printer, isLexicalPreserving);
     }
 
-    /**
-     * Merge a newly generated Java file with existing Java file content.
-     *
-     * @param newFileContent the content of the newly generated Java file
-     * @param existingFileContent the content of the existing Java file
-     * @return the merged source, properly formatted
-     * @throws MergeException if the file cannot be merged for some reason
-     */
     @Override
-    public String getMergedSource(String newFileContent, String existingFileContent) throws MergeException {
-        ParserConfiguration parserConfiguration = new ParserConfiguration();
-        parserConfiguration.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_25);
-        if (isLexicalPreserving) {
-            parserConfiguration.setLexicalPreservationEnabled(true);
-        }
-
-        JavaParser javaParser = new JavaParser(parserConfiguration);
-
-        ParseResults existingFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser,
-                existingFileContent, MergeFileType.EXISTING_FILE);
-
-        // Gather custom members from the existing file. If none, just return the new file as is
-        CustomMemberGatherer customMemberGatherer =
-                new CustomMemberGatherer(existingFileParseResults.typeDeclaration());
-        if (!customMemberGatherer.hasAnyMembersToMerge()) {
-            return newFileContent;
-        }
+    public String performMerge(CustomMemberGatherer customMemberGatherer, ParseResults existingFileParseResults,
+                               ParseResults newFileParseResults) {
+        TypeDeclaration<?> existingType = existingFileParseResults.typeDeclaration();
+        TypeDeclaration<?> newType = newFileParseResults.typeDeclaration();
 
         // remove generated elements from the existing file
-        List<BodyDeclaration<?>> membersToDelete = new ArrayList<>();
-        existingFileParseResults.typeDeclaration().getMembers().forEach(member -> {
-            GeneratedType generatedType = JavaMergeUtilities.checkForGeneratedAnnotation(member);
-            if (generatedType == GeneratedType.GENERATED_REMOVE) {
-                membersToDelete.add(member);
-            }
-            generatedType = JavaMergeUtilities.checkForGeneratedJavadocTag(member);
-            if (generatedType == GeneratedType.GENERATED_REMOVE) {
-                membersToDelete.add(member);
-            }
-        });
-        for (BodyDeclaration<?> member : membersToDelete) {
-            existingFileParseResults.typeDeclaration().remove(member);
-        }
+        existingType.getMembers().stream()
+                .filter(this::shouldDelete)
+                .toList()
+                .forEach(existingType::remove);
 
         // Remove generated enum constants
-        if (existingFileParseResults.typeDeclaration().isEnumDeclaration()) {
-            List<EnumConstantDeclaration> enumConstantsToDelete = new ArrayList<>();
-            existingFileParseResults.typeDeclaration().asEnumDeclaration().getEntries().forEach(enumDec -> {
-                GeneratedType generatedType = JavaMergeUtilities.checkForGeneratedAnnotation(enumDec);
-                if (generatedType == GeneratedType.GENERATED_REMOVE) {
-                    enumConstantsToDelete.add(enumDec);
-                }
-                generatedType = JavaMergeUtilities.checkForGeneratedJavadocTag(enumDec);
-                if (generatedType == GeneratedType.GENERATED_REMOVE) {
-                    enumConstantsToDelete.add(enumDec);
-                }
-            });
-            for (EnumConstantDeclaration member : enumConstantsToDelete) {
-                existingFileParseResults.typeDeclaration().asEnumDeclaration().remove(member);
-            }
+        if (existingType.isEnumDeclaration()) {
+            existingType.asEnumDeclaration().getEntries().stream()
+                    .filter(this::shouldDelete)
+                    .toList()
+                    .forEach(existingType::remove);
         }
-
-        // 2. Parse the new file, gather generated elements and add to the existing file
-        ParseResults newFileParseResults = JavaMergeUtilities.parseAndFindMainTypeDeclaration(javaParser,
-                newFileContent, MergeFileType.NEW_FILE);
 
         // delete any members in the new file that match the old file members (this gets rid of new
         // do not delete members)
-        for (BodyDeclaration<?> member : existingFileParseResults.typeDeclaration().getMembers()) {
-            JavaMergeUtilities.deleteDuplicateMemberIfExists(newFileParseResults.typeDeclaration(), member);
+        for (BodyDeclaration<?> member : existingType.getMembers()) {
+            JavaMergeUtilities.deleteDuplicateMemberIfExists(newType, member);
         }
 
         // add members from the new file to the existing file
-        for (BodyDeclaration<?> member : newFileParseResults.typeDeclaration().getMembers()) {
-            existingFileParseResults.typeDeclaration().addMember(member);
+        for (BodyDeclaration<?> member : newType.getMembers()) {
+            existingType.addMember(member);
         }
 
         // add any enum constants from the new file to the existing file
-        if (newFileParseResults.typeDeclaration().isEnumDeclaration()) {
-            existingFileParseResults.typeDeclaration().asEnumDeclaration().getEntries().addAll(
-                    newFileParseResults.typeDeclaration().asEnumDeclaration().getEntries());
+        if (newType.isEnumDeclaration() && existingType.isEnumDeclaration()) {
+            existingType.asEnumDeclaration().getEntries().addAll(
+                    newType.asEnumDeclaration().getEntries());
         }
 
         // 3. Add imports to existing file from new file that are not in existing file
@@ -172,21 +116,28 @@ public class MergeIntoExistingJavaFileMerger implements JavaFileMerger {
                 .forEach(existingFileParseResults.compilationUnit()::addImport);
 
         // Look for super interfaces in the new file and merge into the existing file if they aren't present
-        JavaMergeUtilities.findCustomSuperInterfaces(newFileParseResults.typeDeclaration(),
-                        existingFileParseResults.typeDeclaration())
-                .forEach(t -> JavaMergeUtilities.addSuperInterface(existingFileParseResults.typeDeclaration(), t));
+        JavaMergeUtilities.findCustomSuperInterfaces(newType, existingType)
+                .forEach(t -> JavaMergeUtilities.addSuperInterface(existingType, t));
 
-        // merge records
-        // TODO(?) this is not really a merge so much as a replace - should we do a merge?
-        if (existingFileParseResults.typeDeclaration().isRecordDeclaration()
-                && newFileParseResults.typeDeclaration().isRecordDeclaration()) {
+        // merge records - this is not really a merge so much as a replacement. We would need to add the @Generated
+        // annotation to record fields to perform a merge, which seems excessive.
+        if (existingType.isRecordDeclaration() && newType.isRecordDeclaration()) {
             // remove all record fields from the existing file and add from the new file
-            existingFileParseResults.typeDeclaration().asRecordDeclaration().getParameters().clear();
-            existingFileParseResults.typeDeclaration().asRecordDeclaration().getParameters().addAll(
-                    newFileParseResults.typeDeclaration().asRecordDeclaration().getParameters());
+            existingType.asRecordDeclaration().getParameters().clear();
+            existingType.asRecordDeclaration().getParameters()
+                    .addAll(newType.asRecordDeclaration().getParameters());
         }
 
         // Return the new (merged) file
         return printer.print(existingFileParseResults.compilationUnit());
+    }
+
+    private boolean shouldDelete(BodyDeclaration<?> bodyDeclaration) {
+        GeneratedType generatedType = JavaMergeUtilities.checkForGeneratedAnnotation(bodyDeclaration);
+        if (generatedType == GeneratedType.GENERATED_REMOVE) {
+            return true;
+        }
+        generatedType = JavaMergeUtilities.checkForGeneratedJavadocTag(bodyDeclaration);
+        return generatedType == GeneratedType.GENERATED_REMOVE;
     }
 }

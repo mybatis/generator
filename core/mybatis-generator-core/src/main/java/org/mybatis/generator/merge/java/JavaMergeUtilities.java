@@ -99,6 +99,16 @@ public class JavaMergeUtilities {
         return false;
     }
 
+    public static void copyMissingSuperInterfaces(BodyDeclaration<?> targetType, BodyDeclaration<?> sourceType) {
+        List<String> sourceSuperInterfaces = findSuperInterfaces(sourceType).stream()
+                .map(NodeWithSimpleName::getNameAsString).toList();
+
+        findSuperInterfaces(targetType).stream()
+                .filter(si -> !sourceSuperInterfaces.contains(si.getNameAsString()))
+                .toList()
+                .forEach(t -> addSuperInterface(targetType, t));
+    }
+
     public static List<ClassOrInterfaceType> findCustomSuperInterfaces(BodyDeclaration<?> existingType,
                                                                        BodyDeclaration<?> newType) {
         List<ClassOrInterfaceType> customSuperInterfaces = new ArrayList<>();

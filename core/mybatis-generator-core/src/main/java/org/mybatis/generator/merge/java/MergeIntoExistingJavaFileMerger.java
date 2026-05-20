@@ -77,7 +77,6 @@ public class MergeIntoExistingJavaFileMerger extends AbstractJavaMerger {
     public String performMerge(CustomMemberGatherer customMemberGatherer, ParseResults existingFileParseResults,
                                ParseResults newFileParseResults) {
         TypeDeclaration<?> existingType = existingFileParseResults.typeDeclaration();
-        TypeDeclaration<?> newType = newFileParseResults.typeDeclaration();
 
         // remove generated elements from the existing file
         existingType.getMembers().stream()
@@ -95,6 +94,8 @@ public class MergeIntoExistingJavaFileMerger extends AbstractJavaMerger {
 
         // delete any members in the new file that match the old file members (this gets rid of new
         // do not delete members)
+        TypeDeclaration<?> newType = newFileParseResults.typeDeclaration();
+
         for (BodyDeclaration<?> member : existingType.getMembers()) {
             JavaMergeUtilities.deleteDuplicateMemberIfExists(newType, member);
         }

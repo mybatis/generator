@@ -77,7 +77,6 @@ public class MergeIntoNewJavaFileMerger extends AbstractJavaMerger {
     @Override
     public String performMerge(CustomMemberGatherer customMemberGatherer, ParseResults existingFileParseResults,
                                ParseResults newFileParseResults) {
-        TypeDeclaration<?> existingType = existingFileParseResults.typeDeclaration();
         TypeDeclaration<?> newType = newFileParseResults.typeDeclaration();
 
         // Delete elements in the new file that match doNotDeleteMembers from the existing file
@@ -97,7 +96,7 @@ public class MergeIntoNewJavaFileMerger extends AbstractJavaMerger {
         }
 
         // Look for custom super interfaces in the existing file and merge into the new file
-        JavaMergeUtilities.copyMissingSuperInterfaces(existingType, newType);
+        JavaMergeUtilities.copyMissingSuperInterfaces(existingFileParseResults.typeDeclaration(), newType);
 
         // Return the new (merged) file
         return printer.print(newFileParseResults.compilationUnit());

@@ -116,8 +116,7 @@ public class MergeIntoExistingJavaFileMerger extends AbstractJavaMerger {
                 .forEach(existingFileParseResults.compilationUnit()::addImport);
 
         // Look for super interfaces in the new file and merge into the existing file if they aren't present
-        JavaMergeUtilities.findCustomSuperInterfaces(newType, existingType)
-                .forEach(t -> JavaMergeUtilities.addSuperInterface(existingType, t));
+        JavaMergeUtilities.copyMissingSuperInterfaces(newType, existingType);
 
         // merge records - this is not really a merge so much as a replacement. We would need to add the @Generated
         // annotation to record fields to perform a merge, which seems excessive.

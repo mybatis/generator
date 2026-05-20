@@ -99,30 +99,13 @@ public class JavaMergeUtilities {
         return false;
     }
 
-    public static void copyMissingSuperInterfaces(BodyDeclaration<?> targetType, BodyDeclaration<?> sourceType) {
-        List<String> sourceSuperInterfaces = findSuperInterfaces(sourceType).stream()
+    public static void copyMissingSuperInterfaces(BodyDeclaration<?> sourceType, BodyDeclaration<?> targetType) {
+        List<String> targetSuperInterfaces = findSuperInterfaces(targetType).stream()
                 .map(NodeWithSimpleName::getNameAsString).toList();
 
-        findSuperInterfaces(targetType).stream()
-                .filter(si -> !sourceSuperInterfaces.contains(si.getNameAsString()))
-                .toList()
+        findSuperInterfaces(sourceType).stream()
+                .filter(t -> !targetSuperInterfaces.contains(t.getNameAsString()))
                 .forEach(t -> addSuperInterface(targetType, t));
-    }
-
-    public static List<ClassOrInterfaceType> findCustomSuperInterfaces(BodyDeclaration<?> existingType,
-                                                                       BodyDeclaration<?> newType) {
-        List<ClassOrInterfaceType> customSuperInterfaces = new ArrayList<>();
-
-        List<String> newFileSuperInterfaces = findSuperInterfaces(newType).stream()
-                .map(NodeWithSimpleName::getNameAsString).toList();
-
-        for (ClassOrInterfaceType id : findSuperInterfaces(existingType)) {
-            if (!newFileSuperInterfaces.contains(id.getNameAsString())) {
-                customSuperInterfaces.add(id);
-            }
-        }
-
-        return customSuperInterfaces;
     }
 
     private static List<ClassOrInterfaceType> findSuperInterfaces(BodyDeclaration<?> bodyDeclaration) {
@@ -137,7 +120,7 @@ public class JavaMergeUtilities {
         return Collections.emptyList();
     }
 
-    public static void addSuperInterface(BodyDeclaration<?> bodyDeclaration, ClassOrInterfaceType superInterface) {
+    private static void addSuperInterface(BodyDeclaration<?> bodyDeclaration, ClassOrInterfaceType superInterface) {
         if (bodyDeclaration.isClassOrInterfaceDeclaration()) {
             bodyDeclaration.asClassOrInterfaceDeclaration().addImplementedType(superInterface);
         } else if (bodyDeclaration.isEnumDeclaration()) {

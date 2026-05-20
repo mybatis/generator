@@ -98,8 +98,7 @@ public class MergeIntoNewJavaFileMerger extends AbstractJavaMerger {
         }
 
         // Look for custom super interfaces in the existing file and merge into the new file
-        JavaMergeUtilities.findCustomSuperInterfaces(existingType, newType)
-                .forEach(t -> JavaMergeUtilities.addSuperInterface(newType, t));
+        JavaMergeUtilities.copyMissingSuperInterfaces(existingType, newType);
 
         // Return the new (merged) file
         return printer.print(newFileParseResults.compilationUnit());

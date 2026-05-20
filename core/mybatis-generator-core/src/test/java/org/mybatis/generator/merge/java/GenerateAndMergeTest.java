@@ -1,3 +1,18 @@
+/*
+ *    Copyright 2006-2026 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
 package org.mybatis.generator.merge.java;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -261,12 +276,12 @@ class GenerateAndMergeTest {
         String content = Files.readString(modelDirectory.resolve("test/model/Pkonly.kt"));
         assertThat(content).isEqualToNormalizingNewlines("""
             package test.model
-            
+
             import java.util.stream.IntStream
-            
+
             class Pkonly {
                 private val existingId: Int = 0
-            
+
                 fun getSum(): Int {
                     return IntStream.range(0, 100).filter { i -> i % 2 == 0 }.map { i -> i * 3 }.sum()
                 }
@@ -390,12 +405,12 @@ class GenerateAndMergeTest {
     private void writeExistingKotlinFile(Path modelDirectory) throws IOException {
         String content = """
                 package test.model
-                
+
                 import java.util.stream.IntStream
-                
+
                 class Pkonly {
                     private val existingId: Int = 0
-                
+
                     fun getSum(): Int {
                         return IntStream.range(0, 100).filter { i -> i % 2 == 0 }.map { i -> i * 3 }.sum()
                     }

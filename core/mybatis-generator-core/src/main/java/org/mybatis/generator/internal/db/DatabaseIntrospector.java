@@ -145,7 +145,7 @@ public class DatabaseIntrospector {
             String formattedSchema = tc.getSchema() == null ? "<null>" : "'" + tc.getSchema() + "'";
             String formattedTableName = "'" + tc.getTableName() + "'";
             warnings.add(getString("Warning.19", formattedCatalog, formattedSchema, formattedTableName)); //$NON-NLS-1$
-            return Collections.emptyList();
+            return List.of();
         }
 
         removeIgnoredColumns(tc, columns);

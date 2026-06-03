@@ -95,7 +95,7 @@ public class RecordBuilderPlugin extends BaseRecordPlugin {
         method.setReturnType(BUILDER_TYPE);
         method.setVisibility(JavaVisibility.PUBLIC);
         method.addParameter(new Parameter(column.getFullyQualifiedJavaType(), column.getJavaProperty()));
-        method.addBodyLine(String.format("this.%s = %s;", column.getJavaProperty(), //$NON-NLS-1$
+        method.addBodyLine("this.%s = %s;".formatted(column.getJavaProperty(), //$NON-NLS-1$
                 column.getJavaProperty()));
         method.addBodyLine("return this;"); //$NON-NLS-1$
         return method;

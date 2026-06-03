@@ -321,8 +321,7 @@ public class FragmentGenerator {
         commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
 
         method.setReturnType(returnType);
-        String line = String.format(
-                "return MyBatis3Utils.%s(this::selectMany, selectList, %s, completer);", //$NON-NLS-1$
+        String line = "return MyBatis3Utils.%s(this::selectMany, selectList, %s, completer);".formatted(//$NON-NLS-1$
                 utilMethodName, tableFieldName);
         method.addBodyLine(line);
 

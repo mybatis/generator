@@ -46,7 +46,7 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
 
     @Override
     public String existingContent(String parameter) {
-        return String.format("""
+        return """
                 package com.example;
 
                 public class TestMapper {
@@ -62,7 +62,7 @@ public class ShouldPreserveCustomMethodsWithAllSupportedJavadocTags extends Java
                         System.out.println("Custom method");
                     }
                 }
-                """, parameter);
+                """.formatted(parameter);
     }
 
     @Override

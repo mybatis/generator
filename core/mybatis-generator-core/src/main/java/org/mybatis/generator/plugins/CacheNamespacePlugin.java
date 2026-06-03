@@ -156,7 +156,7 @@ public class CacheNamespacePlugin extends PluginAdapter {
                                                 CacheProperty cacheProperty,
                                                 String classAccessor) {
         return getPropertyValueForAttribute(introspectedTable, cacheProperty, classAccessor)
-                .map(v -> String.format("%s = %s", cacheProperty.getAttributeName(), v)); //$NON-NLS-1$
+                .map(v -> "%s = %s".formatted(cacheProperty.getAttributeName(), v)); //$NON-NLS-1$
     }
 
     private Optional<String> getPropertyValueForAttribute(IntrospectedTable introspectedTable,

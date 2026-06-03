@@ -66,7 +66,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
     }
 
     private String getResultMapAnnotation() {
-        return String.format("@ResultMap(\"%s.%s\")", //$NON-NLS-1$
+        return "@ResultMap(\"%s.%s\")".formatted(//$NON-NLS-1$
                 introspectedTable.getMyBatis3SqlMapNamespace(),
                 introspectedTable.getRules().generateResultMapWithBLOBs()
                     ? introspectedTable.getResultMapWithBLOBsId() : introspectedTable.getBaseResultMapId());

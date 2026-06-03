@@ -150,7 +150,7 @@ public interface Plugin {
      *         with the other files from this run.
      */
     default List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles() {
-        return Collections.emptyList();
+        return List.of();
     }
 
     /**
@@ -165,23 +165,23 @@ public interface Plugin {
      *         with the other files from this run.
      */
     default List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(IntrospectedTable introspectedTable) {
-        return Collections.emptyList();
+        return List.of();
     }
 
     default List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles() {
-        return Collections.emptyList();
+        return List.of();
     }
 
     default List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles(IntrospectedTable introspectedTable) {
-        return Collections.emptyList();
+        return List.of();
     }
 
     default List<GenericGeneratedFile> contextGenerateAdditionalFiles() {
-        return Collections.emptyList();
+        return List.of();
     }
 
     default List<GenericGeneratedFile> contextGenerateAdditionalFiles(IntrospectedTable introspectedTable) {
-        return Collections.emptyList();
+        return List.of();
     }
 
     /**
@@ -193,7 +193,7 @@ public interface Plugin {
      *         with the other files from this run.
      */
     default List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles() {
-        return Collections.emptyList();
+        return List.of();
     }
 
     /**
@@ -208,7 +208,7 @@ public interface Plugin {
      *         with the other files from this run.
      */
     default List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles(IntrospectedTable introspectedTable) {
-        return Collections.emptyList();
+        return List.of();
     }
 
     /**

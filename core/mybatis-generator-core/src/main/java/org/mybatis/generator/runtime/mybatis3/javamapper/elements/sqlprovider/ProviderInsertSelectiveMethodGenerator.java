@@ -60,7 +60,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaClassMet
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
-        method.addBodyLine(String.format("sql.INSERT_INTO(\"%s\");", //$NON-NLS-1$
+        method.addBodyLine("sql.INSERT_INTO(\"%s\");".formatted(//$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));
 
         for (IntrospectedColumn introspectedColumn :
@@ -69,10 +69,10 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaClassMet
             method.addBodyLine(""); //$NON-NLS-1$
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()
                     && !introspectedColumn.isSequenceColumn()) {
-                method.addBodyLine(String.format("if (row.%s() != null) {", //$NON-NLS-1$
+                method.addBodyLine("if (row.%s() != null) {".formatted(//$NON-NLS-1$
                         getCallingGetterMethodName(introspectedColumn)));
             }
-            method.addBodyLine(String.format("sql.VALUES(\"%s\", \"%s\");", //$NON-NLS-1$
+            method.addBodyLine("sql.VALUES(\"%s\", \"%s\");".formatted(//$NON-NLS-1$
                     escapeStringForJava(getEscapedColumnName(introspectedColumn)),
                     getParameterClause(introspectedColumn)));
 

@@ -169,7 +169,7 @@ public abstract class AbstractJavaRenderer {
 
     public List<String> renderStaticImports(CompilationUnit compilationUnit) {
         if (compilationUnit.getStaticImports().isEmpty()) {
-            return Collections.emptyList();
+            return List.of();
         }
 
         return addEmptyLine(compilationUnit.getStaticImports().stream()
@@ -181,7 +181,7 @@ public abstract class AbstractJavaRenderer {
         Set<String> imports = renderImports(compilationUnit.getImportedTypes());
 
         if (imports.isEmpty()) {
-            return Collections.emptyList();
+            return List.of();
         }
 
         return addEmptyLine(imports.stream()).toList();

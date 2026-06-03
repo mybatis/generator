@@ -82,7 +82,7 @@ public class MapperConfigPlugin extends PluginAdapter {
     @Override
     public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles() {
         if (mapperFiles.isEmpty()) {
-            return Collections.emptyList();
+            return List.of();
         }
 
         XmlElement root = new XmlElement("configuration"); //$NON-NLS-1$

@@ -170,22 +170,22 @@ public class KotlinDynamicSqlSupportClassGenerator extends AbstractGenerator {
     private String calculateInnerInitializationString(IntrospectedColumn column, FullyQualifiedKotlinType kt) {
         StringBuilder initializationString = new StringBuilder();
 
-        initializationString.append(String.format("column<%s>(name = \"%s\", jdbcType = JDBCType.%s", //$NON-NLS-1$
+        initializationString.append("column<%s>(name = \"%s\", jdbcType = JDBCType.%s".formatted(//$NON-NLS-1$
                 kt.getShortNameWithTypeArguments(),
                 escapeStringForKotlin(getEscapedColumnName(column)),
                 column.getJdbcTypeName()));
 
         column.getTypeHandler().ifPresent(
-                th -> initializationString.append(String.format(", typeHandler = \"%s\"", th))); //$NON-NLS-1$
+                th -> initializationString.append(", typeHandler = \"%s\"".formatted(th))); //$NON-NLS-1$
 
         if (StringUtility.isTrue(
                 column.getProperties().getProperty(PropertyRegistry.COLUMN_OVERRIDE_FORCE_JAVA_TYPE))) {
             initializationString.append(
-                    String.format(", javaType = %s::class", kt.getShortNameWithoutTypeArguments())); //$NON-NLS-1$
+                    ", javaType = %s::class".formatted(kt.getShortNameWithoutTypeArguments())); //$NON-NLS-1$
         }
 
         initializationString.append(
-                String.format(", javaProperty = \"%s\"", column.getJavaProperty())); //$NON-NLS-1$
+                ", javaProperty = \"%s\"".formatted(column.getJavaProperty())); //$NON-NLS-1$
 
         initializationString.append(')'); //$NON-NLS-1$
 

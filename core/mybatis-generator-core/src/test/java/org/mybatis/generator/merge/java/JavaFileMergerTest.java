@@ -57,7 +57,7 @@ class JavaFileMergerTest {
             assertThat(actual).isEqualToNormalizingNewlines(
                     testCase.expectedContentAfterMerge(parameter, mergeConfigurationAndId.id()));
         } else {
-            log.debug(String.format("Test disabled: %s (%s)", testCase.getClass().getSimpleName(), mergeConfigurationAndId.id()));
+            log.debug("Test disabled: %s (%s)".formatted(testCase.getClass().getSimpleName(), mergeConfigurationAndId.id()));
         }
     }
 

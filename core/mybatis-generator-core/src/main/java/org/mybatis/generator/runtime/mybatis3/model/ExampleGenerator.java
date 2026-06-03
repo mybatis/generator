@@ -377,7 +377,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
             strIter = criteriaLists.iterator();
             while (strIter.hasNext()) {
-                method.addBodyLine(String.format("allCriteria.addAll(%s);", strIter.next())); //$NON-NLS-1$
+                method.addBodyLine("allCriteria.addAll(%s);".formatted(strIter.next())); //$NON-NLS-1$
             }
 
             method.addBodyLine("}"); //$NON-NLS-1$
@@ -834,7 +834,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine("}"); //$NON-NLS-1$
 
         method.addBodyLine(
-                String.format("%s.add(new Criterion(condition, value, \"%s\"));", //$NON-NLS-1$
+                "%s.add(new Criterion(condition, value, \"%s\"));".formatted(//$NON-NLS-1$
                         field.getName(), introspectedColumn.getTypeHandler().orElseThrow()));
         method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
         innerClass.addMethod(method);
@@ -860,7 +860,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         }
 
         method.addBodyLine(
-                String.format("%s.add(new Criterion(condition, value1, value2, \"%s\"));", //$NON-NLS-1$
+                "%s.add(new Criterion(condition, value1, value2, \"%s\"));".formatted(//$NON-NLS-1$
                         field.getName(), introspectedColumn.getTypeHandler().orElseThrow()));
 
         method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$

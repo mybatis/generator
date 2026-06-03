@@ -63,21 +63,21 @@ public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends Abstract
         for (IntrospectedColumn introspectedColumn : getColumns()) {
             if (distinctCheck) {
                 method.addBodyLine("if (example != null && example.isDistinct()) {"); //$NON-NLS-1$
-                method.addBodyLine(String.format("sql.SELECT_DISTINCT(\"%s\");", //$NON-NLS-1$
+                method.addBodyLine("sql.SELECT_DISTINCT(\"%s\");".formatted(//$NON-NLS-1$
                         escapeStringForJava(getSelectListPhrase(introspectedColumn))));
                 method.addBodyLine("} else {"); //$NON-NLS-1$
-                method.addBodyLine(String.format("sql.SELECT(\"%s\");", //$NON-NLS-1$
+                method.addBodyLine("sql.SELECT(\"%s\");".formatted(//$NON-NLS-1$
                         escapeStringForJava(getSelectListPhrase(introspectedColumn))));
                 method.addBodyLine("}"); //$NON-NLS-1$
             } else {
-                method.addBodyLine(String.format("sql.SELECT(\"%s\");", //$NON-NLS-1$
+                method.addBodyLine("sql.SELECT(\"%s\");".formatted(//$NON-NLS-1$
                         escapeStringForJava(getSelectListPhrase(introspectedColumn))));
             }
 
             distinctCheck = false;
         }
 
-        method.addBodyLine(String.format("sql.FROM(\"%s\");", //$NON-NLS-1$
+        method.addBodyLine("sql.FROM(\"%s\");".formatted(//$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName())));
         method.addBodyLine("applyWhere(sql, example, false);"); //$NON-NLS-1$
 

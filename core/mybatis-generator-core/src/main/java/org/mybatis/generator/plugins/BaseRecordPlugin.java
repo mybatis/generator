@@ -39,7 +39,7 @@ public abstract class BaseRecordPlugin extends PluginAdapter {
             try {
                 fieldCountTrigger = Integer.parseInt(properties.getProperty("fieldCountTrigger")); //$NON-NLS-1$
             } catch (NumberFormatException e) {
-                warnings.add(String.format(MESSAGE_TEMPLATE, getClass().getName(), context.getId())); //$NON-NLS-1$
+                warnings.add(MESSAGE_TEMPLATE.formatted(getClass().getName(), context.getId())); //$NON-NLS-1$
             }
         }
 

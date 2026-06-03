@@ -74,7 +74,7 @@ for (int i = 0; i < oredCriteria.size(); i++) {
                 if (criterion.getTypeHandler() == null) {
                     sb.append(parmPhrase1.formatted(criterion.getCondition(), i, j));
                 } else {
-                    sb.append(parmPhrase1_th.formatted(criterion.getCondition(), i, j,criterion.getTypeHandler()));
+                    sb.append(parmPhrase1_th.formatted(criterion.getCondition(), i, j, criterion.getTypeHandler()));
                 }
             } else if (criterion.isBetweenValue()) {
                 if (criterion.getTypeHandler() == null) {

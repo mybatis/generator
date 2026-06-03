@@ -60,18 +60,18 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
-        method.addBodyLine(String.format("sql.UPDATE(\"%s\");", //$NON-NLS-1$
+        method.addBodyLine("sql.UPDATE(\"%s\");".formatted(//$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));
         method.addBodyLine(""); //$NON-NLS-1$
 
         for (IntrospectedColumn introspectedColumn :
                 ListUtilities.filterColumnsForUpdate(introspectedTable.getNonPrimaryKeyColumns())) {
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
-                method.addBodyLine(String.format("if (row.%s() != null) {", //$NON-NLS-1$
+                method.addBodyLine("if (row.%s() != null) {".formatted(//$NON-NLS-1$
                         getCallingGetterMethodName(introspectedColumn)));
             }
 
-            method.addBodyLine(String.format("sql.SET(\"%s = %s\");", //$NON-NLS-1$
+            method.addBodyLine("sql.SET(\"%s = %s\");".formatted(//$NON-NLS-1$
                     escapeStringForJava(getEscapedColumnName(introspectedColumn)),
                     getParameterClause(introspectedColumn)));
 
@@ -83,7 +83,7 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
         }
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
-            method.addBodyLine(String.format("sql.WHERE(\"%s = %s\");", //$NON-NLS-1$
+            method.addBodyLine("sql.WHERE(\"%s = %s\");".formatted(//$NON-NLS-1$
                     escapeStringForJava(getEscapedColumnName(introspectedColumn)),
                     getParameterClause(introspectedColumn)));
         }

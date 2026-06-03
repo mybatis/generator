@@ -43,7 +43,7 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
 
     @Override
     public String existingContent(String parameter) {
-        return String.format("""
+        return """
                 package com.example;
 
                 import %s;
@@ -70,12 +70,12 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                         System.out.println("Custom method");
                     }
                 }
-                """, parameter);
+                """.formatted(parameter);
     }
 
     @Override
     public String newContent(String parameter) {
-        return String.format("""
+        return """
                 package com.example;
 
                 import %s;
@@ -93,7 +93,7 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                         return 0;
                     }
                 }
-                """, parameter);
+                """.formatted(parameter);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
     }
 
     private String expectedMergeIntoNewContent(String parameter) {
-        return String.format("""
+        return """
             package com.example;
 
             import %s;
@@ -131,12 +131,12 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                     System.out.println("Custom method");
                 }
             }
-            """, parameter);
+            """.formatted(parameter);
     }
 
     private String expectedMergeIntoNewLPContent(String parameter) {
         // This is a documented case of something that doesn't work with the LP printer: comments are not merged
-        return String.format("""
+        return """
                 package com.example;
 
                 import %s;
@@ -158,11 +158,11 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                         System.out.println("Custom method");
                     }
                 }
-                """, parameter);
+                """.formatted(parameter);
     }
 
     private String expectedMergeIntoOldContent(String parameter) {
-        return String.format("""
+        return """
             package com.example;
 
             import %s;
@@ -185,11 +185,11 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                     return 0;
                 }
             }
-            """, parameter);
+            """.formatted(parameter);
     }
 
     private String expectedMergeIntoOldLPContent(String parameter) {
-        return String.format("""
+        return """
             package com.example;
 
             import %s;
@@ -212,7 +212,7 @@ public class ShouldPreserveCustomMethodsWhenMergingWithGeneratedAnnotation exten
                     return 0;
                 }
             }
-            """, parameter);
+            """.formatted(parameter);
     }
 
     @Override

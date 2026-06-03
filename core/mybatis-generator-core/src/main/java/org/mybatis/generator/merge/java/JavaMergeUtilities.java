@@ -110,7 +110,7 @@ public class JavaMergeUtilities {
             return bodyDeclaration.asRecordDeclaration().getImplementedTypes();
         }
 
-        return Collections.emptyList();
+        return List.of();
     }
 
     private static void addSuperInterface(BodyDeclaration<?> bodyDeclaration, ClassOrInterfaceType superInterface) {

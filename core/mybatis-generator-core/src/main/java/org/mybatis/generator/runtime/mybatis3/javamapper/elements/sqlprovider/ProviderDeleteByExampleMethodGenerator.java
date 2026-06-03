@@ -55,7 +55,7 @@ public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaClassMet
         commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, importedTypes);
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
-        method.addBodyLine(String.format("sql.DELETE_FROM(\"%s\");", //$NON-NLS-1$
+        method.addBodyLine("sql.DELETE_FROM(\"%s\");".formatted(//$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName())));
         method.addBodyLine("applyWhere(sql, example, false);"); //$NON-NLS-1$
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$

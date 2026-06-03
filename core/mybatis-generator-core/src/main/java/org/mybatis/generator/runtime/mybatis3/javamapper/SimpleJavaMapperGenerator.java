@@ -102,7 +102,7 @@ public class SimpleJavaMapperGenerator extends AbstractJavaGenerator {
     }
 
     public List<CompilationUnit> getExtraCompilationUnits() {
-        return Collections.emptyList();
+        return List.of();
     }
 
     public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {

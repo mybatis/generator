@@ -91,7 +91,7 @@ public class KotlinDataClassGenerator extends AbstractKotlinGenerator {
         if (pluginAggregator.kotlinDataClassGenerated(kf, dataClass, introspectedTable)) {
             return List.of(kf);
         } else {
-            return Collections.emptyList();
+            return List.of();
         }
     }
 

@@ -59,7 +59,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends Abstract
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
-        method.addBodyLine(String.format("sql.UPDATE(\"%s\");", //$NON-NLS-1$
+        method.addBodyLine("sql.UPDATE(\"%s\");".formatted(//$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName())));
         method.addBodyLine(""); //$NON-NLS-1$
 
@@ -68,7 +68,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends Abstract
             sb.append(getParameterClause(introspectedColumn));
             sb.insert(2, "row."); //$NON-NLS-1$
 
-            method.addBodyLine(String.format("sql.SET(\"%s = %s\");", //$NON-NLS-1$
+            method.addBodyLine("sql.SET(\"%s = %s\");".formatted(//$NON-NLS-1$
                     escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)), sb));
         }
 
@@ -79,7 +79,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends Abstract
 
         FullyQualifiedJavaType example = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(example);
-        method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
+        method.addBodyLine("%s example = (%s) parameter.get(\"example\");".formatted(//$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
 
         method.addBodyLine("applyWhere(sql, example, true);"); //$NON-NLS-1$

@@ -40,7 +40,7 @@ public abstract class MergeTestCase {
      * @return a list of parameter variants. Empty by default.
      */
     public List<String> parameterVariants() {
-        return Collections.emptyList();
+        return List.of();
     }
 
     private Stream<Arguments> variants() {

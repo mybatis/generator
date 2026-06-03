@@ -72,15 +72,15 @@ for (int i = 0; i < oredCriteria.size(); i++) {
                 sb.append(criterion.getCondition());
             } else if (criterion.isSingleValue()) {
                 if (criterion.getTypeHandler() == null) {
-                    sb.append(String.format(parmPhrase1, criterion.getCondition(), i, j));
+                    sb.append(parmPhrase1.formatted(criterion.getCondition(), i, j));
                 } else {
-                    sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j,criterion.getTypeHandler()));
+                    sb.append(parmPhrase1_th.formatted(criterion.getCondition(), i, j, criterion.getTypeHandler()));
                 }
             } else if (criterion.isBetweenValue()) {
                 if (criterion.getTypeHandler() == null) {
-                    sb.append(String.format(parmPhrase2, criterion.getCondition(), i, j, i, j));
+                    sb.append(parmPhrase2.formatted(criterion.getCondition(), i, j, i, j));
                 } else {
-                    sb.append(String.format(parmPhrase2_th, criterion.getCondition(), i, j, criterion.getTypeHandler(), i, j, criterion.getTypeHandler()));
+                    sb.append(parmPhrase2_th.formatted(criterion.getCondition(), i, j, criterion.getTypeHandler(), i, j, criterion.getTypeHandler()));
                 }
             } else if (criterion.isListValue()) {
                 sb.append(criterion.getCondition());
@@ -94,9 +94,9 @@ for (int i = 0; i < oredCriteria.size(); i++) {
                         comma = true;
                     }
                     if (criterion.getTypeHandler() == null) {
-                        sb.append(String.format(parmPhrase3, i, j, k));
+                        sb.append(parmPhrase3.formatted(i, j, k));
                     } else {
-                        sb.append(String.format(parmPhrase3_th, i, j, k, criterion.getTypeHandler()));
+                        sb.append(parmPhrase3_th.formatted(i, j, k, criterion.getTypeHandler()));
                     }
                 }
                 sb.append(')');

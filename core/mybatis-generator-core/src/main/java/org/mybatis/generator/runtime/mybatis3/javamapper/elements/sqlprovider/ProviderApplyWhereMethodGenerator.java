@@ -52,9 +52,9 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaClassMethodGe
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(fqjt);
         importedTypes.add(new FullyQualifiedJavaType(
-                String.format("%s.Criteria", fqjt.getFullyQualifiedName()))); //$NON-NLS-1$
+                "%s.Criteria".formatted(fqjt.getFullyQualifiedName()))); //$NON-NLS-1$
         importedTypes.add(new FullyQualifiedJavaType(
-                String.format("%s.Criterion", fqjt.getFullyQualifiedName()))); //$NON-NLS-1$
+                "%s.Criterion".formatted(fqjt.getFullyQualifiedName()))); //$NON-NLS-1$
 
         Method method = new Method("applyWhere"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PROTECTED);

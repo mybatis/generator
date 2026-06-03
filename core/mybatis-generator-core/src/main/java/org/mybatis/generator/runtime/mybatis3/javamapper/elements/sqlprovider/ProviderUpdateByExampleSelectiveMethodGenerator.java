@@ -59,12 +59,12 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
 
         FullyQualifiedJavaType recordClass = introspectedTable.getRules().calculateAllFieldsClass();
         importedTypes.add(recordClass);
-        method.addBodyLine(String.format("%s row = (%s) parameter.get(\"row\");", //$NON-NLS-1$
+        method.addBodyLine("%s row = (%s) parameter.get(\"row\");".formatted(//$NON-NLS-1$
                 recordClass.getShortName(), recordClass.getShortName()));
 
         FullyQualifiedJavaType example = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(example);
-        method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
+        method.addBodyLine("%s example = (%s) parameter.get(\"example\");".formatted(//$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
 
         commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, importedTypes);
@@ -73,14 +73,14 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
-        method.addBodyLine(String.format("sql.UPDATE(\"%s\");", //$NON-NLS-1$
+        method.addBodyLine("sql.UPDATE(\"%s\");".formatted(//$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName())));
         method.addBodyLine(""); //$NON-NLS-1$
 
         for (IntrospectedColumn introspectedColumn :
                 ListUtilities.filterColumnsForUpdate(introspectedTable.getAllColumns())) {
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
-                method.addBodyLine(String.format("if (row.%s() != null) {", //$NON-NLS-1$
+                method.addBodyLine("if (row.%s() != null) {".formatted(//$NON-NLS-1$
                         getCallingGetterMethodName(introspectedColumn)));
             }
 
@@ -88,7 +88,7 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
             sb.append(getParameterClause(introspectedColumn));
             sb.insert(2, "row."); //$NON-NLS-1$
 
-            method.addBodyLine(String.format("sql.SET(\"%s = %s\");", //$NON-NLS-1$
+            method.addBodyLine("sql.SET(\"%s = %s\");".formatted(//$NON-NLS-1$
                     escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),
                     sb));
 

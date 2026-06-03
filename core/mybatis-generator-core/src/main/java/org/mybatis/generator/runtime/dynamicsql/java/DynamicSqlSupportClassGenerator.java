@@ -109,7 +109,7 @@ public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
         field.setStatic(true);
         field.setFinal(true);
 
-        String initializationString = String.format("new %s()", //$NON-NLS-1$
+        String initializationString = "new %s()".formatted(//$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getMyBatisDynamicSQLTableObjectName()));
         field.setInitializationString(initializationString);
         return field;
@@ -157,18 +157,18 @@ public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
     }
 
     private FullyQualifiedJavaType calculateFieldType(FullyQualifiedJavaType javaType) {
-        return new FullyQualifiedJavaType(String.format("SqlColumn<%s>", javaType.getShortName())); //$NON-NLS-1$
+        return new FullyQualifiedJavaType("SqlColumn<%s>".formatted(javaType.getShortName())); //$NON-NLS-1$
     }
 
     private String calculateInnerInitializationString(IntrospectedColumn column, FullyQualifiedJavaType javaType) {
         StringBuilder initializationString = new StringBuilder();
 
-        initializationString.append(String.format("column(\"%s\", JDBCType.%s", //$NON-NLS-1$ //$NON-NLS-2$
+        initializationString.append("column(\"%s\", JDBCType.%s".formatted(//$NON-NLS-1$ //$NON-NLS-2$
                 escapeStringForJava(getEscapedColumnName(column)),
                 column.getJdbcTypeName()));
 
         column.getTypeHandler().ifPresentOrElse(
-                th -> initializationString.append(String.format(", \"%s\")", th)), //$NON-NLS-1$
+                th -> initializationString.append(", \"%s\")".formatted(th)), //$NON-NLS-1$
                 () -> initializationString.append(')'));
 
         if (StringUtility.isTrue(

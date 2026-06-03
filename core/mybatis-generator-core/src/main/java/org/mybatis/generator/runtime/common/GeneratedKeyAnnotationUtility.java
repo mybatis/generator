@@ -79,8 +79,7 @@ public class GeneratedKeyAnnotationUtility {
         JavaMethodParts.Builder builder = new JavaMethodParts.Builder();
         builder.withImport(new FullyQualifiedJavaType(SELECT_KEY_IMPORT));
         FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
-        String annotation = String.format(JAVA_SELECT_KEY_TEMPLATE,
-                gk.getRuntimeSqlStatement(),
+        String annotation = JAVA_SELECT_KEY_TEMPLATE.formatted(gk.getRuntimeSqlStatement(),
                 prefix.value() + introspectedColumn.getJavaProperty(),
                 !gk.isIdentity(),
                 fqjt.getShortName());
@@ -92,8 +91,7 @@ public class GeneratedKeyAnnotationUtility {
                                                                   IntrospectedColumn introspectedColumn) {
         JavaMethodParts.Builder builder = new JavaMethodParts.Builder();
         builder.withImport(new FullyQualifiedJavaType(OPTIONS_IMPORT));
-        String annotation = String.format(OPTIONS_TEMPLATE,
-                prefix.value() + introspectedColumn.getJavaProperty(),
+        String annotation = OPTIONS_TEMPLATE.formatted(prefix.value() + introspectedColumn.getJavaProperty(),
                 escapeStringForJava(introspectedColumn.getActualColumnName()));
         builder.withAnnotation(annotation);
         return builder.build();
@@ -119,8 +117,7 @@ public class GeneratedKeyAnnotationUtility {
                 builder.withImport(SELECT_KEY_IMPORT);
                 FullyQualifiedKotlinType kt =
                         JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());
-                String annotation = String.format(KOTLIN_SELECT_KEY_TEMPLATE,
-                        gk.getRuntimeSqlStatement(),
+                String annotation = KOTLIN_SELECT_KEY_TEMPLATE.formatted(gk.getRuntimeSqlStatement(),
                         Prefix.DSQL_SINGLE_ROW.value() + introspectedColumn.getJavaProperty(),
                         !gk.isIdentity(),
                         kt.getShortNameWithoutTypeArguments());
@@ -134,8 +131,7 @@ public class GeneratedKeyAnnotationUtility {
                                                                         IntrospectedColumn introspectedColumn) {
         KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
         builder.withImport(OPTIONS_IMPORT);
-        String annotation = String.format(OPTIONS_TEMPLATE,
-                prefix.value() + introspectedColumn.getJavaProperty(),
+        String annotation = OPTIONS_TEMPLATE.formatted(prefix.value() + introspectedColumn.getJavaProperty(),
                 escapeStringForKotlin(introspectedColumn.getActualColumnName()));
         builder.withAnnotation(annotation);
         return builder.build();

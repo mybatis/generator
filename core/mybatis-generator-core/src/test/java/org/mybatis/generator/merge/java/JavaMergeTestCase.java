@@ -90,11 +90,11 @@ public abstract class JavaMergeTestCase extends MergeTestCase {
 
         if (parameterVariants().isEmpty()) {
             return mergeConfigurations().stream()
-                    .map(pc -> Arguments.argumentSet(String.format(name, "null", pc.id), this, null, pc));
+                    .map(pc -> Arguments.argumentSet(name.formatted("null", pc.id), this, null, pc));
         } else {
             return parameterVariants().stream()
                     .flatMap(pv -> mergeConfigurations().stream()
-                            .map(pc -> Arguments.argumentSet(String.format(name, pv, pc.id), this, pv, pc)));
+                            .map(pc -> Arguments.argumentSet(name.formatted(pv, pc.id), this, pv, pc)));
         }
     }
 

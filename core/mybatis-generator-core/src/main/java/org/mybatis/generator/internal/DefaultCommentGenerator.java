@@ -283,10 +283,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
         buffer.append(MyBatisGenerator.class.getName());
         buffer.append('\"');
 
-        getDateString().ifPresent(s -> buffer.append(String.format(", date=\"%s\"", s))); //$NON-NLS-1$
+        getDateString().ifPresent(s -> buffer.append(", date=\"%s\"".formatted(s))); //$NON-NLS-1$
 
         if (forceComment || !minimizeComments) {
-            buffer.append(String.format(", comments=\"%s\"", comment)); //$NON-NLS-1$
+            buffer.append(", comments=\"%s\"".formatted(comment)); //$NON-NLS-1$
         }
 
         buffer.append(')');

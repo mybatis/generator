@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.Indenter;
@@ -56,7 +56,7 @@ class MethodTest {
         FullyQualifiedJavaType listType = FullyQualifiedJavaType.getNewListInstance();
         listType.addTypeArgument(FullyQualifiedJavaType.getStringInstance());
         FullyQualifiedJavaType typeT = new FullyQualifiedJavaType("T");
-        original.addTypeParameter(new TypeParameter("T", Collections.singletonList(listType)));
+        original.addTypeParameter(new TypeParameter("T", List.of(listType)));
 
         original.addParameter(new Parameter(typeT, "t"));
         original.setReturnType(typeT);
@@ -211,7 +211,7 @@ class MethodTest {
         comparatorType.addTypeArgument(FullyQualifiedJavaType.getStringInstance());
         FullyQualifiedJavaType typeR = new FullyQualifiedJavaType("R");
 
-        method.addTypeParameter(new TypeParameter("T", Collections.singletonList(listType)));
+        method.addTypeParameter(new TypeParameter("T", List.of(listType)));
         method.addTypeParameter(new TypeParameter("R", Arrays.asList(listType, comparatorType)));
 
         FullyQualifiedJavaType functionType = new FullyQualifiedJavaType("java.util.function.Function");

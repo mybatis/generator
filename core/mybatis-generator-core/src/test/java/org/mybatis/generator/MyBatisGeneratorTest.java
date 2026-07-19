@@ -20,8 +20,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
@@ -39,6 +41,60 @@ import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
 class MyBatisGeneratorTest {
+
+    @Test
+    void testCalculateContextsToRun() throws Exception {
+        ModelGeneratorConfiguration modelGeneratorConfiguration = new ModelGeneratorConfiguration.Builder()
+                .withTargetPackage("test")
+                .withTargetProject("test")
+                .build();
+        Context context1 = new Context.Builder()
+                .withId("context1")
+                .withModelGeneratorConfiguration(modelGeneratorConfiguration)
+                .build();
+        Context context2 = new Context.Builder()
+                .withId("context2")
+                .withModelGeneratorConfiguration(modelGeneratorConfiguration)
+                .build();
+        Configuration config = new Configuration.Builder()
+                .withContext(context1)
+                .withContext(context2)
+                .build();
+
+        MyBatisGenerator generatorWithContextId = new MyBatisGenerator.Builder()
+                .withConfiguration(config)
+                .withShellCallback(new DefaultShellCallback())
+                .withContextIds(Set.of("context1"))
+                .build();
+        assertThat(calculateContextsToRun(generatorWithContextId))
+                .extracting(Context::getId)
+                .containsExactly("context1");
+
+        MyBatisGenerator generatorWithoutContextIds = new MyBatisGenerator.Builder()
+                .withConfiguration(config)
+                .withShellCallback(new DefaultShellCallback())
+                .build();
+        assertThat(calculateContextsToRun(generatorWithoutContextIds))
+                .extracting(Context::getId)
+                .containsExactly("context1", "context2");
+
+        MyBatisGenerator generatorWithContextIdAndTableName = new MyBatisGenerator.Builder()
+                .withConfiguration(config)
+                .withShellCallback(new DefaultShellCallback())
+                .withContextIds(Set.of("context1"))
+                .withFullyQualifiedTableNames(Set.of("some_table"))
+                .build();
+        assertThat(calculateContextsToRun(generatorWithContextIdAndTableName))
+                .extracting(Context::getId)
+                .containsExactly("context1");
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<Context> calculateContextsToRun(MyBatisGenerator generator) throws Exception {
+        Method method = MyBatisGenerator.class.getDeclaredMethod("calculateContextsToRun");
+        method.setAccessible(true);
+        return (List<Context>) method.invoke(generator);
+    }
 
     @Test
     void testGenerateMyBatis3WithInvalidConfig() throws Exception {

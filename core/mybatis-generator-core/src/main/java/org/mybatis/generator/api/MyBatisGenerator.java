@@ -174,7 +174,7 @@ public class MyBatisGenerator {
         }
     }
 
-    private List<Context> calculateContextsToRun() {
+    List<Context> calculateContextsToRun() {
         List<Context> contextsToRun;
         if (contextIds.isEmpty()) {
             contextsToRun = configuration.getContexts();

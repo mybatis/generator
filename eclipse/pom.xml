@@ -37,7 +37,7 @@
   </modules>
 
   <properties>
-    <license.version>5.0.0</license.version>
+    <license.version>5.1.1</license.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Sonar -->

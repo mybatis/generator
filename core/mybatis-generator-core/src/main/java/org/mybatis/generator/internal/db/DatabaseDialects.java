@@ -17,13 +17,16 @@ package org.mybatis.generator.internal.db;
 
 import java.util.Optional;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.mybatis.generator.internal.util.messages.Messages;
+
 /**
  * Typesafe enum of known database dialects.
  *
  * @author Jeff Butler
  */
 public enum DatabaseDialects {
-
     DB2("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
     MYSQL("SELECT LAST_INSERT_ID()"), //$NON-NLS-1$
     SQLSERVER("SELECT SCOPE_IDENTITY()"), //$NON-NLS-1$
@@ -33,6 +36,8 @@ public enum DatabaseDialects {
     SYBASE("SELECT @@IDENTITY"), //$NON-NLS-1$
     DB2_MF("SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1"), //$NON-NLS-1$
     INFORMIX("select dbinfo('sqlca.sqlerrd1') from systables where tabid=1"); //$NON-NLS-1$
+
+    private static final Log LOGGER = LogFactory.getLog(DatabaseDialects.class);
 
     private final String identityRetrievalStatement;
 
@@ -65,6 +70,7 @@ public enum DatabaseDialects {
         } else if ("Cloudscape".equalsIgnoreCase(database)) { //$NON-NLS-1$
             returnValue = CLOUDSCAPE;
         } else if ("Derby".equalsIgnoreCase(database)) { //$NON-NLS-1$
+            LOGGER.warn(Messages.getString("Warning.35")); //$NON-NLS-1$
             returnValue = DERBY;
         } else if ("HSQLDB".equalsIgnoreCase(database)) { //$NON-NLS-1$
             returnValue = HSQLDB;

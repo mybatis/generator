@@ -17,7 +17,6 @@ package org.mybatis.generator.runtime.dynamicsql.kotlin;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.mybatis.generator.api.FullyQualifiedTable;

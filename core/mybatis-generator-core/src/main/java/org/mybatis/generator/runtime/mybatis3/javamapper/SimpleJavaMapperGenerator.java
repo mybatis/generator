@@ -18,7 +18,6 @@ package org.mybatis.generator.runtime.mybatis3.javamapper;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;

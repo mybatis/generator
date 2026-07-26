@@ -71,7 +71,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
 
     private void addImports(JavaMethodParts.Builder builder) {
         builder.withImports(getAnnotatedSelectImports());
-        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
             builder.withImports(getAnnotatedResultImports(introspectedColumn));
         }
 

@@ -79,7 +79,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
             builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
         } else {
             builder.withImports(getAnnotatedSelectImports());
-            for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
+            for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
                 builder.withImports(
                         getAnnotatedResultImports(introspectedColumn));
             }

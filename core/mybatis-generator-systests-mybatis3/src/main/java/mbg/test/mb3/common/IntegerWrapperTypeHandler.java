@@ -28,10 +28,10 @@ public class IntegerWrapperTypeHandler implements TypeHandler<IntegerWrapper> {
     @Override
     public void setParameter(PreparedStatement ps, int i, IntegerWrapper parameter, JdbcType jdbcType)
             throws SQLException {
-        if (parameter == null || parameter.getValue() == null) {
+        if (parameter == null || parameter.value() == null) {
             ps.setNull(i, JdbcType.INTEGER.TYPE_CODE);
         } else {
-            ps.setInt(i, parameter.getValue());
+            ps.setInt(i, parameter.value());
         }
     }
 
@@ -57,9 +57,7 @@ public class IntegerWrapperTypeHandler implements TypeHandler<IntegerWrapper> {
         if (wasNull) {
             return null;
         } else {
-            IntegerWrapper iw = new IntegerWrapper();
-            iw.setValue(value);
-            return iw;
+            return new IntegerWrapper(value);
         }
     }
 }

@@ -15,14 +15,4 @@
  */
 package mbg.test.mb3.common;
 
-public class IntegerWrapper {
-    private Integer value;
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
-    }
-}
+public record IntegerWrapper(Integer value) {}

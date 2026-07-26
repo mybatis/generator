@@ -17,7 +17,6 @@ package org.mybatis.generator.merge.java;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

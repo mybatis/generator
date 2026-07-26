@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.api;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -1890,7 +1889,7 @@ public interface Plugin {
 
     /**
      * The motivation for adding this method can be found in
-     * <a href="https://github.com/mybatis/generator/issues/1116">https://github.com/mybatis/generator/issues/1116</a>
+     * <a href="https://github.com/mybatis/generator/issues/1116">https://github.com/mybatis/generator/issues/1116</a>.
      *
      * <p>This method is called when the updateByPrimaryKey method
      * has been generated in the dynamic SQL runtime client interface.

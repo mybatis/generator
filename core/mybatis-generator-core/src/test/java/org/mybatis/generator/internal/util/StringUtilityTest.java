@@ -65,7 +65,11 @@ class StringUtilityTest {
                 Arguments.argumentSet("XAxis",
                         JavaBeansUtil.getValidPropertyName("XAxis"), "X_AXIS"),
                 Arguments.argumentSet("Yaxis",
-                        JavaBeansUtil.getValidPropertyName("Yaxis"), "YAXIS")
+                        JavaBeansUtil.getValidPropertyName("Yaxis"), "YAXIS"),
+                Arguments.argumentSet("XMLRequest",
+                        JavaBeansUtil.getValidPropertyName("XMLRequest"), "XML_REQUEST"),
+                Arguments.argumentSet("MySQL",
+                        JavaBeansUtil.getValidPropertyName("MySQL"), "MY_SQL")
         );
     }
 }

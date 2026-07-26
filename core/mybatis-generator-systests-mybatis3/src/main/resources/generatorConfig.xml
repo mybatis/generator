@@ -464,7 +464,10 @@
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>
     </table>
     <table tableName="PKBlobs" />
-    <table tableName="PKFieldsBlobs" />
+    <table tableName="PKFieldsBlobs" >
+      <columnOverride column="ID2" typeHandler="mbg.test.mb3.common.IntegerWrapperTypeHandler"
+                      javaType="mbg.test.mb3.common.IntegerWrapper" />
+    </table>
     <table tableName="FieldsBlobs" />
     <table tableName="awful table" alias="A">
       <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />

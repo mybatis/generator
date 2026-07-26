@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+import mbg.test.mb3.common.IntegerWrapper;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 
@@ -523,7 +524,7 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
-            record.setId2(4);
+            record.setId2(new IntegerWrapper(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
@@ -531,7 +532,7 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
 
             record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
-            record.setId2(6);
+            record.setId2(new IntegerWrapper(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -565,7 +566,7 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
-            record.setId2(4);
+            record.setId2(new IntegerWrapper(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
@@ -573,7 +574,7 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
 
             record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
-            record.setId2(6);
+            record.setId2(new IntegerWrapper(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -581,7 +582,7 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
 
             Pkfieldsblobs newRecord = new Pkfieldsblobs();
             newRecord.setId1(5);
-            newRecord.setId2(8);
+            newRecord.setId2(new IntegerWrapper(8));
             newRecord.setFirstname("Fred");
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1EqualTo(5);
@@ -609,7 +610,7 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
-            record.setId2(4);
+            record.setId2(new IntegerWrapper(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
@@ -617,7 +618,7 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
 
             record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
-            record.setId2(6);
+            record.setId2(new IntegerWrapper(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -625,7 +626,7 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
 
             PkfieldsblobsWithBLOBs newRecord = new PkfieldsblobsWithBLOBs();
             newRecord.setId1(3);
-            newRecord.setId2(8);
+            newRecord.setId2(new IntegerWrapper(8));
             newRecord.setFirstname("Fred");
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1EqualTo(3);

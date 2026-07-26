@@ -42,6 +42,9 @@
   <li>Bug Fix – The plugin "initialized" method was being called too early – before the IntrospectedTable was completely
     initialized. This would break plugins that relied on the IntrospectedTable being fully initialized.
   </li>
+  <li>Bug fix - add missing type handler imports to the select methods for annotated mappers in the legacy runtime.
+    Thanks to @wongkwl for reporting.
+  </li>
 </ul>
 
 <h2>Version 2.0.0</h2>

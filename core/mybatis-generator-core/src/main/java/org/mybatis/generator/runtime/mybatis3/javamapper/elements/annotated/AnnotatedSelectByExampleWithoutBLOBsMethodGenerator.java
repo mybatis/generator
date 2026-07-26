@@ -49,7 +49,7 @@ public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends SelectB
 
     private void addImports(JavaMethodParts.Builder builder) {
         builder.withImports(getAnnotatedSelectImports());
-        for (IntrospectedColumn introspectedColumn : introspectedTable.getBaseColumns()) {
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
             builder.withImports(getAnnotatedResultImports(introspectedColumn));
         }
 

@@ -582,7 +582,7 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
 
             Pkfieldsblobs newRecord = new Pkfieldsblobs();
             newRecord.setId1(5);
-            record.setId2(new IntegerWrapper(8));
+            newRecord.setId2(new IntegerWrapper(8));
             newRecord.setFirstname("Fred");
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1EqualTo(5);
@@ -626,7 +626,7 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
 
             PkfieldsblobsWithBLOBs newRecord = new PkfieldsblobsWithBLOBs();
             newRecord.setId1(3);
-            record.setId2(new IntegerWrapper(8));
+            newRecord.setId2(new IntegerWrapper(8));
             newRecord.setFirstname("Fred");
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1EqualTo(3);

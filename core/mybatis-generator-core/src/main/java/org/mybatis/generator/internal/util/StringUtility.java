@@ -196,7 +196,7 @@ public class StringUtility {
     public static String convertCamelCaseToSnakeCase(String in) {
         if (in.chars().anyMatch(Character::isLowerCase)) {
             return in
-                    .replaceAll("([A-Z])(?=[A-Z])", "$1_") //$NON-NLS-1$ //$NON-NLS-2$
+                    .replaceAll("(?<=[A-Z])([A-Z])(?=[a-z])", "_$1") //$NON-NLS-1$ //$NON-NLS-2$
                     .replaceAll("([a-z])([A-Z])", "$1_$2") //$NON-NLS-1$ //$NON-NLS-2$
                     .toUpperCase();
         } else {

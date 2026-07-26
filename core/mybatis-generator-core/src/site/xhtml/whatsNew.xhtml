@@ -38,6 +38,7 @@
   <li>Enhancement - add InferredGeneratedKeyPlugin that will automatically calculate a generated key configuration
     for a table if it has one primary key column, and the column value is generated.
   </li>
+  <li>Enhancement - improve automatic snake case conversions. Thanks to @wongkwl!</li>
   <li>Bug Fix – The plugin "initialized" method was being called too early – before the IntrospectedTable was completely
     initialized. This would break plugins that relied on the IntrospectedTable being fully initialized.
   </li>

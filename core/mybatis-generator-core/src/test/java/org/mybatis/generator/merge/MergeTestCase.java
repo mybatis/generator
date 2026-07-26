@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.merge;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 

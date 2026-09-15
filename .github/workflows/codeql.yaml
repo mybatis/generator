@@ -31,7 +31,7 @@ jobs:
         with:
           cache: maven
           distribution: 'temurin'
-          java-version: 25
+          java-version: 26.0.2+101
 
       - name: Install Toolchain JDK
         uses: battila7/jdk-via-jabba@v1

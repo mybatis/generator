@@ -28,7 +28,7 @@ jobs:
         with:
           cache: maven
           distribution: temurin
-          java-version: 25
+          java-version: 25.0.4+101.0.LTS
       - name: Build site
         # Note: the mvnw executable is in the parent directory - not this working directory. We only do site on the
         # core project, not all the test projects.

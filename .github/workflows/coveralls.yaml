@@ -24,7 +24,7 @@ jobs:
         with:
           cache: maven
           distribution: temurin
-          java-version: 25
+          java-version: 26
       - name: Run the build
         run: ./mvnw install --batch-mode --no-transfer-progress --quiet --show-version -Dlicense.skip=true
       - name: Report Coverage to Coveralls for Pull Requests

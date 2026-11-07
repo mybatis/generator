@@ -25,6 +25,9 @@
       <id>central</id>
       <username>${env.CI_DEPLOY_USERNAME}</username>
       <password>${env.CI_DEPLOY_PASSWORD}</password>
+      <repositoryOrigins>
+        <repositoryOrigin>https://central.sonatype.com</repositoryOrigin>
+      </repositoryOrigins>
     </server>
 
     <!-- Used for gh-pages-scm publish via maven-scm-publish-plugin -->
@@ -46,6 +49,9 @@
     <server>
       <id>nvd</id>
       <password>${env.NVD_API_KEY}</password>
+      <repositoryOrigins>
+        <repositoryOrigin>https://services.nvd.nist.gov</repositoryOrigin>
+      </repositoryOrigins>
     </server>
   </servers>
 

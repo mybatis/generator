@@ -22,6 +22,7 @@
     <artifactId>tycho-build</artifactId>
     <version>${tycho-version}</version>
   </extension>
+  <!-- Usage as -Dprofile -->
   <extension>
     <groupId>fr.jcgay.maven</groupId>
     <artifactId>maven-profiler</artifactId>

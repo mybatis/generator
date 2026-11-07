@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 
@@ -441,14 +440,12 @@ public class DatabaseIntrospector {
     }
 
     private String escapeName(String localName, String escapeString) {
-        StringTokenizer st = new StringTokenizer(localName, "_%", true); //$NON-NLS-1$
         StringBuilder sb = new StringBuilder();
-        while (st.hasMoreTokens()) {
-            String token = st.nextToken();
-            if (token.equals("_") || token.equals("%")) { //$NON-NLS-1$ //$NON-NLS-2$
+        for (char c : localName.toCharArray()) {
+            if (c == '_' || c == '%') {
                 sb.append(escapeString);
             }
-            sb.append(token);
+            sb.append(c);
         }
         return sb.toString();
     }

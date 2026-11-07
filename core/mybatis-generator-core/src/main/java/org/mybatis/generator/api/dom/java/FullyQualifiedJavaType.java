@@ -21,7 +21,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
@@ -400,27 +399,20 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
         }
         String argumentString = genericSpecification.substring(1, lastIndex);
         // need to find "," outside a <> bounds
-        StringTokenizer st = new StringTokenizer(argumentString, ",<>", true); //$NON-NLS-1$
         int openCount = 0;
         StringBuilder sb = new StringBuilder();
-        while (st.hasMoreTokens()) {
-            String token = st.nextToken();
-            if ("<".equals(token)) { //$NON-NLS-1$
-                sb.append(token);
+        for (char c : argumentString.toCharArray()) {
+            if (c == '<') {
+                sb.append(c);
                 openCount++;
-            } else if (">".equals(token)) { //$NON-NLS-1$
-                sb.append(token);
+            } else if (c == '>') {
+                sb.append(c);
                 openCount--;
-            } else if (",".equals(token)) { //$NON-NLS-1$
-                if (openCount == 0) {
-                    typeArguments
-                            .add(new FullyQualifiedJavaType(sb.toString()));
-                    sb.setLength(0);
-                } else {
-                    sb.append(token);
-                }
+            } else if (c == ',' && openCount == 0) {
+                typeArguments.add(new FullyQualifiedJavaType(sb.toString()));
+                sb.setLength(0);
             } else {
-                sb.append(token);
+                sb.append(c);
             }
         }
 

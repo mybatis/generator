@@ -28,11 +28,22 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * The Class MavenWrapperDownloader.
+ */
 public final class MavenWrapperDownloader {
+
+    /** The wrapper version. */
     private static final String WRAPPER_VERSION = "3.3.4";
 
+    /** The verbose. */
     private static final boolean VERBOSE = Boolean.parseBoolean(System.getenv("MVNW_VERBOSE"));
 
+    /**
+     * Main.
+     *
+     * @param args the args
+     */
     public static void main(String[] args) {
         log("Apache Maven Wrapper Downloader " + WRAPPER_VERSION);
 
@@ -60,6 +71,13 @@ public final class MavenWrapperDownloader {
         }
     }
 
+    /**
+     * Download file from url.
+     *
+     * @param wrapperUrl the wrapper url
+     * @param wrapperJarPath the wrapper jar path
+     * @throws IOException the io exception
+     */
     private static void downloadFileFromURL(URL wrapperUrl, Path wrapperJarPath)
             throws IOException {
         log(" - Downloading to: " + wrapperJarPath);
@@ -86,6 +104,11 @@ public final class MavenWrapperDownloader {
         log(" - Downloader complete");
     }
 
+    /**
+     * Log.
+     *
+     * @param msg the msg
+     */
     private static void log(String msg) {
         if (VERBOSE) {
             System.out.println(msg);

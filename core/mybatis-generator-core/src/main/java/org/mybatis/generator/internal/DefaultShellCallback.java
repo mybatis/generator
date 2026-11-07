@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.StringTokenizer;
 
 import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.exception.ShellException;
@@ -47,10 +46,11 @@ public class DefaultShellCallback implements ShellCallback {
         }
 
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st = new StringTokenizer(targetPackage, "."); //$NON-NLS-1$
-        while (st.hasMoreTokens()) {
-            sb.append(st.nextToken());
-            sb.append(File.separatorChar);
+        for (String token : targetPackage.split("\\.")) { //$NON-NLS-1$
+            if (!token.isEmpty()) {
+                sb.append(token);
+                sb.append(File.separatorChar);
+            }
         }
 
         Path directory = targetProjectDirectory.resolve(sb.toString());

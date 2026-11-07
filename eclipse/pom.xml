@@ -37,7 +37,7 @@
   </modules>
 
   <properties>
-    <license.version>5.1.1</license.version>
+    <license.version>5.1.2</license.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Sonar -->
@@ -231,7 +231,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.15</version>
+        <version>0.8.16</version>
         <configuration>
           <append>true</append>
         </configuration>

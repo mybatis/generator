@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -128,35 +127,12 @@ public class StringUtility {
     }
 
     public static String escapeStringForJava(String s) {
-        StringTokenizer st = new StringTokenizer(s, "\"", true); //$NON-NLS-1$
-        StringBuilder sb = new StringBuilder();
-        while (st.hasMoreTokens()) {
-            String token = st.nextToken();
-            if ("\"".equals(token)) { //$NON-NLS-1$
-                sb.append("\\\""); //$NON-NLS-1$
-            } else {
-                sb.append(token);
-            }
-        }
-
-        return sb.toString();
+        return s.replace("\"", "\\\""); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static String escapeStringForKotlin(String s) {
-        StringTokenizer st = new StringTokenizer(s, "\"$", true); //$NON-NLS-1$
-        StringBuilder sb = new StringBuilder();
-        while (st.hasMoreTokens()) {
-            String token = st.nextToken();
-            if ("\"".equals(token)) { //$NON-NLS-1$
-                sb.append("\\\""); //$NON-NLS-1$
-            } else if ("$".equals(token)) { //$NON-NLS-1$
-                sb.append("\\$"); //$NON-NLS-1$
-            } else {
-                sb.append(token);
-            }
-        }
-
-        return sb.toString();
+        return s.replace("\"", "\\\"") //$NON-NLS-1$ //$NON-NLS-2$
+                .replace("$", "\\$"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static boolean isTrue(@Nullable String s) {
@@ -182,9 +158,8 @@ public class StringUtility {
     public static Set<String> tokenize(@Nullable String in) {
         return mapStringValueOrElseGet(in, str -> {
             Set<String> answer = new HashSet<>();
-            StringTokenizer st = new StringTokenizer(str, ","); //$NON-NLS-1$
-            while (st.hasMoreTokens()) {
-                String s = st.nextToken().trim();
+            for (String token : str.split(",")) { //$NON-NLS-1$
+                String s = token.trim();
                 if (!s.isEmpty()) {
                     answer.add(s);
                 }

@@ -508,6 +508,9 @@
     <table tableName="PKOnly" />
     <table tableName="PKFields" alias="B" >
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+      <!-- The following overrides are required in MyBatis 3.6.0 - possibly will be resolved by MyBatis #3844 -->
+      <columnOverride column="DATEFIELD" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler"/>
+      <columnOverride column="TIMEFIELD" typeHandler="org.apache.ibatis.type.LocalTimeTypeHandler"/>
     </table>
     <table tableName="PKBlobs" />
     <table tableName="PKFieldsBlobs" />
